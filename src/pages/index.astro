@@ -67,11 +67,14 @@ const nbEnCours = candidats.filter((c) => c.couverture.themes_publies === 0 && c
                 volontairement partielle et honnête : elle grandit à mesure des validations.
             </p>
             <ul class="mt-3 flex flex-wrap gap-4 text-sm">
-                <li><strong>{candidats.length}</strong> candidats suivis</li>
+                <li><strong>{candidats.length}</strong> candidats déjà en ligne</li>
                 <li><strong>{nbPublies}</strong> avec des mesures publiées</li>
                 <li><strong>{nbEnCours}</strong> en cours de traitement</li>
             </ul>
-            <p class="text-xs mt-3" style="color: var(--fg-muted)">Revenez régulièrement : le contenu s'enrichit au fil des vérifications.</p>
+            <p class="text-xs mt-3" style="color: var(--fg-muted)">
+                D'autres candidats déclarés sont en cours d'intégration (vérification des sources avant publication).
+                Revenez régulièrement : le contenu s'enrichit au fil des vérifications.
+            </p>
         </div>
     </section>
 

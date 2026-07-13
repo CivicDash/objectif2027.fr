@@ -30,13 +30,23 @@ function etatDe(slug: string): EtatTheme {
         <a href="/candidats/" class="text-brand-600 hover:underline">Candidats</a> · {nom}
     </nav>
 
-    <!-- En-tête -->
-    <header class="py-4 flex items-start gap-4">
-        <span class="grid place-items-center rounded-full text-white text-xl font-bold shrink-0"
-              style={`background:${couleur}; width:64px; height:64px`} aria-hidden="true">
-            {nom.split(/\s+/).map((m: string) => m[0]).slice(0, 2).join('')}
-        </span>
-        <div>
+    <!-- Hero : bandeau dégradé (couleur du candidat) + portrait rond chevauchant -->
+    <div class="relative -mx-4 mt-2 h-28 md:h-36" style={`background: linear-gradient(135deg, ${couleur} 0%, color-mix(in srgb, ${couleur} 12%, transparent) 100%)`}>
+        {c.photo?.credit && (
+            <span class="absolute bottom-1 right-2 text-[10px] px-1 rounded" style="background: rgba(0,0,0,.4); color:#fff">© {c.photo.credit} · {c.photo.licence}</span>
+        )}
+    </div>
+    <header class="-mt-10 flex items-end gap-4">
+        {c.photo?.url ? (
+            <img src={c.photo.url} alt={`Portrait de ${nom}`} width="80" height="80"
+                 class="rounded-full object-cover shrink-0 border-4" style="width:80px;height:80px;border-color:var(--bg)" />
+        ) : (
+            <span class="grid place-items-center rounded-full text-white text-xl font-bold shrink-0 border-4"
+                  style={`background:${couleur}; width:80px; height:80px; border-color:var(--bg)`} aria-hidden="true">
+                {nom.split(/\s+/).map((m: string) => m[0]).slice(0, 2).join('')}
+            </span>
+        )}
+        <div class="pb-1">
             <h1 class="text-2xl font-extrabold leading-tight">{nom}</h1>
             <p style="color: var(--fg-muted)">{c.parti_soutien}</p>
             {c.slogan && <p class="italic mt-0.5" style="color: var(--fg-muted)">« {c.slogan} »</p>}

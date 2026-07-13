@@ -14,10 +14,17 @@ export interface Theme {
     ordre: number;
 }
 
+export interface Photo {
+    url: string | null;
+    credit: string;
+    licence: string;
+}
+
 export interface CandidatIndex {
     slug: string;
     nom_complet: string;
     slogan?: string | null;
+    photo?: Photo | null;
     parti_soutien: string | null;
     nuance: string | null;
     couleur_hex: string | null;
@@ -38,6 +45,7 @@ export const THEMES = themes as Theme[];
 export const CANDIDATS: CandidatIndex[] = (candidatsIndex as CandidatIndex[]).map((c) => ({
     ...c,
     slogan: CANDIDATS_DETAIL[c.slug]?.slogan ?? null,
+    photo: CANDIDATS_DETAIL[c.slug]?.photo ?? null,
 }));
 export const COMPARATEUR = comparateur as Record<string, Record<string, any[]>>;
 

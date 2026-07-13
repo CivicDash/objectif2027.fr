@@ -5,10 +5,11 @@
     "parti_soutien": "La France insoumise",
     "nuance": "GAU",
     "couleur_hex": "#c0392b",
+    "photo": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-05-03",
     "site_campagne_url": "https://melenchon2027.fr",
-    "programme_url_officiel": null,
+    "programme_url_officiel": "https://melenchon2027.fr/programme2025/livre/",
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 12,
