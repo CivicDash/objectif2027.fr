@@ -1,0 +1,60 @@
+// Couche d'accès aux données d'export (JSON statiques générés par democratie).
+import meta from '@/data/meta.json';
+import themes from '@/data/themes.json';
+import candidatsIndex from '@/data/candidats.json';
+import comparateur from '@/data/comparateur.json';
+
+export type EtatTheme = 'publie' | 'en_traitement' | 'non_exprime';
+
+export interface Theme {
+    slug: string;
+    nom: string;
+    icone: string | null;
+    description: string | null;
+    ordre: number;
+}
+
+export interface CandidatIndex {
+    slug: string;
+    nom_complet: string;
+    parti_soutien: string | null;
+    nuance: string | null;
+    couleur_hex: string | null;
+    statut_candidature: string;
+    couverture: { themes_publies: number; themes_exprimes: number; themes_total: number };
+}
+
+// Chargement des fiches candidat détaillées (un fichier par candidat).
+const fiches = import.meta.glob<{ default: any }>('@/data/candidats/*.json', { eager: true });
+
+export const CANDIDATS_DETAIL: Record<string, any> = Object.fromEntries(
+    Object.values(fiches).map((m) => [m.default.slug, m.default]),
+);
+
+export const META = meta;
+export const THEMES = themes as Theme[];
+export const CANDIDATS = candidatsIndex as CandidatIndex[];
+export const COMPARATEUR = comparateur as Record<string, Record<string, any[]>>;
+
+export function getCandidat(slug: string) {
+    return CANDIDATS_DETAIL[slug] ?? null;
+}
+
+export function themeParSlug(slug: string): Theme | undefined {
+    return THEMES.find((t) => t.slug === slug);
+}
+
+const LIBELLE_ETAT: Record<EtatTheme, string> = {
+    publie: 'Mesures publiées',
+    en_traitement: "S'est exprimé — en cours de traitement",
+    non_exprime: "Ne s'est pas exprimé sur ce thème",
+};
+
+export function libelleEtat(etat: EtatTheme): string {
+    return LIBELLE_ETAT[etat];
+}
+
+// Ordre d'affichage neutre : alphabétique par nom (jamais éditorial).
+export function candidatsOrdreNeutre(): CandidatIndex[] {
+    return [...CANDIDATS].sort((a, b) => a.nom_complet.localeCompare(b.nom_complet, 'fr'));
+}

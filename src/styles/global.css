@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------
+   Objectif 2027 — base
+   Mobile-first strict : le layout mobile est l'état par défaut,
+   le desktop est une media query (>= 900px). Contraste WCAG AA.
+--------------------------------------------------------------- */
+:root {
+    color-scheme: light dark;
+    --fg: #10203f;
+    --fg-muted: #4a5a7a;
+    --bg: #ffffff;
+    --bg-soft: #f6f9ff;
+    --border: #e2e8f0;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fg: #e8eefc;
+        --fg-muted: #a9b6d4;
+        --bg: #0b1327;
+        --bg-soft: #111c36;
+        --border: #24324f;
+    }
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Cibles tactiles >= 44px */
+a, button, [role='button'] { touch-action: manipulation; }
+.tap { min-height: 44px; min-width: 44px; }
+
+/* Skip link accessibilité */
+.skip-link {
+    position: absolute; left: -9999px; top: 0; z-index: 100;
+    background: var(--brand-600, #2563eb); color: #fff; padding: 10px 16px; border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+/* Ancre sticky : décale la cible sous la barre d'ancres */
+[id] { scroll-margin-top: 5rem; }

@@ -1,0 +1,17 @@
+---
+import Base from '@/layouts/Base.astro';
+import CandidatCard from '@/components/CandidatCard.astro';
+import { candidatsOrdreNeutre } from '@/lib/data';
+
+const candidats = candidatsOrdreNeutre();
+---
+
+<Base title="Les candidats — Objectif 2027" description="La liste des candidats à l'élection présidentielle 2027, traités de façon strictement identique. Parcours, programmes et sources.">
+    <h1 class="text-2xl font-bold py-4">Les candidats</h1>
+    <p class="text-sm mb-4" style="color: var(--fg-muted)">
+        {candidats.length} candidats — ordre alphabétique, mêmes rubriques pour tous.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {candidats.map((c) => <CandidatCard candidat={c} />)}
+    </div>
+</Base>

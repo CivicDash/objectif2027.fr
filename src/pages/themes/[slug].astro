@@ -1,0 +1,44 @@
+---
+import Base from '@/layouts/Base.astro';
+import { THEMES, CANDIDATS_DETAIL, themeParSlug, type EtatTheme } from '@/lib/data';
+
+export function getStaticPaths() {
+    return THEMES.map((t) => ({ params: { slug: t.slug }, props: { theme: t } }));
+}
+const { theme } = Astro.props;
+
+const candidats = Object.values(CANDIDATS_DETAIL)
+    .sort((a: any, b: any) => a.nom_complet.localeCompare(b.nom_complet, 'fr'));
+
+function etatDe(c: any): EtatTheme {
+    return (c.etats_par_theme?.[theme.slug]?.etat ?? 'non_exprime') as EtatTheme;
+}
+---
+
+<Base title={`${theme.nom} — positions des candidats | Objectif 2027`} description={`Ce que les candidats à la présidentielle 2027 proposent (ou non) sur : ${theme.nom}.`}>
+    <nav class="text-sm py-2"><a href="/" class="text-brand-600 hover:underline">Accueil</a> · <span style="color: var(--fg-muted)">Thème</span></nav>
+    <h1 class="text-2xl font-bold">{theme.nom}</h1>
+    {theme.description && <p class="mt-1" style="color: var(--fg-muted)">{theme.description}</p>}
+
+    <div class="mt-6 space-y-3">
+        {candidats.map((c: any) => {
+            const etat = etatDe(c);
+            const mesures = c.mesures_par_theme?.[theme.slug] ?? [];
+            return (
+                <div class="rounded-card border p-4" style="border-color: var(--border)">
+                    <div class="flex items-center justify-between gap-2">
+                        <a href={`/candidats/${c.slug}/`} class="font-semibold hover:text-brand-600">{c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}</a>
+                        <span class="text-xs whitespace-nowrap" style={etat === 'publie' ? 'color:#047857' : etat === 'en_traitement' ? 'color:#b45309' : 'color:var(--fg-muted)'}>
+                            {etat === 'publie' ? 'Publié' : etat === 'en_traitement' ? 'En cours de traitement' : 'Non exprimé'}
+                        </span>
+                    </div>
+                    {etat === 'publie' && (
+                        <ul class="mt-2 text-sm list-disc pl-5">
+                            {mesures.map((m: any) => <li>{m.titre}</li>)}
+                        </ul>
+                    )}
+                </div>
+            );
+        })}
+    </div>
+</Base>

@@ -1,0 +1,107 @@
+[
+    {
+        "slug": "pouvoir-achat",
+        "nom": "Pouvoir d'achat",
+        "icone": "lucide-wallet",
+        "description": "Revenus, prix, salaires, prestations.",
+        "ordre": 1
+    },
+    {
+        "slug": "travail-retraites",
+        "nom": "Travail & retraites",
+        "icone": "lucide-briefcase",
+        "description": "Emploi, droit du travail, système de retraites.",
+        "ordre": 2
+    },
+    {
+        "slug": "sante",
+        "nom": "Santé",
+        "icone": "lucide-heart-pulse",
+        "description": "Système de soins, hôpital, accès aux soins.",
+        "ordre": 3
+    },
+    {
+        "slug": "education",
+        "nom": "Éducation",
+        "icone": "lucide-graduation-cap",
+        "description": "École, enseignement supérieur, recherche.",
+        "ordre": 4
+    },
+    {
+        "slug": "securite-justice",
+        "nom": "Sécurité & justice",
+        "icone": "lucide-scale",
+        "description": "Police, justice, prisons, délinquance.",
+        "ordre": 5
+    },
+    {
+        "slug": "immigration",
+        "nom": "Immigration",
+        "icone": "lucide-globe",
+        "description": "Politique migratoire, asile, intégration.",
+        "ordre": 6
+    },
+    {
+        "slug": "ecologie-energie",
+        "nom": "Écologie & énergie",
+        "icone": "lucide-leaf",
+        "description": "Climat, énergie, biodiversité, transition.",
+        "ordre": 7
+    },
+    {
+        "slug": "logement",
+        "nom": "Logement",
+        "icone": "lucide-home",
+        "description": "Accès au logement, construction, urbanisme.",
+        "ordre": 8
+    },
+    {
+        "slug": "institutions",
+        "nom": "Institutions & démocratie",
+        "icone": "lucide-landmark",
+        "description": "Constitution, référendum, décentralisation.",
+        "ordre": 9
+    },
+    {
+        "slug": "europe-international",
+        "nom": "Europe & international",
+        "icone": "lucide-flag",
+        "description": "UE, diplomatie, relations internationales.",
+        "ordre": 10
+    },
+    {
+        "slug": "defense",
+        "nom": "Défense",
+        "icone": "lucide-shield",
+        "description": "Armées, dissuasion, industrie de défense.",
+        "ordre": 11
+    },
+    {
+        "slug": "fiscalite-budget",
+        "nom": "Fiscalité & budget",
+        "icone": "lucide-calculator",
+        "description": "Impôts, dépenses publiques, dette, déficit.",
+        "ordre": 12
+    },
+    {
+        "slug": "numerique",
+        "nom": "Numérique",
+        "icone": "lucide-cpu",
+        "description": "IA, souveraineté numérique, données.",
+        "ordre": 13
+    },
+    {
+        "slug": "agriculture",
+        "nom": "Agriculture",
+        "icone": "lucide-wheat",
+        "description": "Agriculture, alimentation, ruralité, pêche.",
+        "ordre": 14
+    },
+    {
+        "slug": "culture",
+        "nom": "Culture",
+        "icone": "lucide-palette",
+        "description": "Culture, patrimoine, médias, audiovisuel.",
+        "ordre": 15
+    }
+]

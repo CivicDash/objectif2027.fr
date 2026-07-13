@@ -1,0 +1,89 @@
+{
+    "slug": "jean-luc-melenchon",
+    "nom_complet": "M. Jean-Luc Mélenchon",
+    "parti_soutien": "La France insoumise",
+    "nuance": "GAU",
+    "couleur_hex": "#c0392b",
+    "statut_candidature": "declare",
+    "date_declaration": "2026-05-03",
+    "site_campagne_url": "https://melenchon2027.fr",
+    "programme_url_officiel": null,
+    "couverture": {
+        "themes_publies": 0,
+        "themes_exprimes": 12,
+        "themes_total": 15
+    },
+    "etats_par_theme": {
+        "pouvoir-achat": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "travail-retraites": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "sante": {
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "education": {
+            "etat": "non_exprime"
+        },
+        "securite-justice": {
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "immigration": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "ecologie-energie": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "logement": {
+            "etat": "non_exprime"
+        },
+        "institutions": {
+            "etat": "en_traitement",
+            "nb_signaux": 4,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "europe-international": {
+            "etat": "en_traitement",
+            "nb_signaux": 3,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "defense": {
+            "etat": "non_exprime"
+        },
+        "fiscalite-budget": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "numerique": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "agriculture": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        },
+        "culture": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
+        }
+    },
+    "parcours": [],
+    "mesures_par_theme": []
+}

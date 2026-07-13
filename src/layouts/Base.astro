@@ -1,0 +1,75 @@
+---
+import '@/styles/global.css';
+
+export interface Props {
+    title: string;
+    description?: string;
+    ogImage?: string;
+    canonical?: string;
+}
+
+const {
+    title,
+    description = "Comprendre l'élection présidentielle française de 2027 : candidats, programmes, arguments sourcés. Application citoyenne, neutre, sans compte.",
+    ogImage = '/og-default.png',
+    canonical,
+} = Astro.props;
+
+const url = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+const annee = 2027;
+---
+
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={url} />
+        <meta name="theme-color" content="#1e3a8a" />
+        <meta name="robots" content="index, follow" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="Objectif 2027" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+        <meta name="twitter:card" content="summary_large_image" />
+    </head>
+    <body>
+        <a href="#contenu" class="skip-link">Aller au contenu</a>
+
+        <header class="border-b" style="border-color: var(--border)">
+            <div class="mx-auto max-w-content px-4 py-3 flex items-center justify-between">
+                <a href="/" class="font-bold tracking-tight text-lg">Objectif&nbsp;{annee}</a>
+                <nav aria-label="Navigation principale" class="flex items-center gap-4 text-sm">
+                    <a href="/candidats/" class="tap inline-flex items-center hover:text-brand-600">Candidats</a>
+                    <a href="/comparateur/" class="tap inline-flex items-center hover:text-brand-600">Comparateur</a>
+                    <a href="/demarche/" class="tap inline-flex items-center hover:text-brand-600">Démarche</a>
+                </nav>
+            </div>
+        </header>
+
+        <main id="contenu" class="mx-auto max-w-content px-4 py-6">
+            <slot />
+        </main>
+
+        <footer class="mt-12 border-t text-sm" style="border-color: var(--border); color: var(--fg-muted)">
+            <div class="mx-auto max-w-content px-4 py-8 space-y-2">
+                <p>
+                    Données : <strong>CivicDash</strong> / <strong>Civis-Consilium</strong> — sources vérifiées,
+                    licence AGPL-3.0.
+                </p>
+                <p class="flex flex-wrap gap-x-4 gap-y-1">
+                    <a href="/methodologie/" class="hover:underline">Méthodologie</a>
+                    <a href="/mentions-legales/" class="hover:underline">Mentions légales</a>
+                    <a href="https://civicdash.fr" class="hover:underline">La plateforme CivicDash</a>
+                    <a href="https://civis-consilium.eu" class="hover:underline">Signaler une erreur</a>
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

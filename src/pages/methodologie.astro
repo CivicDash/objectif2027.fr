@@ -1,0 +1,47 @@
+---
+import Base from '@/layouts/Base.astro';
+import { THEMES } from '@/lib/data';
+---
+
+<Base title="Méthodologie — Objectif 2027" description="Comment nous choisissons les thèmes, traitons les candidats à égalité, distinguons trois états d'expression, et construisons le quiz d'affinité.">
+    <div class="py-4 space-y-6 max-w-2xl">
+        <h1 class="text-2xl font-bold">Méthodologie</h1>
+
+        <section>
+            <h2 class="text-lg font-semibold">Une grille de thèmes neutre</h2>
+            <p class="text-sm">
+                Les {THEMES.length} thèmes ne dérivent d'<em>aucun</em> programme de candidat — cela fausserait la lecture
+                de tous les autres. Ils s'appuient sur des nomenclatures publiques : missions du budget de l'État (LOLF),
+                classification COFOG (Eurostat), périmètres ministériels, sections du CESE.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold">Trois états d'expression, jamais confondus</h2>
+            <ul class="list-disc pl-5 space-y-1 text-sm">
+                <li><strong>Ne s'est pas exprimé</strong> — aucune prise de position repérée sur ce thème.</li>
+                <li><strong>En cours de traitement</strong> — s'est exprimé (source liée), en cours de vérification par notre équipe.</li>
+                <li><strong>Publié</strong> — mesures vérifiées, sourcées et affichées.</li>
+            </ul>
+            <p class="text-sm mt-2">Confondre les deux premiers ferait dire au site quelque chose de faux.</p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold">Symétrie d'affichage</h2>
+            <p class="text-sm">
+                Le comparateur affiche pour chaque candidat un nombre comparable de mesures phares par thème (mises en avant
+                par le candidat lui-même). La richesse réelle d'un programme reste visible via l'indicateur de couverture,
+                sans jamais en tirer un score de qualité.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold">Quiz d'affinité</h2>
+            <p class="text-sm">
+                Le calcul est fait <strong>entièrement dans votre navigateur</strong> : aucune réponse n'est envoyée ni
+                conservée (les opinions politiques sont des données sensibles). Les questions sont dérivées mécaniquement
+                des mesures validées ; un candidat non exprimé sur un thème est exclu du calcul, jamais compté en désaccord.
+            </p>
+        </section>
+    </div>
+</Base>

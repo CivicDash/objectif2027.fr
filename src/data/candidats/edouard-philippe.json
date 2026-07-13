@@ -1,0 +1,79 @@
+{
+    "slug": "edouard-philippe",
+    "nom_complet": "M. Édouard Philippe",
+    "parti_soutien": "Horizons",
+    "nuance": "CEN",
+    "couleur_hex": "#2563eb",
+    "statut_candidature": "declare",
+    "date_declaration": "2024-09-01",
+    "site_campagne_url": "https://edouardphilippe.fr",
+    "programme_url_officiel": null,
+    "couverture": {
+        "themes_publies": 0,
+        "themes_exprimes": 7,
+        "themes_total": 15
+    },
+    "etats_par_theme": {
+        "pouvoir-achat": {
+            "etat": "non_exprime"
+        },
+        "travail-retraites": {
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "sante": {
+            "etat": "non_exprime"
+        },
+        "education": {
+            "etat": "en_traitement",
+            "nb_signaux": 5,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "securite-justice": {
+            "etat": "en_traitement",
+            "nb_signaux": 4,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "immigration": {
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "ecologie-energie": {
+            "etat": "en_traitement",
+            "nb_signaux": 4,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "logement": {
+            "etat": "non_exprime"
+        },
+        "institutions": {
+            "etat": "non_exprime"
+        },
+        "europe-international": {
+            "etat": "non_exprime"
+        },
+        "defense": {
+            "etat": "non_exprime"
+        },
+        "fiscalite-budget": {
+            "etat": "en_traitement",
+            "nb_signaux": 3,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "numerique": {
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "A_COMPLETER_URL_YOUTUBE"
+        },
+        "agriculture": {
+            "etat": "non_exprime"
+        },
+        "culture": {
+            "etat": "non_exprime"
+        }
+    },
+    "parcours": [],
+    "mesures_par_theme": []
+}
