@@ -1,0 +1,41 @@
+[
+    {
+        "slug": "edouard-philippe",
+        "nom_complet": "M. Édouard Philippe",
+        "parti_soutien": "Horizons",
+        "nuance": "CEN",
+        "couleur_hex": "#2563eb",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 7,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "gabriel-attal",
+        "nom_complet": "M. Gabriel Attal",
+        "parti_soutien": "Renaissance",
+        "nuance": "CEN",
+        "couleur_hex": "#f59e0b",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 7,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "jean-luc-melenchon",
+        "nom_complet": "M. Jean-Luc Mélenchon",
+        "parti_soutien": "La France insoumise",
+        "nuance": "GAU",
+        "couleur_hex": "#c0392b",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 12,
+            "themes_total": 15
+        }
+    }
+]

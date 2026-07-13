@@ -1,0 +1,46 @@
+---
+import Base from '@/layouts/Base.astro';
+import { THEMES, CANDIDATS_DETAIL, type EtatTheme } from '@/lib/data';
+
+const candidats = Object.values(CANDIDATS_DETAIL);
+
+// Pour chaque thème : combien de candidats l'ont abordé (publié + en traitement).
+function couverture(slug: string) {
+    let publie = 0, traitement = 0;
+    for (const c of candidats as any[]) {
+        const e = (c.etats_par_theme?.[slug]?.etat ?? 'non_exprime') as EtatTheme;
+        if (e === 'publie') publie++;
+        else if (e === 'en_traitement') traitement++;
+    }
+    return { publie, traitement, total: candidats.length };
+}
+---
+
+<Base title="Les thèmes — Objectif 2027" description="Les 15 thèmes du comparateur présidentiel : une grille neutre issue de nomenclatures publiques (LOLF, COFOG, CESE).">
+    <nav aria-label="Fil d'Ariane" class="text-sm py-2" style="color: var(--fg-muted)">
+        <a href="/" class="text-brand-600 hover:underline">Accueil</a> · Thèmes
+    </nav>
+    <h1 class="text-2xl font-bold">Les {THEMES.length} thèmes</h1>
+    <p class="text-sm mt-1 mb-4" style="color: var(--fg-muted)">
+        Grille neutre, identique pour tous les candidats — jamais dérivée d'un programme (voir
+        <a href="/methodologie/" class="text-brand-600 hover:underline">méthodologie</a>).
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {THEMES.map((t) => {
+            const cov = couverture(t.slug);
+            return (
+                <a href={`/themes/${t.slug}/`} class="rounded-card border p-4 hover:border-brand-400" style="border-color: var(--border)">
+                    <h2 class="font-semibold">{t.nom}</h2>
+                    {t.description && <p class="text-xs mt-1" style="color: var(--fg-muted)">{t.description}</p>}
+                    <p class="text-xs mt-2" style="color: var(--fg-muted)">
+                        {cov.publie > 0 && <span style="color:#047857">{cov.publie} publié(s)</span>}
+                        {cov.publie > 0 && cov.traitement > 0 && ' · '}
+                        {cov.traitement > 0 && <span style="color:#b45309">{cov.traitement} en cours</span>}
+                        {cov.publie === 0 && cov.traitement === 0 && 'Aucune expression pour le moment'}
+                    </p>
+                </a>
+            );
+        })}
+    </div>
+</Base>

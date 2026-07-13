@@ -49,14 +49,37 @@ const annee = 2027;
                     <a href="/candidats/" class="tap inline-flex items-center hover:text-brand-600">Candidats</a>
                     <a href="/comparateur/" class="tap inline-flex items-center hover:text-brand-600">Comparateur</a>
                     <a href="/quiz/" class="tap inline-flex items-center hover:text-brand-600">Quiz</a>
+                    <a href="/themes/" class="tap inline-flex items-center hover:text-brand-600">Thèmes</a>
                     <a href="/demarche/" class="tap inline-flex items-center hover:text-brand-600">Démarche</a>
                 </nav>
             </div>
         </header>
 
-        <main id="contenu" class="mx-auto max-w-content px-4 py-6">
+        <main id="contenu" class="mx-auto max-w-content px-4 py-6 pb-24 md:pb-6">
             <slot />
         </main>
+
+        <!-- Tab bar mobile fixe (navigation au pouce) — masquée en desktop -->
+        <nav aria-label="Navigation mobile"
+             class="md:hidden fixed bottom-0 inset-x-0 z-20 border-t flex"
+             style="background: var(--bg); border-color: var(--border); padding-bottom: env(safe-area-inset-bottom)">
+            <a href="/candidats/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                Candidats
+            </a>
+            <a href="/comparateur/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+                Comparer
+            </a>
+            <a href="/quiz/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4 2.8c-.8.4-1 .9-1 1.7M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+                Quiz
+            </a>
+            <a href="/themes/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Thèmes
+            </a>
+        </nav>
 
         <footer class="mt-12 border-t text-sm" style="border-color: var(--border); color: var(--fg-muted)">
             <div class="mx-auto max-w-content px-4 py-8 space-y-2">
@@ -65,8 +88,11 @@ const annee = 2027;
                     licence AGPL-3.0.
                 </p>
                 <p class="flex flex-wrap gap-x-4 gap-y-1">
+                    <a href="/recherche/" class="hover:underline">Recherche</a>
                     <a href="/methodologie/" class="hover:underline">Méthodologie</a>
                     <a href="/mentions-legales/" class="hover:underline">Mentions légales</a>
+                    <a href="/data/candidats.json" class="hover:underline">Données ouvertes</a>
+                    <a href="https://civis-consilium.eu" class="hover:underline">À propos de l'association</a>
                     <a href="https://civicdash.fr" class="hover:underline">La plateforme CivicDash</a>
                     <a href="https://civis-consilium.eu" class="hover:underline">Signaler une erreur</a>
                 </p>

@@ -1,0 +1,30 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="Recherche — Objectif 2027" description="Rechercher un candidat, une mesure, un thème sur Objectif 2027.">
+    <h1 class="text-2xl font-bold py-4">Recherche</h1>
+    <p class="text-sm mb-4" style="color: var(--fg-muted)">
+        Recherche instantanée, entièrement dans votre navigateur (aucune requête envoyée).
+    </p>
+
+    <div id="recherche"></div>
+
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+    <script src="/pagefind/pagefind-ui.js" is:inline></script>
+    <script is:inline>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.PagefindUI) {
+                new window.PagefindUI({
+                    element: '#recherche',
+                    showSubResults: true,
+                    showImages: false,
+                    translations: {
+                        placeholder: 'Rechercher un candidat, une mesure, un thème…',
+                        zero_results: 'Aucun résultat pour « [SEARCH_TERM] »',
+                    },
+                });
+            }
+        });
+    </script>
+</Base>
