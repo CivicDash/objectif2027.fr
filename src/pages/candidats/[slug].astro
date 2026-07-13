@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { CANDIDATS_DETAIL, THEMES, type EtatTheme } from '@/lib/data';
+import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, type EtatTheme } from '@/lib/data';
 
 export function getStaticPaths() {
     return Object.values(CANDIDATS_DETAIL).map((c: any) => ({ params: { slug: c.slug }, props: { candidat: c } }));
@@ -9,6 +9,7 @@ export function getStaticPaths() {
 const { candidat: c } = Astro.props;
 const couleur = c.couleur_hex ?? '#64748b';
 const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
+const parrainages = badgeParrainages(c.statut_candidature);
 
 const ancres = [
     { id: 'programme', label: 'Programme' },
@@ -31,8 +32,10 @@ function etatDe(slug: string): EtatTheme {
         <div>
             <h1 class="text-2xl font-extrabold leading-tight">{nom}</h1>
             <p style="color: var(--fg-muted)">{c.parti_soutien}</p>
+            {c.slogan && <p class="italic mt-0.5" style="color: var(--fg-muted)">« {c.slogan} »</p>}
             <div class="mt-2 flex flex-wrap gap-2 text-xs">
                 <span class="px-2 py-1 rounded-control text-white" style={`background:${couleur}`}>{c.nuance}</span>
+                <span class="px-2 py-1 rounded-control" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
                 <span class="px-2 py-1 rounded-control" style="background: var(--bg-soft)">
                     Exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes
                 </span>
@@ -120,9 +123,9 @@ function etatDe(slug: string): EtatTheme {
     <section id="affaires" class="py-6">
         <h2 class="text-xl font-bold mb-3">Affaires judiciaires</h2>
         <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
-            Aucune affaire judiciaire recensée à ce jour dans notre base. Une absence d'information n'est pas une
-            preuve d'absence d'affaire ; toute information éventuelle serait sourcée et modérée humainement, avec
-            présomption d'innocence.
+            Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification : {META.genere_le}.
+            Une absence d'information n'est pas une preuve d'absence d'affaire ; toute information éventuelle serait
+            sourcée et modérée humainement, avec présomption d'innocence.
         </div>
     </section>
 

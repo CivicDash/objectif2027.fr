@@ -1,10 +1,12 @@
 ---
 import type { CandidatIndex } from '@/lib/data';
+import { badgeParrainages } from '@/lib/data';
 
 export interface Props {
     candidat: CandidatIndex;
 }
 const { candidat: c } = Astro.props;
+const parrainages = badgeParrainages(c.statut_candidature);
 
 const initiales = c.nom_complet
     .replace(/^M\.\s*|^Mme\s*/, '')
@@ -30,12 +32,16 @@ const statutLabel: Record<string, string> = {
         <div class="min-w-0">
             <h3 class="font-semibold leading-tight truncate">{c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}</h3>
             <p class="text-sm truncate" style="color: var(--fg-muted)">{c.parti_soutien}</p>
+            {c.slogan && <p class="text-sm italic truncate" style="color: var(--fg-muted)">« {c.slogan} »</p>}
         </div>
     </div>
 
     <div class="flex flex-wrap gap-2 text-xs">
         <span class="px-2 py-1 rounded-control" style="background: color-mix(in srgb, var(--etat-publie, #059669) 12%, transparent); color: #047857">
             {statutLabel[c.statut_candidature] ?? c.statut_candidature}
+        </span>
+        <span class="px-2 py-1 rounded-control" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>
+            {parrainages.texte}
         </span>
         <span class="px-2 py-1 rounded-control" style="background: var(--bg-soft); color: var(--fg-muted)">
             S'est exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes

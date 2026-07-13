@@ -1,6 +1,7 @@
 {
     "slug": "edouard-philippe",
     "nom_complet": "M. Édouard Philippe",
+    "slogan": "Croire en nous",
     "parti_soutien": "Horizons",
     "nuance": "CEN",
     "couleur_hex": "#2563eb",
@@ -20,7 +21,7 @@
         "travail-retraites": {
             "etat": "en_traitement",
             "nb_signaux": 2,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "sante": {
             "etat": "non_exprime"
@@ -28,22 +29,22 @@
         "education": {
             "etat": "en_traitement",
             "nb_signaux": 5,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "securite-justice": {
             "etat": "en_traitement",
             "nb_signaux": 4,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "immigration": {
             "etat": "en_traitement",
             "nb_signaux": 2,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "ecologie-energie": {
             "etat": "en_traitement",
             "nb_signaux": 4,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "logement": {
             "etat": "non_exprime"
@@ -60,12 +61,12 @@
         "fiscalite-budget": {
             "etat": "en_traitement",
             "nb_signaux": 3,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "numerique": {
             "etat": "en_traitement",
             "nb_signaux": 1,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
         },
         "agriculture": {
             "etat": "non_exprime"

@@ -1,6 +1,7 @@
 {
     "slug": "gabriel-attal",
     "nom_complet": "M. Gabriel Attal",
+    "slogan": "La force d'agir",
     "parti_soutien": "Renaissance",
     "nuance": "CEN",
     "couleur_hex": "#f59e0b",
@@ -20,7 +21,7 @@
         "travail-retraites": {
             "etat": "en_traitement",
             "nb_signaux": 7,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "sante": {
             "etat": "non_exprime"
@@ -28,7 +29,7 @@
         "education": {
             "etat": "en_traitement",
             "nb_signaux": 5,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "securite-justice": {
             "etat": "non_exprime"
@@ -36,12 +37,12 @@
         "immigration": {
             "etat": "en_traitement",
             "nb_signaux": 3,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "ecologie-energie": {
             "etat": "en_traitement",
             "nb_signaux": 1,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "logement": {
             "etat": "non_exprime"
@@ -49,7 +50,7 @@
         "institutions": {
             "etat": "en_traitement",
             "nb_signaux": 3,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "europe-international": {
             "etat": "non_exprime"
@@ -60,12 +61,12 @@
         "fiscalite-budget": {
             "etat": "en_traitement",
             "nb_signaux": 2,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "numerique": {
             "etat": "en_traitement",
             "nb_signaux": 1,
-            "source_url": "A_COMPLETER_URL_YOUTUBE"
+            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
         },
         "agriculture": {
             "etat": "non_exprime"
