@@ -1,0 +1,27 @@
+---
+import Base from '@/layouts/Base.astro';
+import Quiz from '@/islands/Quiz.vue';
+import { CANDIDATS_DETAIL, THEMES } from '@/lib/data';
+
+const candidats = Object.values(CANDIDATS_DETAIL).map((c: any) => ({
+    slug: c.slug,
+    nom_complet: c.nom_complet,
+    couleur_hex: c.couleur_hex,
+    mesures_par_theme: c.mesures_par_theme,
+    etats_par_theme: c.etats_par_theme,
+}));
+---
+
+<Base title="Avec qui êtes-vous en phase ? — Objectif 2027" description="Un quiz d'affinité, calculé entièrement dans votre navigateur : aucune réponse n'est envoyée ni conservée.">
+    <h1 class="text-2xl font-bold py-4">Avec qui êtes-vous en phase&nbsp;?</h1>
+    <p class="text-sm mb-4" style="color: var(--fg-muted)">
+        Répondez à quelques mesures : nous calculons votre proximité <strong>par thème</strong>. La méthode est
+        détaillée sur la page <a href="/methodologie/" class="text-brand-600 hover:underline">Méthodologie</a>.
+    </p>
+    <Quiz client:load candidats={candidats} themes={THEMES} />
+    <noscript>
+        <p class="mt-4 text-sm rounded-card border p-4" style="border-color: var(--border)">
+            Le quiz nécessite JavaScript (et s'exécute uniquement chez vous, sans rien envoyer).
+        </p>
+    </noscript>
+</Base>

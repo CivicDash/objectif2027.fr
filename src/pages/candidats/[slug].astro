@@ -21,7 +21,7 @@ function etatDe(slug: string): EtatTheme {
 }
 ---
 
-<Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`}>
+<Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`}>
     <!-- En-tête -->
     <header class="py-4 flex items-start gap-4">
         <span class="grid place-items-center rounded-full text-white text-xl font-bold shrink-0"

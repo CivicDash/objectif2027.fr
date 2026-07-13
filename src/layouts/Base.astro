@@ -11,7 +11,7 @@ export interface Props {
 const {
     title,
     description = "Comprendre l'élection présidentielle française de 2027 : candidats, programmes, arguments sourcés. Application citoyenne, neutre, sans compte.",
-    ogImage = '/og-default.png',
+    ogImage = '/og/default.png',
     canonical,
 } = Astro.props;
 
@@ -48,6 +48,7 @@ const annee = 2027;
                 <nav aria-label="Navigation principale" class="flex items-center gap-4 text-sm">
                     <a href="/candidats/" class="tap inline-flex items-center hover:text-brand-600">Candidats</a>
                     <a href="/comparateur/" class="tap inline-flex items-center hover:text-brand-600">Comparateur</a>
+                    <a href="/quiz/" class="tap inline-flex items-center hover:text-brand-600">Quiz</a>
                     <a href="/demarche/" class="tap inline-flex items-center hover:text-brand-600">Démarche</a>
                 </nav>
             </div>
