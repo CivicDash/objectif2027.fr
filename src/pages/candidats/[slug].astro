@@ -11,8 +11,10 @@ const couleur = c.couleur_hex ?? '#64748b';
 const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
 const parrainages = badgeParrainages(c.statut_candidature);
 
+const prisesDeParole = c.prises_de_parole ?? [];
 const ancres = [
     { id: 'programme', label: 'Programme' },
+    ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
     { id: 'parcours', label: 'Parcours' },
     { id: 'affaires', label: 'Affaires' },
 ];
@@ -98,6 +100,43 @@ function etatDe(slug: string): EtatTheme {
             })}
         </div>
     </section>
+
+    <!-- Prises de parole : citations vérifiables à la source (différenciateur) -->
+    {prisesDeParole.length > 0 && (
+        <section id="prises-de-parole" class="py-6">
+            <h2 class="text-xl font-bold mb-1">Prises de parole</h2>
+            <p class="text-sm mb-4" style="color: var(--fg-muted)">
+                Propos repérés dans les meetings et interviews, en cours de traitement par notre équipe.
+                <strong>Chaque citation est vérifiable à la source en un clic.</strong>
+            </p>
+            <div class="space-y-4">
+                {prisesDeParole.map((doc: any) => (
+                    <div class="rounded-card border p-4" style="border-color: var(--border)">
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <h3 class="font-semibold text-sm">
+                                {doc.url ? <a href={doc.url} rel="nofollow noopener" class="hover:text-brand-600">{doc.titre} ↗</a> : doc.titre}
+                            </h3>
+                            <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">{doc.type}{doc.date ? ` · ${doc.date}` : ''}</span>
+                        </div>
+                        <ul class="space-y-3">
+                            {doc.citations.map((cit: any) => (
+                                <li class="text-sm border-l-2 pl-3" style="border-color: var(--border)">
+                                    <p class="italic">« {cit.citation} »</p>
+                                    {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
+                                    {cit.verifier_url && (
+                                        <a href={cit.verifier_url} rel="nofollow noopener"
+                                           class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
+                                            ▶ Vérifier{cit.timecode ? ` à ${cit.timecode}` : ' à la source'}
+                                        </a>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </section>
+    )}
 
     <!-- Parcours -->
     <section id="parcours" class="py-6">

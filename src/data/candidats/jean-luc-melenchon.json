@@ -86,5 +86,187 @@
         }
     },
     "parcours": [],
-    "mesures_par_theme": []
+    "mesures_par_theme": [],
+    "prises_de_parole": [
+        {
+            "titre": "Meeting national de lancement — discours de J.-L. Mélenchon, place Victor-Hugo, Saint-Denis (07/06/2026)",
+            "type": "communique",
+            "date": null,
+            "url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+            "nb": 19,
+            "citations": [
+                {
+                    "theme": "culture",
+                    "resume": "Première loi du mandat : démembrement des trusts médiatico-culturels détenus par les milliardaires et transfert du pouvoir aux usagers sous forme de propriété collective.",
+                    "citation": "une loi pour démembrer ces trusts médiatico-culturels et rendre le pouvoir aux usagers sous la …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "pouvoir-achat",
+                    "resume": "Porter le SMIC à 1 700 euros.",
+                    "citation": "Le Smic passera à 1 700 euros",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "sante",
+                    "resume": "Créer une « Sécurité sociale intégrale » gérée par ses cotisants, avec extension du principe de la Sécu à d'autres domaines de l'existence.",
+                    "citation": "nous créerons une Sécurité sociale intégrale, gérée par ses cotisants",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "travail-retraites",
+                    "resume": "Abroger la réforme des retraites à 64 ans, puis revenir à la retraite à 60 ans.",
+                    "citation": "l’abrogation de la réforme des retraites à 64 ans puis le retour à 60 ans",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "fiscalite-budget",
+                    "resume": "Revenir sur la TVA sociale et réorganiser les ressources de la Sécurité sociale.",
+                    "citation": "nous en reviendrons à autre chose que la TVA sociale",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "europe-international",
+                    "resume": "Refus des nouveaux accords de libre-échange (Mercosur, Inde) et de l'économie de guerre ; les traités européens jugés obsolètes.",
+                    "citation": "Nous refusons les nouveaux accords de libre-échange comme avec Mercosur ou avec l’Inde",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "europe-international",
+                    "resume": "Moratoire sur les directives européennes contraires au mandat donné par le peuple ; blocage en France du statut de travailleur détaché.",
+                    "citation": "nous bloquerons l’accès en France au statut de travailleur détaché",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "agriculture",
+                    "resume": "Blocage des importations agricoles traitées avec des produits interdits en France.",
+                    "citation": "nous le ferons aussi pour toutes les importations agricoles traitées avec des produits interdits en …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Réponse au chaos écologique : planification écologique et régionalisation écologique.",
+                    "citation": "nous répondons avec la planification et la régionalisation écologiques",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "europe-international",
+                    "resume": "Politique internationale : tribunal international pour les génocidaires et criminels de guerre, non-alignement, nouvelle diplomatie, renforcement du droit international (mer, espace, numérique).",
+                    "citation": "le tribunal international pour les génocidaires et les criminels de guerre ; le non alignement …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "sante",
+                    "resume": "Changer le modèle agricole pour permettre une alimentation saine et interdire l'usage des polluants cancérigènes (glyphosate cité).",
+                    "citation": "nous changerons le modèle agricole, d’abord pour permettre à tous de manger sainement. Nous interdirons …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "numerique",
+                    "resume": "« Décolonisation numérique » vis-à-vis des États-Unis : souveraineté complète sur les données, supercalculateurs, câbles et systèmes d'IA ; soutien à l'ordinateur quantique.",
+                    "citation": "la souveraineté complète du peuple de France sur le stockage des données, sur les supercalculateurs, …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Créer un office pour l'autonomie des jeunes remplaçant les 28 administrations dédiées.",
+                    "citation": "l’office pour l’autonomie des jeunes, qui remplacera les 28 administrations impuissantes qui lui sont dédiées",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "immigration",
+                    "resume": "Défense du droit du sol contre la proposition de suppression portée par le RN.",
+                    "citation": "Né en France ? Français !",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "6e République : Assemblée constituante, souveraineté permanente du peuple, référendum citoyen incluant le référendum révocatoire de tout élu, du conseiller municipal au Président.",
+                    "citation": "le droit au référendum citoyen, dont le référendum révocatoire, permettant de démettre un élu quel …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Écorégions : restructuration des régions autour des grands bassins versants des fleuves, dédiées à la bifurcation écologique et première ligne de la planification.",
+                    "citation": "les régions seront entièrement restructurées autour des grands bassins versants des fleuves",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Outre-mer et Corse : autonomie étendue accompagnée pour la Corse, indépendance pour la Nouvelle-Calédonie-Kanaky, droit complet à l'autonomie pour les autres territoires au rythme choisi par les populations.",
+                    "citation": "Nous accompagnerons spécifiquement la Corse vers l’autonomie étendue que demande ce peuple. Et la Nouvelle-Calédonie-Kanaky …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "securite-justice",
+                    "resume": "Loi de lutte globale contre la pédocriminalité et les féminicides.",
+                    "citation": "une loi de lutte globale contre la pédocriminalité et les féminicides",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "securite-justice",
+                    "resume": "Restructuration complète de la politique de sécurité, de la police et des moyens de lutte contre la criminalité ; refus de la « société de surveillance permanente ».",
+                    "citation": "nous restructurerons de la cave au grenier la politique de sécurité, la police et tous …",
+                    "timecode": "transcription officielle (section correspondante)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/",
+                    "statut": "detecte"
+                }
+            ]
+        }
+    ]
 }
