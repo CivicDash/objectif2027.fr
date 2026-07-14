@@ -1,0 +1,73 @@
+{
+    "slug": "david-lisnard",
+    "nom_complet": "David Lisnard",
+    "slogan": null,
+    "parti_soutien": "Nouvelle Énergie",
+    "nuance": "DR",
+    "couleur_hex": null,
+    "photo": null,
+    "hero_banner": null,
+    "statut_candidature": "declare",
+    "date_declaration": "2026-03-31",
+    "site_campagne_url": null,
+    "programme_url_officiel": null,
+    "couverture": {
+        "themes_publies": 0,
+        "themes_exprimes": 0,
+        "themes_total": 15
+    },
+    "etats_par_theme": {
+        "pouvoir-achat": {
+            "etat": "non_exprime"
+        },
+        "travail-retraites": {
+            "etat": "non_exprime"
+        },
+        "sante": {
+            "etat": "non_exprime"
+        },
+        "education": {
+            "etat": "non_exprime"
+        },
+        "securite-justice": {
+            "etat": "non_exprime"
+        },
+        "immigration": {
+            "etat": "non_exprime"
+        },
+        "ecologie-energie": {
+            "etat": "non_exprime"
+        },
+        "logement": {
+            "etat": "non_exprime"
+        },
+        "institutions": {
+            "etat": "non_exprime"
+        },
+        "europe-international": {
+            "etat": "non_exprime"
+        },
+        "defense": {
+            "etat": "non_exprime"
+        },
+        "fiscalite-budget": {
+            "etat": "non_exprime"
+        },
+        "numerique": {
+            "etat": "non_exprime"
+        },
+        "agriculture": {
+            "etat": "non_exprime"
+        },
+        "culture": {
+            "etat": "non_exprime"
+        }
+    },
+    "parcours": [],
+    "mesures_par_theme": [],
+    "prises_de_parole": [],
+    "affaires": {
+        "publiees": [],
+        "en_verification": false
+    }
+}

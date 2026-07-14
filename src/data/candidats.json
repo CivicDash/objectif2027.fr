@@ -1,5 +1,239 @@
 [
     {
+        "slug": "segolene-royal",
+        "nom_complet": "Mme Ségolène Royal",
+        "parti_soutien": "Parti socialiste",
+        "nuance": "GAU",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "marine-tondelier",
+        "nom_complet": "Marine Tondelier",
+        "parti_soutien": "Les Écologistes",
+        "nuance": "ECO",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "clementine-autain",
+        "nom_complet": "Clémentine Autain",
+        "parti_soutien": "L'Après",
+        "nuance": "GAU",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "lydie-massard",
+        "nom_complet": "Lydie Massard",
+        "parti_soutien": "Union démocratique bretonne",
+        "nuance": "ECO",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "delphine-batho",
+        "nom_complet": "M. Delphine Batho",
+        "parti_soutien": "Génération Écologie",
+        "nuance": "ECO",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "nathalie-arthaud",
+        "nom_complet": "Nathalie Arthaud",
+        "parti_soutien": "Lutte ouvrière",
+        "nuance": "EXG",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "jerome-guedj",
+        "nom_complet": "Jérôme Guedj",
+        "parti_soutien": "Parti socialiste (hors primaire)",
+        "nuance": "GAU",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "karim-bouamrane",
+        "nom_complet": "Karim Bouamrane",
+        "parti_soutien": "Parti socialiste",
+        "nuance": "GAU",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "bruno-retailleau",
+        "nom_complet": "M. Bruno Retailleau",
+        "parti_soutien": "Les Républicains",
+        "nuance": "DR",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "david-lisnard",
+        "nom_complet": "David Lisnard",
+        "parti_soutien": "Nouvelle Énergie",
+        "nuance": "DR",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "xavier-bertrand",
+        "nom_complet": "M. Xavier Bertrand",
+        "parti_soutien": "Nous France",
+        "nuance": "DR",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "marine-le-pen",
+        "nom_complet": "Marine Le Pen",
+        "parti_soutien": "Rassemblement national",
+        "nuance": "EXD",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "nicolas-dupont-aignan",
+        "nom_complet": "Nicolas Dupont-Aignan",
+        "parti_soutien": "Debout la France",
+        "nuance": "DR",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "florian-philippot",
+        "nom_complet": "Florian Philippot",
+        "parti_soutien": "Les Patriotes",
+        "nuance": "EXD",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "francois-asselineau",
+        "nom_complet": "François Asselineau",
+        "parti_soutien": "UPR",
+        "nuance": "DIV",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "clara-egger",
+        "nom_complet": "Clara Egger",
+        "parti_soutien": "Solution démocratique",
+        "nuance": "DIV",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "antoine-mikolajczak",
+        "nom_complet": "Antoine Mikolajczak",
+        "parti_soutien": "Équinoxe",
+        "nuance": "DIV",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "francois-ruffin",
+        "nom_complet": "François Ruffin",
+        "parti_soutien": "Debout !",
+        "nuance": "GAU",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
         "slug": "edouard-philippe",
         "nom_complet": "M. Édouard Philippe",
         "parti_soutien": "Horizons",
