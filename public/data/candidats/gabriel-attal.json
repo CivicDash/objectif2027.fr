@@ -21,38 +21,33 @@
             "etat": "non_exprime"
         },
         "travail-retraites": {
-            "etat": "en_traitement",
-            "nb_signaux": 7,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 7
         },
         "sante": {
             "etat": "non_exprime"
         },
         "education": {
-            "etat": "en_traitement",
-            "nb_signaux": 5,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 5
         },
         "securite-justice": {
             "etat": "non_exprime"
         },
         "immigration": {
-            "etat": "en_traitement",
-            "nb_signaux": 3,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 3
         },
         "ecologie-energie": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "logement": {
             "etat": "non_exprime"
         },
         "institutions": {
-            "etat": "en_traitement",
-            "nb_signaux": 3,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 3
         },
         "europe-international": {
             "etat": "non_exprime"
@@ -61,14 +56,12 @@
             "etat": "non_exprime"
         },
         "fiscalite-budget": {
-            "etat": "en_traitement",
-            "nb_signaux": 2,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 2
         },
         "numerique": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "agriculture": {
             "etat": "non_exprime"
@@ -181,6 +174,154 @@
         }
     ],
     "mesures_par_theme": [],
+    "mesures_relevees_par_theme": {
+        "travail-retraites": [
+            {
+                "titre": "Confier la gestion de l'intégralité du système de retraites aux partenaires sociaux, avec obligation d'équilibre (sur le modèle des complémentaires du privé).",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Chiffrage avancé à l'appui de la stratégie salaires : avec la trajectoire de productivité américaine sur 20 ans, le salaire médian serait de 3 300 € nets au lieu de 2 200 €. À fact-checker (méthodologie non citée).",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "« Droit au brut » : baisser les cotisations salariales pour rapprocher le salaire net du brut.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Corollaire assumé du droit au brut : transférer le financement des dépenses sociales hors des cotisations pesant sur les actifs (modalités non précisées).",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Réformer le code du travail pour le réduire à une « constitution du travail » (grands principes), le reste renvoyé au dialogue social.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Réforme systémique des retraites : suppression de l'âge légal de départ au profit de la seule durée de cotisation, avec protection des carrières hachées.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Introduction d'une part de capitalisation : 1 000 € versés par l'État à la naissance de chaque enfant sur un compte bloqué, abondable par la famille avec défiscalisation, débloqué à la retraite.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "fiscalite-budget": [
+            {
+                "titre": "Objectif budgétaire : résorber le déficit public en 10 ans au plus tard, en endiguant la progression des dépenses sociales.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Bilan revendiqué : 10 Md€ de dépenses de l'État coupées en cours d'année à Matignon ; baisse des dépenses de l'État en 2024 attribuée à l'INSEE. À fact-checker (référence exacte INSEE).",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "ecologie-energie": [
+            {
+                "titre": "Réduire de moitié les émissions de gaz à effet de serre en 10 ans, en investissant simultanément dans le nucléaire et les renouvelables.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "numerique": [
+            {
+                "titre": "Faire de la France la première puissance européenne de l'IA : formation massive, attraction des chercheurs, investissements calcul/données/infrastructures/semi-conducteurs, IA « de confiance ».",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "institutions": [
+            {
+                "titre": "Référendums réguliers pendant le mandat.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Décentralisation : transférer aux territoires des compétences accompagnées des moyens de les financer.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Promesse cadre du projet : redevenir la première puissance d'Europe en 10 ans.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "immigration": [
+            {
+                "titre": "Ligne générale : « accueillir moins pour accueillir mieux », rejet simultané de l'immigration zéro et des « portes grandes ouvertes ».",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Quotas annuels d'immigration de travail votés par le Parlement sur proposition des partenaires sociaux.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Immigration de travail sélective via un système à points inspiré du Canada (offre d'emploi, logement, adhésion aux valeurs).",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "education": [
+            {
+                "titre": "Réaffecter les moyens dégagés par la baisse démographique (1,7 M d'élèves en moins d'ici 10 ans) à la rémunération des professeurs et au recrutement/paie des AESH.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Objectif : ramener la France dans le haut du classement PISA en 10 ans.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Rétablir dès le début du mandat les mesures du « choc des savoirs » abandonnées depuis la dissolution.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Aller au bout de l'interdiction des réseaux sociaux pour les moins de 15 ans.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Utiliser la baisse démographique pour réduire la taille des classes : moins de 20 élèves par classe en primaire.",
+                "source_url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ]
+    },
     "prises_de_parole": [
         {
             "titre": "EN DIRECT — La force d'agir, grand meeting de Gabriel Attal à Paris (30/05/2026)",
@@ -189,6 +330,24 @@
             "url": "https://www.youtube.com/watch?v=yIBtu7BndAE",
             "nb": 22,
             "citations": [
+                {
+                    "theme": "education",
+                    "resume": "Réaffecter les moyens dégagés par la baisse démographique (1,7 M d'élèves en moins d'ici 10 ans) à la rémunération des professeurs et au recrutement/paie des AESH.",
+                    "citation": "Ces moyens supplémentaires qui seront dégagés par cette baisse démographique devront aussi servir à mieux …",
+                    "timecode": "01:13",
+                    "timestamp_s": 4380,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Utiliser la baisse démographique pour réduire la taille des classes : moins de 20 élèves par classe en primaire.",
+                    "citation": "Et en primaire, moins de 20 élèves par classe comme dans les meilleurs systèmes éducatifs …",
+                    "timecode": "01:13",
+                    "timestamp_s": 4380,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
+                    "statut": "rattachee"
+                },
                 {
                     "theme": "travail-retraites",
                     "resume": "Réformer le code du travail pour le réduire à une « constitution du travail » (grands principes), le reste renvoyé au dialogue social.",
@@ -223,15 +382,6 @@
                     "timecode": "01:14",
                     "timestamp_s": 4440,
                     "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4440s",
-                    "statut": "rattachee"
-                },
-                {
-                    "theme": "education",
-                    "resume": "Utiliser la baisse démographique pour réduire la taille des classes : moins de 20 élèves par classe en primaire.",
-                    "citation": "Et en primaire, moins de 20 élèves par classe comme dans les meilleurs systèmes éducatifs …",
-                    "timecode": "01:13",
-                    "timestamp_s": 4380,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
                     "statut": "rattachee"
                 },
                 {
@@ -376,15 +526,6 @@
                     "timecode": "01:12",
                     "timestamp_s": 4320,
                     "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4320s",
-                    "statut": "rattachee"
-                },
-                {
-                    "theme": "education",
-                    "resume": "Réaffecter les moyens dégagés par la baisse démographique (1,7 M d'élèves en moins d'ici 10 ans) à la rémunération des professeurs et au recrutement/paie des AESH.",
-                    "citation": "Ces moyens supplémentaires qui seront dégagés par cette baisse démographique devront aussi servir à mieux …",
-                    "timecode": "01:13",
-                    "timestamp_s": 4380,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
                     "statut": "rattachee"
                 }
             ]

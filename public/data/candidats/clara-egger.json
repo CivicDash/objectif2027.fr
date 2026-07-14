@@ -65,6 +65,7 @@
     },
     "parcours": [],
     "mesures_par_theme": [],
+    "mesures_relevees_par_theme": [],
     "prises_de_parole": [],
     "affaires": {
         "publiees": [],

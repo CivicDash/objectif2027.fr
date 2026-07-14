@@ -21,32 +21,27 @@
             "etat": "non_exprime"
         },
         "travail-retraites": {
-            "etat": "en_traitement",
-            "nb_signaux": 2,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 2
         },
         "sante": {
             "etat": "non_exprime"
         },
         "education": {
-            "etat": "en_traitement",
-            "nb_signaux": 5,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 5
         },
         "securite-justice": {
-            "etat": "en_traitement",
-            "nb_signaux": 4,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 4
         },
         "immigration": {
-            "etat": "en_traitement",
-            "nb_signaux": 2,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 2
         },
         "ecologie-energie": {
-            "etat": "en_traitement",
-            "nb_signaux": 4,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 4
         },
         "logement": {
             "etat": "non_exprime"
@@ -61,14 +56,12 @@
             "etat": "non_exprime"
         },
         "fiscalite-budget": {
-            "etat": "en_traitement",
-            "nb_signaux": 3,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 3
         },
         "numerique": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "agriculture": {
             "etat": "non_exprime"
@@ -523,6 +516,148 @@
         }
     ],
     "mesures_par_theme": [],
+    "mesures_relevees_par_theme": {
+        "ecologie-energie": [
+            {
+                "titre": "Exiger au niveau européen des partenaires commerciaux hors UE les mêmes normes environnementales que celles imposées aux producteurs européens (clauses miroirs).",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Décentraliser la compétence d'adaptation au changement climatique vers les collectivités territoriales.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "« Écologie à impact » : mix décarboné nucléaire + renouvelables, adaptation des villes aux îlots de chaleur, rénovation des logements, hôpitaux et écoles.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Grand plan de fret ferroviaire pour retirer des millions de camions des routes.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "numerique": [
+            {
+                "titre": "Transformer l'État par l'IA : services publics plus rapides, décisions accélérées, agents redéployés du back-office vers le terrain ; infrastructures d'IA souveraines à construire à l'échelle des 27.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "education": [
+            {
+                "titre": "Réforme des rythmes scolaires : journées allégées avec plus de sport et de culture, devoirs faits à l'école, vacances d'été raccourcies.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Réglementer et limiter l'exposition des jeunes enfants aux écrans, tout en formant les plus âgés au bon usage des nouvelles technologies.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Autonomie des établissements scolaires : liberté sur les méthodes, horaires et équipes ; directeurs devenant « patrons d'école » avec pouvoir de choisir et d'évaluer les professeurs, redevables devant des conseils d'école rénovés.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Uniforme et règles de discipline laissés au libre choix de chaque établissement.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Soutien scolaire universel pour chaque élève, combinant assistants IA personnalisés et brigades de professeurs, anciens professeurs et étudiants volontaires.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "securite-justice": [
+            {
+                "titre": "Recruter des magistrats plus âgés, issus de parcours professionnels plus divers.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Donner aux maires un pouvoir de sanction pénale pour les petites infractions du quotidien que la justice n'a pas le temps de traiter.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Rétablir l'autorité du gouvernement sur le parquet : possibilité d'instructions individuelles écrites du garde des Sceaux aux procureurs (versées au dossier), en modifiant la loi Taubira de 2013 ; en contrepartie, moyens étendus au CSM pour prévenir les conflits d'intérêts.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Instaurer des peines de prison très courtes et systématiques dès les premières infractions, sans attendre la récidive.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "immigration": [
+            {
+                "titre": "Faire voter chaque année par le Parlement une liste de pays sûrs afin d'accélérer les procédures d'asile.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Assumer une immigration de travail choisie (étudiants, médecins, aides-soignants, ingénieurs) avec des flux maîtrisés plutôt que subis. Le détail (quotas ?) manque : rupture de captation à cet endroit de la transcription.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "fiscalite-budget": [
+            {
+                "titre": "Aucune hausse d'impôts sur les entreprises.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Baisser les dépenses sociales et supprimer des niches fiscales avant toute hausse d'impôts sur les actifs.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Reprendre la politique de l'offre menée jusqu'en 2020, créditée par le candidat de bons résultats sur l'investissement, le chômage et la croissance.",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "travail-retraites": [
+            {
+                "titre": "Mise à contribution accrue des retraités pour le financement du système social (modalités non précisées).",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Allongement de la durée de travail pour les cadres et employés des secteurs public et privé. Aucun âge légal cible n'est donné dans ce discours (contrairement à ses déclarations antérieures — voir angles de contre-argumentaire).",
+                "source_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ]
+    },
     "prises_de_parole": [
         {
             "titre": "INTEGRAL — Philippe, son premier discours de campagne (meeting Adidas Arena, Paris, 05/07/2026)",
@@ -531,6 +666,15 @@
             "url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
             "nb": 21,
             "citations": [
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Exiger au niveau européen des partenaires commerciaux hors UE les mêmes normes environnementales que celles imposées aux producteurs européens (clauses miroirs).",
+                    "citation": "exiger de nos partenaires commerciaux à l'extérieur de l'Europe les mêmes exigences environnementales",
+                    "timecode": "lignes ~1440-1443",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
+                },
                 {
                     "theme": "fiscalite-budget",
                     "resume": "Aucune hausse d'impôts sur les entreprises.",
@@ -680,15 +824,6 @@
                     "resume": "Soutien scolaire universel pour chaque élève, combinant assistants IA personnalisés et brigades de professeurs, anciens professeurs et étudiants volontaires.",
                     "citation": "que chaque élève de France ait accès à un soutien scolaire universel combinant assistant IA …",
                     "timecode": "lignes ~1290-1293",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "rattachee"
-                },
-                {
-                    "theme": "ecologie-energie",
-                    "resume": "Exiger au niveau européen des partenaires commerciaux hors UE les mêmes normes environnementales que celles imposées aux producteurs européens (clauses miroirs).",
-                    "citation": "exiger de nos partenaires commerciaux à l'extérieur de l'Europe les mêmes exigences environnementales",
-                    "timecode": "lignes ~1440-1443",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
                     "statut": "rattachee"

@@ -7,13 +7,14 @@ const candidats = Object.values(CANDIDATS_DETAIL);
 
 // Pour chaque thème : combien de candidats l'ont abordé (publié + en traitement).
 function couverture(slug: string) {
-    let publie = 0, traitement = 0;
+    let publie = 0, releve = 0, traitement = 0;
     for (const c of candidats as any[]) {
         const e = (c.etats_par_theme?.[slug]?.etat ?? 'non_exprime') as EtatTheme;
         if (e === 'publie') publie++;
+        else if (e === 'relevee') releve++;
         else if (e === 'en_traitement') traitement++;
     }
-    return { publie, traitement, total: candidats.length };
+    return { publie, releve, traitement, total: candidats.length };
 }
 ---
 
@@ -32,11 +33,11 @@ function couverture(slug: string) {
                 <a href={`/themes/${t.slug}/`} class="rounded-card border p-4 hover:border-brand-400" style="border-color: var(--border)">
                     <h2 class="font-semibold">{t.nom}</h2>
                     {t.description && <p class="text-xs mt-1" style="color: var(--fg-muted)">{t.description}</p>}
-                    <p class="text-xs mt-2" style="color: var(--fg-muted)">
+                    <p class="text-xs mt-2 space-x-1" style="color: var(--fg-muted)">
                         {cov.publie > 0 && <span style="color:#047857">{cov.publie} publié(s)</span>}
-                        {cov.publie > 0 && cov.traitement > 0 && ' · '}
+                        {cov.releve > 0 && <span style="color:#1d4ed8">{cov.releve} relevé(s)</span>}
                         {cov.traitement > 0 && <span style="color:#b45309">{cov.traitement} en cours</span>}
-                        {cov.publie === 0 && cov.traitement === 0 && 'Aucune expression pour le moment'}
+                        {cov.publie + cov.releve + cov.traitement === 0 && <span>Aucune expression pour le moment</span>}
                     </p>
                 </a>
             );

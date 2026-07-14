@@ -4,7 +4,7 @@ import themes from '@/data/themes.json';
 import candidatsIndex from '@/data/candidats.json';
 import comparateur from '@/data/comparateur.json';
 
-export type EtatTheme = 'publie' | 'en_traitement' | 'non_exprime';
+export type EtatTheme = 'publie' | 'relevee' | 'en_traitement' | 'non_exprime';
 
 export interface Theme {
     slug: string;

@@ -25,17 +25,23 @@ function etatDe(c: any): EtatTheme {
         {candidats.map((c: any) => {
             const etat = etatDe(c);
             const mesures = c.mesures_par_theme?.[theme.slug] ?? [];
+            const relevees = c.mesures_relevees_par_theme?.[theme.slug] ?? [];
             return (
                 <div class="rounded-card border p-4" style="border-color: var(--border)">
                     <div class="flex items-center justify-between gap-2">
                         <a href={`/candidats/${c.slug}/`} class="font-semibold hover:text-brand-600">{c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}</a>
-                        <span class="text-xs whitespace-nowrap" style={etat === 'publie' ? 'color:#047857' : etat === 'en_traitement' ? 'color:#b45309' : 'color:var(--fg-muted)'}>
-                            {etat === 'publie' ? 'Publié' : etat === 'en_traitement' ? 'En cours de traitement' : 'Non exprimé'}
+                        <span class="text-xs whitespace-nowrap" style={etat === 'publie' ? 'color:#047857' : etat === 'relevee' ? 'color:#1d4ed8' : etat === 'en_traitement' ? 'color:#b45309' : 'color:var(--fg-muted)'}>
+                            {etat === 'publie' ? 'Publié' : etat === 'relevee' ? 'Relevé — argumentaire en cours' : etat === 'en_traitement' ? 'En cours de traitement' : 'Non exprimé'}
                         </span>
                     </div>
                     {etat === 'publie' && (
                         <ul class="mt-2 text-sm list-disc pl-5">
                             {mesures.map((m: any) => <li>{m.titre}</li>)}
+                        </ul>
+                    )}
+                    {etat === 'relevee' && (
+                        <ul class="mt-2 text-sm list-disc pl-5" style="color: var(--fg-muted)">
+                            {relevees.map((m: any) => <li>{m.titre}{m.source_url && <a href={m.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}</li>)}
                         </ul>
                     )}
                 </div>

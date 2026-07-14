@@ -15,8 +15,9 @@ const parrainages = badgeParrainages(c.statut_candidature);
 
 const prisesDeParole = c.prises_de_parole ?? [];
 
-// Regroupement du programme : publiés d'abord, puis en traitement, non-exprimés repliés.
+// Regroupement du programme : publiés, puis relevés, puis en traitement, non-exprimés repliés.
 const themesPublies = THEMES.filter((t) => etatDe(t.slug) === 'publie');
+const themesReleves = THEMES.filter((t) => etatDe(t.slug) === 'relevee');
 const themesTraitement = THEMES.filter((t) => etatDe(t.slug) === 'en_traitement');
 const themesNonExprimes = THEMES.filter((t) => etatDe(t.slug) === 'non_exprime');
 
@@ -89,17 +90,22 @@ function etatDe(slug: string): EtatTheme {
     <section id="programme" class="py-6">
         <h2 class="text-xl font-bold mb-3">Programme</h2>
         <div class="space-y-3">
-            {[...themesPublies, ...themesTraitement].map((t) => {
+            {[...themesPublies, ...themesReleves, ...themesTraitement].map((t) => {
                 const etat = etatDe(t.slug);
                 const info = c.etats_par_theme?.[t.slug] ?? {};
                 const mesures = c.mesures_par_theme?.[t.slug] ?? [];
+                const relevees = c.mesures_relevees_par_theme?.[t.slug] ?? [];
                 return (
                     <div class="rounded-card border p-4" style="border-color: var(--border)">
                         <div class="flex items-center justify-between gap-3">
                             <h3 class="font-semibold">{t.nom}</h3>
                             <span class="text-xs px-2 py-1 rounded-full whitespace-nowrap"
-                                  style={etat === 'publie' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>
-                                {etat === 'publie' ? `${info.nb_mesures} mesure(s)` : 'En cours de traitement'}
+                                  style={etat === 'publie' ? 'background:#ecfdf5;color:#047857'
+                                       : etat === 'relevee' ? 'background:#eff6ff;color:#1d4ed8'
+                                       : 'background:#fffbeb;color:#b45309'}>
+                                {etat === 'publie' ? `${info.nb_mesures} mesure(s)`
+                                 : etat === 'relevee' ? `${info.nb_mesures} mesure(s) relevée(s)`
+                                 : 'En cours de traitement'}
                             </span>
                         </div>
                         {etat === 'publie' && (
@@ -111,6 +117,23 @@ function etatDe(slug: string): EtatTheme {
                                     </li>
                                 ))}
                             </ul>
+                        )}
+                        {etat === 'relevee' && (
+                            <>
+                                <ul class="mt-3 space-y-2">
+                                    {relevees.map((m: any) => (
+                                        <li class="text-sm">
+                                            <span class="font-medium">{m.titre}</span>
+                                            {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
+                                            {m.source_url && <a href={m.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p class="mt-2 text-xs" style="color: var(--fg-muted)">
+                                    Propos relevés et vérifiés à la source — l'<strong>argumentaire pour/contre</strong> est en
+                                    préparation avant publication complète (<a href="/methodologie/" class="text-brand-600 hover:underline">méthodologie</a>).
+                                </p>
+                            </>
                         )}
                         {etat === 'en_traitement' && (
                             <p class="mt-2 text-sm" style="color: var(--fg-muted)">
