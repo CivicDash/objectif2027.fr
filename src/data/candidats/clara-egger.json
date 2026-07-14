@@ -35,9 +35,8 @@
             "etat": "non_exprime"
         },
         "travail-retraites": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "sante": {
             "etat": "non_exprime"
@@ -46,40 +45,34 @@
             "etat": "non_exprime"
         },
         "securite-justice": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "immigration": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "ecologie-energie": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "logement": {
             "etat": "non_exprime"
         },
         "institutions": {
-            "etat": "en_traitement",
-            "nb_signaux": 6,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 6
         },
         "europe-international": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "defense": {
             "etat": "non_exprime"
         },
         "fiscalite-budget": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "numerique": {
             "etat": "non_exprime"
@@ -93,7 +86,94 @@
     },
     "parcours": [],
     "mesures_par_theme": [],
-    "mesures_relevees_par_theme": [],
+    "mesures_relevees_par_theme": {
+        "europe-international": [
+            {
+                "titre": "Europe : instaurer le droit de voter par référendum toute modification constitutionnelle et d'initier des révisions ; ratification des traités soumise au consentement populaire (modèles suisse, irlandais, danois cités).",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "immigration": [
+            {
+                "titre": "Immigration : les orientations migratoires fondamentales devraient être validées à la majorité par les citoyens plutôt que décidées par les élites.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "ecologie-energie": [
+            {
+                "titre": "Énergie : plans de long terme votés directement par les citoyens (exemples Italie 1987, Suisse 2016) plutôt que soumis à l'horizon électoral de cinq ans.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "institutions": [
+            {
+                "titre": "Programme volontairement limité à deux réformes institutionnelles : RIC constituant (réforme de l'article 89) et démocratie directe communale (réforme du code des collectivités), textes juridiques publiés.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Dès le début du mandat, soumission des deux textes à référendum via l'article 11 de la Constitution (proposition du gouvernement au président le 18 mai 2027).",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Gouvernement de transition nommé le 16 mai 2027 avec pour seule mission le lancement du référendum ; référendums organisés le 9 octobre 2027.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Démocratie directe communale : chaque commune pourra prendre la compétence de son code électoral et instaurer démocratie directe ou proportionnelle par simple délibération (procédure d'un an maximum, aboutissement au plus tard le 17 octobre 2028).",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Engagement de la candidate sur tous ses biens, devant notaire, pendant la campagne, à appliquer ce calendrier.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Conception du mandat : « président arbitre » au sens strict de l'article 5 — refus de tout programme de gouvernement, neutralité idéologique revendiquée (« ni gauche, ni droite »).",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "fiscalite-budget": [
+            {
+                "titre": "Économie et pouvoir d'achat : pas de mesure sectorielle — la position est de déléguer les choix économiques au filtre du RIC constituant (stabilité et légitimité invoquées, exemples Suisse/Uruguay).",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "travail-retraites": [
+            {
+                "titre": "Retraites : réforme jugée souhaitable mais devant passer le filtre du référendum ; anticipe qu'une réforme validée toucherait probablement les plus grosses pensions.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "securite-justice": [
+            {
+                "titre": "Police et sécurité : les citoyens garants en dernier ressort des missions et pratiques de la police via les outils de démocratie directe.",
+                "source_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ]
+    },
     "prises_de_parole": [
         {
             "titre": "Solution démocratique — « Calendrier une fois élu président » (programme de Clara Egger)",
@@ -103,22 +183,13 @@
             "nb": 12,
             "citations": [
                 {
-                    "theme": "fiscalite-budget",
-                    "resume": "Économie et pouvoir d'achat : pas de mesure sectorielle — la position est de déléguer les choix économiques au filtre du RIC constituant (stabilité et légitimité invoquées, exemples Suisse/Uruguay).",
-                    "citation": "Notre engagement pour le progrès économique et le pouvoir d'achat est donc d'instaurer le RIC …",
+                    "theme": "immigration",
+                    "resume": "Immigration : les orientations migratoires fondamentales devraient être validées à la majorité par les citoyens plutôt que décidées par les élites.",
+                    "citation": "La population doit donc pouvoir se protéger en matière migratoire",
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "travail-retraites",
-                    "resume": "Retraites : réforme jugée souhaitable mais devant passer le filtre du référendum ; anticipe qu'une réforme validée toucherait probablement les plus grosses pensions.",
-                    "citation": "notre engagement pour une réforme des retraites équitable est d'instaurer le RIC Constituant",
-                    "timecode": "section correspondante de la page (ancre)",
-                    "timestamp_s": null,
-                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "europe-international",
@@ -127,25 +198,25 @@
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "immigration",
-                    "resume": "Immigration : les orientations migratoires fondamentales devraient être validées à la majorité par les citoyens plutôt que décidées par les élites.",
-                    "citation": "La population doit donc pouvoir se protéger en matière migratoire",
+                    "theme": "travail-retraites",
+                    "resume": "Retraites : réforme jugée souhaitable mais devant passer le filtre du référendum ; anticipe qu'une réforme validée toucherait probablement les plus grosses pensions.",
+                    "citation": "notre engagement pour une réforme des retraites équitable est d'instaurer le RIC Constituant",
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "ecologie-energie",
-                    "resume": "Énergie : plans de long terme votés directement par les citoyens (exemples Italie 1987, Suisse 2016) plutôt que soumis à l'horizon électoral de cinq ans.",
-                    "citation": "nous nous engageons par conséquent à mettre en place les outils de démocratie directe",
+                    "theme": "fiscalite-budget",
+                    "resume": "Économie et pouvoir d'achat : pas de mesure sectorielle — la position est de déléguer les choix économiques au filtre du RIC constituant (stabilité et légitimité invoquées, exemples Suisse/Uruguay).",
+                    "citation": "Notre engagement pour le progrès économique et le pouvoir d'achat est donc d'instaurer le RIC …",
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "securite-justice",
@@ -154,43 +225,16 @@
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "institutions",
-                    "resume": "Programme volontairement limité à deux réformes institutionnelles : RIC constituant (réforme de l'article 89) et démocratie directe communale (réforme du code des collectivités), textes juridiques publiés.",
-                    "citation": "deux réformes institutionnelles précises",
+                    "theme": "ecologie-energie",
+                    "resume": "Énergie : plans de long terme votés directement par les citoyens (exemples Italie 1987, Suisse 2016) plutôt que soumis à l'horizon électoral de cinq ans.",
+                    "citation": "nous nous engageons par conséquent à mettre en place les outils de démocratie directe",
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "institutions",
-                    "resume": "Dès le début du mandat, soumission des deux textes à référendum via l'article 11 de la Constitution (proposition du gouvernement au président le 18 mai 2027).",
-                    "citation": "soumettre deux textes portant sur l'organisation des pouvoirs publics à référendum conformément à l'article 11 …",
-                    "timecode": "section correspondante de la page (ancre)",
-                    "timestamp_s": null,
-                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "institutions",
-                    "resume": "Gouvernement de transition nommé le 16 mai 2027 avec pour seule mission le lancement du référendum ; référendums organisés le 9 octobre 2027.",
-                    "citation": "nomme un Premier ministre chargé de former un gouvernement de transition, dont la seule mission …",
-                    "timecode": "section correspondante de la page (ancre)",
-                    "timestamp_s": null,
-                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "institutions",
-                    "resume": "Démocratie directe communale : chaque commune pourra prendre la compétence de son code électoral et instaurer démocratie directe ou proportionnelle par simple délibération (procédure d'un an maximum, aboutissement au plus tard le 17 octobre 2028).",
-                    "citation": "chaque commune pourra prendre en main la constitution de son propre code électoral",
-                    "timecode": "section correspondante de la page (ancre)",
-                    "timestamp_s": null,
-                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "institutions",
@@ -199,7 +243,16 @@
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Dès le début du mandat, soumission des deux textes à référendum via l'article 11 de la Constitution (proposition du gouvernement au président le 18 mai 2027).",
+                    "citation": "soumettre deux textes portant sur l'organisation des pouvoirs publics à référendum conformément à l'article 11 …",
+                    "timecode": "section correspondante de la page (ancre)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "institutions",
@@ -208,7 +261,34 @@
                     "timecode": "section correspondante de la page (ancre)",
                     "timestamp_s": null,
                     "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
-                    "statut": "detecte"
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Démocratie directe communale : chaque commune pourra prendre la compétence de son code électoral et instaurer démocratie directe ou proportionnelle par simple délibération (procédure d'un an maximum, aboutissement au plus tard le 17 octobre 2028).",
+                    "citation": "chaque commune pourra prendre en main la constitution de son propre code électoral",
+                    "timecode": "section correspondante de la page (ancre)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Gouvernement de transition nommé le 16 mai 2027 avec pour seule mission le lancement du référendum ; référendums organisés le 9 octobre 2027.",
+                    "citation": "nomme un Premier ministre chargé de former un gouvernement de transition, dont la seule mission …",
+                    "timecode": "section correspondante de la page (ancre)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Programme volontairement limité à deux réformes institutionnelles : RIC constituant (réforme de l'article 89) et démocratie directe communale (réforme du code des collectivités), textes juridiques publiés.",
+                    "citation": "deux réformes institutionnelles précises",
+                    "timecode": "section correspondante de la page (ancre)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://solutiondemocratique.fr/notre-solution/calendrier-president/",
+                    "statut": "rattachee"
                 }
             ]
         }

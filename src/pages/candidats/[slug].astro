@@ -46,46 +46,59 @@ function etatDe(slug: string): EtatTheme {
 <Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`}>
     <Breadcrumb items={[{ label: 'Candidats', href: '/candidats/' }, { label: nom }]} />
 
-    <!-- Hero : bannière image si dispo, sinon dégradé de la couleur du candidat -->
-    <div class="relative -mx-4 mt-2 h-28 md:h-40 bg-cover bg-center"
-         style={c.hero_banner?.url
-            ? `background-image: linear-gradient(90deg, rgba(0,0,0,.25), transparent), url('${c.hero_banner.url}'); background-color:${couleur}`
-            : `background: linear-gradient(135deg, ${couleur} 0%, color-mix(in srgb, ${couleur} 12%, transparent) 100%)`}>
-        {(c.hero_banner?.credit || c.photo?.credit) && (
-            <span class="absolute bottom-1 right-2 text-[10px] px-1 rounded" style="background: rgba(0,0,0,.45); color:#fff">
-                © {c.hero_banner?.credit ?? c.photo?.credit} · {c.hero_banner?.licence ?? c.photo?.licence}
-            </span>
-        )}
-    </div>
-    <header class="-mt-10 flex items-end gap-4">
-        {c.photo?.url ? (
-            <img src={c.photo.url} alt={`Portrait de ${nom}`} width="80" height="80"
-                 class="rounded-full object-cover shrink-0 border-4" style="width:80px;height:80px;border-color:var(--bg)" />
-        ) : (
-            <span class="grid place-items-center rounded-full text-white text-xl font-bold shrink-0 border-4"
-                  style={`background:${couleur}; width:80px; height:80px; border-color:var(--bg)`} aria-hidden="true">
-                {nom.split(/\s+/).map((m: string) => m[0]).slice(0, 2).join('')}
-            </span>
-        )}
-        <div class="pb-1">
-            <h1 class="text-2xl font-extrabold leading-tight">{nom}</h1>
-            <p style="color: var(--fg-muted)">{c.parti_soutien}</p>
-            {c.slogan && <p class="italic mt-0.5" style="color: var(--fg-muted)">« {c.slogan} »</p>}
-            <div class="mt-2 flex flex-wrap gap-2 text-xs">
-                <span class="px-2 py-1 rounded-control text-white" style={`background:${couleur}`}>{c.nuance}</span>
-                <span class="px-2 py-1 rounded-control" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
-                <span class="px-2 py-1 rounded-control" style="background: var(--bg-soft)">
+    <!-- Bannière candidat : bloc unique moderne, 100 % couleur (pas d'image requise).
+         Bande d'identité + dégradé doux vers la surface -> contraste AA garanti. -->
+    <header class="mt-2 rounded-card overflow-hidden border" style="border-color: var(--border)">
+        <div style={`height:6px; background:${couleur}`} aria-hidden="true"></div>
+        <div class="p-4 md:p-6"
+             style={`background: linear-gradient(135deg, color-mix(in srgb, ${couleur} 14%, var(--bg)) 0%, var(--bg) 68%)`}>
+            <div class="flex items-center gap-4">
+                {c.photo?.url ? (
+                    <img src={c.photo.url} alt={`Portrait de ${nom}`} width="84" height="84"
+                         class="rounded-full object-cover shrink-0"
+                         style={`width:84px; height:84px; box-shadow: 0 0 0 3px ${couleur}, 0 0 0 6px var(--bg)`} />
+                ) : (
+                    <span class="grid place-items-center rounded-full text-white text-2xl font-bold shrink-0"
+                          style={`background:${couleur}; width:84px; height:84px`} aria-hidden="true">
+                        {nom.split(/\s+/).map((m: string) => m[0]).slice(0, 2).join('')}
+                    </span>
+                )}
+                <div class="min-w-0">
+                    <h1 class="text-2xl md:text-3xl font-extrabold leading-tight">{nom}</h1>
+                    <p class="text-sm" style="color: var(--fg-muted)">{c.parti_soutien}</p>
+                    {c.slogan && <p class="italic text-sm mt-0.5" style="color: var(--fg-muted)">« {c.slogan} »</p>}
+                </div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+                <span class="px-2.5 py-1 rounded-full text-white font-medium" style={`background:${couleur}`}>{c.nuance}</span>
+                <span class="px-2.5 py-1 rounded-full" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
+                <span class="px-2.5 py-1 rounded-full" style="background: color-mix(in srgb, var(--fg) 7%, transparent)">
                     Exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes
                 </span>
-                {c.site_campagne_url && (
-                    <a href={c.site_campagne_url} target="_blank" rel="nofollow noopener" class="px-2 py-1 rounded-control text-brand-600 hover:underline">Site de campagne ↗</a>
-                )}
-                {Object.entries(c.reseaux ?? {}).map(([res, url]) => (
-                    <a href={url as string} target="_blank" rel="nofollow noopener" class="px-2 py-1 rounded-control border hover:border-brand-400" style="border-color: var(--border); color: var(--fg-muted)">
-                        {{ site: 'Site', x: 'X', instagram: 'Instagram', facebook: 'Facebook', mastodon: 'Mastodon', bluesky: 'Bluesky', linkedin: 'LinkedIn', youtube: 'YouTube', tiktok: 'TikTok' }[res] ?? res} ↗
-                    </a>
-                ))}
             </div>
+
+            {(c.site_campagne_url || Object.keys(c.reseaux ?? {}).length > 0) && (
+                <div class="mt-2.5 flex flex-wrap gap-2 text-xs">
+                    {c.site_campagne_url && (
+                        <a href={c.site_campagne_url} target="_blank" rel="nofollow noopener"
+                           class="px-2.5 py-1 rounded-full text-white font-medium hover:opacity-90" style={`background:${couleur}`}>
+                            Site de campagne ↗
+                        </a>
+                    )}
+                    {Object.entries(c.reseaux ?? {}).map(([res, url]) => (
+                        <a href={url as string} target="_blank" rel="nofollow noopener"
+                           class="px-2.5 py-1 rounded-full border hover:border-brand-400"
+                           style="border-color: var(--border); color: var(--fg-muted); background: var(--bg)">
+                            {{ site: 'Site', x: 'X', instagram: 'Instagram', facebook: 'Facebook', mastodon: 'Mastodon', bluesky: 'Bluesky', linkedin: 'LinkedIn', youtube: 'YouTube', tiktok: 'TikTok' }[res] ?? res} ↗
+                        </a>
+                    ))}
+                </div>
+            )}
+
+            {c.photo?.credit && (
+                <p class="mt-2 text-[10px]" style="color: var(--fg-muted)">Photo : © {c.photo.credit} · {c.photo.licence}</p>
+            )}
         </div>
     </header>
 
