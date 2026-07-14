@@ -10,8 +10,10 @@
     "statut_candidature": "declare",
     "date_declaration": null,
     "site_campagne_url": null,
-    "programme_url_officiel": null,
-    "reseaux": [],
+    "programme_url_officiel": "https://parti-equinoxe.fr/wp-content/uploads/2024/01/2023-11_Manifeste_livret_imprimable.pdf",
+    "reseaux": {
+        "site": "https://parti-equinoxe.fr"
+    },
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 0,

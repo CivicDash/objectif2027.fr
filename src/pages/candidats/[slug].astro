@@ -172,7 +172,7 @@ function etatDe(slug: string): EtatTheme {
         <section id="prises-de-parole" class="py-6">
             <h2 class="text-xl font-bold mb-1">Prises de parole</h2>
             <p class="text-sm mb-4" style="color: var(--fg-muted)">
-                Propos repérés dans les meetings et interviews, en cours de traitement par notre équipe.
+                Propos et engagements repérés dans les meetings, interviews et programmes officiels, en cours de traitement par notre équipe.
                 <strong>Chaque citation est vérifiable à la source en un clic.</strong>
             </p>
             <div class="space-y-3">
@@ -181,7 +181,7 @@ function etatDe(slug: string): EtatTheme {
                         <summary class="cursor-pointer p-4 flex items-center justify-between gap-2 flex-wrap">
                             <span class="font-semibold text-sm">{doc.titre}</span>
                             <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">
-                                {doc.type}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
+                                {({ video: 'vidéo', audio: 'audio', article: 'article', communique: 'communiqué', programme_officiel: 'programme officiel' }[doc.type] ?? doc.type)}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
                             </span>
                         </summary>
                         <div class="px-4 pb-4 space-y-3">

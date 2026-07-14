@@ -5,7 +5,11 @@
     "parti_soutien": "Debout !",
     "nuance": "GAU",
     "couleur_hex": "#ff4d56",
-    "photo": null,
+    "photo": {
+        "url": "https://commons.wikimedia.org/wiki/Category:Fran%C3%A7ois_Ruffin#/media/File:Fran%C3%A7ois_Ruffin.jpg",
+        "credit": "Thinkerview",
+        "licence": "CC BY-SA 4.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": null,
@@ -28,19 +32,16 @@
             "etat": "non_exprime"
         },
         "travail-retraites": {
-            "etat": "en_traitement",
-            "nb_signaux": 3,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 3
         },
         "sante": {
-            "etat": "en_traitement",
-            "nb_signaux": 2,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 2
         },
         "education": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "securite-justice": {
             "etat": "non_exprime"
@@ -49,48 +50,157 @@
             "etat": "non_exprime"
         },
         "ecologie-energie": {
-            "etat": "en_traitement",
-            "nb_signaux": 3,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 3
         },
         "logement": {
             "etat": "non_exprime"
         },
         "institutions": {
-            "etat": "en_traitement",
-            "nb_signaux": 2,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 2
         },
         "europe-international": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "defense": {
             "etat": "non_exprime"
         },
         "fiscalite-budget": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "numerique": {
-            "etat": "en_traitement",
-            "nb_signaux": 1,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "agriculture": {
             "etat": "non_exprime"
         },
         "culture": {
-            "etat": "en_traitement",
-            "nb_signaux": 2,
-            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
+            "etat": "relevee",
+            "nb_mesures": 2
         }
     },
     "parcours": [],
     "mesures_par_theme": [],
-    "mesures_relevees_par_theme": [],
+    "mesures_relevees_par_theme": {
+        "sante": [
+            {
+                "titre": "Refonte de l'aide sociale à l'enfance, qualifiée de « scandale national » : une famille d'accueil pour tout enfant plutôt que les foyers.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Sortir du marché l'accueil des enfants (crèches) et des personnes âgées.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "europe-international": [
+            {
+                "titre": "Boussole internationale : défense des intérêts de la France, ni alignement américain, chinois ou russe.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "culture": [
+            {
+                "titre": "Panthéonisation de Gisèle Halimi.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Déclaration de tribune : « CNews fermée » sous sa présidence (transcription auto : « ces news ») — formulation scénique, base juridique et modalités non précisées : à requalifier à la validation.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "ecologie-energie": [
+            {
+                "titre": "Écologie populaire par le travail : isoler les 5 millions de passoires thermiques, présenté comme gisement d'emplois.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Ateliers de réparation (électronique, mécanique, informatique) par quartier ou par canton, contre le tout-jetable.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Report du fret sur le rail présenté comme axe travail/écologie (« mettre les marchandises sur les rails »).",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "travail-retraites": [
+            {
+                "titre": "Défense et extension des territoires zéro chômeur de longue durée ; reproche à E. Macron de les avoir réduits au lieu de les élargir.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Principe « broyeur-payeur » : faire payer les entreprises qui produisent burnouts et inaptitudes (plus de 100 000 inaptitudes par an), sur le modèle pollueur-payeur.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Droit au repos revendiqué comme héritage du mouvement ouvrier (dimanche chômé, congés payés) contre l'extension du travail les jours fériés.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "education": [
+            {
+                "titre": "Orientation : une année où les jeunes touchent à tous les métiers manuels et techniques avant de choisir — « choisir son métier et non le subir » ; cuisine, jardinage, réparation entrent à l'école et au collège.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "institutions": [
+            {
+                "titre": "Engagement personnel : rester rémunéré au niveau du SMIC comme président, comme il l'est comme député.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            },
+            {
+                "titre": "Démocratie continue : États généraux, cahiers de doléances, assemblées populaires et référendum d'initiative citoyenne (RIC).",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "fiscalite-budget": [
+            {
+                "titre": "Régulation vs marché comme « grand débat de l'année » : rétablir des règles (prix protégeant producteurs et consommateurs), sortir certains secteurs du marché.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ],
+        "numerique": [
+            {
+                "titre": "IA et automatisation (ex. commande vocale chez les caristes) soumises au « filtre de la démocratie » : à l'Assemblée et dans les entreprises.",
+                "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ]
+    },
     "prises_de_parole": [
         {
             "titre": "« L'entretien d'embauche de François Ruffin » — meeting à Lyon (Debout !)",
