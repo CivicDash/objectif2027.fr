@@ -41,7 +41,7 @@ function etatDe(c: any): EtatTheme {
                     )}
                     {etat === 'relevee' && (
                         <ul class="mt-2 text-sm list-disc pl-5" style="color: var(--fg-muted)">
-                            {relevees.map((m: any) => <li>{m.titre}{m.source_url && <a href={m.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}</li>)}
+                            {relevees.map((m: any) => <li>{m.titre}{m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}</li>)}
                         </ul>
                     )}
                 </div>

@@ -11,6 +11,7 @@
     "date_declaration": "2025-11-25",
     "site_campagne_url": null,
     "programme_url_officiel": null,
+    "reseaux": [],
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 0,

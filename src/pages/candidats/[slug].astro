@@ -78,10 +78,10 @@ function etatDe(slug: string): EtatTheme {
                     Exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes
                 </span>
                 {c.site_campagne_url && (
-                    <a href={c.site_campagne_url} rel="nofollow noopener" class="px-2 py-1 rounded-control text-brand-600 hover:underline">Site de campagne ↗</a>
+                    <a href={c.site_campagne_url} target="_blank" rel="nofollow noopener" class="px-2 py-1 rounded-control text-brand-600 hover:underline">Site de campagne ↗</a>
                 )}
                 {Object.entries(c.reseaux ?? {}).map(([res, url]) => (
-                    <a href={url as string} rel="nofollow noopener" class="px-2 py-1 rounded-control border hover:border-brand-400" style="border-color: var(--border); color: var(--fg-muted)">
+                    <a href={url as string} target="_blank" rel="nofollow noopener" class="px-2 py-1 rounded-control border hover:border-brand-400" style="border-color: var(--border); color: var(--fg-muted)">
                         {{ site: 'Site', x: 'X', instagram: 'Instagram', facebook: 'Facebook', mastodon: 'Mastodon', bluesky: 'Bluesky', linkedin: 'LinkedIn', youtube: 'YouTube' }[res] ?? res} ↗
                     </a>
                 ))}
@@ -118,7 +118,7 @@ function etatDe(slug: string): EtatTheme {
                                 {mesures.map((m: any) => (
                                     <li class="text-sm">
                                         <span class="font-medium">{m.titre}</span>
-                                        {m.source_url && <a href={m.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                        {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                     </li>
                                 ))}
                             </ul>
@@ -130,7 +130,7 @@ function etatDe(slug: string): EtatTheme {
                                         <li class="text-sm">
                                             <span class="font-medium">{m.titre}</span>
                                             {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
-                                            {m.source_url && <a href={m.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                         </li>
                                     ))}
                                 </ul>
@@ -144,7 +144,7 @@ function etatDe(slug: string): EtatTheme {
                             <p class="mt-2 text-sm" style="color: var(--fg-muted)">
                                 S'est exprimé sur ce thème ({info.nb_signaux} prise(s) de parole repérée(s)) — en cours de
                                 vérification par notre équipe avant publication.
-                                {info.source_url && <a href={info.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                {info.source_url && <a href={info.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                             </p>
                         )}
                     </div>
@@ -185,7 +185,7 @@ function etatDe(slug: string): EtatTheme {
                             </span>
                         </summary>
                         <div class="px-4 pb-4 space-y-3">
-                            {doc.url && <a href={doc.url} rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
+                            {doc.url && <a href={doc.url} target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
                             {citationsParTheme(doc).map(([theme, citations]) => (
                                 <details class="border-l-2 pl-3" style="border-color: var(--border)" open={doc.citations.length <= 8}>
                                     <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wide py-1" style="color: var(--fg-muted)">
@@ -197,7 +197,7 @@ function etatDe(slug: string): EtatTheme {
                                                 <p class="italic">« {cit.citation} »</p>
                                                 {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
                                                 {cit.verifier_url && (
-                                                    <a href={cit.verifier_url} rel="nofollow noopener"
+                                                    <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
                                                        class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
                                                         ▶ Vérifier{cit.timecode ? ` à ${cit.timecode}` : ' à la source'}
                                                     </a>
@@ -224,7 +224,7 @@ function etatDe(slug: string): EtatTheme {
                         <div class="text-sm font-medium">{e.titre}{e.organisation && <span style="color: var(--fg-muted)"> · {e.organisation}</span>}</div>
                         <div class="text-xs" style="color: var(--fg-muted)">
                             {e.date_debut ?? '?'}{e.date_fin ? ` — ${e.date_fin}` : ' — en cours'}
-                            {e.source_url && <a href={e.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                            {e.source_url && <a href={e.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                         </div>
                         {e.actions?.length > 0 && (
                             <details class="mt-1">
@@ -235,7 +235,7 @@ function etatDe(slug: string): EtatTheme {
                                     {e.actions.map((a: any) => (
                                         <li>
                                             <span class="font-mono">{a.date}</span> — {a.titre}
-                                            {a.source_url && <a href={a.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">JO ↗</a>}
+                                            {a.source_url && <a href={a.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">JO ↗</a>}
                                         </li>
                                     ))}
                                 </ul>
@@ -289,7 +289,7 @@ function etatDe(slug: string): EtatTheme {
                                 <p class="text-xs mt-3" style="color: var(--fg-muted)">
                                     {a.sources.length} source(s) vérifiée(s) :
                                     {a.sources.map((s: any, i: number) => (
-                                        <span> {i > 0 ? '· ' : ''}{s.url ? <a href={s.url} rel="nofollow noopener" class="text-brand-600 hover:underline">{s.media}</a> : s.media}{s.archive_url && <a href={s.archive_url} rel="nofollow noopener" class="text-brand-600 hover:underline"> (archive)</a>}</span>
+                                        <span> {i > 0 ? '· ' : ''}{s.url ? <a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{s.media}</a> : s.media}{s.archive_url && <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline"> (archive)</a>}</span>
                                     ))}
                                 </p>
                             )}

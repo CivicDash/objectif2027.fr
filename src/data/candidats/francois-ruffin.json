@@ -4,16 +4,23 @@
     "slogan": null,
     "parti_soutien": "Debout !",
     "nuance": "GAU",
-    "couleur_hex": null,
+    "couleur_hex": "#ff4d56",
     "photo": null,
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": null,
-    "site_campagne_url": null,
+    "site_campagne_url": "https://nouspresident.fr/",
     "programme_url_officiel": null,
+    "reseaux": {
+        "x": "https://x.com/francois_ruffin",
+        "instagram": "https://www.instagram.com/francois_ruffin/",
+        "facebook": "https://www.facebook.com/FrancoisRuffin80",
+        "bluesky": "https://bsky.app/profile/did:plc:e3tbauupqe4xf7qrnyv7rlkt",
+        "youtube": "https://www.youtube.com/@francois_ruffin"
+    },
     "couverture": {
         "themes_publies": 0,
-        "themes_exprimes": 0,
+        "themes_exprimes": 9,
         "themes_total": 15
     },
     "etats_par_theme": {
@@ -21,13 +28,19 @@
             "etat": "non_exprime"
         },
         "travail-retraites": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 3,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "sante": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "education": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "securite-justice": {
             "etat": "non_exprime"
@@ -36,37 +49,203 @@
             "etat": "non_exprime"
         },
         "ecologie-energie": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 3,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "logement": {
             "etat": "non_exprime"
         },
         "institutions": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "europe-international": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "defense": {
             "etat": "non_exprime"
         },
         "fiscalite-budget": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "numerique": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         },
         "agriculture": {
             "etat": "non_exprime"
         },
         "culture": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 2,
+            "source_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs"
         }
     },
     "parcours": [],
     "mesures_par_theme": [],
     "mesures_relevees_par_theme": [],
-    "prises_de_parole": [],
+    "prises_de_parole": [
+        {
+            "titre": "« L'entretien d'embauche de François Ruffin » — meeting à Lyon (Debout !)",
+            "type": "video",
+            "date": null,
+            "url": "https://www.youtube.com/watch?v=V4oPh8-QmWs",
+            "nb": 16,
+            "citations": [
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Report du fret sur le rail présenté comme axe travail/écologie (« mettre les marchandises sur les rails »).",
+                    "citation": "il va falloir changer les déplacements. Mais ça veut dire mettre les marchandises sur les …",
+                    "timecode": "01:09:28",
+                    "timestamp_s": 4168,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=4168s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Écologie populaire par le travail : isoler les 5 millions de passoires thermiques, présenté comme gisement d'emplois.",
+                    "citation": "5 millions de passoirs thermiques à isoler",
+                    "timecode": "01:09:21",
+                    "timestamp_s": 4161,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=4161s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Démocratie continue : États généraux, cahiers de doléances, assemblées populaires et référendum d'initiative citoyenne (RIC).",
+                    "citation": "avec ce nouvel outil entre ses mains, le RIC, le référendum d'initiative",
+                    "timecode": "01:42:48",
+                    "timestamp_s": 6168,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=6168s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "travail-retraites",
+                    "resume": "Principe « broyeur-payeur » : faire payer les entreprises qui produisent burnouts et inaptitudes (plus de 100 000 inaptitudes par an), sur le modèle pollueur-payeur.",
+                    "citation": "Instituons un principe simple, broyeur payeur",
+                    "timecode": "00:59:35",
+                    "timestamp_s": 3575,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=3575s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "culture",
+                    "resume": "Déclaration de tribune : « CNews fermée » sous sa présidence (transcription auto : « ces news ») — formulation scénique, base juridique et modalités non précisées : à requalifier à la validation.",
+                    "citation": "président, c'est ces news qui est fermé",
+                    "timecode": "01:47:21",
+                    "timestamp_s": 6441,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=6441s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "culture",
+                    "resume": "Panthéonisation de Gisèle Halimi.",
+                    "citation": "qui entre au panthéon",
+                    "timecode": "01:48:07",
+                    "timestamp_s": 6487,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=6487s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "sante",
+                    "resume": "Sortir du marché l'accueil des enfants (crèches) et des personnes âgées.",
+                    "citation": "normal que les enfants dans les crèches soient livrés au marché ? On le met …",
+                    "timecode": "01:35:05",
+                    "timestamp_s": 5705,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5705s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "travail-retraites",
+                    "resume": "Défense et extension des territoires zéro chômeur de longue durée ; reproche à E. Macron de les avoir réduits au lieu de les élargir.",
+                    "citation": "Emmanuel Macron avait promis d'élargir le territoire zéro chômeur",
+                    "timecode": "01:22:05",
+                    "timestamp_s": 4925,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=4925s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "sante",
+                    "resume": "Refonte de l'aide sociale à l'enfance, qualifiée de « scandale national » : une famille d'accueil pour tout enfant plutôt que les foyers.",
+                    "citation": "c'est une République qui offre à tout enfant, non l'enfer des foyers, mais une famille, …",
+                    "timecode": "01:46:07",
+                    "timestamp_s": 6367,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=6367s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "travail-retraites",
+                    "resume": "Droit au repos revendiqué comme héritage du mouvement ouvrier (dimanche chômé, congés payés) contre l'extension du travail les jours fériés.",
+                    "citation": "une histoire de la fierté du travail, de gagner sa vie en travaillant et du …",
+                    "timecode": "01:23:40",
+                    "timestamp_s": 5020,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5020s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "europe-international",
+                    "resume": "Boussole internationale : défense des intérêts de la France, ni alignement américain, chinois ou russe.",
+                    "citation": "Je viens défendre une chose et une seule chose, les intérêts de la France et …",
+                    "timecode": "01:25:13",
+                    "timestamp_s": 5113,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5113s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "numerique",
+                    "resume": "IA et automatisation (ex. commande vocale chez les caristes) soumises au « filtre de la démocratie » : à l'Assemblée et dans les entreprises.",
+                    "citation": "doit passer par le filtre de la démocratie. La démocratie à l'Assemblée, la démocratie dans …",
+                    "timecode": "01:33:43",
+                    "timestamp_s": 5623,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5623s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Orientation : une année où les jeunes touchent à tous les métiers manuels et techniques avant de choisir — « choisir son métier et non le subir » ; cuisine, jardinage, réparation entrent à l'école et au collège.",
+                    "citation": "Une année pour choisir son métier et non le subir",
+                    "timecode": "01:39:51",
+                    "timestamp_s": 5991,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5991s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "fiscalite-budget",
+                    "resume": "Régulation vs marché comme « grand débat de l'année » : rétablir des règles (prix protégeant producteurs et consommateurs), sortir certains secteurs du marché.",
+                    "citation": "Il nous faut rétablir des règles et je vous le dis, c'est le grand débat …",
+                    "timecode": "01:34:34",
+                    "timestamp_s": 5674,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5674s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Ateliers de réparation (électronique, mécanique, informatique) par quartier ou par canton, contre le tout-jetable.",
+                    "citation": "un atelier de réparation d'électronique, de mécanique, d'informatique par quartier ou par canton",
+                    "timecode": "01:09:37",
+                    "timestamp_s": 4177,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=4177s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Engagement personnel : rester rémunéré au niveau du SMIC comme président, comme il l'est comme député.",
+                    "citation": "un député au SMIC. Je resterai un président au SMIC",
+                    "timecode": "01:35:39",
+                    "timestamp_s": 5739,
+                    "verifier_url": "https://www.youtube.com/watch?v=V4oPh8-QmWs&t=5739s",
+                    "statut": "rattachee"
+                }
+            ]
+        }
+    ],
     "affaires": {
         "publiees": [],
         "en_verification": false,

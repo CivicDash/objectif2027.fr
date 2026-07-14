@@ -13,15 +13,15 @@
         }
     },
     {
-        "slug": "antoine-mikolajczak",
-        "nom_complet": "Antoine Mikolajczak",
-        "parti_soutien": "Équinoxe",
-        "nuance": "DIV",
-        "couleur_hex": "#ffd412",
+        "slug": "francois-ruffin",
+        "nom_complet": "François Ruffin",
+        "parti_soutien": "Debout !",
+        "nuance": "GAU",
+        "couleur_hex": "#ff4d56",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
-            "themes_exprimes": 0,
+            "themes_exprimes": 9,
             "themes_total": 15
         }
     },
@@ -130,19 +130,6 @@
         }
     },
     {
-        "slug": "francois-ruffin",
-        "nom_complet": "François Ruffin",
-        "parti_soutien": "Debout !",
-        "nuance": "GAU",
-        "couleur_hex": null,
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
         "slug": "marine-tondelier",
         "nom_complet": "Marine Tondelier",
         "parti_soutien": "Les Écologistes",
@@ -226,6 +213,19 @@
         "parti_soutien": "UPR",
         "nuance": "DIV",
         "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "antoine-mikolajczak",
+        "nom_complet": "Antoine Mikolajczak",
+        "parti_soutien": "Équinoxe",
+        "nuance": "DIV",
+        "couleur_hex": "#ffd412",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
