@@ -119,6 +119,31 @@ function etatDe(slug: string): EtatTheme {
                                     <li class="text-sm">
                                         <span class="font-medium">{m.titre}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                        {(m.arguments?.pour?.length > 0 || m.arguments?.contre?.length > 0) && (
+                                            <details class="mt-1">
+                                                <summary class="cursor-pointer text-xs text-brand-600">Arguments pour / contre</summary>
+                                                <div class="mt-1 space-y-2">
+                                                    {['pour', 'contre'].map((sens) => (m.arguments?.[sens]?.length > 0 && (
+                                                        <div>
+                                                            <p class="text-xs font-semibold" style={sens === 'pour' ? 'color:#047857' : 'color:#b91c1c'}>{sens === 'pour' ? 'Pour' : 'Contre'}</p>
+                                                            <ul class="text-xs list-disc pl-4 space-y-1" style="color: var(--fg-muted)">
+                                                                {m.arguments[sens].map((a: any) => (
+                                                                    <li>
+                                                                        {a.contenu}
+                                                                        {(a.sources ?? []).map((s: any) => (
+                                                                            <>
+                                                                                {' '}<a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {s.media ?? s.titre ?? 'source'} ↗</a>
+                                                                                {s.archive_url && <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>}
+                                                                            </>
+                                                                        ))}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    )))}
+                                                </div>
+                                            </details>
+                                        )}
                                     </li>
                                 ))}
                             </ul>

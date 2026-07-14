@@ -116,11 +116,25 @@ async function partager() {
                             <p v-if="m.resume" style="color: var(--fg-muted)">{{ m.resume }}</p>
                             <div v-if="m.arguments?.pour?.length">
                                 <p class="text-xs font-semibold text-etat-publie">Pour</p>
-                                <ul class="text-xs list-disc pl-4"><li v-for="(a, j) in m.arguments.pour" :key="j">{{ a.contenu }}</li></ul>
+                                <ul class="text-xs list-disc pl-4 space-y-1">
+                                    <li v-for="(a, j) in m.arguments.pour" :key="j">
+                                        {{ a.contenu }}
+                                        <template v-for="(s, k) in a.sources" :key="k">
+                                            <a :href="s.url" target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {{ s.media || s.titre || 'source' }} ↗</a><a v-if="s.archive_url" :href="s.archive_url" target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>
+                                        </template>
+                                    </li>
+                                </ul>
                             </div>
                             <div v-if="m.arguments?.contre?.length">
                                 <p class="text-xs font-semibold text-etat-danger">Contre</p>
-                                <ul class="text-xs list-disc pl-4"><li v-for="(a, j) in m.arguments.contre" :key="j">{{ a.contenu }}</li></ul>
+                                <ul class="text-xs list-disc pl-4 space-y-1">
+                                    <li v-for="(a, j) in m.arguments.contre" :key="j">
+                                        {{ a.contenu }}
+                                        <template v-for="(s, k) in a.sources" :key="k">
+                                            <a :href="s.url" target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {{ s.media || s.titre || 'source' }} ↗</a><a v-if="s.archive_url" :href="s.archive_url" target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>
+                                        </template>
+                                    </li>
+                                </ul>
                             </div>
                             <a v-if="m.source_url" :href="m.source_url" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">source ↗</a>
                         </div>
