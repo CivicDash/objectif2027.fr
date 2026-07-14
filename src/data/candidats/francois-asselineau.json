@@ -4,8 +4,12 @@
     "slogan": null,
     "parti_soutien": "UPR",
     "nuance": "DIV",
-    "couleur_hex": null,
-    "photo": null,
+    "couleur_hex": "#00737c",
+    "photo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Fran%C3%A7ois_ASSELINEAU.jpg/500px-Fran%C3%A7ois_ASSELINEAU.jpg",
+        "credit": "Union Populaire Républicaine",
+        "licence": "CC BY-SA 4.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-03-21",

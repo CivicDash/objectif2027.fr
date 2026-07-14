@@ -4,14 +4,26 @@
     "slogan": null,
     "parti_soutien": "La France insoumise",
     "nuance": "GAU",
-    "couleur_hex": "#c0392b",
-    "photo": null,
+    "couleur_hex": "#4C0297",
+    "photo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/M%C3%A9lenchon_2027_-_55263136641_%28cropped_3-4%2C_2%29.png/500px-M%C3%A9lenchon_2027_-_55263136641_%28cropped_3-4%2C_2%29.png",
+        "credit": "jlm2017.fr",
+        "licence": "CC-BY-SA 4.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-05-03",
     "site_campagne_url": "https://melenchon2027.fr",
     "programme_url_officiel": "https://melenchon2027.fr/programme2025/livre/",
-    "reseaux": [],
+    "reseaux": {
+        "site": "https://lafranceinsoumise.fr/",
+        "x": "https://x.com/jlmelenchon",
+        "instagram": "https://www.instagram.com/jlmelenchon/",
+        "facebook": "https://www.facebook.com/JLMelenchon",
+        "bluesky": "https://bsky.app/profile/jlmelenchon.bsky.social",
+        "youtube": "https://www.youtube.com/@JLMelenchon",
+        "tiktok": "https://www.tiktok.com/@jlmelenchon"
+    },
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 12,

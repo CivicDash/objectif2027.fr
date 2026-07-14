@@ -5,13 +5,21 @@
     "parti_soutien": "Horizons",
     "nuance": "CEN",
     "couleur_hex": "#2563eb",
-    "photo": null,
+    "photo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/%C3%89douard_Philippe_-_2021_%2851560524221%29.jpg/960px-%C3%89douard_Philippe_-_2021_%2851560524221%29.jpg",
+        "credit": "Jérémy Barande",
+        "licence": "CC BY-SA 2.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2024-09-03",
     "site_campagne_url": "https://www.edouardphilippe.fr",
     "programme_url_officiel": null,
-    "reseaux": [],
+    "reseaux": {
+        "x": "https://x.com/EPhilippe_LH",
+        "instagram": "https://www.instagram.com/edouardphilippelh/",
+        "facebook": "https://www.facebook.com/edouardphilippelh"
+    },
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 7,

@@ -107,6 +107,41 @@ function etatDe(slug: string): EtatTheme {
     <!-- Programme par thème (3 états honnêtes) — publiés d'abord, non-exprimés repliés -->
     <section id="programme" class="py-6">
         <h2 class="text-xl font-bold mb-3">Programme</h2>
+
+        {c.programme_complet && (
+            <div class="rounded-card border p-4 mb-3" style={`border-color: color-mix(in srgb, ${couleur} 40%, var(--border)); background: color-mix(in srgb, ${couleur} 6%, var(--bg))`}>
+                <div class="flex items-center justify-between gap-3 flex-wrap">
+                    <div>
+                        <p class="font-semibold text-sm">📗 Programme complet publié : {c.programme_complet.titre}</p>
+                        <p class="text-xs mt-0.5" style="color: var(--fg-muted)">
+                            {c.programme_complet.nb_chapitres} chapitres · {c.programme_complet.nb_entrees} entrées référencées
+                        </p>
+                    </div>
+                    {c.programme_complet.url && (
+                        <a href={c.programme_complet.url} target="_blank" rel="nofollow noopener"
+                           class="tap inline-flex items-center rounded-control text-white text-xs font-medium px-3 py-2" style={`background:${couleur}`}>
+                            Consulter le programme officiel ↗
+                        </a>
+                    )}
+                </div>
+                <details class="mt-2">
+                    <summary class="cursor-pointer text-xs text-brand-600">Sommaire des chapitres</summary>
+                    <div class="mt-2 space-y-1.5">
+                        {c.programme_complet.chapitres.map((ch: any) => (
+                            <details class="text-sm pl-1">
+                                <summary class="cursor-pointer text-xs font-medium">{ch.titre}</summary>
+                                <ul class="mt-1 pl-4 list-disc text-xs space-y-0.5" style="color: var(--fg-muted)">
+                                    {ch.sous_pages.map((sp: any) => (
+                                        <li>{sp.url ? <a href={sp.url} target="_blank" rel="nofollow noopener" class="hover:text-brand-600 hover:underline">{sp.titre} ↗</a> : sp.titre}</li>
+                                    ))}
+                                </ul>
+                            </details>
+                        ))}
+                    </div>
+                </details>
+            </div>
+        )}
+
         <div class="space-y-3">
             {[...themesPublies, ...themesReleves, ...themesTraitement].map((t) => {
                 const etat = etatDe(t.slug);

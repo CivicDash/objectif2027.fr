@@ -13,45 +13,6 @@
         }
     },
     {
-        "slug": "clementine-autain",
-        "nom_complet": "Clémentine Autain",
-        "parti_soutien": "L'Après",
-        "nuance": "GAU",
-        "couleur_hex": "#623FAE",
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
-        "slug": "nicolas-dupont-aignan",
-        "nom_complet": "Nicolas Dupont-Aignan",
-        "parti_soutien": "Debout la France",
-        "nuance": "DR",
-        "couleur_hex": null,
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
-        "slug": "xavier-bertrand",
-        "nom_complet": "M. Xavier Bertrand",
-        "parti_soutien": "Nous France",
-        "nuance": "DR",
-        "couleur_hex": null,
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
         "slug": "nathalie-arthaud",
         "nom_complet": "Nathalie Arthaud",
         "parti_soutien": "Lutte ouvrière",
@@ -91,9 +52,35 @@
         }
     },
     {
-        "slug": "david-lisnard",
-        "nom_complet": "David Lisnard",
-        "parti_soutien": "Nouvelle Énergie",
+        "slug": "florian-philippot",
+        "nom_complet": "Florian Philippot",
+        "parti_soutien": "Les Patriotes",
+        "nuance": "EXD",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "xavier-bertrand",
+        "nom_complet": "M. Xavier Bertrand",
+        "parti_soutien": "Nous France",
+        "nuance": "DR",
+        "couleur_hex": "#192734",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "nicolas-dupont-aignan",
+        "nom_complet": "Nicolas Dupont-Aignan",
+        "parti_soutien": "Debout la France",
         "nuance": "DR",
         "couleur_hex": null,
         "statut_candidature": "declare",
@@ -104,11 +91,11 @@
         }
     },
     {
-        "slug": "florian-philippot",
-        "nom_complet": "Florian Philippot",
-        "parti_soutien": "Les Patriotes",
-        "nuance": "EXD",
-        "couleur_hex": null,
+        "slug": "francois-asselineau",
+        "nom_complet": "François Asselineau",
+        "parti_soutien": "UPR",
+        "nuance": "DIV",
+        "couleur_hex": "#00737c",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
@@ -182,19 +169,6 @@
         }
     },
     {
-        "slug": "francois-asselineau",
-        "nom_complet": "François Asselineau",
-        "parti_soutien": "UPR",
-        "nuance": "DIV",
-        "couleur_hex": null,
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
         "slug": "francois-ruffin",
         "nom_complet": "François Ruffin",
         "parti_soutien": "Debout !",
@@ -204,6 +178,19 @@
         "couverture": {
             "themes_publies": 0,
             "themes_exprimes": 9,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "david-lisnard",
+        "nom_complet": "David Lisnard",
+        "parti_soutien": "Nouvelle Énergie",
+        "nuance": "DR",
+        "couleur_hex": "#0f1752",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
             "themes_total": 15
         }
     },
@@ -234,6 +221,19 @@
         }
     },
     {
+        "slug": "clementine-autain",
+        "nom_complet": "Clémentine Autain",
+        "parti_soutien": "L'Après",
+        "nuance": "GAU",
+        "couleur_hex": "#623FAE",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
         "slug": "edouard-philippe",
         "nom_complet": "M. Édouard Philippe",
         "parti_soutien": "Horizons",
@@ -251,7 +251,7 @@
         "nom_complet": "M. Gabriel Attal",
         "parti_soutien": "Renaissance",
         "nuance": "CEN",
-        "couleur_hex": "#f59e0b",
+        "couleur_hex": "#ffff80",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
@@ -264,7 +264,7 @@
         "nom_complet": "M. Jean-Luc Mélenchon",
         "parti_soutien": "La France insoumise",
         "nuance": "GAU",
-        "couleur_hex": "#c0392b",
+        "couleur_hex": "#4C0297",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,

@@ -4,14 +4,24 @@
     "slogan": "La force d'agir",
     "parti_soutien": "Renaissance",
     "nuance": "CEN",
-    "couleur_hex": "#f59e0b",
-    "photo": null,
+    "couleur_hex": "#ffff80",
+    "photo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Gabriel_Attal_2025_%28close_crop%29.jpg/330px-Gabriel_Attal_2025_%28close_crop%29.jpg",
+        "credit": "Ismail Aissoub",
+        "licence": "CC BY 4.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-05-22",
     "site_campagne_url": "https://attalpresident.fr",
     "programme_url_officiel": null,
-    "reseaux": [],
+    "reseaux": {
+        "site": "https://parti-renaissance.fr",
+        "x": "https://x.com/GabrielAttal?lang=fr",
+        "instagram": "https://www.instagram.com/gabrielattal/?hl=fr",
+        "facebook": "https://www.facebook.com/GabrielAttal",
+        "youtube": "https://www.youtube.com/channel/UCOcDPuYTuxoRBtfmTBXtqBA"
+    },
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 7,

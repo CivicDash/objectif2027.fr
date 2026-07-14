@@ -4,14 +4,26 @@
     "slogan": null,
     "parti_soutien": "Nouvelle Énergie",
     "nuance": "DR",
-    "couleur_hex": null,
-    "photo": null,
+    "couleur_hex": "#0f1752",
+    "photo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/David_Lisnard.jpg/500px-David_Lisnard.jpg",
+        "credit": "Marie Tavares",
+        "licence": "CC-BY-SA 4.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-03-31",
-    "site_campagne_url": null,
+    "site_campagne_url": "https://www.unenouvelleenergie.fr/david-lisnard/",
     "programme_url_officiel": null,
-    "reseaux": [],
+    "reseaux": {
+        "site": "https://www.unenouvelleenergie.fr/",
+        "x": "https://x.com/nouv_energie",
+        "instagram": "https://www.instagram.com/nouv_energie/",
+        "facebook": "https://www.facebook.com/Nouv.Energie",
+        "linkedin": "https://www.linkedin.com/company/nouvelle-energie-pour-la-france/",
+        "youtube": "https://www.youtube.com/@david_lisnard",
+        "tiktok": "https://www.tiktok.com/@nouvelle_energie?_t=ZN-8z21pSoy5zy&_r=1"
+    },
     "couverture": {
         "themes_publies": 0,
         "themes_exprimes": 0,
