@@ -13,11 +13,11 @@
         }
     },
     {
-        "slug": "francois-asselineau",
-        "nom_complet": "François Asselineau",
-        "parti_soutien": "UPR",
+        "slug": "antoine-mikolajczak",
+        "nom_complet": "Antoine Mikolajczak",
+        "parti_soutien": "Équinoxe",
         "nuance": "DIV",
-        "couleur_hex": null,
+        "couleur_hex": "#ffd412",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
@@ -130,19 +130,6 @@
         }
     },
     {
-        "slug": "antoine-mikolajczak",
-        "nom_complet": "Antoine Mikolajczak",
-        "parti_soutien": "Équinoxe",
-        "nuance": "DIV",
-        "couleur_hex": null,
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
         "slug": "francois-ruffin",
         "nom_complet": "François Ruffin",
         "parti_soutien": "Debout !",
@@ -225,6 +212,19 @@
         "nom_complet": "Marine Le Pen",
         "parti_soutien": "Rassemblement national",
         "nuance": "EXD",
+        "couleur_hex": null,
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "francois-asselineau",
+        "nom_complet": "François Asselineau",
+        "parti_soutien": "UPR",
+        "nuance": "DIV",
         "couleur_hex": null,
         "statut_candidature": "declare",
         "couverture": {
