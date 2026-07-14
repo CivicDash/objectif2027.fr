@@ -724,7 +724,54 @@
         }
     ],
     "affaires": {
-        "publiees": [],
-        "en_verification": true
+        "publiees": [
+            {
+                "titre": "Cité numérique du Havre",
+                "statut_judiciaire": "en_cours",
+                "statut_label": "Procédure en cours",
+                "presomption_innocence": true,
+                "aucune_mise_en_examen": true,
+                "description": "Le 19 mai 2026, le Parquet national financier a ouvert une information judiciaire portant sur les conditions de création et de gestion de la Cité numérique du Havre, projet d'innovation lancé en 2020 (budget initial d'environ 8 M€, projet depuis abandonné). Le dossier porte notamment sur une convention signée en juillet 2020 entre la communauté urbaine Le Havre Seine Métropole — alors présidée par Édouard Philippe — et une association attributaire de plus de 2 M€ de fonds publics pour l'animation du site, seule candidate à l'appel à manifestation d'intérêt. Une ancienne haute fonctionnaire de la collectivité, lanceuse d'alerte, avait signalé dès 2023 un possible conflit d'intérêts ; des perquisitions ont eu lieu en 2024. L'enquête examine notamment si l'attribution a favorisé une adjointe du maire, présidente de l'association. Aucune mise en examen n'a été prononcée à ce jour. Édouard Philippe a fait savoir qu'il répondrait aux questions de la justice.",
+                "autorite": "Parquet national financier (juge d'instruction désigné)",
+                "qualifications": [
+                    "détournement de fonds publics (faits présumés)",
+                    "favoritisme (faits présumés)",
+                    "prise illégale d'intérêts (faits présumés)",
+                    "concussion (faits présumés)"
+                ],
+                "position_interesse": "Prend acte de l'ouverture de l'information judiciaire, apprise par la presse ; indique via son entourage qu'il « répondra à toutes les questions que posera la justice » (AFP, 19-20/05/2026).",
+                "sources": [
+                    {
+                        "media": "AFP (via reprise presse)",
+                        "url": null,
+                        "archive_url": null,
+                        "date": "2026-05-19",
+                        "fiabilite": "haute"
+                    },
+                    {
+                        "media": "VL Média",
+                        "url": "https://vl-media.fr/cest-quoi-cette-enquete-qui-vise-edouard-philippe/",
+                        "archive_url": null,
+                        "date": "2026-05-20",
+                        "fiabilite": "moyenne"
+                    },
+                    {
+                        "media": "Echos Plus",
+                        "url": "https://echosplus.com/2026/05/20/edouard-philippe-vise-par-une-information-judiciaire-du-pnf-sur-la-cite-numerique-du-havre/",
+                        "archive_url": null,
+                        "date": "2026-05-20",
+                        "fiabilite": "moyenne"
+                    },
+                    {
+                        "media": "Time France",
+                        "url": "https://www.timefrance.fr/politique/edouard-philippe-vise-par-une-enquete-judiciaire-au-havre-pour-detournements-de-fonds-publics/",
+                        "archive_url": null,
+                        "date": "2026-05-20",
+                        "fiabilite": "moyenne"
+                    }
+                ]
+            }
+        ],
+        "en_verification": false
     }
 }
