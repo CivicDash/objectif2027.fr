@@ -69,6 +69,7 @@
     "prises_de_parole": [],
     "affaires": {
         "publiees": [],
-        "en_verification": false
+        "en_verification": false,
+        "derniere_verification": null
     }
 }

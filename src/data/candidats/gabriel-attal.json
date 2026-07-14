@@ -533,6 +533,7 @@
     ],
     "affaires": {
         "publiees": [],
-        "en_verification": false
+        "en_verification": false,
+        "derniere_verification": "2026-07-14"
     }
 }

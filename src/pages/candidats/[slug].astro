@@ -299,7 +299,8 @@ function etatDe(slug: string): EtatTheme {
             </div>
         ) : (
             <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
-                Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification : {META.genere_le}.
+                Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification :
+                {c.affaires?.derniere_verification ?? META.genere_le}.
                 Une absence d'information n'est pas une preuve d'absence d'affaire.
             </div>
         )}
