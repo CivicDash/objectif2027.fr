@@ -80,6 +80,11 @@ function etatDe(slug: string): EtatTheme {
                 {c.site_campagne_url && (
                     <a href={c.site_campagne_url} rel="nofollow noopener" class="px-2 py-1 rounded-control text-brand-600 hover:underline">Site de campagne ↗</a>
                 )}
+                {Object.entries(c.reseaux ?? {}).map(([res, url]) => (
+                    <a href={url as string} rel="nofollow noopener" class="px-2 py-1 rounded-control border hover:border-brand-400" style="border-color: var(--border); color: var(--fg-muted)">
+                        {{ site: 'Site', x: 'X', instagram: 'Instagram', facebook: 'Facebook', mastodon: 'Mastodon', bluesky: 'Bluesky', linkedin: 'LinkedIn', youtube: 'YouTube' }[res] ?? res} ↗
+                    </a>
+                ))}
             </div>
         </div>
     </header>
