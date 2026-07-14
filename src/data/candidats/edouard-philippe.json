@@ -84,7 +84,433 @@
             "organisation": "Gouvernement Philippe",
             "date_debut": "2017-06-19",
             "date_fin": "2020-07-03",
-            "source_url": null
+            "source_url": null,
+            "actions": [
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi prorogeant l'application de la loi n° 55-385 du 3 avril 1955 relative à l'état d'urgence",
+                    "date": "2017-07-12",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-07-12, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/7/11/2017-1154/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2016-1360 du 13 octobre 2016 modifiant la partie législative du code des juridictions financières",
+                    "date": "2017-08-09",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-08-09, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/8/8/2017-1241/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour la confiance dans la vie politique",
+                    "date": "2017-09-16",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-09-16, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/9/15/JUSC1715753L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi d'habilitation à prendre par ordonnances les mesures pour le renforcement du dialogue social",
+                    "date": "2017-09-16",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-09-16, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/9/15/MTRX1717150L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2017-31 du 12 janvier 2017 de mise en cohérence des textes au regard des dispositions de la loi n° 2016-41 du 26 janvier 2016 de modernisation de notre système de santé",
+                    "date": "2017-10-24",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-10-24, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": null
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi renforçant la sécurité intérieure et la lutte contre le terrorisme",
+                    "date": "2017-10-31",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-10-31, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/10/30/2017-1510/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2017-717 du 3 mai 2017 portant création de l'établissement public Paris La Défense",
+                    "date": "2017-12-27",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-12-27, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/12/25/TERL1713289L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2017-644 du 27 avril 2017 relative à l'adaptation des dispositions législatives relatives au fonctionnement des ordres des professions de santé",
+                    "date": "2017-12-31",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-12-31, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/12/30/SSAH1712342L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi mettant fin à la recherche ainsi qu'à l'exploitation des hydrocarbures et portant diverses dispositions relatives à l'énergie et à l'environnement",
+                    "date": "2017-12-31",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2017-12-31, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2017/12/30/TREX1722331L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant diverses dispositions d'adaptation au droit de l'Union européenne dans le domaine de la sécurité",
+                    "date": "2018-02-27",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-02-27, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/2/26/INTX1728622L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2017-48 du 19 janvier 2017 relative à la profession de physicien médical et l'ordonnance n° 2017-50 du 19 janvier 2017 relative à la reconnaissance des qualifications professionnelles dans le domaine de la santé",
+                    "date": "2018-02-27",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-02-27, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": null
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant les ordonnances n° 2016-1058 du 3 août 2016 relative à la modification des règles applicables à l'évaluation environnementale des projets, plans et programmes et n° 2016-1060 du 3 août 2016 portant réforme des procédures destinées à assurer l'information et la participation du pub…",
+                    "date": "2018-03-03",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-03-03, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/3/2/TRED1630022L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'orientation et à la réussite des étudiants",
+                    "date": "2018-03-09",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-03-09, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/3/8/ESRX1730554L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'organisation des Jeux Olympiques et Paralympiques de 2024",
+                    "date": "2018-03-27",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-03-27, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/3/26/SPOV1729269L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant diverses ordonnances prises sur le fondement de la loi n° 2017-1340 du 15 septembre 2017 d'habilitation à prendre par ordonnances les mesures pour le renforcement du dialogue social",
+                    "date": "2018-03-31",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-03-31, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/3/29/MTRT1726748L/jo/texte "
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2016-131 du 10 février 2016 portant réforme du droit des contrats, du régime général et de la preuve des obligations",
+                    "date": "2018-04-21",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-04-21, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/4/20/JUSC1612295L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la protection des données personnelles",
+                    "date": "2018-06-21",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-06-21, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/6/20/JUSC1732261L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'élection des représentants au Parlement européen",
+                    "date": "2018-06-26",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-06-26, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/6/25/INTX1733825L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour un nouveau pacte ferroviaire",
+                    "date": "2018-06-28",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-06-28, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/6/27/TRAT1805471L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la programmation militaire pour les années 2019 à 2025 et portant diverses dispositions intéressant la défense",
+                    "date": "2018-07-14",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-07-14, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/7/13/ARMX1800503L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif aux contrôles et aux sanctions en matière de concurrence en Polynésie française et en Nouvelle-Calédonie",
+                    "date": "2018-07-24",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-07-24, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/7/23/MOMO1804513L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2017-1252 du 9 août 2017 portant transposition de la directive 2015/2366 du Parlement européen et du Conseil du 25 novembre 2015 concernant les services de paiement dans le marché intérieur",
+                    "date": "2018-08-05",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-08-05, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/8/3/ECOT1728049L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi d'orientation et de programmation renforçant la lutte contre les violences sexuelles et sexistes",
+                    "date": "2018-08-05",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-08-05, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/8/3/JUSD1805895L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour un État au service d'une société de confiance",
+                    "date": "2018-08-11",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-08-11, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/8/10/CPAX1730519L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour la liberté de choisir son avenir professionnel",
+                    "date": "2018-09-06",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-09-06, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/affichTexte.do;jsessionid=431D4DC2306588E9ACA5D302DCE7B6EA.tplgfr43s_1?cidTexte=JORFTEXT000037367660&dateTexte=&oldAction=rechJO&categorieLien=id&idJO=JORFCONT000037367657"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour une immigration maîtrisée, un droit d'asile effectif et une intégration réussie",
+                    "date": "2018-09-11",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-09-11, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/9/10/INTX1801788L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la lutte contre la fraude",
+                    "date": "2018-10-24",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-10-24, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/10/23/CPAE1805937L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour l'équilibre des relations commerciales dans le secteur agricole et alimentaire et une alimentation saine, durable et accessible à tous",
+                    "date": "2018-11-01",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-11-01, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/10/30/AGRX1736303L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant évolution du logement, de l'aménagement et du numérique",
+                    "date": "2018-11-24",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-11-24, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/11/23/TERL1805474L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant mesures d'urgence économiques et sociales",
+                    "date": "2018-12-26",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2018-12-26, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2018/12/24/2018-1213/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi habilitant le Gouvernement à prendre par ordonnances les mesures de préparation au retrait du Royaume-Uni de l'Union européenne",
+                    "date": "2019-01-20",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-01-20, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/1/19/EAEX1825542L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'entrée en fonction des représentants au Parlement européen élus en France aux élections de 2019",
+                    "date": "2019-05-23",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-05-23, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/5/22/INTX1911079L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la croissance et la transformation des entreprises",
+                    "date": "2019-05-23",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-05-23, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/5/22/ECOT1810669L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant diverses dispositions institutionnelles en Polynésie française",
+                    "date": "2019-07-06",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-07-06, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/7/5/MOMX1828735L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant création d'une taxe sur les services numériques et modification de la trajectoire de baisse de l'impôt sur les sociétés",
+                    "date": "2019-07-25",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-07-25, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/7/24/ECOE1902865L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'organisation et à la transformation du système de santé",
+                    "date": "2019-07-26",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-07-26, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/7/24/SSAX1900401L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant création de l'Office français de la biodiversité, modifiant les missions des fédérations des chasseurs et renforçant la police de l'environnement",
+                    "date": "2019-07-26",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-07-26, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/7/24/TREL1827740L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour une école de la confiance",
+                    "date": "2019-07-28",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-07-28, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/7/26/MENX1828765L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour la conservation et la restauration  de la cathédrale Notre-Dame de Paris  et instituant une souscription nationale à cet effet",
+                    "date": "2019-07-30",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-07-30, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/7/29/MICX1911677L/jo/texte "
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la création de l'Agence nationale du sport et à diverses dispositions relatives à l'organisation des jeux Olympiques et Paralympiques de 2024",
+                    "date": "2019-08-02",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-08-02, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/8/1/SPOV1913474L/jo/texte "
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif aux compétences de la Collectivité européenne d'Alsace",
+                    "date": "2019-08-03",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-08-03, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/8/2/TERB1901105L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi de transformation de la fonction publique",
+                    "date": "2019-08-07",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-08-07, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/8/6/CPAF1832065L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la modernisation de la distribution de la presse",
+                    "date": "2019-10-19",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-10-19, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/10/18/MICE1906427L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'énergie et au climat",
+                    "date": "2019-11-09",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-11-09, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/11/8/TREX1911204L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi d'orientation des mobilités",
+                    "date": "2019-12-26",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-12-26, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/12/24/TRET1821032L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'engagement dans la vie locale et à la proximité de l'action publique",
+                    "date": "2019-12-28",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2019-12-28, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "https://www.legifrance.gouv.fr/eli/loi/2019/12/27/TERX1917292L/jo/texte"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à la lutte contre le gaspillage et à l'économie circulaire",
+                    "date": "2020-02-11",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-02-11, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=TREP1902395L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2019-235 du 27 mars 2019 relative aux dispositions pénales et de procédure pénale du code de l'urbanisme de Saint-Martin",
+                    "date": "2020-02-22",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-02-22, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=MOMS1914789L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi d'urgence pour faire face à l'épidémie de covid-19",
+                    "date": "2020-03-24",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-03-24, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=PRMX2007883L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi modifiant la loi n° 2010-838 du 23 juillet 2010 relative à l'application du cinquième alinéa de l'article 13 de la Constitution et prorogeant le mandat des membres de la Haute autorité pour la diffusion des oeuvres et la protection des droits sur internet",
+                    "date": "2020-03-31",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-03-31, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=PRMX1930544L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi prorogeant l'état d'urgence sanitaire et complétant ses dispositions",
+                    "date": "2020-05-12",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-05-12, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=PRMX2010645L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à diverses dispositions liées à la crise sanitaire, à d'autres mesures urgentes ainsi qu'au retrait du Royaume-Uni de l'Union européenne",
+                    "date": "2020-06-18",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-06-18, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=PRMX2009367L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi tendant à sécuriser l'organisation du second tour des élections municipales et communautaires de juin 2020 et à reporter les élections consulaires",
+                    "date": "2020-06-23",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2020-06-23, pendant la période où M. Édouard Philippe était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=INTA2012112L"
+                }
+            ]
         },
         {
             "type": "fonction_gouvernementale",
@@ -92,7 +518,8 @@
             "organisation": "Gouvernement Philippe",
             "date_debut": "2017-05-15",
             "date_fin": "2017-06-19",
-            "source_url": null
+            "source_url": null,
+            "actions": []
         }
     ],
     "mesures_par_theme": [],

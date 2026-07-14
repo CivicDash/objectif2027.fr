@@ -94,7 +94,8 @@
             "organisation": "Gouvernement Jospin",
             "date_debut": "1997-06-02",
             "date_fin": "2002-05-06",
-            "source_url": null
+            "source_url": null,
+            "actions": []
         }
     ],
     "mesures_par_theme": [],

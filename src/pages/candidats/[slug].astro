@@ -12,6 +12,22 @@ const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
 const parrainages = badgeParrainages(c.statut_candidature);
 
 const prisesDeParole = c.prises_de_parole ?? [];
+
+// Regroupement du programme : publiés d'abord, puis en traitement, non-exprimés repliés.
+const themesPublies = THEMES.filter((t) => etatDe(t.slug) === 'publie');
+const themesTraitement = THEMES.filter((t) => etatDe(t.slug) === 'en_traitement');
+const themesNonExprimes = THEMES.filter((t) => etatDe(t.slug) === 'non_exprime');
+
+// Libellé de thème pour les citations des prises de parole.
+const nomTheme = (slug: string | null) => THEMES.find((t) => t.slug === slug)?.nom ?? 'Autre';
+
+// Citations groupées par thème dans chaque document (dropdown par rubrique).
+function citationsParTheme(doc: any): [string, any[]][] {
+    const groupes: Record<string, any[]> = {};
+    for (const cit of doc.citations) (groupes[nomTheme(cit.theme)] ??= []).push(cit);
+    return Object.entries(groupes).sort((a, b) => b[1].length - a[1].length);
+}
+
 const ancres = [
     { id: 'programme', label: 'Programme' },
     ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
@@ -74,11 +90,11 @@ function etatDe(slug: string): EtatTheme {
         {ancres.map((a) => <a href={`#${a.id}`} class="tap inline-flex items-center whitespace-nowrap hover:text-brand-600">{a.label}</a>)}
     </nav>
 
-    <!-- Programme par thème (3 états honnêtes) -->
+    <!-- Programme par thème (3 états honnêtes) — publiés d'abord, non-exprimés repliés -->
     <section id="programme" class="py-6">
         <h2 class="text-xl font-bold mb-3">Programme</h2>
         <div class="space-y-3">
-            {THEMES.map((t) => {
+            {[...themesPublies, ...themesTraitement].map((t) => {
                 const etat = etatDe(t.slug);
                 const info = c.etats_par_theme?.[t.slug] ?? {};
                 const mesures = c.mesures_par_theme?.[t.slug] ?? [];
@@ -87,12 +103,8 @@ function etatDe(slug: string): EtatTheme {
                         <div class="flex items-center justify-between gap-3">
                             <h3 class="font-semibold">{t.nom}</h3>
                             <span class="text-xs px-2 py-1 rounded-full whitespace-nowrap"
-                                  style={etat === 'publie' ? 'background:#ecfdf5;color:#047857'
-                                       : etat === 'en_traitement' ? 'background:#fffbeb;color:#b45309'
-                                       : 'background:var(--bg-soft);color:var(--fg-muted)'}>
-                                {etat === 'publie' ? `${info.nb_mesures} mesure(s)`
-                                 : etat === 'en_traitement' ? 'En cours de traitement'
-                                 : 'Non exprimé'}
+                                  style={etat === 'publie' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>
+                                {etat === 'publie' ? `${info.nb_mesures} mesure(s)` : 'En cours de traitement'}
                             </span>
                         </div>
                         {etat === 'publie' && (
@@ -112,12 +124,23 @@ function etatDe(slug: string): EtatTheme {
                                 {info.source_url && <a href={info.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                             </p>
                         )}
-                        {etat === 'non_exprime' && (
-                            <p class="mt-2 text-sm" style="color: var(--fg-muted)">Ne s'est pas exprimé sur ce thème à ce jour.</p>
-                        )}
                     </div>
                 );
             })}
+
+            {themesNonExprimes.length > 0 && (
+                <details class="rounded-card border p-4" style="border-color: var(--border)">
+                    <summary class="cursor-pointer text-sm font-medium" style="color: var(--fg-muted)">
+                        Thèmes sans expression à ce jour ({themesNonExprimes.length})
+                    </summary>
+                    <p class="mt-2 text-sm flex flex-wrap gap-2">
+                        {themesNonExprimes.map((t) => (
+                            <span class="px-2 py-1 rounded-control text-xs" style="background: var(--bg-soft); color: var(--fg-muted)">{t.nom}</span>
+                        ))}
+                    </p>
+                    <p class="mt-2 text-xs" style="color: var(--fg-muted)">Ne s'est pas exprimé publiquement sur ces thèmes, selon nos relevés.</p>
+                </details>
+            )}
         </div>
     </section>
 
@@ -129,30 +152,40 @@ function etatDe(slug: string): EtatTheme {
                 Propos repérés dans les meetings et interviews, en cours de traitement par notre équipe.
                 <strong>Chaque citation est vérifiable à la source en un clic.</strong>
             </p>
-            <div class="space-y-4">
-                {prisesDeParole.map((doc: any) => (
-                    <div class="rounded-card border p-4" style="border-color: var(--border)">
-                        <div class="flex items-center justify-between gap-2 mb-2">
-                            <h3 class="font-semibold text-sm">
-                                {doc.url ? <a href={doc.url} rel="nofollow noopener" class="hover:text-brand-600">{doc.titre} ↗</a> : doc.titre}
-                            </h3>
-                            <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">{doc.type}{doc.date ? ` · ${doc.date}` : ''}</span>
-                        </div>
-                        <ul class="space-y-3">
-                            {doc.citations.map((cit: any) => (
-                                <li class="text-sm border-l-2 pl-3" style="border-color: var(--border)">
-                                    <p class="italic">« {cit.citation} »</p>
-                                    {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
-                                    {cit.verifier_url && (
-                                        <a href={cit.verifier_url} rel="nofollow noopener"
-                                           class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
-                                            ▶ Vérifier{cit.timecode ? ` à ${cit.timecode}` : ' à la source'}
-                                        </a>
-                                    )}
-                                </li>
+            <div class="space-y-3">
+                {prisesDeParole.map((doc: any, iDoc: number) => (
+                    <details class="rounded-card border" style="border-color: var(--border)" open={prisesDeParole.length === 1 && iDoc === 0}>
+                        <summary class="cursor-pointer p-4 flex items-center justify-between gap-2 flex-wrap">
+                            <span class="font-semibold text-sm">{doc.titre}</span>
+                            <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">
+                                {doc.type}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
+                            </span>
+                        </summary>
+                        <div class="px-4 pb-4 space-y-3">
+                            {doc.url && <a href={doc.url} rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
+                            {citationsParTheme(doc).map(([theme, citations]) => (
+                                <details class="border-l-2 pl-3" style="border-color: var(--border)" open={doc.citations.length <= 8}>
+                                    <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wide py-1" style="color: var(--fg-muted)">
+                                        {theme} ({citations.length})
+                                    </summary>
+                                    <ul class="space-y-3 mt-1">
+                                        {citations.map((cit: any) => (
+                                            <li class="text-sm">
+                                                <p class="italic">« {cit.citation} »</p>
+                                                {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
+                                                {cit.verifier_url && (
+                                                    <a href={cit.verifier_url} rel="nofollow noopener"
+                                                       class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
+                                                        ▶ Vérifier{cit.timecode ? ` à ${cit.timecode}` : ' à la source'}
+                                                    </a>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </details>
                             ))}
-                        </ul>
-                    </div>
+                        </div>
+                    </details>
                 ))}
             </div>
         </section>
@@ -170,6 +203,25 @@ function etatDe(slug: string): EtatTheme {
                             {e.date_debut ?? '?'}{e.date_fin ? ` — ${e.date_fin}` : ' — en cours'}
                             {e.source_url && <a href={e.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                         </div>
+                        {e.actions?.length > 0 && (
+                            <details class="mt-1">
+                                <summary class="cursor-pointer text-xs font-medium text-brand-600">
+                                    Actions durant cette fonction ({e.actions.length}) — données CivicDash
+                                </summary>
+                                <ul class="mt-2 space-y-1.5 text-xs" style="color: var(--fg-muted)">
+                                    {e.actions.map((a: any) => (
+                                        <li>
+                                            <span class="font-mono">{a.date}</span> — {a.titre}
+                                            {a.source_url && <a href={a.source_url} rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">JO ↗</a>}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p class="text-[11px] mt-2" style="color: var(--fg-muted)">
+                                    Sélection mécanique, sans choix éditorial : {e.actions[0].critere}
+                                    (<a href="/methodologie/" class="text-brand-600 hover:underline">méthodologie</a>).
+                                </p>
+                            </details>
+                        )}
                     </li>
                 ))}
             </ol>

@@ -84,7 +84,73 @@
             "organisation": "Gouvernement Attal",
             "date_debut": "2024-01-09",
             "date_fin": "2024-09-05",
-            "source_url": null
+            "source_url": null,
+            "actions": [
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi pour contrôler l'immigration, améliorer l'intégration",
+                    "date": "2024-01-27",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-01-27, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=IOMV2236472L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'accélération et à la simplification de la rénovation de l'habitat dégradé et des grandes opérations d'aménagement",
+                    "date": "2024-04-10",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-04-10, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=TREL2329162L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2023-389 du 24 mai 2023 modifiant les dispositions du code général de la propriété des personnes publiques relatives à la Polynésie française",
+                    "date": "2024-04-16",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-04-16, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=ECOE2329877L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi portant diverses dispositions d'adaptation au droit de l'Union européenne en matière d'économie, de finances, de transition écologique, de droit pénal, de droit social et en matière agricole",
+                    "date": "2024-04-23",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-04-23, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=ECOM2328155L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi visant à renforcer la lutte contre les dérives sectaires et à améliorer l'accompagnement des victimes",
+                    "date": "2024-05-11",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-05-11, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=IOMD2327297L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi relatif à l'organisation de la gouvernance de la sûreté nucléaire et de la radioprotection pour répondre au défi de la relance de la filière nucléaire",
+                    "date": "2024-05-22",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-05-22, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=ECOP2329611L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi visant à sécuriser et réguler l'espace numérique",
+                    "date": "2024-05-22",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-05-22, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=ECOI2309270L"
+                },
+                {
+                    "type": "loi_portee",
+                    "titre": "Loi ratifiant l'ordonnance n° 2023-285 du 19 avril 2023 portant extension et adaptation à la Polynésie française, à la Nouvelle-Calédonie et aux îles Wallis et Futuna de diverses dispositions législatives relatives à la santé",
+                    "date": "2024-05-24",
+                    "explication": "Projet de loi porté par le gouvernement, promulgué le 2024-05-24, pendant la période où M. Gabriel Attal était Premier ministre. Sélection mécanique par date de promulgation — aucun choix éditorial.",
+                    "critere": "Projet de loi promulgué au JO pendant la fonction de Premier ministre (dates de promulgation)",
+                    "source_url": "http://www.legifrance.gouv.fr/UnTexteDeJorf.do?numjo=TSSP2325834L"
+                }
+            ]
         },
         {
             "type": "fonction_gouvernementale",
@@ -92,7 +158,8 @@
             "organisation": "Gouvernement Borne",
             "date_debut": "2022-05-16",
             "date_fin": "2024-01-09",
-            "source_url": null
+            "source_url": null,
+            "actions": []
         },
         {
             "type": "fonction_gouvernementale",
@@ -100,7 +167,8 @@
             "organisation": "Gouvernement Castex",
             "date_debut": "2020-07-03",
             "date_fin": "2022-05-16",
-            "source_url": null
+            "source_url": null,
+            "actions": []
         },
         {
             "type": "fonction_gouvernementale",
@@ -108,7 +176,8 @@
             "organisation": "Gouvernement Philippe",
             "date_debut": "2017-06-19",
             "date_fin": "2020-07-03",
-            "source_url": null
+            "source_url": null,
+            "actions": []
         }
     ],
     "mesures_par_theme": [],
