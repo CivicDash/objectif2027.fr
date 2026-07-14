@@ -82,7 +82,7 @@ function etatDe(slug: string): EtatTheme {
                 )}
                 {Object.entries(c.reseaux ?? {}).map(([res, url]) => (
                     <a href={url as string} target="_blank" rel="nofollow noopener" class="px-2 py-1 rounded-control border hover:border-brand-400" style="border-color: var(--border); color: var(--fg-muted)">
-                        {{ site: 'Site', x: 'X', instagram: 'Instagram', facebook: 'Facebook', mastodon: 'Mastodon', bluesky: 'Bluesky', linkedin: 'LinkedIn', youtube: 'YouTube' }[res] ?? res} ↗
+                        {{ site: 'Site', x: 'X', instagram: 'Instagram', facebook: 'Facebook', mastodon: 'Mastodon', bluesky: 'Bluesky', linkedin: 'LinkedIn', youtube: 'YouTube', tiktok: 'TikTok' }[res] ?? res} ↗
                     </a>
                 ))}
             </div>
