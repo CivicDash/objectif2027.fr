@@ -240,7 +240,478 @@
             }
         ]
     },
-    "programme_complet": null,
+    "programme_complet": {
+        "titre": "L'Avenir en commun (édition 2025) — squelette du référentiel",
+        "url": "https://melenchon2027.fr/programme2025/livre/",
+        "nb_chapitres": 18,
+        "nb_entrees": 89,
+        "chapitres": [
+            {
+                "numero": 1,
+                "titre": "Chapitre 1 : Le pouvoir au peuple",
+                "sous_pages": [
+                    {
+                        "titre": "Réunir une Assemblée constituante pour passer à la 6e République",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre1/s1"
+                    },
+                    {
+                        "titre": "Abolir la monarchie présidentielle",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre1/s2"
+                    },
+                    {
+                        "titre": "Balayer l’oligarchie, abolir les privilèges de la caste",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre1/s3"
+                    },
+                    {
+                        "titre": "Une République permettant l’intervention populaire",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre1/s4"
+                    },
+                    {
+                        "titre": "Une République laïque",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre1/s5"
+                    },
+                    {
+                        "titre": "La Révolution citoyenne dans les médias",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre1/s6"
+                    }
+                ]
+            },
+            {
+                "numero": 2,
+                "titre": "Chapitre 2 : Par delà la propriété privée",
+                "sous_pages": [
+                    {
+                        "titre": "Collectiviser les biens communs fondamentaux",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre2/s1"
+                    },
+                    {
+                        "titre": "Mettre fin au pillage économique de la Nation",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre2/s2"
+                    }
+                ]
+            },
+            {
+                "numero": 3,
+                "titre": "Chapitre 3 : Citoyens dans l’entreprise et dans la ville",
+                "sous_pages": [
+                    {
+                        "titre": "Reconnaître la citoyenneté dans l’entreprise et des droits nouveaux aux salariés",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre3/s1"
+                    },
+                    {
+                        "titre": "Une République affirmant le rôle central des communes",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre3/s2"
+                    }
+                ]
+            },
+            {
+                "numero": 4,
+                "titre": "Chapitre 4 : Étendre le domaine de la liberté",
+                "sous_pages": [
+                    {
+                        "titre": "Une nouvelle étape des libertés et de l’émancipation individuelle",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre4/s1"
+                    },
+                    {
+                        "titre": "Sortir de l’état d’urgence permanent",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre4/s2"
+                    },
+                    {
+                        "titre": "Refonder une police républicaine",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre4/s3"
+                    }
+                ]
+            },
+            {
+                "numero": 5,
+                "titre": "Chapitre 5 : Élever le niveau d’instruction",
+                "sous_pages": [
+                    {
+                        "titre": "Éradiquer l’illettrisme et développer l’alphabétisation",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s1"
+                    },
+                    {
+                        "titre": "Faire le service public de la petite enfance",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s2"
+                    },
+                    {
+                        "titre": "Reconstruire une école globale pour l’égalité et l’émancipation",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s3"
+                    },
+                    {
+                        "titre": "Qualifier tout le monde",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s4"
+                    },
+                    {
+                        "titre": "Être une grande nation scientifique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s5"
+                    },
+                    {
+                        "titre": "Refonder l’enseignement supérieur",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s6"
+                    },
+                    {
+                        "titre": "Créer une conscription pour le secours collectif",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre5/s7"
+                    }
+                ]
+            },
+            {
+                "numero": 6,
+                "titre": "Chapitre 6 : Partage des richesses",
+                "sous_pages": [
+                    {
+                        "titre": "Mettre au pas la finance",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre6/s1"
+                    },
+                    {
+                        "titre": "Pour des banques au service de l’intérêt général",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre6/s2"
+                    },
+                    {
+                        "titre": "Définanciariser l’économie réelle",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre6/s3"
+                    },
+                    {
+                        "titre": "Refuser le chantage : annuler la dette publique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre6/s4"
+                    },
+                    {
+                        "titre": "Faire la révolution fiscale",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre6/s5"
+                    }
+                ]
+            },
+            {
+                "numero": 7,
+                "titre": "Chapitre 7 : La force de l’entraide",
+                "sous_pages": [
+                    {
+                        "titre": "L’égalité des populations par la démocratie et les services publics",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s1"
+                    },
+                    {
+                        "titre": "En finir avec l’abandon des Outre-mer",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s2"
+                    },
+                    {
+                        "titre": "Faire la société de l’entraide : généraliser l’économie sociale, solidaire et coopérative",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s3"
+                    },
+                    {
+                        "titre": "Éradiquer la pauvreté",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s4"
+                    },
+                    {
+                        "titre": "Garantir le droit au logement",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s5"
+                    },
+                    {
+                        "titre": "La justice au nom du peuple",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s6"
+                    },
+                    {
+                        "titre": "Une politique de justice efficace",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s7"
+                    },
+                    {
+                        "titre": "Une police de proximité au service de la sûreté des citoyens",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s8"
+                    },
+                    {
+                        "titre": "Protéger les enfants",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre7/s9"
+                    }
+                ]
+            },
+            {
+                "numero": 8,
+                "titre": "Chapitre 8 : Travailler tous, travailler moins, travailler mieux",
+                "sous_pages": [
+                    {
+                        "titre": "Établir la garantie d’emploi",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s1"
+                    },
+                    {
+                        "titre": "Réduire le temps de travail et faire naître une société du temps choisi",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s2"
+                    },
+                    {
+                        "titre": "Un emploi stable pour chacun",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s3"
+                    },
+                    {
+                        "titre": "Augmenter les salaires et réduire les inégalités salariales dans l’entreprise",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s4"
+                    },
+                    {
+                        "titre": "Rétablir une assurance-chômage protectrice",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s5"
+                    },
+                    {
+                        "titre": "Une sécurité sociale professionnelle",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s6"
+                    },
+                    {
+                        "titre": "En finir avec la souffrance au travail",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s7"
+                    },
+                    {
+                        "titre": "Garantir une retraite digne",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre8/s8"
+                    }
+                ]
+            },
+            {
+                "numero": 9,
+                "titre": "Chapitre 9 : Produire nous même pour répondre aux besoins",
+                "sous_pages": [
+                    {
+                        "titre": "Créer un état d’urgence sociale",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre9/s1"
+                    },
+                    {
+                        "titre": "Réindustrialiser et relocaliser pour assurer notre indépendance",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre9/s2"
+                    },
+                    {
+                        "titre": "Lancer des grands chantiers écologiques, créateurs d’emplois",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre9/s3"
+                    }
+                ]
+            },
+            {
+                "numero": 10,
+                "titre": "Chapitre 10 : Faire place à la nouvelle France",
+                "sous_pages": [
+                    {
+                        "titre": "Réaliser l’égalité entre les femmes et les hommes",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre10/s1"
+                    },
+                    {
+                        "titre": "Une République universaliste contre le racisme et les discriminations",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre10/s2"
+                    },
+                    {
+                        "titre": "Construire l’autonomie des jeunes",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre10/s3"
+                    },
+                    {
+                        "titre": "Faire face collectivement à la perte d’autonomie individuelle",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre10/s4"
+                    },
+                    {
+                        "titre": "Lever les obstacles à l&#039;autonomie des personnes en situation de handicap",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre10/s5"
+                    }
+                ]
+            },
+            {
+                "numero": 11,
+                "titre": "Chapitre 11 : Humaniser par la culture et le sport",
+                "sous_pages": [
+                    {
+                        "titre": "La bifurcation dans les arts et la culture : pour un service public du progrès humain",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre11/s1"
+                    },
+                    {
+                        "titre": "Le sport et les corps libérés de l’argent",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre11/s2"
+                    }
+                ]
+            },
+            {
+                "numero": 12,
+                "titre": "Chapitre 12 : Planification écologique",
+                "sous_pages": [
+                    {
+                        "titre": "La bifurcation écologique pour une société de l’harmonie",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre12/s1"
+                    },
+                    {
+                        "titre": "L’organisation de l’État au service de la planification écologique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre12/s2"
+                    },
+                    {
+                        "titre": "Les Outre-mer, avant-postes de la planification écologique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre12/s3"
+                    }
+                ]
+            },
+            {
+                "numero": 13,
+                "titre": "Chapitre 13 : Les grands chantiers de la bifurcation écologique",
+                "sous_pages": [
+                    {
+                        "titre": "Investir pour lancer la bifurcation de notre économie",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre13/s1"
+                    },
+                    {
+                        "titre": "Développer les transports publics écologiques, repenser la mobilité individuelle",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre13/s2"
+                    },
+                    {
+                        "titre": "Organiser le 100 % d’énergies renouvelables en 2050 et la rénovation énergétique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre13/s3"
+                    },
+                    {
+                        "titre": "Consommer autrement, une France « zéro déchet »",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre13/s4"
+                    },
+                    {
+                        "titre": "Souveraineté alimentaire et révolution agricole : pour une agriculture écologique et paysanne",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre13/s5"
+                    }
+                ]
+            },
+            {
+                "numero": 14,
+                "titre": "Chapitre 14 : Protection des biens communs et des droits de l’espèce",
+                "sous_pages": [
+                    {
+                        "titre": "Pollutions : désempoisonner le monde",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre14/s1"
+                    },
+                    {
+                        "titre": "L’eau, enjeu central pour l’Humanité",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre14/s2"
+                    },
+                    {
+                        "titre": "Le droit à l’eau dans les Outre-mer",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre14/s3"
+                    },
+                    {
+                        "titre": "Défendre la forêt, poumon de la planète",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre14/s4"
+                    },
+                    {
+                        "titre": "Rompre avec la maltraitance animale",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre14/s5"
+                    },
+                    {
+                        "titre": "Sauver l’écosystème et la biodiversité",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre14/s6"
+                    }
+                ]
+            },
+            {
+                "numero": 15,
+                "titre": "Chapitre 15 : Une approche de santé globale",
+                "sous_pages": [
+                    {
+                        "titre": "S’organiser pour faire face aux pandémies",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre15/s1"
+                    },
+                    {
+                        "titre": "Faire passer la santé d’abord et reconstruire les établissements de santé publics, notamment les hôpitaux",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre15/s2"
+                    },
+                    {
+                        "titre": "Addictions et drogues : il faut changer de stratégie",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre15/s3"
+                    },
+                    {
+                        "titre": "En finir avec la malbouffe",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre15/s4"
+                    }
+                ]
+            },
+            {
+                "numero": 16,
+                "titre": "Chapitre 16 : Une diplomatie altermondialiste pour la paix",
+                "sous_pages": [
+                    {
+                        "titre": "Assumer l’indépendance de la France dans le monde",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s1"
+                    },
+                    {
+                        "titre": "Unir le petit bassin méditerranéen autour d’objectifs communs de progrès",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s10"
+                    },
+                    {
+                        "titre": "Construire une relation avec l’Afrique basée sur la souveraineté des peuples",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s11"
+                    },
+                    {
+                        "titre": "Passer à la francophonie des peuples",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s12"
+                    },
+                    {
+                        "titre": "Construire une défense souveraine au service de la paix",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s2"
+                    },
+                    {
+                        "titre": "Renforcer l’ONU pour faire vivre un monde ordonné",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s3"
+                    },
+                    {
+                        "titre": "Agir pour le respect du droit international contre les guerres",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s4"
+                    },
+                    {
+                        "titre": "Refuser le libre-échange, instaurer un protectionnisme écologique et la coopération économique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s5"
+                    },
+                    {
+                        "titre": "Étendre les protections du droit international aux biens communs planétaires",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s6"
+                    },
+                    {
+                        "titre": "Pour une politique migratoire humaniste et réaliste",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s7"
+                    },
+                    {
+                        "titre": "Les Outre-mer, fer de lance d’une diplomatie écologique altermondialiste",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s8"
+                    },
+                    {
+                        "titre": "Construire des coopérations altermondialistes et internationalistes",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre16/s9"
+                    }
+                ]
+            },
+            {
+                "numero": 17,
+                "titre": "Chapitre 17 : Europe",
+                "sous_pages": [
+                    {
+                        "titre": "Utiliser tous les leviers d’action face aux institutions européennes",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre17/s1"
+                    },
+                    {
+                        "titre": "Désobéir à chaque fois que c’est nécessaire pour mettre en œuvre notre programme",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre17/s2"
+                    }
+                ]
+            },
+            {
+                "numero": 18,
+                "titre": "Chapitre 18 : Nouvelles frontières de l’humanité",
+                "sous_pages": [
+                    {
+                        "titre": "Protéger les mers et océans",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre18/s1"
+                    },
+                    {
+                        "titre": "Être à la hauteur de la responsabilité maritime française",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre18/s2"
+                    },
+                    {
+                        "titre": "Relancer la découverte de l’espace",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre18/s3"
+                    },
+                    {
+                        "titre": "Affirmer le caractère d’intérêt général de la révolution numérique",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre18/s4"
+                    },
+                    {
+                        "titre": "Garantir la souveraineté numérique de la France",
+                        "url": "https://melenchon2027.fr/programme2025/livre/chapitre18/s5"
+                    }
+                ]
+            }
+        ]
+    },
     "prises_de_parole": [
         {
             "titre": "Meeting national de lancement — discours de J.-L. Mélenchon, place Victor-Hugo, Saint-Denis (07/06/2026)",

@@ -20,7 +20,7 @@
     },
     "couverture": {
         "themes_publies": 0,
-        "themes_exprimes": 0,
+        "themes_exprimes": 4,
         "themes_total": 15
     },
     "etats_par_theme": {
@@ -31,7 +31,8 @@
             "etat": "non_exprime"
         },
         "sante": {
-            "etat": "non_exprime"
+            "etat": "relevee",
+            "nb_mesures": 1
         },
         "education": {
             "etat": "non_exprime"
@@ -43,13 +44,17 @@
             "etat": "non_exprime"
         },
         "ecologie-energie": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://www.youtube.com/watch?v=G4A68g_aL88"
         },
         "logement": {
             "etat": "non_exprime"
         },
         "institutions": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 3,
+            "source_url": "https://www.youtube.com/watch?v=G4A68g_aL88"
         },
         "europe-international": {
             "etat": "non_exprime"
@@ -58,7 +63,9 @@
             "etat": "non_exprime"
         },
         "fiscalite-budget": {
-            "etat": "non_exprime"
+            "etat": "en_traitement",
+            "nb_signaux": 1,
+            "source_url": "https://www.youtube.com/watch?v=G4A68g_aL88"
         },
         "numerique": {
             "etat": "non_exprime"
@@ -72,9 +79,100 @@
     },
     "parcours": [],
     "mesures_par_theme": [],
-    "mesures_relevees_par_theme": [],
+    "mesures_relevees_par_theme": {
+        "sante": [
+            {
+                "titre": "Troisième chantier : vivre en bonne santé — garantir un accès aux soins de proximité, une alimentation de qualité et un cadre de vie préservé. Mécanismes non précisés dans ce discours.",
+                "source_url": "https://www.youtube.com/watch?v=G4A68g_aL88",
+                "date_annonce": null,
+                "statut": "annoncee"
+            }
+        ]
+    },
     "programme_complet": null,
-    "prises_de_parole": [],
+    "prises_de_parole": [
+        {
+            "titre": "« On va changer la France. Et ça commence maintenant ! » — mini-meeting Équinoxe, Saint-Père-sur-Loire",
+            "type": "video",
+            "date": null,
+            "url": "https://www.youtube.com/watch?v=G4A68g_aL88",
+            "nb": 1,
+            "citations": [
+                {
+                    "theme": "sante",
+                    "resume": "Troisième chantier : vivre en bonne santé — garantir un accès aux soins de proximité, une alimentation de qualité et un cadre de vie préservé. Mécanismes non précisés dans ce discours.",
+                    "citation": "un accès aux soins proche de chez soi, à une alimentation de qualité",
+                    "timecode": "00:08:32",
+                    "timestamp_s": 512,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=512s",
+                    "statut": "rattachee"
+                }
+            ]
+        },
+        {
+            "titre": "« On va changer la France. Et ça commence maintenant ! » — mini-meeting Équinoxe, Saint-Père-sur-Loire",
+            "type": "video",
+            "date": null,
+            "url": "https://www.youtube.com/watch?v=G4A68g_aL88",
+            "nb": 6,
+            "citations": [
+                {
+                    "theme": "institutions",
+                    "resume": "Premier chantier : décider collectivement — créer des espaces de délibération citoyenne permanents (participation, discussion, décision), au-delà du seul vote quinquennal. Modalités non précisées dans ce discours.",
+                    "citation": "créer des espaces de délibération où nous, les citoyens pouvons vraiment participer, discuter et enfin …",
+                    "timecode": "00:07:11",
+                    "timestamp_s": 431,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=431s",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "La participation ne doit pas se limiter au bulletin de vote tous les cinq ans.",
+                    "citation": "que chacun puisse utiliser sa voix et pas seulement, déposer un bulletin de vote une …",
+                    "timecode": "00:07:21",
+                    "timestamp_s": 441,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=441s",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "fiscalite-budget",
+                    "resume": "Deuxième chantier : produire en France — réindustrialisation contre la logique de performance à tout prix, les délocalisations et le déclassement des territoires (référence personnelle : usine paternelle délocalisée en Pologne).",
+                    "citation": "produire en France. Derrière la quête de la performance à tout prix, nous avons laissé …",
+                    "timecode": "00:07:27",
+                    "timestamp_s": 447,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=447s",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "sante",
+                    "resume": "Troisième chantier : vivre en bonne santé — garantir un accès aux soins de proximité, une alimentation de qualité et un cadre de vie préservé. Mécanismes non précisés dans ce discours.",
+                    "citation": "un accès aux soins proche de chez soi, à une alimentation de qualité",
+                    "timecode": "00:08:32",
+                    "timestamp_s": 512,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=512s",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "L'environnement posé comme condition transversale des trois chantiers (démocratie, réindustrialisation dans les limites planétaires, santé et pollutions).",
+                    "citation": "on ne peut pas parler de démocratie sans parler d'habitabilité de notre planète",
+                    "timecode": "00:08:46",
+                    "timestamp_s": 526,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=526s",
+                    "statut": "detecte"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Subsidiarité : des décisions prises au plus proche du terrain.",
+                    "citation": "pour une France où les décisions se prennent au plus proche du terrain",
+                    "timecode": "00:10:01",
+                    "timestamp_s": 601,
+                    "verifier_url": "https://www.youtube.com/watch?v=G4A68g_aL88&t=601s",
+                    "statut": "detecte"
+                }
+            ]
+        }
+    ],
     "affaires": {
         "publiees": [],
         "en_verification": false,

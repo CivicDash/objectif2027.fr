@@ -112,7 +112,7 @@
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
-            "themes_exprimes": 0,
+            "themes_exprimes": 4,
             "themes_total": 15
         }
     },
