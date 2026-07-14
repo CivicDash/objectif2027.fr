@@ -104,6 +104,19 @@
         }
     },
     {
+        "slug": "antoine-mikolajczak",
+        "nom_complet": "Antoine Mikolajczak",
+        "parti_soutien": "Équinoxe",
+        "nuance": "DIV",
+        "couleur_hex": "#ffd412",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
         "slug": "marine-tondelier",
         "nom_complet": "Marine Tondelier",
         "parti_soutien": "Les Écologistes",
@@ -195,32 +208,6 @@
         }
     },
     {
-        "slug": "clara-egger",
-        "nom_complet": "Clara Egger",
-        "parti_soutien": "Solution démocratique",
-        "nuance": "DIV",
-        "couleur_hex": "#07545e",
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 7,
-            "themes_total": 15
-        }
-    },
-    {
-        "slug": "antoine-mikolajczak",
-        "nom_complet": "Antoine Mikolajczak",
-        "parti_soutien": "Équinoxe",
-        "nuance": "DIV",
-        "couleur_hex": "#ffd412",
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
         "slug": "clementine-autain",
         "nom_complet": "Clémentine Autain",
         "parti_soutien": "L'Après",
@@ -230,6 +217,19 @@
         "couverture": {
             "themes_publies": 0,
             "themes_exprimes": 0,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "clara-egger",
+        "nom_complet": "Clara Egger",
+        "parti_soutien": "Solution démocratique",
+        "nuance": "DIV",
+        "couleur_hex": "#07545e",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 7,
             "themes_total": 15
         }
     },

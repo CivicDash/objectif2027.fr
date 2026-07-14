@@ -9,10 +9,14 @@
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": null,
-    "site_campagne_url": null,
+    "site_campagne_url": "https://parti-equinoxe.fr/qui-est-antoine-mikolajczak/",
     "programme_url_officiel": "https://parti-equinoxe.fr/wp-content/uploads/2024/01/2023-11_Manifeste_livret_imprimable.pdf",
     "reseaux": {
-        "site": "https://parti-equinoxe.fr"
+        "site": "https://parti-equinoxe.fr",
+        "x": "https://x.com/PartiEquinoxe",
+        "instagram": "https://www.instagram.com/parti_equinoxe/",
+        "facebook": "https://www.facebook.com/PartiEquinoxe",
+        "youtube": "https://www.youtube.com/channel/UC5kUxcR5oqS3UArodBOaqsA"
     },
     "couverture": {
         "themes_publies": 0,
@@ -69,6 +73,7 @@
     "parcours": [],
     "mesures_par_theme": [],
     "mesures_relevees_par_theme": [],
+    "programme_complet": null,
     "prises_de_parole": [],
     "affaires": {
         "publiees": [],

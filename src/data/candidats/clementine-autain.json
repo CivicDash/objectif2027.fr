@@ -5,7 +5,11 @@
     "parti_soutien": "L'Après",
     "nuance": "GAU",
     "couleur_hex": "#623FAE",
-    "photo": null,
+    "photo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/20210821_autin.c_6679_%28cropped%29.jpg/500px-20210821_autin.c_6679_%28cropped%29.jpg",
+        "credit": "Greenbox",
+        "licence": "CC-BY-SA 4.0"
+    },
     "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2025-06-16",
@@ -75,6 +79,7 @@
     "parcours": [],
     "mesures_par_theme": [],
     "mesures_relevees_par_theme": [],
+    "programme_complet": null,
     "prises_de_parole": [],
     "affaires": {
         "publiees": [],
