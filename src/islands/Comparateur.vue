@@ -30,6 +30,15 @@ function etat(c) {
 function mesures(c) {
     return c.mesures_par_theme?.[themeActif.value] ?? [];
 }
+function mesuresRelevees(c) {
+    return c.mesures_relevees_par_theme?.[themeActif.value] ?? [];
+}
+// Comparateur : mesures publiées (argumentées) + relevées (fait vérifié, sans argumentaire).
+function toutesMesures(c) {
+    const pub = mesures(c).map((m) => ({ ...m, argumente: !!(m.arguments?.pour?.length || m.arguments?.contre?.length) }));
+    const rel = mesuresRelevees(c).map((m) => ({ ...m, argumente: false }));
+    return [...pub, ...rel];
+}
 function infoTheme(c) {
     return c.etats_par_theme?.[themeActif.value] ?? {};
 }
@@ -104,13 +113,14 @@ async function partager() {
                     <a :href="`/candidats/${c.slug}/`" class="font-semibold hover:text-brand-600">{{ nom(c) }}</a>
                 </header>
 
-                <template v-if="etat(c) === 'publie'">
-                    <details v-for="(m, i) in mesures(c)" :key="i" class="mb-2 border-b pb-2" style="border-color: var(--border)">
+                <template v-if="etat(c) === 'publie' || etat(c) === 'relevee'">
+                    <details v-for="(m, i) in toutesMesures(c)" :key="i" class="mb-2 border-b pb-2" style="border-color: var(--border)">
                         <summary class="cursor-pointer text-sm font-medium">
                             {{ m.titre }}
                             <span class="ml-1 text-xs px-1.5 py-0.5 rounded" :style="m.mise_en_avant ? 'background:#eff6ff;color:#1d4ed8' : 'background:var(--bg-soft);color:var(--fg-muted)'">
                                 {{ m.statut === 'annoncee' ? 'Annonce' : 'Programme' }}
                             </span>
+                            <span v-if="m.argumente" class="ml-1 text-xs px-1.5 py-0.5 rounded" style="background:#ecfdf5;color:#047857" title="Arguments pour et contre sourcés">⚖ argumenté</span>
                         </summary>
                         <div class="mt-2 text-sm space-y-2">
                             <p v-if="m.resume" style="color: var(--fg-muted)">{{ m.resume }}</p>
@@ -136,7 +146,8 @@ async function partager() {
                                     </li>
                                 </ul>
                             </div>
-                            <a v-if="m.source_url" :href="m.source_url" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">source ↗</a>
+                            <p v-if="!m.argumente" class="text-xs" style="color: var(--fg-muted)">Fait vérifié à la source — argumentaire pour/contre en préparation.</p>
+                            <a v-if="m.source_url" :href="m.source_url" target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">source ↗</a>
                         </div>
                     </details>
                 </template>
