@@ -1,0 +1,34 @@
+---
+/**
+ * Barre d'ancres sticky — pilules segmentées avec état actif suivi au scroll
+ * (IntersectionObserver inline, ~15 lignes, aucune donnée collectée).
+ * items : [{ id, label }] — les id correspondent aux sections de la page.
+ */
+export interface Props {
+    items: { id: string; label: string }[];
+}
+const { items } = Astro.props;
+---
+
+<nav aria-label="Sections de la page" class="anchor-nav">
+    <div class="anchor-nav-track">
+        {items.map((a, i) => (
+            <a href={`#${a.id}`} data-spy={a.id} class:list={['anchor-pill', { actif: i === 0 }]}>{a.label}</a>
+        ))}
+    </div>
+</nav>
+
+<script is:inline>
+    (() => {
+        const pills = [...document.querySelectorAll('.anchor-nav [data-spy]')];
+        if (!pills.length || !('IntersectionObserver' in window)) return;
+        const byId = Object.fromEntries(pills.map((p) => [p.dataset.spy, p]));
+        const setActif = (id) => pills.forEach((p) => p.classList.toggle('actif', p.dataset.spy === id));
+        const io = new IntersectionObserver((entries) => {
+            const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.target.offsetTop - b.target.offsetTop)[0];
+            if (visible) setActif(visible.target.id);
+        }, { rootMargin: '-15% 0px -65% 0px' });
+        pills.forEach((p) => { const s = document.getElementById(p.dataset.spy); if (s) io.observe(s); });
+        pills.forEach((p) => p.addEventListener('click', () => setActif(p.dataset.spy)));
+    })();
+</script>

@@ -532,40 +532,13 @@
             "nb": 21,
             "citations": [
                 {
-                    "theme": "securite-justice",
-                    "resume": "Rétablir l'autorité du gouvernement sur le parquet : possibilité d'instructions individuelles écrites du garde des Sceaux aux procureurs (versées au dossier), en modifiant la loi Taubira de 2013 ; en contrepartie, moyens étendus au CSM pour prévenir les conflits d'intérêts.",
-                    "citation": "l'autorité du gouvernement sur les parquets sera rétablie et j'assumerai sur ce point de modifier …",
-                    "timecode": "lignes ~1097-1099",
+                    "theme": "fiscalite-budget",
+                    "resume": "Aucune hausse d'impôts sur les entreprises.",
+                    "citation": "Je ne taxerai pas davantage les entreprises qui payent déjà trop d'impôts",
+                    "timecode": "ligne ~1192",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "securite-justice",
-                    "resume": "Donner aux maires un pouvoir de sanction pénale pour les petites infractions du quotidien que la justice n'a pas le temps de traiter.",
-                    "citation": "donner au maire un pouvoir de sanction pénale pour réprimer les infractions qui pourrissent la …",
-                    "timecode": "lignes ~1099-1101",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "securite-justice",
-                    "resume": "Instaurer des peines de prison très courtes et systématiques dès les premières infractions, sans attendre la récidive.",
-                    "citation": "condamner très tôt à des peines de prison très courtes systématiques sans attendre la récidive",
-                    "timecode": "lignes ~1092-1093",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "securite-justice",
-                    "resume": "Recruter des magistrats plus âgés, issus de parcours professionnels plus divers.",
-                    "citation": "des magistrats plus âgés qui ont eu des expériences professionnelles plus diverses",
-                    "timecode": "lignes ~1090-1092",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "immigration",
@@ -574,61 +547,34 @@
                     "timecode": "lignes ~1105-1107",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "immigration",
-                    "resume": "Assumer une immigration de travail choisie (étudiants, médecins, aides-soignants, ingénieurs) avec des flux maîtrisés plutôt que subis. Le détail (quotas ?) manque : rupture de captation à cet endroit de la transcription.",
-                    "citation": "Nous aurons et disons-le besoin d'accueillir dans les années qui viennent des étudiants, des médecins, …",
-                    "timecode": "lignes ~1110-1112 (rupture de captation juste après)",
+                    "theme": "securite-justice",
+                    "resume": "Recruter des magistrats plus âgés, issus de parcours professionnels plus divers.",
+                    "citation": "des magistrats plus âgés qui ont eu des expériences professionnelles plus diverses",
+                    "timecode": "lignes ~1090-1092",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "fiscalite-budget",
-                    "resume": "Aucune hausse d'impôts sur les entreprises.",
-                    "citation": "Je ne taxerai pas davantage les entreprises qui payent déjà trop d'impôts",
-                    "timecode": "ligne ~1192",
+                    "theme": "securite-justice",
+                    "resume": "Instaurer des peines de prison très courtes et systématiques dès les premières infractions, sans attendre la récidive.",
+                    "citation": "condamner très tôt à des peines de prison très courtes systématiques sans attendre la récidive",
+                    "timecode": "lignes ~1092-1093",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "fiscalite-budget",
-                    "resume": "Baisser les dépenses sociales et supprimer des niches fiscales avant toute hausse d'impôts sur les actifs.",
-                    "citation": "il faut baisser les dépenses sociales, supprimer les niches fiscales avant de songer à augmenter …",
-                    "timecode": "lignes ~1193-1195",
+                    "theme": "securite-justice",
+                    "resume": "Donner aux maires un pouvoir de sanction pénale pour les petites infractions du quotidien que la justice n'a pas le temps de traiter.",
+                    "citation": "donner au maire un pouvoir de sanction pénale pour réprimer les infractions qui pourrissent la …",
+                    "timecode": "lignes ~1099-1101",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "travail-retraites",
-                    "resume": "Mise à contribution accrue des retraités pour le financement du système social (modalités non précisées).",
-                    "citation": "J'assume de dire aux retraités qu'il faudra contribuer davantage au financement de notre système social",
-                    "timecode": "lignes ~1196-1198",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "travail-retraites",
-                    "resume": "Allongement de la durée de travail pour les cadres et employés des secteurs public et privé. Aucun âge légal cible n'est donné dans ce discours (contrairement à ses déclarations antérieures — voir angles de contre-argumentaire).",
-                    "citation": "au cadre et aux employés du secteur public et privé qu'il faudra travailler plus longtemps",
-                    "timecode": "lignes ~1200-1202",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "fiscalite-budget",
-                    "resume": "Reprendre la politique de l'offre menée jusqu'en 2020, créditée par le candidat de bons résultats sur l'investissement, le chômage et la croissance.",
-                    "citation": "reprendre la politique de l'offre interrompue en 2020",
-                    "timecode": "ligne ~1580",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "education",
@@ -637,52 +583,43 @@
                     "timecode": "lignes ~1246-1249",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "education",
-                    "resume": "Uniforme et règles de discipline laissés au libre choix de chaque établissement.",
-                    "citation": "Liberté d'imposer ou non, s'ils le veulent, le port d'un uniforme",
-                    "timecode": "lignes ~1244-1245",
+                    "theme": "fiscalite-budget",
+                    "resume": "Reprendre la politique de l'offre menée jusqu'en 2020, créditée par le candidat de bons résultats sur l'investissement, le chômage et la croissance.",
+                    "citation": "reprendre la politique de l'offre interrompue en 2020",
+                    "timecode": "ligne ~1580",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "education",
-                    "resume": "Soutien scolaire universel pour chaque élève, combinant assistants IA personnalisés et brigades de professeurs, anciens professeurs et étudiants volontaires.",
-                    "citation": "que chaque élève de France ait accès à un soutien scolaire universel combinant assistant IA …",
-                    "timecode": "lignes ~1290-1293",
+                    "theme": "travail-retraites",
+                    "resume": "Allongement de la durée de travail pour les cadres et employés des secteurs public et privé. Aucun âge légal cible n'est donné dans ce discours (contrairement à ses déclarations antérieures — voir angles de contre-argumentaire).",
+                    "citation": "au cadre et aux employés du secteur public et privé qu'il faudra travailler plus longtemps",
+                    "timecode": "lignes ~1200-1202",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "education",
-                    "resume": "Réforme des rythmes scolaires : journées allégées avec plus de sport et de culture, devoirs faits à l'école, vacances d'été raccourcies.",
-                    "citation": "vacances d'été raccourci pour que le savoir ne se perde pas entre juin et septembre",
-                    "timecode": "lignes ~1310-1313",
+                    "theme": "travail-retraites",
+                    "resume": "Mise à contribution accrue des retraités pour le financement du système social (modalités non précisées).",
+                    "citation": "J'assume de dire aux retraités qu'il faudra contribuer davantage au financement de notre système social",
+                    "timecode": "lignes ~1196-1198",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "education",
-                    "resume": "Réglementer et limiter l'exposition des jeunes enfants aux écrans, tout en formant les plus âgés au bon usage des nouvelles technologies.",
-                    "citation": "protégeons les plus jeunes en fixant des limites",
-                    "timecode": "lignes ~1276-1280",
+                    "theme": "fiscalite-budget",
+                    "resume": "Baisser les dépenses sociales et supprimer des niches fiscales avant toute hausse d'impôts sur les actifs.",
+                    "citation": "il faut baisser les dépenses sociales, supprimer les niches fiscales avant de songer à augmenter …",
+                    "timecode": "lignes ~1193-1195",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "ecologie-energie",
-                    "resume": "« Écologie à impact » : mix décarboné nucléaire + renouvelables, adaptation des villes aux îlots de chaleur, rénovation des logements, hôpitaux et écoles.",
-                    "citation": "l'énergie décarbonée avec le nucléaire et les énergies renouvelables",
-                    "timecode": "lignes ~1408-1410",
-                    "timestamp_s": null,
-                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "ecologie-energie",
@@ -691,25 +628,34 @@
                     "timecode": "lignes ~1437-1439",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "ecologie-energie",
-                    "resume": "Exiger au niveau européen des partenaires commerciaux hors UE les mêmes normes environnementales que celles imposées aux producteurs européens (clauses miroirs).",
-                    "citation": "exiger de nos partenaires commerciaux à l'extérieur de l'Europe les mêmes exigences environnementales",
-                    "timecode": "lignes ~1440-1443",
+                    "resume": "« Écologie à impact » : mix décarboné nucléaire + renouvelables, adaptation des villes aux îlots de chaleur, rénovation des logements, hôpitaux et écoles.",
+                    "citation": "l'énergie décarbonée avec le nucléaire et les énergies renouvelables",
+                    "timecode": "lignes ~1408-1410",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "ecologie-energie",
-                    "resume": "Décentraliser la compétence d'adaptation au changement climatique vers les collectivités territoriales.",
-                    "citation": "Décentralisons cette compétence. faisons confiance aux collectivités",
-                    "timecode": "lignes ~1470-1472",
+                    "theme": "education",
+                    "resume": "Réglementer et limiter l'exposition des jeunes enfants aux écrans, tout en formant les plus âgés au bon usage des nouvelles technologies.",
+                    "citation": "protégeons les plus jeunes en fixant des limites",
+                    "timecode": "lignes ~1276-1280",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Réforme des rythmes scolaires : journées allégées avec plus de sport et de culture, devoirs faits à l'école, vacances d'été raccourcies.",
+                    "citation": "vacances d'été raccourci pour que le savoir ne se perde pas entre juin et septembre",
+                    "timecode": "lignes ~1310-1313",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "numerique",
@@ -718,7 +664,61 @@
                     "timecode": "lignes ~1540-1545",
                     "timestamp_s": null,
                     "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
-                    "statut": "detecte"
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Décentraliser la compétence d'adaptation au changement climatique vers les collectivités territoriales.",
+                    "citation": "Décentralisons cette compétence. faisons confiance aux collectivités",
+                    "timecode": "lignes ~1470-1472",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Soutien scolaire universel pour chaque élève, combinant assistants IA personnalisés et brigades de professeurs, anciens professeurs et étudiants volontaires.",
+                    "citation": "que chaque élève de France ait accès à un soutien scolaire universel combinant assistant IA …",
+                    "timecode": "lignes ~1290-1293",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Exiger au niveau européen des partenaires commerciaux hors UE les mêmes normes environnementales que celles imposées aux producteurs européens (clauses miroirs).",
+                    "citation": "exiger de nos partenaires commerciaux à l'extérieur de l'Europe les mêmes exigences environnementales",
+                    "timecode": "lignes ~1440-1443",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Uniforme et règles de discipline laissés au libre choix de chaque établissement.",
+                    "citation": "Liberté d'imposer ou non, s'ils le veulent, le port d'un uniforme",
+                    "timecode": "lignes ~1244-1245",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "immigration",
+                    "resume": "Assumer une immigration de travail choisie (étudiants, médecins, aides-soignants, ingénieurs) avec des flux maîtrisés plutôt que subis. Le détail (quotas ?) manque : rupture de captation à cet endroit de la transcription.",
+                    "citation": "Nous aurons et disons-le besoin d'accueillir dans les années qui viennent des étudiants, des médecins, …",
+                    "timecode": "lignes ~1110-1112 (rupture de captation juste après)",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "securite-justice",
+                    "resume": "Rétablir l'autorité du gouvernement sur le parquet : possibilité d'instructions individuelles écrites du garde des Sceaux aux procureurs (versées au dossier), en modifiant la loi Taubira de 2013 ; en contrepartie, moyens étendus au CSM pour prévenir les conflits d'intérêts.",
+                    "citation": "l'autorité du gouvernement sur les parquets sera rétablie et j'assumerai sur ce point de modifier …",
+                    "timecode": "lignes ~1097-1099",
+                    "timestamp_s": null,
+                    "verifier_url": "https://www.youtube.com/watch?v=cDUjRR0k7z0",
+                    "statut": "rattachee"
                 }
             ]
         }

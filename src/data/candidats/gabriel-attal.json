@@ -190,58 +190,13 @@
             "nb": 22,
             "citations": [
                 {
-                    "theme": "education",
-                    "resume": "Rétablir dès le début du mandat les mesures du « choc des savoirs » abandonnées depuis la dissolution.",
-                    "citation": "l'une de mes premières décisions sera de rétablir les mesures qui sont passées à la …",
-                    "timecode": "01:10",
-                    "timestamp_s": 4200,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4200s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "education",
-                    "resume": "Aller au bout de l'interdiction des réseaux sociaux pour les moins de 15 ans.",
-                    "citation": "nous irons au bout de leur interdiction pour les moins de 15 ans",
-                    "timecode": "01:12",
-                    "timestamp_s": 4320,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4320s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "education",
-                    "resume": "Utiliser la baisse démographique pour réduire la taille des classes : moins de 20 élèves par classe en primaire.",
-                    "citation": "Et en primaire, moins de 20 élèves par classe comme dans les meilleurs systèmes éducatifs …",
-                    "timecode": "01:13",
-                    "timestamp_s": 4380,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "education",
-                    "resume": "Réaffecter les moyens dégagés par la baisse démographique (1,7 M d'élèves en moins d'ici 10 ans) à la rémunération des professeurs et au recrutement/paie des AESH.",
-                    "citation": "Ces moyens supplémentaires qui seront dégagés par cette baisse démographique devront aussi servir à mieux …",
-                    "timecode": "01:13",
-                    "timestamp_s": 4380,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "education",
-                    "resume": "Objectif : ramener la France dans le haut du classement PISA en 10 ans.",
-                    "citation": "reprendre en 10 ans l'une des premières places du classement PISA",
-                    "timecode": "01:14",
-                    "timestamp_s": 4440,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4440s",
-                    "statut": "detecte"
-                },
-                {
                     "theme": "travail-retraites",
-                    "resume": "« Droit au brut » : baisser les cotisations salariales pour rapprocher le salaire net du brut.",
-                    "citation": "Rapprocher le net du brut, supprimer des lignes sur la feuille de paye en baissant …",
-                    "timecode": "01:18",
-                    "timestamp_s": 4680,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4680s",
-                    "statut": "detecte"
+                    "resume": "Réformer le code du travail pour le réduire à une « constitution du travail » (grands principes), le reste renvoyé au dialogue social.",
+                    "citation": "réformer le code du travail pour en faire une constitution du travail",
+                    "timecode": "01:17",
+                    "timestamp_s": 4620,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4620s",
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "travail-retraites",
@@ -250,70 +205,34 @@
                     "timecode": "01:18",
                     "timestamp_s": 4680,
                     "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4680s",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "travail-retraites",
-                    "resume": "Réformer le code du travail pour le réduire à une « constitution du travail » (grands principes), le reste renvoyé au dialogue social.",
-                    "citation": "réformer le code du travail pour en faire une constitution du travail",
-                    "timecode": "01:17",
-                    "timestamp_s": 4620,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4620s",
-                    "statut": "detecte"
+                    "resume": "« Droit au brut » : baisser les cotisations salariales pour rapprocher le salaire net du brut.",
+                    "citation": "Rapprocher le net du brut, supprimer des lignes sur la feuille de paye en baissant …",
+                    "timecode": "01:18",
+                    "timestamp_s": 4680,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4680s",
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "travail-retraites",
-                    "resume": "Chiffrage avancé à l'appui de la stratégie salaires : avec la trajectoire de productivité américaine sur 20 ans, le salaire médian serait de 3 300 € nets au lieu de 2 200 €. À fact-checker (méthodologie non citée).",
-                    "citation": "le salaire médian français ne serait pas de 2200 € nets comme aujourd'hui, il serait …",
-                    "timecode": "01:17",
-                    "timestamp_s": 4620,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4620s",
-                    "statut": "detecte"
+                    "theme": "education",
+                    "resume": "Objectif : ramener la France dans le haut du classement PISA en 10 ans.",
+                    "citation": "reprendre en 10 ans l'une des premières places du classement PISA",
+                    "timecode": "01:14",
+                    "timestamp_s": 4440,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4440s",
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "immigration",
-                    "resume": "Ligne générale : « accueillir moins pour accueillir mieux », rejet simultané de l'immigration zéro et des « portes grandes ouvertes ».",
-                    "citation": "accueillir moins pour accueillir mieux",
-                    "timecode": "01:20",
-                    "timestamp_s": 4800,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4800s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "immigration",
-                    "resume": "Immigration de travail sélective via un système à points inspiré du Canada (offre d'emploi, logement, adhésion aux valeurs).",
-                    "citation": "un système à point comme au Canada, fondé sur des critères simples",
-                    "timecode": "01:20",
-                    "timestamp_s": 4800,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4800s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "immigration",
-                    "resume": "Quotas annuels d'immigration de travail votés par le Parlement sur proposition des partenaires sociaux.",
-                    "citation": "les quotas d'immigration de travail que nous fixerons, qui seront votés par le Parlement soi …",
-                    "timecode": "01:34",
-                    "timestamp_s": 5640,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5640s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "travail-retraites",
-                    "resume": "Réforme systémique des retraites : suppression de l'âge légal de départ au profit de la seule durée de cotisation, avec protection des carrières hachées.",
-                    "citation": "un système débarrassé de l'âge légal de départ fondé sur la seule durée de cotisation",
-                    "timecode": "01:28",
-                    "timestamp_s": 5280,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5280s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "travail-retraites",
-                    "resume": "Introduction d'une part de capitalisation : 1 000 € versés par l'État à la naissance de chaque enfant sur un compte bloqué, abondable par la famille avec défiscalisation, débloqué à la retraite.",
-                    "citation": "que l'État verse 1000 € à chaque naissance de chaque enfrant français sur un compte …",
-                    "timecode": "01:28",
-                    "timestamp_s": 5280,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5280s",
-                    "statut": "detecte"
+                    "theme": "education",
+                    "resume": "Utiliser la baisse démographique pour réduire la taille des classes : moins de 20 élèves par classe en primaire.",
+                    "citation": "Et en primaire, moins de 20 élèves par classe comme dans les meilleurs systèmes éducatifs …",
+                    "timecode": "01:13",
+                    "timestamp_s": 4380,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "travail-retraites",
@@ -322,61 +241,52 @@
                     "timecode": "01:34",
                     "timestamp_s": 5640,
                     "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5640s",
-                    "statut": "detecte"
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "fiscalite-budget",
-                    "resume": "Objectif budgétaire : résorber le déficit public en 10 ans au plus tard, en endiguant la progression des dépenses sociales.",
-                    "citation": "Résorber notre déficit en 10 ans au plus tard",
-                    "timecode": "01:27",
-                    "timestamp_s": 5220,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5220s",
-                    "statut": "detecte"
+                    "theme": "travail-retraites",
+                    "resume": "Introduction d'une part de capitalisation : 1 000 € versés par l'État à la naissance de chaque enfant sur un compte bloqué, abondable par la famille avec défiscalisation, débloqué à la retraite.",
+                    "citation": "que l'État verse 1000 € à chaque naissance de chaque enfrant français sur un compte …",
+                    "timecode": "01:28",
+                    "timestamp_s": 5280,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5280s",
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "fiscalite-budget",
-                    "resume": "Bilan revendiqué : 10 Md€ de dépenses de l'État coupées en cours d'année à Matignon ; baisse des dépenses de l'État en 2024 attribuée à l'INSEE. À fact-checker (référence exacte INSEE).",
-                    "citation": "les dépenses de l'État ont baissé par rapport à l'année précédente",
-                    "timecode": "01:27",
-                    "timestamp_s": 5220,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5220s",
-                    "statut": "detecte"
+                    "theme": "travail-retraites",
+                    "resume": "Réforme systémique des retraites : suppression de l'âge légal de départ au profit de la seule durée de cotisation, avec protection des carrières hachées.",
+                    "citation": "un système débarrassé de l'âge légal de départ fondé sur la seule durée de cotisation",
+                    "timecode": "01:28",
+                    "timestamp_s": 5280,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5280s",
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "ecologie-energie",
-                    "resume": "Réduire de moitié les émissions de gaz à effet de serre en 10 ans, en investissant simultanément dans le nucléaire et les renouvelables.",
-                    "citation": "baisser de moitié dans les 10 ans à venir nos émissions de gaz à effet …",
-                    "timecode": "01:31",
-                    "timestamp_s": 5460,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5460s",
-                    "statut": "detecte"
+                    "theme": "immigration",
+                    "resume": "Quotas annuels d'immigration de travail votés par le Parlement sur proposition des partenaires sociaux.",
+                    "citation": "les quotas d'immigration de travail que nous fixerons, qui seront votés par le Parlement soi …",
+                    "timecode": "01:34",
+                    "timestamp_s": 5640,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5640s",
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "numerique",
-                    "resume": "Faire de la France la première puissance européenne de l'IA : formation massive, attraction des chercheurs, investissements calcul/données/infrastructures/semi-conducteurs, IA « de confiance ».",
-                    "citation": "Nous devons devenir la première puissance d'Europe sur l'intelligence artificielle",
-                    "timecode": "01:24",
-                    "timestamp_s": 5040,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5040s",
-                    "statut": "detecte"
+                    "theme": "immigration",
+                    "resume": "Immigration de travail sélective via un système à points inspiré du Canada (offre d'emploi, logement, adhésion aux valeurs).",
+                    "citation": "un système à point comme au Canada, fondé sur des critères simples",
+                    "timecode": "01:20",
+                    "timestamp_s": 4800,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4800s",
+                    "statut": "rattachee"
                 },
                 {
-                    "theme": "institutions",
-                    "resume": "Référendums réguliers pendant le mandat.",
-                    "citation": "des référendums réguliers parce que la démocratie nationale ne peut pas se limiter à un …",
-                    "timecode": "01:35",
-                    "timestamp_s": 5700,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5700s",
-                    "statut": "detecte"
-                },
-                {
-                    "theme": "institutions",
-                    "resume": "Décentralisation : transférer aux territoires des compétences accompagnées des moyens de les financer.",
-                    "citation": "Donnons-leur des compétences, mais aussi les moyens de financer ces compétences",
-                    "timecode": "01:33",
-                    "timestamp_s": 5580,
-                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5580s",
-                    "statut": "detecte"
+                    "theme": "immigration",
+                    "resume": "Ligne générale : « accueillir moins pour accueillir mieux », rejet simultané de l'immigration zéro et des « portes grandes ouvertes ».",
+                    "citation": "accueillir moins pour accueillir mieux",
+                    "timecode": "01:20",
+                    "timestamp_s": 4800,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4800s",
+                    "statut": "rattachee"
                 },
                 {
                     "theme": "institutions",
@@ -385,7 +295,97 @@
                     "timecode": "01:06",
                     "timestamp_s": 3960,
                     "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=3960s",
-                    "statut": "detecte"
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Décentralisation : transférer aux territoires des compétences accompagnées des moyens de les financer.",
+                    "citation": "Donnons-leur des compétences, mais aussi les moyens de financer ces compétences",
+                    "timecode": "01:33",
+                    "timestamp_s": 5580,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5580s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "institutions",
+                    "resume": "Référendums réguliers pendant le mandat.",
+                    "citation": "des référendums réguliers parce que la démocratie nationale ne peut pas se limiter à un …",
+                    "timecode": "01:35",
+                    "timestamp_s": 5700,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5700s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "ecologie-energie",
+                    "resume": "Réduire de moitié les émissions de gaz à effet de serre en 10 ans, en investissant simultanément dans le nucléaire et les renouvelables.",
+                    "citation": "baisser de moitié dans les 10 ans à venir nos émissions de gaz à effet …",
+                    "timecode": "01:31",
+                    "timestamp_s": 5460,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5460s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "fiscalite-budget",
+                    "resume": "Bilan revendiqué : 10 Md€ de dépenses de l'État coupées en cours d'année à Matignon ; baisse des dépenses de l'État en 2024 attribuée à l'INSEE. À fact-checker (référence exacte INSEE).",
+                    "citation": "les dépenses de l'État ont baissé par rapport à l'année précédente",
+                    "timecode": "01:27",
+                    "timestamp_s": 5220,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5220s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Rétablir dès le début du mandat les mesures du « choc des savoirs » abandonnées depuis la dissolution.",
+                    "citation": "l'une de mes premières décisions sera de rétablir les mesures qui sont passées à la …",
+                    "timecode": "01:10",
+                    "timestamp_s": 4200,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4200s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "numerique",
+                    "resume": "Faire de la France la première puissance européenne de l'IA : formation massive, attraction des chercheurs, investissements calcul/données/infrastructures/semi-conducteurs, IA « de confiance ».",
+                    "citation": "Nous devons devenir la première puissance d'Europe sur l'intelligence artificielle",
+                    "timecode": "01:24",
+                    "timestamp_s": 5040,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5040s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "fiscalite-budget",
+                    "resume": "Objectif budgétaire : résorber le déficit public en 10 ans au plus tard, en endiguant la progression des dépenses sociales.",
+                    "citation": "Résorber notre déficit en 10 ans au plus tard",
+                    "timecode": "01:27",
+                    "timestamp_s": 5220,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=5220s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "travail-retraites",
+                    "resume": "Chiffrage avancé à l'appui de la stratégie salaires : avec la trajectoire de productivité américaine sur 20 ans, le salaire médian serait de 3 300 € nets au lieu de 2 200 €. À fact-checker (méthodologie non citée).",
+                    "citation": "le salaire médian français ne serait pas de 2200 € nets comme aujourd'hui, il serait …",
+                    "timecode": "01:17",
+                    "timestamp_s": 4620,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4620s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Aller au bout de l'interdiction des réseaux sociaux pour les moins de 15 ans.",
+                    "citation": "nous irons au bout de leur interdiction pour les moins de 15 ans",
+                    "timecode": "01:12",
+                    "timestamp_s": 4320,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4320s",
+                    "statut": "rattachee"
+                },
+                {
+                    "theme": "education",
+                    "resume": "Réaffecter les moyens dégagés par la baisse démographique (1,7 M d'élèves en moins d'ici 10 ans) à la rémunération des professeurs et au recrutement/paie des AESH.",
+                    "citation": "Ces moyens supplémentaires qui seront dégagés par cette baisse démographique devront aussi servir à mieux …",
+                    "timecode": "01:13",
+                    "timestamp_s": 4380,
+                    "verifier_url": "https://www.youtube.com/watch?v=yIBtu7BndAE&t=4380s",
+                    "statut": "rattachee"
                 }
             ]
         }

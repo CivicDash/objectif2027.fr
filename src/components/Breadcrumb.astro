@@ -1,0 +1,27 @@
+---
+/**
+ * Fil d'Ariane — pilule aérée avec icône accueil et séparateurs chevron.
+ * items : [{ label, href? }] — le dernier item (sans href) est la page courante.
+ */
+export interface Props {
+    items: { label: string; href?: string }[];
+}
+const { items } = Astro.props;
+---
+
+<nav aria-label="Fil d'Ariane" class="breadcrumb">
+    <a href="/" class="bc-link bc-home" aria-label="Accueil">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5" /><path d="M5 9.5V21h5v-6h4v6h5V9.5" />
+        </svg>
+        <span class="sr-only">Accueil</span>
+    </a>
+    {items.map((it) => (
+        <>
+            <svg class="bc-sep" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+            {it.href
+                ? <a href={it.href} class="bc-link">{it.label}</a>
+                : <span class="bc-current" aria-current="page">{it.label}</span>}
+        </>
+    ))}
+</nav>

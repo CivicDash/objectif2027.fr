@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
 import { THEMES, CANDIDATS_DETAIL, themeParSlug, type EtatTheme } from '@/lib/data';
 
 export function getStaticPaths() {
@@ -16,7 +17,7 @@ function etatDe(c: any): EtatTheme {
 ---
 
 <Base title={`${theme.nom} — positions des candidats | Objectif 2027`} description={`Ce que les candidats à la présidentielle 2027 proposent (ou non) sur : ${theme.nom}.`}>
-    <nav aria-label="Fil d'Ariane" class="text-sm py-2" style="color: var(--fg-muted)"><a href="/" class="text-brand-600 hover:underline">Accueil</a> · <a href="/themes/" class="text-brand-600 hover:underline">Thèmes</a> · {theme.nom}</nav>
+    <Breadcrumb items={[{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }]} />
     <h1 class="text-2xl font-bold">{theme.nom}</h1>
     {theme.description && <p class="mt-1" style="color: var(--fg-muted)">{theme.description}</p>}
 

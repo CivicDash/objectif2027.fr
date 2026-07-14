@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
 import { THEMES, CANDIDATS_DETAIL, type EtatTheme } from '@/lib/data';
 
 const candidats = Object.values(CANDIDATS_DETAIL);
@@ -17,9 +18,7 @@ function couverture(slug: string) {
 ---
 
 <Base title="Les thèmes — Objectif 2027" description="Les 15 thèmes du comparateur présidentiel : une grille neutre issue de nomenclatures publiques (LOLF, COFOG, CESE).">
-    <nav aria-label="Fil d'Ariane" class="text-sm py-2" style="color: var(--fg-muted)">
-        <a href="/" class="text-brand-600 hover:underline">Accueil</a> · Thèmes
-    </nav>
+    <Breadcrumb items={[{ label: 'Thèmes' }]} />
     <h1 class="text-2xl font-bold">Les {THEMES.length} thèmes</h1>
     <p class="text-sm mt-1 mb-4" style="color: var(--fg-muted)">
         Grille neutre, identique pour tous les candidats — jamais dérivée d'un programme (voir

@@ -1,5 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import AnchorNav from '@/components/AnchorNav.astro';
 import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, type EtatTheme } from '@/lib/data';
 
 export function getStaticPaths() {
@@ -41,10 +43,7 @@ function etatDe(slug: string): EtatTheme {
 ---
 
 <Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`}>
-    <nav aria-label="Fil d'Ariane" class="text-sm pt-2" style="color: var(--fg-muted)">
-        <a href="/" class="text-brand-600 hover:underline">Accueil</a> ·
-        <a href="/candidats/" class="text-brand-600 hover:underline">Candidats</a> · {nom}
-    </nav>
+    <Breadcrumb items={[{ label: 'Candidats', href: '/candidats/' }, { label: nom }]} />
 
     <!-- Hero : bannière image si dispo, sinon dégradé de la couleur du candidat -->
     <div class="relative -mx-4 mt-2 h-28 md:h-40 bg-cover bg-center"
@@ -84,11 +83,7 @@ function etatDe(slug: string): EtatTheme {
         </div>
     </header>
 
-    <!-- Barre d'ancres sticky -->
-    <nav aria-label="Sections de la fiche" class="sticky top-0 z-10 -mx-4 px-4 py-2 border-b flex gap-4 text-sm overflow-x-auto"
-         style="background: var(--bg); border-color: var(--border)">
-        {ancres.map((a) => <a href={`#${a.id}`} class="tap inline-flex items-center whitespace-nowrap hover:text-brand-600">{a.label}</a>)}
-    </nav>
+    <AnchorNav items={ancres} />
 
     <!-- Programme par thème (3 états honnêtes) — publiés d'abord, non-exprimés repliés -->
     <section id="programme" class="py-6">
