@@ -6,6 +6,7 @@
     "nuance": "CEN",
     "couleur_hex": "#2563eb",
     "photo": null,
+    "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2024-09-03",
     "site_campagne_url": "https://www.edouardphilippe.fr",
@@ -76,7 +77,24 @@
             "etat": "non_exprime"
         }
     },
-    "parcours": [],
+    "parcours": [
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Premier ministre",
+            "organisation": "Gouvernement Philippe",
+            "date_debut": "2017-06-19",
+            "date_fin": "2020-07-03",
+            "source_url": null
+        },
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Premier ministre",
+            "organisation": "Gouvernement Philippe",
+            "date_debut": "2017-05-15",
+            "date_fin": "2017-06-19",
+            "source_url": null
+        }
+    ],
     "mesures_par_theme": [],
     "prises_de_parole": [
         {

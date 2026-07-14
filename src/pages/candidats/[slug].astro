@@ -30,10 +30,15 @@ function etatDe(slug: string): EtatTheme {
         <a href="/candidats/" class="text-brand-600 hover:underline">Candidats</a> · {nom}
     </nav>
 
-    <!-- Hero : bandeau dégradé (couleur du candidat) + portrait rond chevauchant -->
-    <div class="relative -mx-4 mt-2 h-28 md:h-36" style={`background: linear-gradient(135deg, ${couleur} 0%, color-mix(in srgb, ${couleur} 12%, transparent) 100%)`}>
-        {c.photo?.credit && (
-            <span class="absolute bottom-1 right-2 text-[10px] px-1 rounded" style="background: rgba(0,0,0,.4); color:#fff">© {c.photo.credit} · {c.photo.licence}</span>
+    <!-- Hero : bannière image si dispo, sinon dégradé de la couleur du candidat -->
+    <div class="relative -mx-4 mt-2 h-28 md:h-40 bg-cover bg-center"
+         style={c.hero_banner?.url
+            ? `background-image: linear-gradient(90deg, rgba(0,0,0,.25), transparent), url('${c.hero_banner.url}'); background-color:${couleur}`
+            : `background: linear-gradient(135deg, ${couleur} 0%, color-mix(in srgb, ${couleur} 12%, transparent) 100%)`}>
+        {(c.hero_banner?.credit || c.photo?.credit) && (
+            <span class="absolute bottom-1 right-2 text-[10px] px-1 rounded" style="background: rgba(0,0,0,.45); color:#fff">
+                © {c.hero_banner?.credit ?? c.photo?.credit} · {c.hero_banner?.licence ?? c.photo?.licence}
+            </span>
         )}
     </div>
     <header class="-mt-10 flex items-end gap-4">

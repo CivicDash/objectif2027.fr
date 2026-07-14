@@ -6,6 +6,7 @@
     "nuance": "GAU",
     "couleur_hex": "#c0392b",
     "photo": null,
+    "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-05-03",
     "site_campagne_url": "https://melenchon2027.fr",
@@ -86,7 +87,16 @@
             "source_url": "https://melenchon.fr/2026/06/07/meeting-de-jean-luc-melenchon-a-saint-denis/"
         }
     },
-    "parcours": [],
+    "parcours": [
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Ministre délégué à l'Enseignement professionnel",
+            "organisation": "Gouvernement Jospin",
+            "date_debut": "1997-06-02",
+            "date_fin": "2002-05-06",
+            "source_url": null
+        }
+    ],
     "mesures_par_theme": [],
     "prises_de_parole": [
         {

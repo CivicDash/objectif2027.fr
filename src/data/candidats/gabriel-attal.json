@@ -6,6 +6,7 @@
     "nuance": "CEN",
     "couleur_hex": "#f59e0b",
     "photo": null,
+    "hero_banner": null,
     "statut_candidature": "declare",
     "date_declaration": "2026-05-22",
     "site_campagne_url": "https://attalpresident.fr",
@@ -76,7 +77,40 @@
             "etat": "non_exprime"
         }
     },
-    "parcours": [],
+    "parcours": [
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Premier ministre, chargé de la Planification écologique et énergétique",
+            "organisation": "Gouvernement Attal",
+            "date_debut": "2024-01-09",
+            "date_fin": "2024-09-05",
+            "source_url": null
+        },
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Ministre délégué chargé des Comptes publics",
+            "organisation": "Gouvernement Borne",
+            "date_debut": "2022-05-16",
+            "date_fin": "2024-01-09",
+            "source_url": null
+        },
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Secrétaire d'État, porte-parole du gouvernement",
+            "organisation": "Gouvernement Castex",
+            "date_debut": "2020-07-03",
+            "date_fin": "2022-05-16",
+            "source_url": null
+        },
+        {
+            "type": "fonction_gouvernementale",
+            "titre": "Secrétaire d'État",
+            "organisation": "Gouvernement Philippe",
+            "date_debut": "2017-06-19",
+            "date_fin": "2020-07-03",
+            "source_url": null
+        }
+    ],
     "mesures_par_theme": [],
     "prises_de_parole": [
         {
