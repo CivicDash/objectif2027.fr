@@ -13,11 +13,11 @@
         }
     },
     {
-        "slug": "antoine-mikolajczak",
-        "nom_complet": "Antoine Mikolajczak",
-        "parti_soutien": "Équinoxe",
-        "nuance": "DIV",
-        "couleur_hex": "#ffd412",
+        "slug": "clementine-autain",
+        "nom_complet": "Clémentine Autain",
+        "parti_soutien": "L'Après",
+        "nuance": "GAU",
+        "couleur_hex": "#623FAE",
         "statut_candidature": "declare",
         "couverture": {
             "themes_publies": 0,
@@ -130,19 +130,6 @@
         }
     },
     {
-        "slug": "clementine-autain",
-        "nom_complet": "Clémentine Autain",
-        "parti_soutien": "L'Après",
-        "nuance": "GAU",
-        "couleur_hex": null,
-        "statut_candidature": "declare",
-        "couverture": {
-            "themes_publies": 0,
-            "themes_exprimes": 0,
-            "themes_total": 15
-        }
-    },
-    {
         "slug": "lydie-massard",
         "nom_complet": "Lydie Massard",
         "parti_soutien": "Union démocratique bretonne",
@@ -230,6 +217,19 @@
         "couverture": {
             "themes_publies": 0,
             "themes_exprimes": 7,
+            "themes_total": 15
+        }
+    },
+    {
+        "slug": "antoine-mikolajczak",
+        "nom_complet": "Antoine Mikolajczak",
+        "parti_soutien": "Équinoxe",
+        "nuance": "DIV",
+        "couleur_hex": "#ffd412",
+        "statut_candidature": "declare",
+        "couverture": {
+            "themes_publies": 0,
+            "themes_exprimes": 0,
             "themes_total": 15
         }
     },
