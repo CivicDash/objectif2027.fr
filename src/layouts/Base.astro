@@ -39,23 +39,31 @@ const annee = 2027;
         <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
         <meta name="twitter:card" content="summary_large_image" />
     </head>
-    <body>
+    <body class="min-h-dvh flex flex-col">
         <a href="#contenu" class="skip-link">Aller au contenu</a>
 
         <header class="border-b" style="border-color: var(--border)">
-            <div class="mx-auto max-w-content px-4 py-3 flex items-center justify-between">
-                <a href="/" class="font-bold tracking-tight text-lg">Objectif&nbsp;{annee}</a>
-                <nav aria-label="Navigation principale" class="flex items-center gap-4 text-sm">
-                    <a href="/candidats/" class="tap inline-flex items-center hover:text-brand-600">Candidats</a>
-                    <a href="/comparateur/" class="tap inline-flex items-center hover:text-brand-600">Comparateur</a>
-                    <a href="/quiz/" class="tap inline-flex items-center hover:text-brand-600">Quiz</a>
-                    <a href="/themes/" class="tap inline-flex items-center hover:text-brand-600">Thèmes</a>
-                    <a href="/demarche/" class="tap inline-flex items-center hover:text-brand-600">Démarche</a>
+            <div class="mx-auto max-w-content px-4 h-14 flex items-center justify-between gap-6">
+                <a href="/" class="font-bold tracking-tight text-lg shrink-0">Objectif&nbsp;{annee}</a>
+                <!-- Navigation desktop uniquement (le mobile utilise la tab bar du bas) -->
+                <nav aria-label="Navigation principale" class="hidden md:flex items-center gap-7 text-sm font-medium">
+                    <a href="/candidats/" class="hover:text-brand-600">Candidats</a>
+                    <a href="/comparateur/" class="hover:text-brand-600">Comparateur</a>
+                    <a href="/quiz/" class="hover:text-brand-600">Quiz</a>
+                    <a href="/themes/" class="hover:text-brand-600">Thèmes</a>
+                    <a href="/demarche/" class="hover:text-brand-600">Démarche</a>
+                    <a href="/recherche/" aria-label="Recherche" class="hover:text-brand-600 inline-flex items-center" title="Recherche">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                    </a>
                 </nav>
+                <!-- Mobile : accès recherche dans la barre du haut (le reste est en tab bar) -->
+                <a href="/recherche/" aria-label="Recherche" class="md:hidden inline-flex items-center justify-center tap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                </a>
             </div>
         </header>
 
-        <main id="contenu" class="mx-auto max-w-content px-4 py-6 pb-24 md:pb-6">
+        <main id="contenu" class="flex-1 w-full mx-auto max-w-content px-4 py-6 pb-24 md:pb-8">
             <slot />
         </main>
 
@@ -81,7 +89,7 @@ const annee = 2027;
             </a>
         </nav>
 
-        <footer class="mt-12 border-t text-sm" style="border-color: var(--border); color: var(--fg-muted)">
+        <footer class="border-t text-sm" style="border-color: var(--border); color: var(--fg-muted)">
             <div class="mx-auto max-w-content px-4 py-8 space-y-2">
                 <p>
                     Données : <strong>CivicDash</strong> / <strong>Civis-Consilium</strong> — sources vérifiées,

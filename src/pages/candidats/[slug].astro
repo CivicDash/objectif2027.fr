@@ -178,14 +178,61 @@ function etatDe(slug: string): EtatTheme {
         )}
     </section>
 
-    <!-- Affaires judiciaires : état vide daté (présomption d'innocence par défaut) -->
+    <!-- Affaires judiciaires : composant le plus sensible (présomption d'innocence) -->
     <section id="affaires" class="py-6">
         <h2 class="text-xl font-bold mb-3">Affaires judiciaires</h2>
-        <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
-            Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification : {META.genere_le}.
-            Une absence d'information n'est pas une preuve d'absence d'affaire ; toute information éventuelle serait
-            sourcée et modérée humainement, avec présomption d'innocence.
-        </div>
+
+        {c.affaires?.publiees?.length ? (
+            <div class="space-y-4">
+                {c.affaires.publiees.map((a: any) => (
+                    <article class="rounded-card border overflow-hidden" style="border-color: var(--border)">
+                        {a.presomption_innocence && (
+                            <p class="text-sm px-4 py-3" style="background:#fffbeb; color:#92400e; border-bottom:1px solid var(--border)">
+                                ⚠ Décision de justice non définitive. <strong>La présomption d'innocence s'applique.</strong>
+                                {a.aucune_mise_en_examen && ' Aucune mise en examen n\'a été prononcée à ce jour.'}
+                            </p>
+                        )}
+                        <div class="p-4">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <h3 class="font-semibold">{a.titre}</h3>
+                                <span class="text-xs px-2 py-1 rounded-full whitespace-nowrap"
+                                      style={a.statut_judiciaire === 'condamne_definitif' ? 'background:#fef2f2;color:#b91c1c' : 'background:#fffbeb;color:#b45309'}>
+                                    {a.statut_label}
+                                </span>
+                            </div>
+                            {a.autorite && <p class="text-xs mb-2" style="color: var(--fg-muted)">{a.autorite}</p>}
+                            {a.description && <p class="text-sm">{a.description}</p>}
+                            {a.qualifications?.length > 0 && (
+                                <ul class="text-xs mt-2 list-disc pl-5" style="color: var(--fg-muted)">
+                                    {a.qualifications.map((q: string) => <li>{q}</li>)}
+                                </ul>
+                            )}
+                            {a.position_interesse && (
+                                <p class="text-xs mt-2 italic" style="color: var(--fg-muted)">Position de l'intéressé : {a.position_interesse}</p>
+                            )}
+                            {a.sources?.length > 0 && (
+                                <p class="text-xs mt-3" style="color: var(--fg-muted)">
+                                    {a.sources.length} source(s) vérifiée(s) :
+                                    {a.sources.map((s: any, i: number) => (
+                                        <span> {i > 0 ? '· ' : ''}{s.url ? <a href={s.url} rel="nofollow noopener" class="text-brand-600 hover:underline">{s.media}</a> : s.media}{s.archive_url && <a href={s.archive_url} rel="nofollow noopener" class="text-brand-600 hover:underline"> (archive)</a>}</span>
+                                    ))}
+                                </p>
+                            )}
+                        </div>
+                    </article>
+                ))}
+            </div>
+        ) : c.affaires?.en_verification ? (
+            <div class="rounded-card border p-4 text-sm" style="border-color:#f59e0b; background:#fffbeb; color:#92400e">
+                Un signalement judiciaire concernant ce candidat est <strong>en cours de vérification</strong> par notre équipe.
+                Il ne sera publié qu'une fois les sources vérifiées et archivées, avec présomption d'innocence.
+            </div>
+        ) : (
+            <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
+                Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification : {META.genere_le}.
+                Une absence d'information n'est pas une preuve d'absence d'affaire.
+            </div>
+        )}
     </section>
 
     <div class="py-4 flex flex-wrap gap-3">

@@ -320,5 +320,9 @@
                 }
             ]
         }
-    ]
+    ],
+    "affaires": {
+        "publiees": [],
+        "en_verification": false
+    }
 }
