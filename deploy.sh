@@ -25,8 +25,8 @@ NEW=$(docker compose exec -T app sh -c 'cat storage/app/presidentielle/dist/meta
       | python3 -c "import json,sys;print(json.load(sys.stdin)['content_hash'])" 2>/dev/null || echo new-fail)
 CUR=$(python3 -c "import json;print(json.load(open('$FRONT/src/data/meta.json'))['content_hash'])" 2>/dev/null || echo none)
 
-if [ "$NEW" = "$CUR" ] && [ -d "$SITE" ]; then
-    exit 0  # rien à faire
+if [ "$NEW" = "$CUR" ] && [ -d "$SITE" ] && [ -z "${FORCE:-}" ]; then
+    exit 0  # rien à faire (FORCE=1 pour rebuild malgré un contenu inchangé, ex. changement de code front)
 fi
 
 echo "$(date -Is) contenu modifié ($CUR -> $NEW) : rebuild…"
