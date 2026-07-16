@@ -178,6 +178,7 @@ function etatDe(slug: string): EtatTheme {
                                                                 {m.arguments[sens].map((a: any) => (
                                                                     <li>
                                                                         {a.contenu}
+                                                                        {a.note_contextuelle && <span class="block opacity-70 italic">{a.note_contextuelle}</span>}
                                                                         {(a.sources ?? []).map((s: any) => (
                                                                             <>
                                                                                 {' '}<a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {s.media ?? s.titre ?? 'source'} ↗</a>

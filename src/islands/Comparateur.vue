@@ -129,6 +129,7 @@ async function partager() {
                                 <ul class="text-xs list-disc pl-4 space-y-1">
                                     <li v-for="(a, j) in m.arguments.pour" :key="j">
                                         {{ a.contenu }}
+                                        <span v-if="a.note_contextuelle" class="block opacity-70 italic">{{ a.note_contextuelle }}</span>
                                         <template v-for="(s, k) in a.sources" :key="k">
                                             <a :href="s.url" target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {{ s.media || s.titre || 'source' }} ↗</a><a v-if="s.archive_url" :href="s.archive_url" target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>
                                         </template>
@@ -140,6 +141,7 @@ async function partager() {
                                 <ul class="text-xs list-disc pl-4 space-y-1">
                                     <li v-for="(a, j) in m.arguments.contre" :key="j">
                                         {{ a.contenu }}
+                                        <span v-if="a.note_contextuelle" class="block opacity-70 italic">{{ a.note_contextuelle }}</span>
                                         <template v-for="(s, k) in a.sources" :key="k">
                                             <a :href="s.url" target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {{ s.media || s.titre || 'source' }} ↗</a><a v-if="s.archive_url" :href="s.archive_url" target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>
                                         </template>
