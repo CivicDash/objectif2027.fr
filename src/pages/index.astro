@@ -2,13 +2,15 @@
 import Base from '@/layouts/Base.astro';
 import CandidatCard from '@/components/CandidatCard.astro';
 import { candidatsOrdreNeutre, THEMES } from '@/lib/data';
+import { websiteJsonLd, organizationJsonLd } from '@/lib/seo';
 
 const candidats = candidatsOrdreNeutre();
 const nbPublies = candidats.filter((c) => c.couverture.themes_publies > 0).length;
 const nbEnCours = candidats.filter((c) => c.couverture.themes_publies === 0 && c.couverture.themes_exprimes > 0).length;
 ---
 
-<Base title="Objectif 2027 — l'élection présidentielle décryptée pour les citoyens">
+<Base title="Objectif 2027 — l'élection présidentielle décryptée pour les citoyens"
+      jsonld={[websiteJsonLd(), organizationJsonLd()]}>
     <section class="py-6">
         <p class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full"
            style="background: var(--bg-soft); color: var(--fg-muted)">Élection présidentielle française</p>
