@@ -18,6 +18,6 @@
         "categories:best-practices": ["warn", { "minScore": 0.95 }]
       }
     },
-    "upload": { "target": "filesystem", "outputDir": "./.lighthouse" }
+    "upload": { "target": "filesystem", "outputDir": "./lighthouse-report" }
   }
 }
