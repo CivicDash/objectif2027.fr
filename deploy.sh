@@ -37,7 +37,9 @@ rm -rf "$FRONT/public/data/candidats"
 cp -r "$FRONT/src/data/candidats" "$FRONT/public/data/candidats"
 
 cd "$FRONT"
-if ! docker run --rm -v "$FRONT":/app -w /app --entrypoint "" civicdash-prod:latest \
+# URL de l'API CivicDash pour le formulaire « Signaler une erreur » (inlinée au build).
+PUBLIC_CIVICDASH_API="${PUBLIC_CIVICDASH_API:-https://admin.objectif2027.fr}"
+if ! docker run --rm -v "$FRONT":/app -w /app -e "PUBLIC_CIVICDASH_API=$PUBLIC_CIVICDASH_API" --entrypoint "" civicdash-prod:latest \
     sh -c 'npm install --no-audit --no-fund >/dev/null 2>&1 && npm run build' >/tmp/o2027-build.log 2>&1; then
     echo "$(date -Is) BUILD FRONT ÉCHOUÉ — site inchangé :"; tail -5 /tmp/o2027-build.log
     exit 1

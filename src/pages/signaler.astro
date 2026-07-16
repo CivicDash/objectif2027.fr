@@ -1,0 +1,35 @@
+---
+import Base from '@/layouts/Base.astro';
+import SignalementForm from '@/islands/SignalementForm.vue';
+import { CANDIDATS, THEMES, META } from '@/lib/data';
+
+const candidats = CANDIDATS.map((c: any) => ({ slug: c.slug, nom_complet: c.nom_complet }));
+const themes = THEMES.map((t: any) => ({ slug: t.slug, nom: t.nom }));
+---
+
+<Base
+    title="Signaler une erreur — Objectif 2027"
+    description="Signalez une inexactitude, une source erronée ou un problème sur une fiche. Chaque signalement est examiné par la modération de l'association."
+>
+    <h1 class="text-2xl font-bold py-4">Signaler une erreur</h1>
+
+    <p class="text-sm mb-4" style="color: var(--fg-muted)">
+        Une information vous semble inexacte, une source manque ou est périmée, un statut judiciaire est mal présenté ?
+        Décrivez-le ci-dessous : votre signalement rejoint la file de modération de l'association et sera vérifié à la source.
+        Citoyens comme équipes de campagne peuvent demander une correction sourcée (droit de réponse).
+    </p>
+    <p class="text-xs mb-6 rounded-card border p-3" style="border-color: var(--border); color: var(--fg-muted)">
+        <strong>Vos données :</strong> ce formulaire est le seul moment où le site transmet une information à un serveur, et
+        uniquement quand vous cliquez « Envoyer ». Aucun cookie, aucun traceur, aucune mesure d'audience, aucune adresse IP
+        conservée. L'email est facultatif et sert seulement à vous recontacter au sujet de ce signalement.
+    </p>
+
+    <SignalementForm client:load candidats={candidats} themes={themes} contentHash={META.content_hash} />
+
+    <noscript>
+        <p class="mt-4 text-sm rounded-card border p-4" style="border-color: var(--border)">
+            Le formulaire nécessite JavaScript. Vous pouvez sinon nous écrire via
+            <a href="https://civis-consilium.eu" class="text-brand-600 hover:underline">l'association</a>.
+        </p>
+    </noscript>
+</Base>
