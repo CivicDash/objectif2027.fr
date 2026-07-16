@@ -15,6 +15,14 @@ const parrainages = badgeParrainages(c.statut_candidature);
 
 const prisesDeParole = c.prises_de_parole ?? [];
 
+// HATVP (déclaration d'intérêts) — affichée seulement si un statut a été arbitré au BO.
+const hatvp = c.hatvp ?? { statut: 'a_verifier' };
+const revenusHatvp = Object.entries(hatvp.summary?.revenus_par_annee ?? {})
+    .map(([annee, v]: any) => ({ annee, total: Number(v?.total ?? v ?? 0) }))
+    .sort((a, b) => a.annee.localeCompare(b.annee));
+const revenusMax = Math.max(1, ...revenusHatvp.map((r) => r.total));
+const fmtEur = (v: number) => v ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v) : '—';
+
 // Regroupement du programme : publiés, puis relevés, puis en traitement, non-exprimés repliés.
 const themesPublies = THEMES.filter((t) => etatDe(t.slug) === 'publie');
 const themesReleves = THEMES.filter((t) => etatDe(t.slug) === 'relevee');
@@ -36,6 +44,7 @@ const ancres = [
     ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
     { id: 'parcours', label: 'Parcours' },
     { id: 'affaires', label: 'Affaires' },
+    ...(hatvp.statut === 'lie' ? [{ id: 'hatvp', label: 'Intérêts (HATVP)' }] : []),
 ];
 
 function etatDe(slug: string): EtatTheme {
@@ -384,6 +393,78 @@ function etatDe(slug: string): EtatTheme {
             </div>
         )}
     </section>
+
+    {hatvp.statut !== 'a_verifier' && (
+        <section id="hatvp" class="py-6">
+            <h2 class="text-lg font-semibold mb-1">Déclaration d'intérêts (HATVP)</h2>
+            <p class="text-xs mb-3" style="color: var(--fg-muted)">
+                Données publiques de la Haute Autorité pour la Transparence de la Vie Publique (déclaration d'intérêts et d'activités).
+            </p>
+            {hatvp.statut === 'lie' && hatvp.summary ? (
+                <div class="rounded-card border p-4 space-y-4" style="border-color: var(--border)">
+                    <p class="text-xs" style="color: var(--fg-muted)">
+                        {hatvp.summary.declaration_type}{hatvp.summary.declaration_date ? ` — déposée le ${hatvp.summary.declaration_date}` : ''}.
+                        {hatvp.url && (<a href={hatvp.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline"> Fiche HATVP officielle ↗</a>)}
+                    </p>
+
+                    {revenusHatvp.length > 0 && (
+                        <div>
+                            <p class="text-sm font-medium mb-1">Revenus déclarés par année</p>
+                            <div class="space-y-1">
+                                {revenusHatvp.map((r) => (
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-14 text-xs" style="color: var(--fg-muted)">{r.annee}</span>
+                                        <div class="flex-1 rounded h-4" style="background: var(--bg-soft)">
+                                            <div class="h-4 rounded" style={`width:${Math.round((r.total / revenusMax) * 100)}%; background:${couleur}`}></div>
+                                        </div>
+                                        <span class="w-24 text-right text-xs">{fmtEur(r.total)}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {hatvp.summary.participations_dirigeantes?.length > 0 && (
+                        <div>
+                            <p class="text-sm font-medium">Participations dirigeantes</p>
+                            <ul class="text-sm list-disc pl-5" style="color: var(--fg-muted)">
+                                {hatvp.summary.participations_dirigeantes.map((p: any) => (<li>{p.societe}{p.activite ? ` — ${p.activite}` : ''}</li>))}
+                            </ul>
+                        </div>
+                    )}
+                    {hatvp.summary.activites_professionnelles?.length > 0 && (
+                        <div>
+                            <p class="text-sm font-medium">Activités professionnelles</p>
+                            <ul class="text-sm list-disc pl-5" style="color: var(--fg-muted)">
+                                {hatvp.summary.activites_professionnelles.map((a: any) => (<li>{a.description}{a.employeur ? ` — ${a.employeur}` : ''}</li>))}
+                            </ul>
+                        </div>
+                    )}
+                    {hatvp.summary.mandats_electifs?.length > 0 && (
+                        <div>
+                            <p class="text-sm font-medium">Mandats électifs</p>
+                            <ul class="text-sm list-disc pl-5" style="color: var(--fg-muted)">
+                                {hatvp.summary.mandats_electifs.map((m: any) => (<li>{m.description}</li>))}
+                            </ul>
+                        </div>
+                    )}
+                    {hatvp.summary.fonctions_benevoles?.length > 0 && (
+                        <div>
+                            <p class="text-sm font-medium">Fonctions bénévoles</p>
+                            <ul class="text-sm list-disc pl-5" style="color: var(--fg-muted)">
+                                {hatvp.summary.fonctions_benevoles.map((f: any) => (<li>{f.description}{f.organisme ? ` — ${f.organisme}` : ''}</li>))}
+                            </ul>
+                        </div>
+                    )}
+                    <p class="text-xs" style="color: var(--fg-muted)">Patrimoine non reproduit (réutilisation restreinte par la loi) — voir la fiche HATVP officielle.</p>
+                </div>
+            ) : hatvp.statut === 'non_soumis' ? (
+                <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">Ce candidat n'est pas soumis à l'obligation de déclaration HATVP.</div>
+            ) : (
+                <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">Aucune déclaration HATVP disponible pour ce candidat dans la source open data.</div>
+            )}
+        </section>
+    )}
 
     <div class="py-4 flex flex-wrap gap-3">
         <a href="/comparateur/" class="tap inline-flex items-center rounded-control bg-brand-600 text-white text-sm font-medium px-4 py-2 hover:bg-brand-800">Comparer</a>
