@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: Build + Lighthouse (SEO / a11y / perf)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Astro + Pagefind)
+        run: npm run build
+
+      - name: Lighthouse CI (budgets .lighthouserc.json)
+        run: npx --yes @lhci/cli@0.14.x autorun
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: .lighthouse/
+          if-no-files-found: ignore

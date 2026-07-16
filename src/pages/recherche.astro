@@ -15,7 +15,7 @@ import Base from '@/layouts/Base.astro';
     <script is:inline>
         window.addEventListener('DOMContentLoaded', () => {
             if (window.PagefindUI) {
-                new window.PagefindUI({
+                const ui = new window.PagefindUI({
                     element: '#recherche',
                     showSubResults: true,
                     showImages: false,
@@ -24,6 +24,9 @@ import Base from '@/layouts/Base.astro';
                         zero_results: 'Aucun résultat pour « [SEARCH_TERM] »',
                     },
                 });
+                // Recherche pré-remplie depuis ?q= (permet la SearchAction / sitelinks searchbox).
+                const q = new URLSearchParams(window.location.search).get('q');
+                if (q && typeof ui.triggerSearch === 'function') ui.triggerSearch(q);
             }
         });
     </script>

@@ -3,6 +3,7 @@ import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
 import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, type EtatTheme } from '@/lib/data';
+import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
     return Object.values(CANDIDATS_DETAIL).map((c: any) => ({ params: { slug: c.slug }, props: { candidat: c } }));
@@ -52,7 +53,7 @@ function etatDe(slug: string): EtatTheme {
 }
 ---
 
-<Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`}>
+<Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
     <Breadcrumb items={[{ label: 'Candidats', href: '/candidats/' }, { label: nom }]} />
 
     <!-- Bannière candidat : bloc unique moderne, 100 % couleur (pas d'image requise).

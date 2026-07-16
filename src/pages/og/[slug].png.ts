@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { CANDIDATS } from '@/lib/data';
+import { CANDIDATS, THEMES } from '@/lib/data';
 
 // Lecture depuis la source (racine projet au build), pas le code bundlé.
 const fontsDir = path.resolve(process.cwd(), 'src/assets/fonts');
@@ -30,6 +30,12 @@ export function getStaticPaths() {
             titre: c.nom_complet.replace(/^M\.\s*|^Mme\s*/, ''),
             sous_titre: `${c.parti_soutien ?? ''} · exprimé sur ${c.couverture.themes_exprimes}/${c.couverture.themes_total} thèmes`,
             accent: c.couleur_hex ?? '#60a5fa',
+        })),
+        ...THEMES.map((t) => ({
+            slug: `theme-${t.slug}`,
+            titre: t.nom,
+            sous_titre: 'Positions des candidats · thème par thème, sourcé',
+            accent: '#60a5fa',
         })),
     ];
     return cartes.map((carte) => ({ params: { slug: carte.slug }, props: { carte } }));
