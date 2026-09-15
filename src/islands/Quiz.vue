@@ -1,123 +1,296 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 
+/**
+ * Quiz thématique.
+ *
+ * Il ne produit AUCUN score. L'écran de résultat rend les positions retenues et les
+ * candidats qui les portent : le lecteur tire sa conclusion, nous ne la produisons pas.
+ * C'est ce qui rend tenable la cohabitation de deux formats de question — sans total à
+ * calculer, il n'y a pas de pondération implicite entre les thèmes.
+ *
+ * Rien n'est envoyé ni conservé : ni serveur, ni stockage local. Les opinions politiques
+ * sont des données sensibles, et un lien de partage les inscrirait dans les journaux de
+ * tous les serveurs qu'il traverse.
+ */
 const props = defineProps({
-    candidats: { type: Array, required: true }, // {slug, nom_complet, couleur_hex, mesures_par_theme, etats_par_theme}
+    // [{ slug, nom, questions: [...] }]
     themes: { type: Array, required: true },
 });
 
-function nom(c) {
-    return c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
+const etape = ref('themes'); // themes | questions | resultat
+const themesChoisis = ref([]);
+const index = ref(0);
+const reponses = ref({});    // ref de question -> ref d'option, ou null (sans avis)
+const enonce = ref(null);
+
+// Les civilités sont retirées partout ailleurs sur le site : « M. Bruno Retailleau »
+// détonnait dans une liste de pastilles.
+const nom = (n) => (n ?? '').replace(/^M\.\s*|^Mme\s*/, '');
+
+const themesDisponibles = computed(() => props.themes.filter((t) => t.questions.length > 0));
+
+const totalQuestions = computed(() =>
+    themesDisponibles.value.reduce((n, t) => n + t.questions.length, 0));
+
+/**
+ * Mélange de Fisher-Yates, tiré une fois par session.
+ *
+ * Sans lui, la première option serait systématiquement la même pour tous les visiteurs —
+ * or la première position d'une liste est avantagée. L'ordre de saisie en administration
+ * ne doit pas devenir un ordre de préséance politique.
+ */
+function melanger(liste) {
+    const a = [...liste];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
-// Questions dérivées MÉCANIQUEMENT des mesures publiées (une question = une mesure phare publiée).
-// Chaque question porte le thème + les candidats qui portent cette position.
-const questions = computed(() => {
-    const q = [];
-    for (const t of props.themes) {
-        for (const c of props.candidats) {
-            const mesures = (c.mesures_par_theme?.[t.slug] ?? []).filter((m) => m.mise_en_avant);
-            for (const m of mesures) {
-                q.push({ theme: t.slug, themeNom: t.nom, enonce: m.titre, candidat: c.slug });
-            }
-        }
-    }
-    return q;
-});
+const questions = ref([]);
 
-const disponible = computed(() => questions.value.length > 0);
-
-// Réponses : question index -> 1 (d'accord) | -1 (pas d'accord) | 0 (sans avis)
-const reponses = ref({});
-const etape = ref(0);
-
-function repondre(i, val) {
-    reponses.value[i] = val;
-    if (etape.value < questions.value.length - 1) etape.value++;
-    else etape.value = questions.value.length; // écran résultats
+function commencer() {
+    const retenus = new Set(themesChoisis.value);
+    questions.value = melanger(
+        props.themes
+            .filter((t) => retenus.has(t.slug))
+            .flatMap((t) => t.questions.map((q) => ({
+                ...q,
+                themeNom: t.nom,
+                optionsMelangees: melanger(q.options),
+            }))),
+    );
+    index.value = 0;
+    reponses.value = {};
+    etape.value = 'questions';
+    annoncer();
 }
 
-// Affinité par thème (calcul 100% client-side) : accord sur les mesures portées par le candidat,
-// candidat non exprimé sur le thème = EXCLU (jamais compté en désaccord).
-const resultats = computed(() => {
-    const parCandidat = {};
-    for (const c of props.candidats) parCandidat[c.slug] = { nom: nom(c), couleur: c.couleur_hex, themes: {} };
+function basculerTheme(slug) {
+    const i = themesChoisis.value.indexOf(slug);
+    if (i >= 0) themesChoisis.value.splice(i, 1);
+    else themesChoisis.value.push(slug);
+}
 
-    questions.value.forEach((q, i) => {
-        const rep = reponses.value[i];
-        if (rep === undefined || rep === 0) return;
-        const c = parCandidat[q.candidat];
-        c.themes[q.theme] ??= { nomTheme: q.themeNom, accords: 0, total: 0 };
-        c.themes[q.theme].total++;
-        if (rep === 1) c.themes[q.theme].accords++;
-    });
+function toutCocher() {
+    themesChoisis.value = themesDisponibles.value.map((t) => t.slug);
+}
 
-    // Meilleur candidat par thème
-    const parTheme = {};
-    for (const t of props.themes) {
-        const classement = props.candidats
-            .map((c) => {
-                const d = parCandidat[c.slug].themes[t.slug];
-                return d && d.total ? { slug: c.slug, nom: nom(c), score: Math.round((d.accords / d.total) * 100) } : null;
-            })
-            .filter(Boolean)
-            .sort((a, b) => b.score - a.score);
-        if (classement.length) parTheme[t.slug] = { nom: t.nom, classement };
+// Le focus suit la question : sans cela, la navigation au clavier reste bloquée en haut
+// de page et un lecteur d'écran n'annonce pas le changement d'énoncé.
+async function annoncer() {
+    await nextTick();
+    enonce.value?.focus();
+}
+
+function repondre(refOption) {
+    const q = questions.value[index.value];
+    reponses.value[q.ref] = refOption;
+    if (index.value < questions.value.length - 1) {
+        index.value++;
+        annoncer();
+    } else {
+        etape.value = 'resultat';
     }
-    return parTheme;
-});
+}
+
+function precedente() {
+    if (index.value > 0) {
+        index.value--;
+        annoncer();
+    }
+}
 
 function recommencer() {
+    etape.value = 'themes';
+    themesChoisis.value = [];
     reponses.value = {};
-    etape.value = 0;
+    index.value = 0;
 }
+
+const questionCourante = computed(() => questions.value[index.value] ?? null);
+
+/**
+ * Résultat : par thème, les positions retenues et qui les porte.
+ *
+ * Un candidat n'apparaît que sous les positions qu'il défend réellement. Ne pas figurer
+ * n'est pas un désaccord — c'est le plus souvent que nous n'avons pas encore dépouillé de
+ * prise de parole de sa part sur le sujet.
+ */
+const resultat = computed(() => {
+    const parTheme = new Map();
+
+    for (const q of questions.value) {
+        const refChoisie = reponses.value[q.ref];
+        if (!refChoisie) continue;
+        const option = q.options.find((o) => o.ref === refChoisie);
+        if (!option) continue;
+
+        const bloc = parTheme.get(q.themeNom) ?? [];
+        bloc.push({ intitule: q.intitule, option });
+        parTheme.set(q.themeNom, bloc);
+    }
+
+    return [...parTheme.entries()].map(([theme, choix]) => ({ theme, choix }));
+});
+
+const nbSansAvis = computed(() =>
+    questions.value.filter((q) => !reponses.value[q.ref]).length);
 </script>
 
 <template>
     <div>
-        <!-- État vide honnête -->
-        <div v-if="!disponible" class="rounded-card border p-5 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
-            Le quiz d'affinité sera disponible dès que des mesures auront été <strong>publiées et validées</strong>.
-            Aujourd'hui, les positions des candidats sont encore en cours de traitement par notre équipe.
+        <p class="text-sm rounded-card border p-3 mb-4" style="border-color: var(--border); color: var(--fg-muted)">
+            🔒 Tout se passe dans votre navigateur — <strong>rien n'est envoyé, rien n'est conservé</strong>.
+            Recharger la page efface vos réponses.
+        </p>
+
+        <!-- Aucune question publiée -->
+        <div v-if="!themesDisponibles.length" class="rounded-card border p-5 text-sm"
+             style="border-color: var(--border); color: var(--fg-muted)">
+            Aucune question n'est publiée pour le moment. Elles arrivent à mesure que les
+            prises de parole des candidats sont dépouillées et vérifiées.
         </div>
 
-        <template v-else>
-            <p class="text-sm rounded-card border p-3 mb-4" style="border-color: var(--border); color: var(--fg-muted)">
-                🔒 Calcul entièrement dans votre navigateur — <strong>rien n'est envoyé ni conservé</strong>.
+        <!-- 1. Choix des thèmes -->
+        <div v-else-if="etape === 'themes'">
+            <h2 class="font-semibold">Sur quels sujets voulez-vous vous situer ?</h2>
+            <p class="text-sm mt-1 mb-4" style="color: var(--fg-muted)">
+                {{ totalQuestions }} question{{ totalQuestions > 1 ? 's' : '' }} disponible{{ totalQuestions > 1 ? 's' : '' }}.
+                Les thèmes absents de cette liste n'ont pas encore de question publiée.
             </p>
 
-            <!-- Questions -->
-            <div v-if="etape < questions.length">
-                <div class="text-xs mb-2" style="color: var(--fg-muted)">
-                    Question {{ etape + 1 }} / {{ questions.length }} · {{ questions[etape].themeNom }}
+            <fieldset class="border-0 p-0 m-0">
+                <legend class="sr-only">Thèmes du quiz</legend>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button v-for="t in themesDisponibles" :key="t.slug" type="button"
+                            class="tap rounded-card border p-3 text-left"
+                            :style="themesChoisis.includes(t.slug)
+                                ? 'border-color: var(--brand-600, #2563eb); background: color-mix(in srgb, #2563eb 6%, var(--bg))'
+                                : 'border-color: var(--border)'"
+                            :aria-pressed="themesChoisis.includes(t.slug)"
+                            @click="basculerTheme(t.slug)">
+                        <span class="font-medium">{{ t.nom }}</span>
+                        <span class="block text-xs" style="color: var(--fg-muted)">
+                            {{ t.questions.length }} question{{ t.questions.length > 1 ? 's' : '' }}
+                        </span>
+                    </button>
                 </div>
-                <p class="text-lg font-medium mb-4">{{ questions[etape].enonce }}</p>
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" class="tap rounded-control bg-etat-publie text-white px-4 py-2 text-sm" @click="repondre(etape, 1)">D'accord</button>
-                    <button type="button" class="tap rounded-control bg-etat-danger text-white px-4 py-2 text-sm" @click="repondre(etape, -1)">Pas d'accord</button>
-                    <button type="button" class="tap rounded-control border px-4 py-2 text-sm" style="border-color: var(--border)" @click="repondre(etape, 0)">Sans avis</button>
+            </fieldset>
+
+            <div class="flex items-center gap-3 mt-4 flex-wrap">
+                <button type="button" class="tap rounded-control bg-brand-600 text-white px-4 py-2 text-sm font-medium disabled:opacity-50"
+                        :disabled="!themesChoisis.length" @click="commencer">
+                    Commencer
+                </button>
+                <button type="button" class="tap text-sm text-brand-600 hover:underline" @click="toutCocher">
+                    Tout sélectionner
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Questions -->
+        <div v-else-if="etape === 'questions' && questionCourante">
+            <p class="text-xs" style="color: var(--fg-muted)">
+                Question {{ index + 1 }} sur {{ questions.length }} · {{ questionCourante.themeNom }}
+            </p>
+
+            <fieldset class="border-0 p-0 m-0 mt-2">
+                <legend class="sr-only">{{ questionCourante.intitule }}</legend>
+
+                <h2 ref="enonce" tabindex="-1" aria-live="polite" class="text-lg font-semibold">
+                    {{ questionCourante.intitule }}
+                </h2>
+                <p v-if="questionCourante.precision" class="text-sm mt-2" style="color: var(--fg-muted)">
+                    {{ questionCourante.precision }}
+                </p>
+
+                <!-- Les candidats ne sont PAS montrés ici : sinon on répond à l'étiquette
+                     et non au contenu. Ils apparaissent au résultat. -->
+                <div class="mt-4 space-y-2">
+                    <button v-for="o in questionCourante.optionsMelangees" :key="o.ref" type="button"
+                            class="tap w-full rounded-card border p-3 text-left hover:border-brand-400"
+                            style="border-color: var(--border)"
+                            @click="repondre(o.ref)">
+                        {{ o.libelle }}
+                    </button>
+                </div>
+            </fieldset>
+
+            <div class="flex items-center justify-between gap-3 mt-4">
+                <button type="button" class="tap text-sm hover:underline disabled:opacity-40"
+                        style="color: var(--fg-muted)" :disabled="index === 0" @click="precedente">
+                    ← Précédente
+                </button>
+                <button type="button" class="tap text-sm hover:underline" style="color: var(--fg-muted)"
+                        @click="repondre(null)">
+                    Sans avis →
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Résultat -->
+        <div v-else-if="etape === 'resultat'">
+            <h2 class="text-lg font-semibold">Les positions que vous avez retenues</h2>
+            <p class="text-sm mt-1 mb-4" style="color: var(--fg-muted)">
+                Pas de score, pas de classement : voici ce que vous avez choisi, et qui le
+                défend. Un candidat qui ne figure pas sous une position ne s'y oppose pas
+                forcément — le plus souvent, nous n'avons pas encore dépouillé de prise de
+                parole de sa part sur ce point.
+            </p>
+
+            <div v-if="!resultat.length" class="rounded-card border p-4 text-sm"
+                 style="border-color: var(--border); color: var(--fg-muted)">
+                Vous n'avez retenu aucune position.
+            </div>
+
+            <div v-for="bloc in resultat" :key="bloc.theme" class="mb-5">
+                <h3 class="font-semibold">{{ bloc.theme }}</h3>
+                <div v-for="(c, i) in bloc.choix" :key="i"
+                     class="rounded-card border p-3 mt-2" style="border-color: var(--border)">
+                    <p class="text-xs" style="color: var(--fg-muted)">{{ c.intitule }}</p>
+                    <p class="font-medium mt-1">{{ c.option.libelle }}</p>
+
+                    <p v-if="!c.option.candidats.length" class="text-sm mt-2" style="color: var(--fg-muted)">
+                        Aucun candidat publié ne porte cette position à ce jour.
+                    </p>
+                    <ul v-else class="flex flex-wrap gap-2 mt-2">
+                        <li v-for="cand in c.option.candidats" :key="cand.slug">
+                            <a :href="`/candidats/${cand.slug}/`"
+                               class="tap inline-flex items-center gap-2 rounded-control border px-2 py-1 text-sm hover:underline"
+                               style="border-color: var(--border)">
+                                <span class="inline-block w-2.5 h-2.5 rounded-full" aria-hidden="true"
+                                      :style="{ background: cand.couleur || '#64748b' }"></span>
+                                {{ nom(cand.nom) }}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <details v-if="c.option.mesures.length" class="mt-2">
+                        <summary class="text-xs cursor-pointer" style="color: var(--fg-muted)">
+                            Les mesures exactes ({{ c.option.mesures.length }})
+                        </summary>
+                        <ul class="mt-2 space-y-1.5">
+                            <li v-for="(m, j) in c.option.mesures" :key="j" class="text-sm">
+                                {{ m.titre }}
+                                <a v-if="m.source_url" :href="m.source_url" target="_blank" rel="nofollow noopener"
+                                   class="text-brand-600 hover:underline text-xs"> source ↗</a>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
             </div>
 
-            <!-- Résultats par thème -->
-            <div v-else>
-                <h2 class="text-xl font-bold mb-1">Vos affinités par thème</h2>
-                <p class="text-sm mb-4" style="color: var(--fg-muted)">
-                    Pas de « gagnant » unique : vous pouvez être proche de candidats différents selon les thèmes.
-                </p>
-                <div class="space-y-3">
-                    <div v-for="(t, slug) in resultats" :key="slug" class="rounded-card border p-4" style="border-color: var(--border)">
-                        <h3 class="font-semibold mb-2">{{ t.nom }}</h3>
-                        <ul class="space-y-1 text-sm">
-                            <li v-for="r in t.classement" :key="r.slug" class="flex items-center justify-between gap-2">
-                                <a :href="`/candidats/${r.slug}/`" class="hover:text-brand-600">{{ r.nom }}</a>
-                                <span class="font-mono">{{ r.score }}%</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <button type="button" class="tap mt-4 rounded-control border px-4 py-2 text-sm" style="border-color: var(--border)" @click="recommencer">Recommencer</button>
-            </div>
-        </template>
+            <p v-if="nbSansAvis" class="text-sm" style="color: var(--fg-muted)">
+                {{ nbSansAvis }} question{{ nbSansAvis > 1 ? 's' : '' }} sans avis.
+            </p>
+
+            <button type="button" class="tap rounded-control border px-4 py-2 text-sm mt-3"
+                    style="border-color: var(--border)" @click="recommencer">
+                Recommencer
+            </button>
+        </div>
     </div>
 </template>

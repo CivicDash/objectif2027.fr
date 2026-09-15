@@ -8,6 +8,7 @@ import controverses from '@/data/controverses.json';
 // Chargement tolérant : un import statique ferait échouer le build si le back-office
 // n'a pas encore livré le fichier — et deploy.sh figerait alors le site entier.
 const _cal = import.meta.glob<{ default: any }>('@/data/calendrier.json', { eager: true });
+const _quiz = import.meta.glob<{ default: any }>('@/data/quiz.json', { eager: true });
 
 export interface Controverse {
     titre: string;
@@ -320,3 +321,40 @@ export function evenementsRecents(limite?: number): Evenement[] {
 }
 
 export const CALENDRIER_ACTIF = CALENDRIER.evenements.length > 0;
+
+/* ── Quiz thématique ─────────────────────────────────────────────────────────────── */
+
+export interface QuizOption {
+    ref: string;
+    libelle: string;
+    candidats: { slug: string; nom: string; couleur: string | null }[];
+    mesures: { titre: string; candidat_slug: string | null; source_url: string | null }[];
+}
+
+export interface QuizQuestion {
+    ref: string;
+    theme: string | null;
+    format: 'arbitrage' | 'accord';
+    intitule: string;
+    precision: string | null;
+    controverse: string | null;
+    options: QuizOption[];
+}
+
+/**
+ * Chargement tolérant : un import statique ferait échouer le build tant que le
+ * back-office n'a pas livré `quiz.json`, et deploy.sh figerait le site entier.
+ */
+export const QUIZ: { election: string; questions: QuizQuestion[] } =
+    (Object.values(_quiz)[0]?.default) ?? { election: '2027', questions: [] };
+
+export const QUIZ_ACTIF = QUIZ.questions.length > 0;
+
+/** Nombre de questions publiées par thème — sert à l'écran de choix des thèmes. */
+export function quizParTheme(): { slug: string; nom: string; questions: QuizQuestion[] }[] {
+    return THEMES.map((t) => ({
+        slug: t.slug,
+        nom: t.nom,
+        questions: QUIZ.questions.filter((q) => q.theme === t.slug),
+    }));
+}
