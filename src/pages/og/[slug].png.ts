@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { CANDIDATS, THEMES } from '@/lib/data';
+import { CANDIDATS, THEMES, questionsCles } from '@/lib/data';
 
 // Lecture depuis la source (racine projet au build), pas le code bundlé.
 const fontsDir = path.resolve(process.cwd(), 'src/assets/fonts');
@@ -36,6 +36,14 @@ export function getStaticPaths() {
             titre: t.nom,
             sous_titre: 'Positions des candidats · thème par thème, sourcé',
             accent: '#60a5fa',
+        })),
+        // Préfixe obligatoire : sans lui, un slug de question pourrait entrer en
+        // collision avec un slug de candidat et faire échouer le build.
+        ...questionsCles().map((q) => ({
+            slug: `question-${q.slug}`,
+            titre: q.titre,
+            sous_titre: 'Ce qui fait débat · qui propose quoi, et ce que disent les études',
+            accent: '#94a3b8',
         })),
     ];
     return cartes.map((carte) => ({ params: { slug: carte.slug }, props: { carte } }));

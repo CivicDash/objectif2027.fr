@@ -1,8 +1,9 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
+import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
-import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, type EtatTheme } from '@/lib/data';
+import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, controverseParSlug, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
@@ -47,6 +48,13 @@ const ancres = [
     { id: 'affaires', label: 'Affaires' },
     ...(hatvp.statut === 'lie' ? [{ id: 'hatvp', label: 'Intérêts (HATVP)' }] : []),
 ];
+
+// La controverse d'une mesure est portée par ses arguments : tous ceux d'un même
+// désaccord y renvoient par le même slug. On prend la première rencontrée.
+function controverseDe(m: any) {
+    const args = [...(m.arguments?.pour ?? []), ...(m.arguments?.contre ?? [])];
+    return controverseParSlug(args.find((a: any) => a.controverse)?.controverse);
+}
 
 function etatDe(slug: string): EtatTheme {
     return (c.etats_par_theme?.[slug]?.etat ?? 'non_exprime') as EtatTheme;
@@ -177,32 +185,7 @@ function etatDe(slug: string): EtatTheme {
                                     <li class="text-sm">
                                         <span class="font-medium">{m.titre}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
-                                        {(m.arguments?.pour?.length > 0 || m.arguments?.contre?.length > 0) && (
-                                            <details class="mt-1">
-                                                <summary class="cursor-pointer text-xs text-brand-600">Arguments pour / contre</summary>
-                                                <div class="mt-1 space-y-2">
-                                                    {['pour', 'contre'].map((sens) => (m.arguments?.[sens]?.length > 0 && (
-                                                        <div>
-                                                            <p class="text-xs font-semibold" style={sens === 'pour' ? 'color:#047857' : 'color:#b91c1c'}>{sens === 'pour' ? 'Pour' : 'Contre'}</p>
-                                                            <ul class="text-xs list-disc pl-4 space-y-1" style="color: var(--fg-muted)">
-                                                                {m.arguments[sens].map((a: any) => (
-                                                                    <li>
-                                                                        {a.contenu}
-                                                                        {a.note_contextuelle && <span class="block opacity-70 italic">{a.note_contextuelle}</span>}
-                                                                        {(a.sources ?? []).map((s: any) => (
-                                                                            <>
-                                                                                {' '}<a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {s.media ?? s.titre ?? 'source'} ↗</a>
-                                                                                {s.archive_url && <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>}
-                                                                            </>
-                                                                        ))}
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    )))}
-                                                </div>
-                                            </details>
-                                        )}
+                                        <ArgumentaireVs arguments={m.arguments} controverse={controverseDe(m)} compact />
                                     </li>
                                 ))}
                             </ul>

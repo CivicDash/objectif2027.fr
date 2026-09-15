@@ -1,7 +1,8 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
-import { THEMES, CANDIDATS_DETAIL, themeParSlug, type EtatTheme } from '@/lib/data';
+import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
+import { THEMES, CANDIDATS_DETAIL, themeParSlug, controversesDuTheme, controverseParSlug, type EtatTheme } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
@@ -15,12 +16,69 @@ const candidats = Object.values(CANDIDATS_DETAIL)
 function etatDe(c: any): EtatTheme {
     return (c.etats_par_theme?.[theme.slug]?.etat ?? 'non_exprime') as EtatTheme;
 }
+
+// Les faits versés à une controverse sont portés par les arguments liés aux mesures
+// des candidats. Un même fait (même `ref`) est partagé entre plusieurs mesures : on le
+// dédoublonne, et on retient combien de fois il est invoqué dans chaque sens.
+// Le sens n'est PAS une propriété du fait : il dépend de la mesure visée — un même
+// chiffrage joue « pour » une mesure et « contre » la mesure opposée. Les ranger en deux
+// colonnes à ce niveau donnerait une fausse impression de camps.
+const controverses = controversesDuTheme(theme.slug).map((ctrv) => {
+    const faits = new Map<string, any>();
+    for (const c of candidats) {
+        for (const m of (c as any).mesures_par_theme?.[theme.slug] ?? []) {
+            for (const sens of ['pour', 'contre'] as const) {
+                for (const a of m.arguments?.[sens] ?? []) {
+                    if (a.controverse !== ctrv.slug) continue;
+                    const f = faits.get(a.ref) ?? { ...a, pour: 0, contre: 0 };
+                    f[sens]++;
+                    faits.set(a.ref, f);
+                }
+            }
+        }
+    }
+    return { ...ctrv, faits: [...faits.values()] };
+}).filter((c) => c.faits.length > 0);
+
+function controverseDe(m: any) {
+    const a = [...(m.arguments?.pour ?? []), ...(m.arguments?.contre ?? [])];
+    return controverseParSlug(a.find((x: any) => x.controverse)?.controverse);
+}
+
+const LIBELLE_TYPE: Record<string, string> = {
+    etude: 'Étude',
+    chiffrage: 'Chiffrage',
+    avis_institution: 'Avis d\'institution',
+};
 ---
 
 <Base title={`${theme.nom} — positions des candidats | Objectif 2027`} description={`Ce que les candidats à la présidentielle 2027 proposent (ou non) sur : ${theme.nom}.`} ogImage={`/og/theme-${theme.slug}.png`} ogImageAlt={`${theme.nom} — positions des candidats · Objectif 2027`} ogType="article" jsonld={breadcrumbJsonLd([{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }])}>
     <Breadcrumb items={[{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }]} />
     <h1 class="text-2xl font-bold">{theme.nom}</h1>
     {theme.description && <p class="mt-1" style="color: var(--fg-muted)">{theme.description}</p>}
+
+    {controverses.length > 0 && (
+        <section class="mt-6">
+            <h2 class="text-lg font-semibold">Les débats sur ce thème</h2>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Ce qui fait désaccord, et pourquoi. L'argumentaire pour/contre sourcé s'affiche
+                sous chaque mesure ci-dessous.
+            </p>
+            <div class="mt-3 space-y-3">
+                {controverses.map((ctrv) => (
+                    <article class="rounded-card border p-4" style="border-color: var(--border)">
+                        <h3 class="font-semibold"><a href={`/questions/${ctrv.slug}/`} class="hover:text-brand-600">{ctrv.titre}</a></h3>
+                        {ctrv.note_methodologique && (
+                            <p class="text-sm mt-2 leading-relaxed" style="color: var(--fg-muted)">{ctrv.note_methodologique}</p>
+                        )}
+                        <p class="text-xs mt-2 opacity-75" style="color: var(--fg-muted)">
+                            {ctrv.faits.length} fait{ctrv.faits.length > 1 ? 's' : ''} sourcé{ctrv.faits.length > 1 ? 's' : ''} · <a href={`/questions/${ctrv.slug}/`} class="text-brand-600 hover:underline">voir la question →</a>
+                        </p>
+                    </article>
+                ))}
+            </div>
+        </section>
+    )}
 
     <div class="mt-6 space-y-3">
         {candidats.map((c: any) => {
@@ -36,8 +94,13 @@ function etatDe(c: any): EtatTheme {
                         </span>
                     </div>
                     {etat === 'publie' && (
-                        <ul class="mt-2 text-sm list-disc pl-5">
-                            {mesures.map((m: any) => <li>{m.titre}</li>)}
+                        <ul class="mt-2 space-y-3">
+                            {mesures.map((m: any) => (
+                                <li class="text-sm">
+                                    <span class="font-medium">{m.titre}</span>
+                                    <ArgumentaireVs arguments={m.arguments} controverse={null} compact />
+                                </li>
+                            ))}
                         </ul>
                     )}
                     {etat === 'relevee' && (
