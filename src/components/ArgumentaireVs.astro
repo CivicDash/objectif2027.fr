@@ -1,0 +1,108 @@
+---
+// Affrontement pour / contre d'une mesure. Le sens est porté par la liaison
+// argument↔mesure : un même fait étaye une proposition et contredit la
+// proposition inverse. Ce face-à-face n'a donc de sens qu'au niveau d'UNE mesure.
+interface Props {
+    arguments?: { pour?: any[]; contre?: any[] } | null;
+    controverse?: { titre: string; note_methodologique: string | null } | null;
+    compact?: boolean;
+    /**
+     * Densité typographique. Sur une fiche candidat ce bloc n'est qu'une fraction de la
+     * page ; sur une page question il en est l'essentiel, et l'audit SEO « legible font
+     * sizes » (bloquant en CI) échoue si plus de 40 % du texte est sous 12px.
+     */
+    dense?: boolean;
+    /**
+     * Mode renvoi, réservé aux pages où une section « Les faits » présente déjà chaque
+     * fait EN ENTIER, une seule fois.
+     *
+     * Sans lui, le contenu d'un fait et ses sources étaient réimprimés pour chaque
+     * candidat qui l'invoque. Sur la question des allègements de cotisations, la même
+     * étude apparaissait seize fois et la page atteignait 58 000 caractères — non parce
+     * qu'elle disait trop de choses, mais parce qu'elle répétait les mêmes huit ou neuf
+     * fois. Ici on ne garde que ce qui est propre à CE candidat : le titre du fait, en
+     * lien vers sa version complète, et la note contextuelle qui dit pourquoi ce fait
+     * porte sur cette mesure-là. Rien n'est retiré du site, seulement des doublons.
+     */
+    ancrageFaits?: boolean;
+}
+const { arguments: args, controverse, compact = false, dense = true, ancrageFaits = false } = Astro.props;
+const T = dense
+    ? { badge: 'text-[10px]', titre: 'text-xs', corps: 'text-xs', src: 'text-[11px]', entete: 'text-[11px]' }
+    : { badge: 'text-[11px]', titre: 'text-sm', corps: 'text-sm', src: 'text-xs', entete: 'text-xs' };
+const pour = args?.pour ?? [];
+const contre = args?.contre ?? [];
+const TYPE: Record<string, string> = { etude: 'Étude', chiffrage: 'Chiffrage', avis_institution: 'Institution' };
+const COL = {
+    pour:   { titre: 'POUR',   accent: '#047857', fond: 'rgba(4,120,87,0.06)',  bord: 'rgba(4,120,87,0.35)' },
+    contre: { titre: 'CONTRE', accent: '#b91c1c', fond: 'rgba(185,28,28,0.06)', bord: 'rgba(185,28,28,0.35)' },
+};
+---
+{(pour.length > 0 || contre.length > 0) && (
+    <div class={compact ? 'mt-2' : 'mt-3'}>
+        {controverse && (
+            <div class="mb-2 rounded border-l-2 px-3 py-2" style="border-color:#94a3b8;background:rgba(148,163,184,0.08)">
+                <p class="text-xs font-semibold">{controverse.titre}</p>
+                {controverse.note_methodologique && (
+                    <p class="text-xs mt-1 leading-relaxed" style="color: var(--fg-muted)">{controverse.note_methodologique}</p>
+                )}
+            </div>
+        )}
+
+        <div class="grid gap-2 items-start" style="grid-template-columns: 1fr auto 1fr">
+            {(['pour', 'contre'] as const).map((sens, i) => (
+                <>
+                    {i === 1 && (
+                        <div class="self-stretch flex flex-col items-center justify-center px-1" aria-hidden="true">
+                            <span class="w-px flex-1" style="background: var(--border)"></span>
+                            <span class="my-1 text-[10px] font-bold tracking-wider" style="color: var(--fg-muted)">VS</span>
+                            <span class="w-px flex-1" style="background: var(--border)"></span>
+                        </div>
+                    )}
+                    <section class="rounded-lg border p-2.5" style={`border-color:${COL[sens].bord};background:${COL[sens].fond}`}>
+                        <h4 class={`${T.entete} font-bold tracking-wider`} style={`color:${COL[sens].accent}`}>
+                            {COL[sens].titre} <span class="opacity-60">({(sens === 'pour' ? pour : contre).length})</span>
+                        </h4>
+                        {(sens === 'pour' ? pour : contre).length === 0 ? (
+                            <p class={`${T.corps} mt-1.5 italic`} style="color: var(--fg-muted)">Aucun argument sourcé à ce jour.</p>
+                        ) : (
+                            <ul class="mt-1.5 space-y-2.5">
+                                {(sens === 'pour' ? pour : contre).map((a: any) => (
+                                    <li>
+                                        <div class="flex flex-wrap items-baseline gap-1.5">
+                                            <span class={`${T.badge} px-1 py-0.5 rounded`} style="background:rgba(148,163,184,0.2);color:var(--fg-muted)">{TYPE[a.type] ?? a.type}</span>
+                                            {ancrageFaits && a.ref ? (
+                                                <a class={`${T.titre} font-semibold hover:underline`} href={`#fait-${a.ref}`}>
+                                                    {a.titre} <span class="opacity-60" aria-hidden="true">↓</span>
+                                                </a>
+                                            ) : (
+                                                <span class={`${T.titre} font-semibold`}>{a.titre}</span>
+                                            )}
+                                        </div>
+                                        {!ancrageFaits && (
+                                            <p class={`${T.corps} mt-0.5 leading-relaxed`} style="color: var(--fg-muted)">{a.contenu}</p>
+                                        )}
+                                        {a.note_contextuelle && (
+                                            <p class={`${T.corps} mt-0.5 italic opacity-75`} style="color: var(--fg-muted)">{a.note_contextuelle}</p>
+                                        )}
+                                        {!ancrageFaits && (
+                                            <p class={`${T.src} mt-1`}>
+                                                {(a.sources ?? []).map((s: any) => (
+                                                    <>
+                                                        <a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{s.media ?? s.titre ?? 'source'} ↗</a>
+                                                        {s.archive_url && <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>}
+                                                        <span class="opacity-60"> · {s.fiabilite}</span>{' '}
+                                                    </>
+                                                ))}
+                                            </p>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </section>
+                </>
+            ))}
+        </div>
+    </div>
+)}
