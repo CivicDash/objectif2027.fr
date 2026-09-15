@@ -291,6 +291,18 @@ const nbSansAvis = computed(() =>
                     style="border-color: var(--border)" @click="recommencer">
                 Recommencer
             </button>
+
+            <!-- Le meilleur moment pour proposer le jeu : on vient de lire des positions
+                 et de découvrir qui les porte. -->
+            <div class="rounded-card border p-4 mt-6" style="border-color: var(--border)">
+                <p class="font-medium">Vous connaissez leurs positions&nbsp;?</p>
+                <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                    Vingt phrases réellement prononcées, à attribuer. Correction immédiate.
+                </p>
+                <a href="/jeu/" class="tap inline-block rounded-control bg-brand-600 text-white px-4 py-2 text-sm font-medium mt-3">
+                    Jouer à « Qui a dit quoi ? »
+                </a>
+            </div>
         </div>
     </div>
 </template>

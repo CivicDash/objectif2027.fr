@@ -9,6 +9,7 @@ import controverses from '@/data/controverses.json';
 // n'a pas encore livré le fichier — et deploy.sh figerait alors le site entier.
 const _cal = import.meta.glob<{ default: any }>('@/data/calendrier.json', { eager: true });
 const _quiz = import.meta.glob<{ default: any }>('@/data/quiz.json', { eager: true });
+const _jeu = import.meta.glob<{ default: any }>('@/data/jeu.json', { eager: true });
 
 export interface Controverse {
     titre: string;
@@ -349,6 +350,29 @@ export const QUIZ: { election: string; questions: QuizQuestion[] } =
     (Object.values(_quiz)[0]?.default) ?? { election: '2027', questions: [] };
 
 export const QUIZ_ACTIF = QUIZ.questions.length > 0;
+
+/* ── Jeu « Qui a dit quoi ? » ─────────────────────────────────────────────────────── */
+
+export interface JeuCitation {
+    ref: string;
+    texte: string;
+    candidat: string;
+    theme: string | null;
+    source: { titre?: string; url?: string; date?: string; reperage?: string };
+}
+
+export interface JeuCandidat {
+    slug: string;
+    nom: string;
+    couleur: string | null;
+}
+
+export const JEU: { election: string; candidats: JeuCandidat[]; citations: JeuCitation[] } =
+    (Object.values(_jeu)[0]?.default) ?? { election: '2027', candidats: [], citations: [] };
+
+// Cinq propositions par carte : il faut au moins cinq candidats dans le vivier, sinon le
+// jeu proposerait moins de choix qu'annoncé.
+export const JEU_ACTIF = JEU.candidats.length >= 5 && JEU.citations.length >= 10;
 
 /** Nombre de questions publiées par thème — sert à l'écran de choix des thèmes. */
 export function quizParTheme(): { slug: string; nom: string; questions: QuizQuestion[] }[] {

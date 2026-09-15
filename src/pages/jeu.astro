@@ -1,0 +1,19 @@
+---
+import Base from '@/layouts/Base.astro';
+import Jeu from '@/islands/Jeu.vue';
+import { JEU } from '@/lib/data';
+---
+
+<Base
+    title="Qui a dit quoi ? — Objectif 2027"
+    description="Vingt phrases réellement prononcées par les candidats. À vous de retrouver qui les a dites. Correction immédiate, sources vérifiées.">
+    <h1 class="text-2xl font-bold py-4">Qui a dit quoi&nbsp;?</h1>
+    <Jeu client:load citations={JEU.citations} candidats={JEU.candidats} />
+    <noscript>
+        <p class="mt-4 text-sm rounded-card border p-4" style="border-color: var(--border)">
+            Le jeu nécessite JavaScript (et s'exécute uniquement chez vous, sans rien envoyer).
+            Les prises de parole restent consultables sur les fiches
+            <a href="/candidats/" class="text-brand-600 hover:underline">Candidats</a>.
+        </p>
+    </noscript>
+</Base>

@@ -28,7 +28,7 @@ RACINE = pathlib.Path('/opt/objectif2027')
 SOURCES = RACINE / 'src/data/candidats'
 SORTIE = RACINE / 'public/portraits'
 MANIFESTE = SORTIE / '.sources.json'
-TAILLE = 96
+TAILLES = (96, 256)   # pastille de carte, et carte de jeu
 AGENT = 'objectif2027.fr (association Civis-Consilium ; contact@civis-consilium.eu)'
 
 try:
@@ -44,7 +44,7 @@ def telecharger(url: str) -> bytes:
         return reponse.read()
 
 
-def carre(donnees: bytes) -> bytes:
+def carre(donnees: bytes, taille: int) -> bytes:
     image = Image.open(io.BytesIO(donnees))
     if image.mode not in ('RGB', 'L'):
         image = image.convert('RGB')
@@ -55,7 +55,7 @@ def carre(donnees: bytes) -> bytes:
     gauche = (largeur - cote) // 2
     haut = min((hauteur - cote) // 2, largeur // 8) if hauteur > largeur else (hauteur - cote) // 2
     image = image.crop((gauche, haut, gauche + cote, haut + cote))
-    image = image.resize((TAILLE, TAILLE), Image.LANCZOS)
+    image = image.resize((taille, taille), Image.LANCZOS)
     tampon = io.BytesIO()
     image.save(tampon, format='JPEG', quality=82, optimize=True, progressive=True)
     return tampon.getvalue()
@@ -82,11 +82,15 @@ def main() -> int:
         cible = SORTIE / f'{slug}.jpg'
         empreinte = hashlib.sha256(url.encode()).hexdigest()[:16]
 
-        if deja.get(slug) == empreinte and cible.exists():
+        if deja.get(slug) == empreinte and cible.exists() and (SORTIE / f'{slug}@256.jpg').exists():
             inchanges += 1
         else:
             try:
-                cible.write_bytes(carre(telecharger(url)))
+                # Un seul téléchargement, deux tailles : 96 px pour les pastilles de
+                # cartes candidat, 256 px pour les cartes du jeu « Qui a dit quoi ? ».
+                brut = telecharger(url)
+                cible.write_bytes(carre(brut, 96))
+                (SORTIE / f'{slug}@256.jpg').write_bytes(carre(brut, 256))
                 rapatries += 1
             except Exception as erreur:
                 # Un portrait indisponible ne doit pas faire échouer la mise en ligne :
@@ -111,7 +115,7 @@ def main() -> int:
 
     MANIFESTE.write_text(json.dumps(nouveau, indent=2), encoding='utf-8')
     print(f'portraits : {rapatries} rapatrié(s), {inchanges} inchangé(s), {echecs} échec(s) '
-          f'— {TAILLE}px, servis depuis /portraits/')
+          f'— {"/".join(str(t) for t in TAILLES)}px, servis depuis /portraits/')
     return 0
 
 

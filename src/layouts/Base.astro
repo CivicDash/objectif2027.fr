@@ -1,5 +1,5 @@
 ---
-import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF } from '@/lib/data';
+import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF } from '@/lib/data';
 import '@/styles/global.css';
 
 export interface Props {
@@ -75,6 +75,7 @@ const annee = 2027;
                     <a href="/candidats/" class="hover:text-brand-600">Candidats</a>
                     <a href="/comparateur/" class="hover:text-brand-600">Comparateur</a>
                     {QUIZ_ACTIF && <a href="/quiz/" class="hover:text-brand-600">Quiz</a>}
+                    {JEU_ACTIF && <a href="/jeu/" class="hover:text-brand-600" title="Qui a dit quoi ?">Jeu</a>}
                     <a href="/themes/" class="hover:text-brand-600">Thèmes</a>
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:text-brand-600" title="Questions clés">Questions</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:text-brand-600" title="Le fil de la campagne">Calendrier</a>}
@@ -132,6 +133,7 @@ const annee = 2027;
                 </p>
                 <p class="flex flex-wrap gap-x-4 gap-y-1">
                     <a href="/recherche/" class="hover:underline">Recherche</a>
+                    {JEU_ACTIF && <a href="/jeu/" class="hover:underline">Qui a dit quoi ?</a>}
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:underline">Questions clés</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:underline">Le fil de la campagne</a>}
                     <a href="/methodologie/" class="hover:underline">Méthodologie</a>
