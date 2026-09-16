@@ -356,6 +356,9 @@ export const QUIZ_ACTIF = QUIZ.questions.length > 0;
 export interface JeuCitation {
     ref: string;
     texte: string;
+    /** Notre résumé neutre, en discours indirect : rend la phrase compréhensible
+     *  hors de son contexte sans nommer son auteur. */
+    contexte: string;
     candidat: string;
     theme: string | null;
     source: { titre?: string; url?: string; date?: string; reperage?: string };

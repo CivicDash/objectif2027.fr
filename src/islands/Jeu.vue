@@ -201,9 +201,18 @@ function initiales(nom) {
             </div>
 
             <blockquote ref="enonce" tabindex="-1" aria-live="polite"
-                        class="rounded-card border p-4 mt-2 text-lg leading-relaxed"
+                        class="rounded-card border p-4 mt-2"
                         style="border-color: var(--border); background: var(--bg-soft)">
-                « {{ carte.texte }} »
+                <p class="text-lg leading-relaxed">« {{ carte.texte }} »</p>
+                <!-- Le résumé accompagne la phrase dès la question. Une citation extraite
+                     d'un flux de parole reste souvent indevinable même complète : « la
+                     capitalisation, c'est pas pour aujourd'hui » ne dit pas de quoi il
+                     s'agit. Le résumé est en discours indirect et ne nomme personne —
+                     ceux qui citaient un adversaire sont écartés du vivier à l'export. -->
+                <p v-if="carte.contexte" class="text-sm mt-3 pt-3"
+                   style="color: var(--fg-muted); border-top: 1px solid var(--border)">
+                    {{ carte.contexte }}
+                </p>
             </blockquote>
 
             <fieldset class="border-0 p-0 m-0 mt-4">
