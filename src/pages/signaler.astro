@@ -1,9 +1,9 @@
 ---
 import Base from '@/layouts/Base.astro';
 import SignalementForm from '@/islands/SignalementForm.vue';
-import { CANDIDATS, THEMES, META } from '@/lib/data';
+import { candidatsOrdreNeutre, THEMES, META } from '@/lib/data';
 
-const candidats = CANDIDATS.map((c: any) => ({ slug: c.slug, nom_complet: c.nom_complet }));
+const candidats = candidatsOrdreNeutre().map((c: any) => ({ slug: c.slug, nom_complet: c.nom_complet }));
 const themes = THEMES.map((t: any) => ({ slug: t.slug, nom: t.nom }));
 ---
 
