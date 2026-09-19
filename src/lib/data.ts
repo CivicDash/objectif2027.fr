@@ -37,6 +37,8 @@ export interface Photo {
 }
 
 export interface CandidatIndex {
+    nom?: string;
+    prenom?: string;
     slug: string;
     nom_complet: string;
     slogan?: string | null;
@@ -92,7 +94,27 @@ export function libelleEtat(etat: EtatTheme): string {
 
 // Ordre d'affichage neutre : alphabétique par nom (jamais éditorial).
 export function candidatsOrdreNeutre(): CandidatIndex[] {
-    return [...CANDIDATS].sort((a, b) => a.nom_complet.localeCompare(b.nom_complet, 'fr'));
+    return [...CANDIDATS].sort((a, b) => cleDeTri(a).localeCompare(cleDeTri(b), 'fr'));
+}
+
+/**
+ * Clé d'ordre alphabétique : NOM puis prénom.
+ *
+ * Le tri portait sur `nom_complet`, avec deux conséquences. Il classait par prénom —
+ * Éric Zemmour arrivait en sixième position, entre Clémentine et Fabien. Et il embarquait
+ * la civilité, triée comme du texte : « M. » et « Mme » formaient deux blocs, de sorte que
+ * les candidates préfixées « Mme » se retrouvaient groupées, ce qui est exactement ce
+ * qu'un ordre dit neutre ne doit pas produire.
+ *
+ * Le repli sur `nom_complet` sert le temps qu'un export livre les deux champs : le front
+ * peut être déployé avant le back-office.
+ */
+function cleDeTri(c: CandidatIndex): string {
+    const nom = (c as { nom?: string }).nom;
+    const prenom = (c as { prenom?: string }).prenom;
+    if (nom) return `${nom} ${prenom ?? ''}`.trim();
+
+    return c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
 }
 
 // ---------------------------------------------------------------------------
