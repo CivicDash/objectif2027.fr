@@ -98,6 +98,18 @@ export function candidatsOrdreNeutre(): CandidatIndex[] {
 }
 
 /**
+ * Les fiches complètes dans le même ordre neutre.
+ *
+ * Quatre pages classaient les candidats chacune à sa façon — ordre du glob (donc par
+ * slug, donc par prénom), ordre de l'export, ou tri local sur `nom_complet`. Trois
+ * mécanismes, un même résultat : un classement par prénom présenté comme alphabétique.
+ */
+export function candidatsDetailOrdreNeutre(): any[] {
+    return Object.values(CANDIDATS_DETAIL)
+        .sort((a: any, b: any) => cleDeTri(a).localeCompare(cleDeTri(b), 'fr'));
+}
+
+/**
  * Clé d'ordre alphabétique : NOM puis prénom.
  *
  * Le tri portait sur `nom_complet`, avec deux conséquences. Il classait par prénom —

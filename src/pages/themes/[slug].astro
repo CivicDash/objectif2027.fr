@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
-import { THEMES, CANDIDATS_DETAIL, themeParSlug, controversesDuTheme, controverseParSlug, type EtatTheme } from '@/lib/data';
+import { THEMES, candidatsDetailOrdreNeutre, themeParSlug, controversesDuTheme, controverseParSlug, type EtatTheme } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
@@ -10,8 +10,7 @@ export function getStaticPaths() {
 }
 const { theme } = Astro.props;
 
-const candidats = Object.values(CANDIDATS_DETAIL)
-    .sort((a: any, b: any) => a.nom_complet.localeCompare(b.nom_complet, 'fr'));
+const candidats = candidatsDetailOrdreNeutre();
 
 function etatDe(c: any): EtatTheme {
     return (c.etats_par_theme?.[theme.slug]?.etat ?? 'non_exprime') as EtatTheme;

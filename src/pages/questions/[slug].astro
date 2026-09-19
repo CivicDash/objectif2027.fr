@@ -3,7 +3,7 @@ import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
-import { questionsCles, questionParSlug, themeParSlug, CANDIDATS_DETAIL } from '@/lib/data';
+import { questionsCles, questionParSlug, themeParSlug, candidatsDetailOrdreNeutre } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
@@ -23,7 +23,7 @@ const TYPE: Record<string, string> = {
 // question. « Pas encore rattaché » n'est pas « ne se prononce pas » : on le dit ainsi.
 const positionnes = new Set(q.positions.map((p) => p.slug));
 const autres = q.theme
-    ? Object.values(CANDIDATS_DETAIL)
+    ? candidatsDetailOrdreNeutre()
         .filter((c: any) => c.etats_par_theme?.[q.theme!]?.etat === 'publie' && !positionnes.has(c.slug))
         .map((c: any) => ({ slug: c.slug, nom: c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '') }))
     : [];
