@@ -2,7 +2,8 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
-import { THEMES, candidatsDetailOrdreNeutre, themeParSlug, controversesDuTheme, controverseParSlug, type EtatTheme } from '@/lib/data';
+import { THEMES, candidatsDetailOrdreNeutre, themeParSlug, controversesDuTheme, controverseParSlug, affirmationsDuTheme, type EtatTheme } from '@/lib/data';
+import { VERDICTS } from '@/lib/verdicts';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
@@ -38,6 +39,8 @@ const controverses = controversesDuTheme(theme.slug).map((ctrv) => {
     }
     return { ...ctrv, faits: [...faits.values()] };
 }).filter((c) => c.faits.length > 0);
+
+const entendu = affirmationsDuTheme(theme.slug);
 
 function controverseDe(m: any) {
     const a = [...(m.arguments?.pour ?? []), ...(m.arguments?.contre ?? [])];
@@ -76,6 +79,25 @@ const LIBELLE_TYPE: Record<string, string> = {
                     </article>
                 ))}
             </div>
+        </section>
+    )}
+
+    {entendu.length > 0 && (
+        <section class="mt-6">
+            <h2 class="text-lg font-semibold">Ce qu'on entend sur ce thème</h2>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Des affirmations du débat public confrontées aux données. Le verdict ne porte que sur ce qui se mesure.
+            </p>
+            <ul class="mt-3 space-y-2">
+                {entendu.map((a) => (
+                    <li class="rounded-card border p-3" style="border-color: var(--border)">
+                        <a href={`/ce-qu-on-entend/${a.slug}/`} class="font-semibold hover:text-brand-600">« {a.enonce} »</a>
+                        <p class="text-xs mt-1" style="color: var(--fg-muted)">
+                            {a.verdicts.map((v) => VERDICTS[v.verdict].libelle + (v.portee ? ` ${v.portee}` : '')).join(' · ')}
+                        </p>
+                    </li>
+                ))}
+            </ul>
         </section>
     )}
 

@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import CandidatCard from '@/components/CandidatCard.astro';
 import FriseCampagne from '@/components/FriseCampagne.astro';
-import { candidatsOrdreNeutre, THEMES, evenementsRecents, CALENDRIER_ACTIF } from '@/lib/data';
+import { candidatsOrdreNeutre, THEMES, evenementsRecents, CALENDRIER_ACTIF, AFFIRMATIONS_ACTIVES, AFFIRMATIONS } from '@/lib/data';
 import { websiteJsonLd, organizationJsonLd } from '@/lib/seo';
 
 const candidats = candidatsOrdreNeutre();
@@ -48,13 +48,21 @@ const nbEnCours = candidats.filter((c) => c.couverture.themes_publies === 0 && c
         </div>
     </section>
 
-    <section class="py-6 grid gap-4 md:grid-cols-2">
+    <section class:list={['py-6 grid gap-4 md:grid-cols-2', AFFIRMATIONS_ACTIVES && 'lg:grid-cols-3']}>
         <a href="/comparateur/" class="rounded-card border p-5 hover:border-brand-400" style="border-color: var(--border)">
             <h2 class="font-bold text-lg">Comparer les programmes</h2>
             <p class="text-sm mt-1" style="color: var(--fg-muted)">
                 Thème par thème, jusqu'à 4 candidats côte à côte, avec arguments pour et contre sourcés.
             </p>
         </a>
+        {AFFIRMATIONS_ACTIVES && (
+            <a href="/ce-qu-on-entend/" class="rounded-card border p-5 hover:border-brand-400" style="border-color: var(--border)">
+                <h2 class="font-bold text-lg">Ce qu'on entend</h2>
+                <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                    {AFFIRMATIONS.affirmations.length} affirmation{AFFIRMATIONS.affirmations.length > 1 ? 's' : ''} du débat public confrontée{AFFIRMATIONS.affirmations.length > 1 ? 's' : ''} aux données publiques, sources à l'appui.
+                </p>
+            </a>
+        )}
         <a href="/demarche/" class="rounded-card border p-5 hover:border-brand-400" style="border-color: var(--border)">
             <h2 class="font-bold text-lg">Notre démarche</h2>
             <p class="text-sm mt-1" style="color: var(--fg-muted)">

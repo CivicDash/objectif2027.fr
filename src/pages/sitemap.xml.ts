@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { CANDIDATS, THEMES, META, QUESTIONS_ACTIVES, questionsCles, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF } from '@/lib/data';
+import { CANDIDATS, THEMES, META, QUESTIONS_ACTIVES, questionsCles, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF, AFFIRMATIONS_ACTIVES, affirmationsOrdonnees } from '@/lib/data';
 
 // Sitemap généré à la main (sans dépendance) — pas d'analytics, pas de collecte.
 export const GET: APIRoute = ({ site }) => {
@@ -14,6 +14,7 @@ export const GET: APIRoute = ({ site }) => {
         '/themes/',
         ...(QUESTIONS_ACTIVES ? ['/questions/'] : []),
         ...(CALENDRIER_ACTIF ? ['/calendrier/'] : []),
+        ...(AFFIRMATIONS_ACTIVES ? ['/ce-qu-on-entend/'] : []),
         '/recherche/',
         '/demarche/',
         '/methodologie/',
@@ -24,6 +25,7 @@ export const GET: APIRoute = ({ site }) => {
         ...statiques,
         ...CANDIDATS.map((c) => `/candidats/${c.slug}/`),
         ...questionsCles().map((q) => `/questions/${q.slug}/`),
+        ...affirmationsOrdonnees().map((a) => `/ce-qu-on-entend/${a.slug}/`),
         ...THEMES.map((t) => `/themes/${t.slug}/`),
     ];
 

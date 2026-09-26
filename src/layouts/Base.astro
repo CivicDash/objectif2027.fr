@@ -1,5 +1,5 @@
 ---
-import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF } from '@/lib/data';
+import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF, AFFIRMATIONS_ACTIVES } from '@/lib/data';
 import '@/styles/global.css';
 
 export interface Props {
@@ -78,6 +78,10 @@ const annee = 2027;
                     {JEU_ACTIF && <a href="/jeu/" class="hover:text-brand-600" title="Qui a dit quoi ?">Jeu</a>}
                     <a href="/themes/" class="hover:text-brand-600">Thèmes</a>
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:text-brand-600" title="Questions clés">Questions</a>}
+                    {/* Neuf entrées ne tiennent pas à 768 px : la rubrique n'apparaît dans la
+                        barre qu'à partir de lg, et reste accessible par l'accueil, le pied de
+                        page et les pages de thème. */}
+                    {AFFIRMATIONS_ACTIVES && <a href="/ce-qu-on-entend/" class="hidden lg:inline hover:text-brand-600 whitespace-nowrap">Ce qu'on entend</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:text-brand-600" title="Le fil de la campagne">Calendrier</a>}
                     <a href="/demarche/" class="hover:text-brand-600">Démarche</a>
                     <a href="/recherche/" aria-label="Recherche" class="hover:text-brand-600 inline-flex items-center" title="Recherche">
@@ -135,6 +139,7 @@ const annee = 2027;
                     <a href="/recherche/" class="hover:underline">Recherche</a>
                     {JEU_ACTIF && <a href="/jeu/" class="hover:underline">Qui a dit quoi ?</a>}
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:underline">Questions clés</a>}
+                    {AFFIRMATIONS_ACTIVES && <a href="/ce-qu-on-entend/" class="hover:underline">Ce qu'on entend</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:underline">Le fil de la campagne</a>}
                     <a href="/methodologie/" class="hover:underline">Méthodologie</a>
                     <a href="/mentions-legales/" class="hover:underline">Mentions légales</a>

@@ -1,0 +1,182 @@
+---
+import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import AnchorNav from '@/components/AnchorNav.astro';
+import VerdictJauge from '@/components/VerdictJauge.astro';
+import Graphique from '@/components/graphiques/Graphique.astro';
+import { affirmationsOrdonnees, themeParSlug, type Affirmation, type SectionConstat } from '@/lib/data';
+import { CATEGORIES_SOURCE, VERDICTS } from '@/lib/verdicts';
+import { dateFr, textePlat, texteRiche } from '@/lib/format';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+export function getStaticPaths() {
+    // Aucune fiche publiée => aucune page. Pas de page morte par construction.
+    return affirmationsOrdonnees().map((f) => ({ params: { slug: f.slug }, props: { f } }));
+}
+const { f } = Astro.props as { f: Affirmation };
+
+const themes = [f.theme, ...f.themes_secondaires].map((s) => (s ? themeParSlug(s) : null)).filter(Boolean);
+
+const SECTIONS: { id: SectionConstat; ancre: string; titre: string; onglet: string }[] = [
+    { id: 'chiffres', ancre: 'chiffres', titre: 'Ce que disent les chiffres', onglet: 'Les chiffres' },
+    { id: 'limites', ancre: 'limites', titre: 'Ce que les chiffres ne disent pas', onglet: "Ce qu'ils ne disent pas" },
+    { id: 'complement', ancre: 'complements', titre: 'Pour aller plus loin', onglet: 'Compléments' },
+    { id: 'europe', ancre: 'europe', titre: 'Comparaison européenne', onglet: 'En Europe' },
+    { id: 'liens', ancre: 'liens', titre: 'Liens', onglet: 'Liens' },
+];
+
+// Constats groupés par section, puis par sous-titre, dans l'ordre de la fiche.
+const sections = SECTIONS.map((s) => {
+    const groupes: { nom: string | null; constats: typeof f.constats }[] = [];
+    for (const c of f.constats.filter((c) => c.section === s.id)) {
+        const g = groupes.find((x) => x.nom === c.groupe);
+        if (g) g.constats.push(c); else groupes.push({ nom: c.groupe, constats: [c] });
+    }
+    return { ...s, groupes };
+}).filter((s) => s.groupes.length);
+
+// Sources numérotées dans l'ordre de leur première citation.
+const numero = new Map<string, number>();
+for (const s of sections) for (const g of s.groupes) for (const c of g.constats) for (const cle of c.sources) {
+    if (!numero.has(cle)) numero.set(cle, numero.size + 1);
+}
+const sources = [...f.sources].sort((a, b) => (numero.get(a.cle) ?? 999) - (numero.get(b.cle) ?? 999));
+const parCle = new Map(f.sources.map((s) => [s.cle, s]));
+const graphiquesDe = (id: number) => f.graphiques.filter((g) => g.constat === id);
+
+const ancres = [...sections.map((s) => ({ id: s.ancre, label: s.onglet })), { id: 'sources', label: 'Sources' }];
+
+const titre = `« ${f.enonce} » : ce que disent les chiffres`;
+const description = (f.resume
+    ?? `${f.verdicts.map((v) => VERDICTS[v.verdict].libelle + (v.portee ? ` ${v.portee}` : '')).join(' ; ')}. Données publiques et sources.`
+).slice(0, 155);
+---
+
+<Base
+    title={titre.length > 55 ? titre : `${titre} | Objectif 2027`}
+    description={description}
+    ogImage={`/og/affirmation-${f.slug}.png`}
+    ogImageAlt={`« ${f.enonce} » — Ce qu'on entend, Objectif 2027`}
+    ogType="article"
+    jsonld={breadcrumbJsonLd([{ label: "Ce qu'on entend", href: '/ce-qu-on-entend/' }, { label: `« ${f.enonce} »` }])}>
+
+    <Breadcrumb items={[{ label: "Ce qu'on entend", href: '/ce-qu-on-entend/' }, { label: `« ${f.enonce} »` }]} />
+
+    <header class="pt-2">
+        <p class="text-xs font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">Ce qu'on entend</p>
+        <h1 class="text-2xl font-bold mt-1">« {f.enonce} »</h1>
+        <p class="mt-1 text-sm" style="color: var(--fg-muted)">
+            {themes.map((t, i) => <>{i > 0 && ' · '}<a href={`/themes/${t!.slug}/`} class="text-brand-600 hover:underline">{t!.nom}</a></>)}
+            {f.derniere_verification && <> · sources vérifiées le {dateFr(f.derniere_verification)}</>}
+        </p>
+    </header>
+
+    <section class="mt-4 rounded-card border p-4" style="border-color: var(--border); background: var(--bg-soft)" aria-labelledby="verdict-titre">
+        <h2 id="verdict-titre" class="text-sm font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">
+            Sur la partie mesurable
+        </h2>
+        <div class="mt-3 space-y-3">
+            {f.verdicts.map((v) => <VerdictJauge verdict={v.verdict} portee={v.portee} />)}
+        </div>
+        {f.resume && <p class="mt-3 leading-relaxed">{f.resume}</p>}
+        {f.part_de_valeur && (
+            <p class="mt-3 text-sm leading-relaxed rounded-card border-l-4 pl-3 py-1" style="border-color: var(--fg-muted)">
+                <strong>Ce que les chiffres ne peuvent pas trancher.</strong> Cette affirmation contient
+                un jugement. Les données disent combien, comment ça évolue et comment la France se
+                situe parmi ses voisins — jamais ce qui est « trop ». Cette part-là vous revient.
+            </p>
+        )}
+    </section>
+
+    {ancres.length > 1 && <AnchorNav items={ancres} onglets />}
+
+    {sections.map((s) => (
+        <section id={s.ancre} class="py-6">
+            <h2 class="text-xl font-bold">{s.titre}</h2>
+            {s.groupes.map((g) => (
+                <div class="mt-4">
+                    {g.nom && <h3 class="font-semibold">{g.nom}</h3>}
+                    <ul class="mt-2 space-y-3">
+                        {g.constats.map((c) => (
+                            <li id={`constat-${c.id}`} class="constat leading-relaxed">
+                                <span set:html={texteRiche(c.texte)} />
+                                {c.sources.length > 0 && (
+                                    <span class="renvois">
+                                        {c.sources.map((cle) => {
+                                            const src = parCle.get(cle);
+                                            return (
+                                                <a href={`#source-${cle}`} class="renvoi"
+                                                   aria-label={`Source ${numero.get(cle)} : ${src ? `${src.producteur}, ${textePlat(src.titre)}` : cle}`}>
+                                                    {numero.get(cle)}
+                                                </a>
+                                            );
+                                        })}
+                                    </span>
+                                )}
+                                {graphiquesDe(c.id).map((gr, k) => <Graphique g={gr} id={`g${c.id}-${k}`} />)}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </section>
+    ))}
+
+    <section id="sources" class="py-6">
+        <h2 class="text-xl font-bold">Sources</h2>
+        <p class="text-sm mt-1" style="color: var(--fg-muted)">
+            Producteurs publics et organisations internationales d'abord. Un chiffre d'association,
+            de syndicat ou de think tank est cité comme l'estimation d'un acteur identifié, jamais
+            comme le chiffre de référence.
+        </p>
+        <ol class="mt-4 space-y-2 text-sm">
+            {sources.map((s) => (
+                <li id={`source-${s.cle}`} class="source flex gap-2">
+                    <span class="numero tabular-nums">{numero.get(s.cle)}</span>
+                    <span>
+                        <span class="font-medium">{s.producteur}</span>,{' '}
+                        {s.url
+                            ? <a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline" set:html={texteRiche(s.titre) + ' ↗'} />
+                            : <span set:html={texteRiche(s.titre)} />}
+                        {s.archive_url && <> <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="opacity-70 hover:underline">(archive)</a></>}
+                        <span style="color: var(--fg-muted)">
+                            {' · '}{CATEGORIES_SOURCE[s.categorie] ?? s.categorie}
+                            {s.date_consultation && <> · consulté le {dateFr(s.date_consultation)}</>}
+                        </span>
+                    </span>
+                </li>
+            ))}
+        </ol>
+    </section>
+
+    <section id="suite" class="py-6 border-t" style="border-color: var(--border)">
+        <ul class="text-sm space-y-1.5">
+            {themes.map((t) => (
+                <li><a href={`/themes/${t!.slug}/`} class="text-brand-600 hover:underline">Ce que proposent les candidats — {t!.nom} →</a></li>
+            ))}
+            <li><a href="/comparateur/" class="text-brand-600 hover:underline">Comparer les programmes →</a></li>
+        </ul>
+        <p class="text-sm mt-4" style="color: var(--fg-muted)">
+            Le verdict ne porte que sur la partie mesurable de l'affirmation.
+            <a href="/methodologie/#ce-qu-on-entend" class="text-brand-600 hover:underline">Comment nous vérifions</a>
+            {' · '}<a href="/signaler/" class="text-brand-600 hover:underline">Signaler une erreur</a>
+        </p>
+    </section>
+</Base>
+
+<style>
+    .constat, .source { scroll-margin-top: 5rem; }
+    .renvois { white-space: nowrap; }
+    .renvoi {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 1.5rem; height: 1.5rem; margin-left: 0.25rem; padding: 0 0.3rem;
+        font-size: 0.75rem; font-weight: 600; border-radius: 999px; text-decoration: none;
+        color: var(--graphe-fr); border: 1px solid color-mix(in srgb, var(--graphe-fr) 45%, var(--bg));
+        vertical-align: 0.1em;
+    }
+    .renvoi:hover, .renvoi:focus-visible { background: color-mix(in srgb, var(--graphe-fr) 12%, var(--bg)); }
+    .numero {
+        flex: none; min-width: 1.5rem; text-align: right; font-weight: 600; color: var(--fg-muted);
+    }
+    .source:target { background: color-mix(in srgb, var(--graphe-fr) 10%, transparent); border-radius: 6px; }
+</style>

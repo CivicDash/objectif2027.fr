@@ -154,3 +154,55 @@ a, button, [role='button'] { touch-action: manipulation; }
     .anchor-pill:hover { color: #93c5fd; }
     .bc-link:hover { color: #93c5fd; }
 }
+
+/* ---------------------------------------------------------------
+   Graphiques de « Ce qu'on entend » (annexe D.5)
+   Une seule couleur d'accent, réservée à la France. Les autres pays
+   en gris de clartés différentes, l'UE-27 en tirets. Tout dérive de
+   --fg et --bg : le mode sombre et l'impression suivent seuls.
+--------------------------------------------------------------- */
+:root { --graphe-fr: #2563eb; }
+@media (prefers-color-scheme: dark) { :root { --graphe-fr: #60a5fa; } }
+
+.graphe svg { display: block; width: 100%; height: auto; overflow: visible; }
+.graphe text { font-family: inherit; fill: var(--fg-muted); }
+.graphe .g-grille { stroke: color-mix(in srgb, var(--fg) 10%, transparent); stroke-width: 1; }
+.graphe .g-base { stroke: color-mix(in srgb, var(--fg) 45%, transparent); stroke-width: 1; }
+.graphe .g-ligne { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.graphe .pays-FR { stroke: var(--graphe-fr); stroke-width: 3; }
+.graphe .pays-DE { stroke: color-mix(in srgb, var(--fg) 72%, var(--bg)); stroke-width: 1.8; }
+.graphe .pays-IT { stroke: color-mix(in srgb, var(--fg) 52%, var(--bg)); stroke-width: 1.8; }
+.graphe .pays-ES { stroke: color-mix(in srgb, var(--fg) 36%, var(--bg)); stroke-width: 1.8; }
+.graphe .pays-EU27_2020 { stroke: color-mix(in srgb, var(--fg) 85%, var(--bg)); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.graphe .g-point { fill: var(--bg); stroke-width: 1.6; stroke-dasharray: none; }
+/* Étiquettes : plus foncées que leur courbe, pour tenir le contraste AA (4,5:1). */
+.graphe text.etiq-FR { fill: var(--graphe-fr); font-weight: 700; }
+.graphe text.etiq-EU27_2020 { fill: var(--fg); }
+.graphe .barre-FR { fill: var(--graphe-fr); }
+.graphe .barre-autre { fill: color-mix(in srgb, var(--fg) 55%, var(--bg)); }
+.graphe .barre-claire { fill: color-mix(in srgb, var(--fg) 14%, var(--bg)); stroke: color-mix(in srgb, var(--fg) 55%, var(--bg)); stroke-width: 1; }
+.graphe .barre-claire-FR { fill: color-mix(in srgb, var(--graphe-fr) 18%, var(--bg)); stroke: var(--graphe-fr); stroke-width: 1; }
+.graphe .hachure { stroke: color-mix(in srgb, var(--fg) 60%, var(--bg)); stroke-width: 1.2; }
+.graphe .hachure-FR { stroke: var(--graphe-fr); stroke-width: 1.2; }
+.graphe .seg-0 { fill: color-mix(in srgb, var(--fg) 82%, var(--bg)); }
+.graphe .seg-1 { fill: color-mix(in srgb, var(--fg) 58%, var(--bg)); }
+.graphe .seg-2 { fill: color-mix(in srgb, var(--fg) 38%, var(--bg)); }
+.graphe .seg-3 { fill: color-mix(in srgb, var(--fg) 22%, var(--bg)); }
+.graphe .seg-4 { fill: color-mix(in srgb, var(--fg) 10%, var(--bg)); }
+.graphe .seg-bord { stroke: var(--bg); stroke-width: 1; }
+.graphe text.sur-fonce { fill: var(--bg); }
+.graphe text.sur-clair { fill: var(--fg); }
+.graphe text.fort { fill: var(--fg); font-weight: 700; }
+.graphe text.fr { fill: var(--graphe-fr); font-weight: 700; }
+
+/* Deux gabarits, un seul affiché : display:none retire l'autre de l'arbre d'accessibilité. */
+.graphe .v-large { display: none; }
+@media (min-width: 640px) {
+    .graphe .v-large { display: block; }
+    .graphe .v-compact { display: none; }
+}
+@media print {
+    .graphe .v-large { display: block; }
+    .graphe .v-compact { display: none; }
+    .graphe details { display: none; }
+}

@@ -7,9 +7,15 @@ import controverses from '@/data/controverses.json';
 
 // Chargement tolérant : un import statique ferait échouer le build si le back-office
 // n'a pas encore livré le fichier — et deploy.sh figerait alors le site entier.
-const _cal = import.meta.glob<{ default: any }>('@/data/calendrier.json', { eager: true });
-const _quiz = import.meta.glob<{ default: any }>('@/data/quiz.json', { eager: true });
-const _jeu = import.meta.glob<{ default: any }>('@/data/jeu.json', { eager: true });
+//
+// Chemins RELATIFS, pas l'alias `@/` : pour un motif aliasé, Vite doit résoudre le
+// fichier, et lève « Invalid glob » s'il n'existe pas. Le motif `@/data/…` ne tolérait
+// donc rien du tout — il n'a simplement jamais rencontré de fichier manquant. Un chemin
+// relatif ne demande aucune résolution : absent, le glob rend un objet vide.
+const _cal = import.meta.glob<{ default: any }>('../data/calendrier.json', { eager: true });
+const _quiz = import.meta.glob<{ default: any }>('../data/quiz.json', { eager: true });
+const _jeu = import.meta.glob<{ default: any }>('../data/jeu.json', { eager: true });
+const _affirmations = import.meta.glob<{ default: any }>('../data/affirmations.json', { eager: true });
 
 export interface Controverse {
     titre: string;
@@ -418,4 +424,109 @@ export function quizParTheme(): { slug: string; nom: string; questions: QuizQues
         nom: t.nom,
         questions: QUIZ.questions.filter((q) => q.theme === t.slug),
     }));
+}
+
+/* ── « Ce qu'on entend » ──────────────────────────────────────────────────────────── */
+
+export type CodeVerdict = 'confirme' | 'plutot_confirme' | 'nuance' | 'plutot_infirme' | 'infirme' | 'inverifiable';
+export type SectionConstat = 'chiffres' | 'limites' | 'complement' | 'europe' | 'liens';
+
+export interface AffirmationSource {
+    cle: string;
+    producteur: string;
+    titre: string;
+    url: string | null;
+    archive_url: string | null;
+    categorie: 'producteur_public' | 'organisation_internationale' | 'recherche' | 'presse' | 'acteur_identifie';
+    date_publication: string | null;
+    date_consultation: string | null;
+}
+
+export interface AffirmationConstat {
+    id: number;
+    section: SectionConstat;
+    groupe: string | null;
+    texte: string;
+    sources: string[];
+}
+
+export interface OptionsGraphique {
+    decimales?: number;
+    suffixe?: string;
+    y_min?: number;
+    libelles?: string[];
+    panneaux?: string[];
+    mise_en_avant?: string;
+}
+
+export interface AffirmationGraphique {
+    /** Identifiant du constat qui accompagne le graphique (annexe D.7). */
+    constat: number | null;
+    type: 'courbes' | 'barres_groupees' | 'barres_empilees';
+    titre: string;
+    sous_titre: string | null;
+    indicateurs: string[];
+    options: OptionsGraphique;
+    note: string | null;
+}
+
+export interface Affirmation {
+    slug: string;
+    enonce: string;
+    resume: string | null;
+    theme: string | null;
+    themes_secondaires: string[];
+    part_de_valeur: boolean;
+    derniere_verification: string | null;
+    /** Tous affichés, aucun « principal » : une fiche sur deux en a deux. */
+    verdicts: { portee: string | null; verdict: CodeVerdict }[];
+    constats: AffirmationConstat[];
+    sources: AffirmationSource[];
+    graphiques: AffirmationGraphique[];
+}
+
+export interface PointSerie { annee: number; valeur: number; statut: string }
+
+export interface Indicateur {
+    titre: string;
+    unite: string;
+    note_methodo: string | null;
+    sources: { code: string; url: string }[];
+    extraction: string | null;
+    series: Record<string, PointSerie[]>;
+}
+
+/**
+ * Chargement tolérant, comme le quiz : tant que le back-office n'a pas livré
+ * `affirmations.json`, la rubrique n'existe pas — pas de page, pas de lien.
+ */
+export const AFFIRMATIONS: {
+    election: string;
+    legende_statuts: Record<string, string>;
+    affirmations: Affirmation[];
+    indicateurs: Record<string, Indicateur>;
+} = (Object.values(_affirmations)[0]?.default) ?? { election: '2027', legende_statuts: {}, affirmations: [], indicateurs: {} };
+
+/** Test léger : Base.astro l'importe sur chaque page. */
+export const AFFIRMATIONS_ACTIVES = AFFIRMATIONS.affirmations.length > 0;
+
+/**
+ * Ordre mécanique, jamais éditorial : l'ordre des thèmes, puis l'énoncé. Aucune fiche
+ * n'est mise en tête parce qu'elle confirmerait ou infirmerait quelque chose.
+ */
+export function affirmationsOrdonnees(): Affirmation[] {
+    const rang = new Map(THEMES.map((t) => [t.slug, t.ordre]));
+    return [...AFFIRMATIONS.affirmations].sort(
+        (a, b) => ((rang.get(a.theme ?? '') ?? 99) - (rang.get(b.theme ?? '') ?? 99))
+               || a.enonce.localeCompare(b.enonce, 'fr'),
+    );
+}
+
+/** Fiches dont le thème principal ou un thème secondaire est `slug`. */
+export function affirmationsDuTheme(slug: string): Affirmation[] {
+    return affirmationsOrdonnees().filter((a) => a.theme === slug || a.themes_secondaires.includes(slug));
+}
+
+export function indicateur(code: string): Indicateur | null {
+    return AFFIRMATIONS.indicateurs[code] ?? null;
 }
