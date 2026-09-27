@@ -2,8 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
-import { THEMES, candidatsDetailOrdreNeutre, themeParSlug, controversesDuTheme, controverseParSlug, affirmationsDuTheme, type EtatTheme } from '@/lib/data';
-import { VERDICTS } from '@/lib/verdicts';
+import { THEMES, candidatsDetailOrdreNeutre, themeParSlug, controversesDuTheme, controverseParSlug, reperesDuTheme, urlRepere, nbASourcer, elements, type EtatTheme } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 export function getStaticPaths() {
@@ -40,7 +39,10 @@ const controverses = controversesDuTheme(theme.slug).map((ctrv) => {
     return { ...ctrv, faits: [...faits.values()] };
 }).filter((c) => c.faits.length > 0);
 
-const entendu = affirmationsDuTheme(theme.slug);
+// Repères chiffrés : des questions neutres et ce que disent les données publiques pour y
+// répondre. Posés au niveau du thème, avant les candidats et jamais à côté d'une mesure :
+// un chiffre accolé à une proposition l'évaluerait sans le dire.
+const reperes = reperesDuTheme(theme.slug);
 
 function controverseDe(m: any) {
     const a = [...(m.arguments?.pour ?? []), ...(m.arguments?.contre ?? [])];
@@ -58,6 +60,29 @@ const LIBELLE_TYPE: Record<string, string> = {
     <Breadcrumb items={[{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }]} />
     <h1 class="text-2xl font-bold">{theme.nom}</h1>
     {theme.description && <p class="mt-1" style="color: var(--fg-muted)">{theme.description}</p>}
+
+    {reperes.length > 0 && (
+        <section id="chiffres" class="mt-6">
+            <h2 class="text-lg font-semibold">Les chiffres</h2>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Ce que disent les données publiques sur ce thème, et ce qu'elles ne disent pas.
+                Aucune conclusion : les chiffres décrivent, à chacun d'en juger.
+            </p>
+            <ul class="mt-3 grid gap-3 md:grid-cols-2">
+                {reperes.map((r) => (
+                    <li class="rounded-card border p-4 relative" style="border-color: var(--border)">
+                        <h3 class="font-semibold leading-snug">
+                            <a href={urlRepere(r)} class="hover:text-brand-600 after:absolute after:inset-0">{r.question}</a>
+                        </h3>
+                        {r.resume && <p class="text-sm mt-2" style="color: var(--fg-muted)">{r.resume}</p>}
+                        {nbASourcer(r) > 0 && (
+                            <p class="text-xs mt-2" style="color: var(--fg-muted)">{elements(nbASourcer(r))} en cours de sourçage.</p>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
 
     {controverses.length > 0 && (
         <section class="mt-6">
@@ -82,26 +107,8 @@ const LIBELLE_TYPE: Record<string, string> = {
         </section>
     )}
 
-    {entendu.length > 0 && (
-        <section class="mt-6">
-            <h2 class="text-lg font-semibold">Ce qu'on entend sur ce thème</h2>
-            <p class="text-sm mt-1" style="color: var(--fg-muted)">
-                Des affirmations du débat public confrontées aux données. Le verdict ne porte que sur ce qui se mesure.
-            </p>
-            <ul class="mt-3 space-y-2">
-                {entendu.map((a) => (
-                    <li class="rounded-card border p-3" style="border-color: var(--border)">
-                        <a href={`/ce-qu-on-entend/${a.slug}/`} class="font-semibold hover:text-brand-600">« {a.enonce} »</a>
-                        <p class="text-xs mt-1" style="color: var(--fg-muted)">
-                            {a.verdicts.map((v) => VERDICTS[v.verdict].libelle + (v.portee ? ` ${v.portee}` : '')).join(' · ')}
-                        </p>
-                    </li>
-                ))}
-            </ul>
-        </section>
-    )}
-
-    <div class="mt-6 space-y-3">
+    <h2 id="candidats" class="text-lg font-semibold mt-8">Ce que proposent les candidats</h2>
+    <div class="mt-3 space-y-3">
         {candidats.map((c: any) => {
             const etat = etatDe(c);
             const mesures = c.mesures_par_theme?.[theme.slug] ?? [];

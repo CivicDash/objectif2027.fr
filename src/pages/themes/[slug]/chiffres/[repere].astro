@@ -2,20 +2,29 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
-import VerdictJauge from '@/components/VerdictJauge.astro';
 import Graphique from '@/components/graphiques/Graphique.astro';
-import { affirmationsOrdonnees, elements, nbASourcer, themeParSlug, type Affirmation, type SectionConstat } from '@/lib/data';
-import { CATEGORIES_SOURCE, VERDICTS } from '@/lib/verdicts';
+import { REPERES, controversesDuTheme, elements, nbASourcer, themeParSlug, type Repere, type SectionConstat } from '@/lib/data';
+import { CATEGORIES_SOURCE } from '@/lib/sources';
 import { dateFr, textePlat, texteRiche } from '@/lib/format';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
+/**
+ * Un repère chiffré : une question neutre, ce que disent les données publiques pour y
+ * répondre, et ce qu'elles ne disent pas. Aucun verdict — le site décrit, le lecteur juge.
+ * Aucune mesure de candidat n'est citée ici : un chiffre accolé à une proposition
+ * l'évaluerait sans le dire. La page renvoie aux débats et aux propositions du thème.
+ */
 export function getStaticPaths() {
-    // Aucune fiche publiée => aucune page. Pas de page morte par construction.
-    return affirmationsOrdonnees().map((f) => ({ params: { slug: f.slug }, props: { f } }));
+    // Aucun repère publié => aucune page. Pas de page morte par construction.
+    return REPERES.reperes
+        .filter((r) => r.theme)
+        .map((f) => ({ params: { slug: f.theme!, repere: f.slug }, props: { f } }));
 }
-const { f } = Astro.props as { f: Affirmation };
+const { f } = Astro.props as { f: Repere };
 
+const theme = themeParSlug(f.theme!);
 const themes = [f.theme, ...f.themes_secondaires].map((s) => (s ? themeParSlug(s) : null)).filter(Boolean);
+const debats = controversesDuTheme(f.theme!);
 
 const SECTIONS: { id: SectionConstat; ancre: string; titre: string; onglet: string }[] = [
     { id: 'chiffres', ancre: 'chiffres', titre: 'Ce que disent les chiffres', onglet: 'Les chiffres' },
@@ -49,51 +58,35 @@ const graphiquesDe = (id: number) => f.graphiques.filter((g) => g.constat === id
 
 const ancres = [...sections.map((s) => ({ id: s.ancre, label: s.onglet })), { id: 'sources', label: 'Sources' }];
 
-const titre = `« ${f.enonce} » : ce que disent les chiffres`;
-const description = (f.resume
-    ?? `${f.verdicts.map((v) => VERDICTS[v.verdict].libelle + (v.portee ? ` ${v.portee}` : '')).join(' ; ')}. Données publiques et sources.`
-).slice(0, 155);
+const titre = f.question;
+const description = (f.resume ?? 'Ce que disent les données publiques, et ce qu\'elles ne disent pas. Sources vérifiées.').slice(0, 155);
+const fil = [{ label: 'Thèmes', href: '/themes/' }, { label: theme?.nom ?? '', href: `/themes/${f.theme}/` }, { label: f.question }];
 ---
 
 <Base
     title={titre.length > 55 ? titre : `${titre} | Objectif 2027`}
     description={description}
-    ogImage={`/og/affirmation-${f.slug}.png`}
-    ogImageAlt={`« ${f.enonce} » — Ce qu'on entend, Objectif 2027`}
+    ogImage={`/og/repere-${f.slug}.png`}
+    ogImageAlt={`${f.question} — Les chiffres, Objectif 2027`}
     ogType="article"
-    jsonld={breadcrumbJsonLd([{ label: "Ce qu'on entend", href: '/ce-qu-on-entend/' }, { label: `« ${f.enonce} »` }])}>
+    jsonld={breadcrumbJsonLd(fil)}>
 
-    <Breadcrumb items={[{ label: "Ce qu'on entend", href: '/ce-qu-on-entend/' }, { label: `« ${f.enonce} »` }]} />
+    <Breadcrumb items={fil} />
 
     <header class="pt-2">
-        <p class="text-xs font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">Ce qu'on entend</p>
-        <h1 class="text-2xl font-bold mt-1">« {f.enonce} »</h1>
+        <p class="text-xs font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">Les chiffres · {theme?.nom}</p>
+        <h1 class="text-2xl font-bold mt-1">{f.question}</h1>
         <p class="mt-1 text-sm" style="color: var(--fg-muted)">
             {themes.map((t, i) => <>{i > 0 && ' · '}<a href={`/themes/${t!.slug}/`} class="text-brand-600 hover:underline">{t!.nom}</a></>)}
             {f.derniere_verification && <> · sources vérifiées le {dateFr(f.derniere_verification)}</>}
         </p>
     </header>
 
-    <section class="mt-4 rounded-card border p-4" style="border-color: var(--border); background: var(--bg-soft)" aria-labelledby="verdict-titre">
-        <h2 id="verdict-titre" class="text-sm font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">
-            Sur la partie mesurable
-        </h2>
-        <div class="mt-3 space-y-3">
-            {f.verdicts.map((v) => <VerdictJauge verdict={v.verdict} portee={v.portee} />)}
-        </div>
-        {f.resume && <p class="mt-3 leading-relaxed">{f.resume}</p>}
-        {f.part_de_valeur && (
-            <p class="mt-3 text-sm leading-relaxed rounded-card border-l-4 pl-3 py-1" style="border-color: var(--fg-muted)">
-                <strong>Ce que les chiffres ne peuvent pas trancher.</strong> Cette affirmation contient
-                un jugement. Les données disent combien, comment ça évolue et comment la France se
-                situe parmi ses voisins — jamais ce qui est « trop ». Cette part-là vous revient.
-            </p>
-        )}
-    </section>
+    {f.resume && <p class="mt-3 leading-relaxed">{f.resume}</p>}
 
     {aSourcer > 0 && (
         <p class="mt-4 text-sm leading-relaxed rounded-card border px-4 py-3" style="border-color: var(--border)">
-            <strong>Fiche en cours de complément.</strong> Tout ce qui est affiché ici a été vérifié dans
+            <strong>Repère en cours de complément.</strong> Tout ce qui est affiché ici a été vérifié dans
             sa source. {elements(aSourcer)} {aSourcer > 1 ? 'restent' : 'reste'} à sourcer : {aSourcer > 1 ? 'ils seront affichés' : 'il sera affiché'} dès
             que cela aura été fait.
         </p>
@@ -168,15 +161,22 @@ const description = (f.resume
     </section>
 
     <section id="suite" class="py-6 border-t" style="border-color: var(--border)">
-        <ul class="text-sm space-y-1.5">
+        <h2 class="text-lg font-semibold">Et les candidats ?</h2>
+        <p class="text-sm mt-1" style="color: var(--fg-muted)">
+            Ces chiffres ne disent pas quoi faire. Ce que chacun propose, et les arguments pour et
+            contre, sont sur la page du thème.
+        </p>
+        <ul class="text-sm space-y-1.5 mt-3">
+            {debats.map((d) => (
+                <li><a href={`/questions/${d.slug}/`} class="text-brand-600 hover:underline">{d.titre} →</a></li>
+            ))}
             {themes.map((t) => (
-                <li><a href={`/themes/${t!.slug}/`} class="text-brand-600 hover:underline">Ce que proposent les candidats — {t!.nom} →</a></li>
+                <li><a href={`/themes/${t!.slug}/#candidats`} class="text-brand-600 hover:underline">Ce que proposent les candidats — {t!.nom} →</a></li>
             ))}
             <li><a href="/comparateur/" class="text-brand-600 hover:underline">Comparer les programmes →</a></li>
         </ul>
         <p class="text-sm mt-4" style="color: var(--fg-muted)">
-            Le verdict ne porte que sur la partie mesurable de l'affirmation.
-            <a href="/methodologie/#ce-qu-on-entend" class="text-brand-600 hover:underline">Comment nous vérifions</a>
+            <a href="/methodologie/#chiffres-des-themes" class="text-brand-600 hover:underline">Comment nous choisissons et vérifions ces chiffres</a>
             {' · '}<a href="/signaler/" class="text-brand-600 hover:underline">Signaler une erreur</a>
         </p>
     </section>

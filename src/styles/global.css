@@ -156,7 +156,7 @@ a, button, [role='button'] { touch-action: manipulation; }
 }
 
 /* ---------------------------------------------------------------
-   Graphiques de « Ce qu'on entend » (annexe D.5)
+   Graphiques des repères chiffrés (annexe D.5)
    Une seule couleur d'accent, réservée à la France. Les autres pays
    en gris de clartés différentes, l'UE-27 en tirets. Tout dérive de
    --fg et --bg : le mode sombre et l'impression suivent seuls.

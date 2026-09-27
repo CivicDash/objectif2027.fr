@@ -6,7 +6,7 @@
 //  - le pied obligatoire : source, code du jeu, date d'extraction, ruptures, note ;
 //  - le tableau équivalent et un CSV par indicateur, pour vérifier soi-même.
 // Aucun JavaScript : le graphique se lit sans.
-import type { AffirmationGraphique, Indicateur } from '@/lib/data';
+import type { RepereGraphique, Indicateur } from '@/lib/data';
 import { indicateur } from '@/lib/data';
 import { dateFr, nombreFr } from '@/lib/format';
 import {
@@ -17,7 +17,7 @@ import GraphiqueCourbes from './GraphiqueCourbes.astro';
 import GraphiqueBarresGroupees from './GraphiqueBarresGroupees.astro';
 import GraphiqueBarresEmpilees from './GraphiqueBarresEmpilees.astro';
 
-interface Props { g: AffirmationGraphique; id: string }
+interface Props { g: RepereGraphique; id: string }
 const { g, id } = Astro.props;
 
 const inds = g.indicateurs.map((c) => indicateur(c));
@@ -160,7 +160,7 @@ const tableauxCourbes = complets && g.type === 'courbes' ? I.map((ind, k) => {
         <p class="mt-2 text-xs" style="color: var(--fg-muted)">
             Statuts Eurostat : p provisoire, e estimé, b rupture de série. Télécharger :
             {g.indicateurs.map((c, k) => (
-                <>{k > 0 && ', '}<a href={`/ce-qu-on-entend/donnees/${c}.csv`} class="text-brand-600 hover:underline" download>{c}.csv</a></>
+                <>{k > 0 && ', '}<a href={`/chiffres/donnees/${c}.csv`} class="text-brand-600 hover:underline" download>{c}.csv</a></>
             ))}
         </p>
     </details>

@@ -1,4 +1,4 @@
-// Calculs des graphiques de « Ce qu'on entend », faits au build (annexe D.3).
+// Calculs des graphiques des repères chiffrés, faits au build (annexe D.3).
 //
 // Aucune bibliothèque : une échelle linéaire, des graduations « rondes » et un placement
 // d'étiquettes tiennent en quelques fonctions, et le build tourne dans un conteneur qui

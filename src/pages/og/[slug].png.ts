@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { CANDIDATS, THEMES, questionsCles, affirmationsOrdonnees } from '@/lib/data';
+import { CANDIDATS, THEMES, questionsCles, REPERES } from '@/lib/data';
 
 // Lecture depuis la source (racine projet au build), pas le code bundlé.
 const fontsDir = path.resolve(process.cwd(), 'src/assets/fonts');
@@ -45,12 +45,11 @@ export function getStaticPaths() {
             sous_titre: 'Ce qui fait débat · qui propose quoi, et ce que disent les études',
             accent: '#94a3b8',
         })),
-        // Aucun verdict sur l'image : partagé seul, sans sa portée ni ses limites, un
-        // verdict devient un slogan. L'image dit ce qu'on examine, pas ce qu'on conclut.
-        ...affirmationsOrdonnees().map((a) => ({
-            slug: `affirmation-${a.slug}`,
-            titre: `« ${a.enonce} »`,
-            sous_titre: "Ce qu'on entend · ce que disent les données publiques",
+        // La question, jamais une conclusion : partagée seule, l'image dit ce qu'on examine.
+        ...REPERES.reperes.map((r) => ({
+            slug: `repere-${r.slug}`,
+            titre: r.question,
+            sous_titre: 'Les chiffres · ce que disent les données publiques, et ce qu\'elles ne disent pas',
             accent: '#94a3b8',
         })),
     ];

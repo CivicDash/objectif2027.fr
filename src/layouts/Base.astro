@@ -1,5 +1,5 @@
 ---
-import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF, AFFIRMATIONS_ACTIVES } from '@/lib/data';
+import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF } from '@/lib/data';
 import '@/styles/global.css';
 
 export interface Props {
@@ -29,12 +29,10 @@ const structured = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
 const annee = 2027;
 
 // Rubriques regroupées sous « Plus » : dans la barre du bas sur téléphone, dans un menu
-// déroulant entre 768 et 1 024 px. Cinq onglets tiennent juste sur 375 px, et neuf entrées
-// ne tiennent pas dans le menu du haut avant lg — c'est ce qui rendait « Ce qu'on entend »
-// invisible sur mobile et tablette.
+// déroulant entre 768 et 1 024 px. Cinq onglets tiennent juste sur 375 px, et toutes les
+// entrées ne tiennent pas dans le menu du haut avant lg.
 const rubriquesPlus = [
     QUESTIONS_ACTIVES && { href: '/questions/', libelle: 'Questions clés' },
-    AFFIRMATIONS_ACTIVES && { href: '/ce-qu-on-entend/', libelle: "Ce qu'on entend" },
     JEU_ACTIF && { href: '/jeu/', libelle: 'Qui a dit quoi ?' },
     CALENDRIER_ACTIF && { href: '/calendrier/', libelle: 'Le fil de la campagne' },
     { href: '/demarche/', libelle: 'Démarche' },
@@ -94,7 +92,6 @@ const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
                         passent dans le menu « Plus » ci-dessous. */}
                     {JEU_ACTIF && <a href="/jeu/" class="hidden lg:inline hover:text-brand-600" title="Qui a dit quoi ?">Jeu</a>}
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hidden lg:inline hover:text-brand-600" title="Questions clés">Questions</a>}
-                    {AFFIRMATIONS_ACTIVES && <a href="/ce-qu-on-entend/" class="hidden lg:inline hover:text-brand-600 whitespace-nowrap">Ce qu'on entend</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hidden lg:inline hover:text-brand-600" title="Le fil de la campagne">Calendrier</a>}
                     <a href="/demarche/" class="hidden lg:inline hover:text-brand-600">Démarche</a>
                     <details class="menu-plus lg:hidden relative" data-menu-plus>
@@ -171,7 +168,6 @@ const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
                     <a href="/recherche/" class="hover:underline">Recherche</a>
                     {JEU_ACTIF && <a href="/jeu/" class="hover:underline">Qui a dit quoi ?</a>}
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:underline">Questions clés</a>}
-                    {AFFIRMATIONS_ACTIVES && <a href="/ce-qu-on-entend/" class="hover:underline">Ce qu'on entend</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:underline">Le fil de la campagne</a>}
                     <a href="/methodologie/" class="hover:underline">Méthodologie</a>
                     <a href="/mentions-legales/" class="hover:underline">Mentions légales</a>

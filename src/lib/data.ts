@@ -15,7 +15,7 @@ import controverses from '@/data/controverses.json';
 const _cal = import.meta.glob<{ default: any }>('../data/calendrier.json', { eager: true });
 const _quiz = import.meta.glob<{ default: any }>('../data/quiz.json', { eager: true });
 const _jeu = import.meta.glob<{ default: any }>('../data/jeu.json', { eager: true });
-const _affirmations = import.meta.glob<{ default: any }>('../data/affirmations.json', { eager: true });
+const _reperes = import.meta.glob<{ default: any }>('../data/reperes.json', { eager: true });
 
 export interface Controverse {
     titre: string;
@@ -426,12 +426,14 @@ export function quizParTheme(): { slug: string; nom: string; questions: QuizQues
     }));
 }
 
-/* ── « Ce qu'on entend » ──────────────────────────────────────────────────────────── */
+/* ── Repères chiffrés des thèmes ────────────────────────────────────────────────────
+ * Une question neutre posée dans un thème, et ce que disent les chiffres publics pour y
+ * répondre, avec leurs limites. Aucun verdict : le site décrit, le lecteur juge. (Le
+ * premier format, « Ce qu'on entend », jugeait des affirmations ; abandonné le 27/09/2026.) */
 
-export type CodeVerdict = 'confirme' | 'plutot_confirme' | 'nuance' | 'plutot_infirme' | 'infirme' | 'inverifiable';
 export type SectionConstat = 'chiffres' | 'limites' | 'complement' | 'europe' | 'liens';
 
-export interface AffirmationSource {
+export interface RepereSource {
     cle: string;
     producteur: string;
     titre: string;
@@ -442,7 +444,7 @@ export interface AffirmationSource {
     date_consultation: string | null;
 }
 
-export interface AffirmationConstat {
+export interface RepereConstat {
     id: number;
     section: SectionConstat;
     groupe: string | null;
@@ -459,8 +461,8 @@ export interface OptionsGraphique {
     mise_en_avant?: string;
 }
 
-export interface AffirmationGraphique {
-    /** Identifiant du constat qui accompagne le graphique (annexe D.7). */
+export interface RepereGraphique {
+    /** Identifiant du constat qui accompagne le graphique : un graphique n'est jamais seul. */
     constat: number | null;
     type: 'courbes' | 'barres_groupees' | 'barres_empilees';
     titre: string;
@@ -470,27 +472,25 @@ export interface AffirmationGraphique {
     note: string | null;
 }
 
-export interface Affirmation {
+export interface Repere {
     slug: string;
-    enonce: string;
+    /** Le titre public : une question neutre, jamais une affirmation. */
+    question: string;
     resume: string | null;
     theme: string | null;
     themes_secondaires: string[];
-    part_de_valeur: boolean;
     derniere_verification: string | null;
-    /** Tous affichés, aucun « principal » : une fiche sur deux en a deux. */
-    verdicts: { portee: string | null; verdict: CodeVerdict }[];
     /** Seules les phrases vérifiées dans leur source partent ; leurs sources et graphiques avec. */
-    constats: AffirmationConstat[];
+    constats: RepereConstat[];
     /** Phrases encore en cours de sourçage, par section : comptées, jamais montrées. */
     a_sourcer?: Partial<Record<SectionConstat, number>>;
-    sources: AffirmationSource[];
-    graphiques: AffirmationGraphique[];
+    sources: RepereSource[];
+    graphiques: RepereGraphique[];
 }
 
-/** Nombre d'éléments d'une fiche encore en cours de sourçage. */
-export function nbASourcer(f: Affirmation): number {
-    return Object.values(f.a_sourcer ?? {}).reduce((n, x) => n + (x ?? 0), 0);
+/** Nombre d'éléments d'un repère encore en cours de sourçage. */
+export function nbASourcer(r: Repere): number {
+    return Object.values(r.a_sourcer ?? {}).reduce((n, x) => n + (x ?? 0), 0);
 }
 
 /** « 1 élément », « 3 éléments ». */
@@ -511,35 +511,30 @@ export interface Indicateur {
 
 /**
  * Chargement tolérant, comme le quiz : tant que le back-office n'a pas livré
- * `affirmations.json`, la rubrique n'existe pas — pas de page, pas de lien.
+ * `reperes.json`, aucun repère — pas de section, pas de page.
  */
-export const AFFIRMATIONS: {
+export const REPERES: {
     election: string;
     legende_statuts: Record<string, string>;
-    affirmations: Affirmation[];
+    reperes: Repere[];
     indicateurs: Record<string, Indicateur>;
-} = (Object.values(_affirmations)[0]?.default) ?? { election: '2027', legende_statuts: {}, affirmations: [], indicateurs: {} };
+} = (Object.values(_reperes)[0]?.default) ?? { election: '2027', legende_statuts: {}, reperes: [], indicateurs: {} };
 
-/** Test léger : Base.astro l'importe sur chaque page. */
-export const AFFIRMATIONS_ACTIVES = AFFIRMATIONS.affirmations.length > 0;
+export const REPERES_ACTIFS = REPERES.reperes.length > 0;
 
-/**
- * Ordre mécanique, jamais éditorial : l'ordre des thèmes, puis l'énoncé. Aucune fiche
- * n'est mise en tête parce qu'elle confirmerait ou infirmerait quelque chose.
- */
-export function affirmationsOrdonnees(): Affirmation[] {
-    const rang = new Map(THEMES.map((t) => [t.slug, t.ordre]));
-    return [...AFFIRMATIONS.affirmations].sort(
-        (a, b) => ((rang.get(a.theme ?? '') ?? 99) - (rang.get(b.theme ?? '') ?? 99))
-               || a.enonce.localeCompare(b.enonce, 'fr'),
-    );
+/** Repères dont le thème principal ou un thème secondaire est `slug`, par ordre alphabétique
+ *  de la question : un ordre mécanique, jamais éditorial. */
+export function reperesDuTheme(slug: string): Repere[] {
+    return REPERES.reperes
+        .filter((r) => r.theme === slug || r.themes_secondaires.includes(slug))
+        .sort((a, b) => a.question.localeCompare(b.question, 'fr'));
 }
 
-/** Fiches dont le thème principal ou un thème secondaire est `slug`. */
-export function affirmationsDuTheme(slug: string): Affirmation[] {
-    return affirmationsOrdonnees().filter((a) => a.theme === slug || a.themes_secondaires.includes(slug));
+/** Adresse publique d'un repère : sous son thème principal. */
+export function urlRepere(r: Repere): string {
+    return `/themes/${r.theme}/chiffres/${r.slug}/`;
 }
 
 export function indicateur(code: string): Indicateur | null {
-    return AFFIRMATIONS.indicateurs[code] ?? null;
+    return REPERES.indicateurs[code] ?? null;
 }
