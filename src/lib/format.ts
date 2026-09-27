@@ -19,6 +19,21 @@ export function dateFr(iso: string | null | undefined): string {
     return new Date(Date.UTC(a, m - 1, j)).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 }
 
+/**
+ * Date à la précision connue : « 2 juillet 2019 », « juillet 2019 » ou « 2019 ». Une période
+ * déclarée au mois près ne doit pas paraître commencer un 1er ; une fonction connue à
+ * l'année, un 1er janvier. Sans précision (ancien export), la date complète.
+ */
+export function datePrecise(iso: string | null | undefined, precision?: string | null): string {
+    if (!iso) return '';
+    const [a, m] = iso.split('-').map(Number);
+    if (precision === 'annee') return String(a);
+    if (precision === 'mois') {
+        return new Date(Date.UTC(a, m - 1, 1)).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+    }
+    return dateFr(iso);
+}
+
 function echapper(t: string): string {
     return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
