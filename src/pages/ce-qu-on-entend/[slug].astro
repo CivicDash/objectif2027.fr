@@ -4,7 +4,7 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
 import VerdictJauge from '@/components/VerdictJauge.astro';
 import Graphique from '@/components/graphiques/Graphique.astro';
-import { affirmationsOrdonnees, themeParSlug, type Affirmation, type SectionConstat } from '@/lib/data';
+import { affirmationsOrdonnees, elements, nbASourcer, themeParSlug, type Affirmation, type SectionConstat } from '@/lib/data';
 import { CATEGORIES_SOURCE, VERDICTS } from '@/lib/verdicts';
 import { dateFr, textePlat, texteRiche } from '@/lib/format';
 import { breadcrumbJsonLd } from '@/lib/seo';
@@ -25,15 +25,18 @@ const SECTIONS: { id: SectionConstat; ancre: string; titre: string; onglet: stri
     { id: 'liens', ancre: 'liens', titre: 'Liens', onglet: 'Liens' },
 ];
 
-// Constats groupés par section, puis par sous-titre, dans l'ordre de la fiche.
+// Constats groupés par section, puis par sous-titre, dans l'ordre de la fiche. Une section
+// dont tout reste à sourcer paraît quand même, avec sa seule mention : la taire laisserait
+// croire qu'il n'y a rien à en dire.
 const sections = SECTIONS.map((s) => {
     const groupes: { nom: string | null; constats: typeof f.constats }[] = [];
     for (const c of f.constats.filter((c) => c.section === s.id)) {
         const g = groupes.find((x) => x.nom === c.groupe);
         if (g) g.constats.push(c); else groupes.push({ nom: c.groupe, constats: [c] });
     }
-    return { ...s, groupes };
-}).filter((s) => s.groupes.length);
+    return { ...s, groupes, aSourcer: f.a_sourcer?.[s.id] ?? 0 };
+}).filter((s) => s.groupes.length || s.aSourcer);
+const aSourcer = nbASourcer(f);
 
 // Sources numérotées dans l'ordre de leur première citation.
 const numero = new Map<string, number>();
@@ -88,6 +91,14 @@ const description = (f.resume
         )}
     </section>
 
+    {aSourcer > 0 && (
+        <p class="mt-4 text-sm leading-relaxed rounded-card border px-4 py-3" style="border-color: var(--border)">
+            <strong>Fiche en cours de complément.</strong> Tout ce qui est affiché ici a été vérifié dans
+            sa source. {elements(aSourcer)} {aSourcer > 1 ? 'restent' : 'reste'} à sourcer : {aSourcer > 1 ? 'ils seront affichés' : 'il sera affiché'} dès
+            que cela aura été fait.
+        </p>
+    )}
+
     {ancres.length > 1 && <AnchorNav items={ancres} onglets />}
 
     {sections.map((s) => (
@@ -119,6 +130,13 @@ const description = (f.resume
                     </ul>
                 </div>
             ))}
+            {s.aSourcer > 0 && (
+                <p class="a-sourcer mt-4 text-sm" style="color: var(--fg-muted)">
+                    {s.groupes.length
+                        ? `+ ${elements(s.aSourcer)} en cours de sourçage, affiché${s.aSourcer > 1 ? 's' : ''} dès vérification.`
+                        : `${elements(s.aSourcer)} en cours de sourçage : cette section sera complétée dès vérification.`}
+                </p>
+            )}
         </section>
     ))}
 
@@ -166,6 +184,7 @@ const description = (f.resume
 
 <style>
     .constat, .source { scroll-margin-top: 5rem; }
+    .a-sourcer { border-left: 3px dashed var(--border); padding-left: 0.75rem; }
     .renvois { white-space: nowrap; }
     .renvoi {
         display: inline-flex; align-items: center; justify-content: center;

@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import VerdictJauge from '@/components/VerdictJauge.astro';
-import { AFFIRMATIONS_ACTIVES, affirmationsOrdonnees, THEMES } from '@/lib/data';
+import { AFFIRMATIONS_ACTIVES, affirmationsOrdonnees, elements, nbASourcer, THEMES } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
 // Sans fiche publiée, la page existe mais n'est liée de nulle part (navigation, pied de
@@ -59,6 +59,9 @@ const parTheme = THEMES
                             <p class="mt-2 text-xs" style="color: var(--fg-muted)">Contient un jugement que les chiffres ne tranchent pas.</p>
                         )}
                         {f.resume && <p class="mt-2 text-sm" style="color: var(--fg-muted)">{f.resume}</p>}
+                        {nbASourcer(f) > 0 && (
+                            <p class="mt-2 text-xs" style="color: var(--fg-muted)">{elements(nbASourcer(f))} en cours de sourçage.</p>
+                        )}
                     </li>
                 ))}
             </ul>

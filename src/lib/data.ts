@@ -480,9 +480,22 @@ export interface Affirmation {
     derniere_verification: string | null;
     /** Tous affichés, aucun « principal » : une fiche sur deux en a deux. */
     verdicts: { portee: string | null; verdict: CodeVerdict }[];
+    /** Seules les phrases vérifiées dans leur source partent ; leurs sources et graphiques avec. */
     constats: AffirmationConstat[];
+    /** Phrases encore en cours de sourçage, par section : comptées, jamais montrées. */
+    a_sourcer?: Partial<Record<SectionConstat, number>>;
     sources: AffirmationSource[];
     graphiques: AffirmationGraphique[];
+}
+
+/** Nombre d'éléments d'une fiche encore en cours de sourçage. */
+export function nbASourcer(f: Affirmation): number {
+    return Object.values(f.a_sourcer ?? {}).reduce((n, x) => n + (x ?? 0), 0);
+}
+
+/** « 1 élément », « 3 éléments ». */
+export function elements(n: number): string {
+    return `${n} élément${n > 1 ? 's' : ''}`;
 }
 
 export interface PointSerie { annee: number; valeur: number; statut: string }
