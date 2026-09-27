@@ -206,3 +206,7 @@ a, button, [role='button'] { touch-action: manipulation; }
     .graphe .v-compact { display: none; }
     .graphe details { display: none; }
 }
+
+/* Menu « Plus » : sans le triangle natif de <summary>. */
+.menu-plus > summary { list-style: none; }
+.menu-plus > summary::-webkit-details-marker { display: none; }
