@@ -24,6 +24,16 @@ const revenusHatvp = Object.entries(hatvp.summary?.revenus_par_annee ?? {})
     .map(([annee, v]: any) => ({ annee, total: Number(v?.total ?? v ?? 0) }))
     .sort((a, b) => a.annee.localeCompare(b.annee));
 const revenusMax = Math.max(1, ...revenusHatvp.map((r) => r.total));
+// Bandeau de présomption : un libellé par statut (règles éditoriales). « Décision non
+// définitive » ne convient pas tant qu'aucun jugement n'a été rendu.
+const BANDEAU_STATUT: Record<string, string> = {
+    en_cours: 'Aucun jugement n\'a été rendu dans ce dossier.',
+    mis_en_examen: 'Aucun jugement n\'a été rendu dans ce dossier.',
+    condamne_premiere_instance: 'Décision non définitive : appel possible ou en cours.',
+    condamne_appel: 'Décision non définitive : pourvoi en cassation en cours.',
+};
+// Étapes de procédure datées à l'année (2004), au mois (2015-03) ou au jour (2017-06-30).
+const dateEtape = (d: string) => datePrecise(d, d.length === 4 ? 'annee' : d.length === 7 ? 'mois' : 'jour');
 const fmtEur = (v: number) => v ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v) : '—';
 
 // Regroupement du programme : publiés, puis relevés, puis en traitement, non-exprimés repliés.
@@ -331,7 +341,7 @@ function etatDe(slug: string): EtatTheme {
                     <article class="rounded-card border overflow-hidden" style="border-color: var(--border)">
                         {a.presomption_innocence && (
                             <p class="text-sm px-4 py-3" style="background:#fffbeb; color:#92400e; border-bottom:1px solid var(--border)">
-                                ⚠ Décision de justice non définitive. <strong>La présomption d'innocence s'applique.</strong>
+                                ⚠ {BANDEAU_STATUT[a.statut_judiciaire] ?? 'Décision de justice non définitive.'} <strong>La présomption d'innocence s'applique.</strong>
                                 {a.aucune_mise_en_examen && ' Aucune mise en examen n\'a été prononcée à ce jour.'}
                             </p>
                         )}
@@ -352,6 +362,23 @@ function etatDe(slug: string): EtatTheme {
                             )}
                             {a.position_interesse && (
                                 <p class="text-xs mt-2 italic" style="color: var(--fg-muted)">Position de l'intéressé : {a.position_interesse}</p>
+                            )}
+                            {a.chronologie?.length > 0 && (
+                                <details class="mt-3">
+                                    <summary class="text-xs cursor-pointer text-brand-600 hover:underline">
+                                        Chronologie de la procédure ({a.chronologie.length} étape{a.chronologie.length > 1 ? 's' : ''})
+                                    </summary>
+                                    <ol class="mt-2 ml-1 border-l-2 space-y-2" style="border-color: var(--border)">
+                                        {a.chronologie.map((e: any) => (
+                                            <li class="pl-3 text-xs relative">
+                                                <span class="absolute rounded-full" style="left:-5px; top:5px; width:8px; height:8px; background: var(--fg-muted)"></span>
+                                                <span class="font-mono whitespace-nowrap" style="color: var(--fg-muted)">{dateEtape(e.date)}</span>
+                                                <span> — {e.fait}</span>
+                                                {e.source && <a href={e.source} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </details>
                             )}
                             {a.sources?.length > 0 && (
                                 <p class="text-xs mt-3" style="color: var(--fg-muted)">
