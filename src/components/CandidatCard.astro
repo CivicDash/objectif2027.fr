@@ -8,8 +8,9 @@ export interface Props {
 const { candidat: c } = Astro.props;
 const parrainages = badgeParrainages(c.statut_candidature);
 
-const initiales = c.nom_complet
-    .replace(/^M\.\s*|^Mme\s*/, '')
+const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
+
+const initiales = nom
     .split(/\s+/)
     .map((m) => m[0])
     .slice(0, 2)
@@ -21,39 +22,203 @@ const statutLabel: Record<string, string> = {
     declare: 'Déclaré', pressenti: 'Pressenti', investi: 'Investi',
     parrainages_valides: '500 parrainages validés', retire: 'Retiré', elimine_t1: 'Éliminé T1',
 };
+
+const { themes_exprimes: exprimes, themes_total: total } = c.couverture;
+const part = total > 0 ? Math.round((exprimes / total) * 100) : 0;
 ---
 
-<article class="rounded-card border p-4 flex flex-col gap-3" style="border-color: var(--border)">
-    <div class="flex items-center gap-3">
-        {c.photo?.url ? (
-            <img src={c.photo.url} alt={`Portrait de ${c.nom_complet}`} width="48" height="48" loading="lazy"
-                 class="rounded-full shrink-0 object-cover" style="width:48px; height:48px" />
-        ) : (
-            <span class="grid place-items-center rounded-full text-white font-semibold shrink-0"
-                  style={`background:${couleur}; width:48px; height:48px`} aria-hidden="true">{initiales}</span>
-        )}
-        <div class="min-w-0">
-            <h3 class="font-semibold leading-tight truncate">{c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}</h3>
-            <p class="text-sm truncate" style="color: var(--fg-muted)">{c.parti_soutien}</p>
-            {c.slogan && <p class="text-sm italic truncate" style="color: var(--fg-muted)">« {c.slogan} »</p>}
+<article class="carte-candidat">
+    <div class="tete">
+        {/* Les initiales sont SOUS la photo, pas à la place. Les portraits sont pointés
+            chez Wikimedia : ils arrivent avec retard, et parfois pas du tout. Un simple
+            `src` laissait alors un carré vide de 48 px, qui décalait le nom — d'où des
+            cartes visuellement dépareillées. Ici la géométrie ne bouge jamais. */}
+        <span class="avatar" style={`--avatar-fond: ${couleur}`} aria-hidden="true">
+            <span class="avatar-initiales">{initiales}</span>
+            {c.photo?.url && (
+                <img class="avatar-photo" src={c.photo.url} alt="" width="48" height="48"
+                     loading="lazy" decoding="async" />
+            )}
+        </span>
+
+        <div class="identite">
+            {/* Lien étendu : le ::after couvre toute la carte. On garde un vrai lien —
+                clic milieu, ouverture dans un onglet, lecture d'écran et référencement
+                continuent de fonctionner, ce qu'un `onclick` sur la carte casserait. */}
+            <h3 class="nom"><a class="lien-etendu" href={`/candidats/${c.slug}/`}>{nom}</a></h3>
+            <p class="parti">{c.parti_soutien}</p>
+            {c.slogan && <p class="slogan">« {c.slogan} »</p>}
         </div>
     </div>
 
-    <div class="flex flex-wrap gap-2 text-xs">
-        <span class="px-2 py-1 rounded-control" style="background: color-mix(in srgb, var(--etat-publie, #059669) 12%, transparent); color: #047857">
-            {statutLabel[c.statut_candidature] ?? c.statut_candidature}
-        </span>
-        <span class="px-2 py-1 rounded-control" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>
+    <div class="badges">
+        <span class="badge badge-statut">{statutLabel[c.statut_candidature] ?? c.statut_candidature}</span>
+        <span class:list={['badge', parrainages.ton === 'vert' ? 'badge-vert' : 'badge-ambre']}>
             {parrainages.texte}
-        </span>
-        <span class="px-2 py-1 rounded-control" style="background: var(--bg-soft); color: var(--fg-muted)">
-            S'est exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes
         </span>
     </div>
 
-    <a
-        href={`/candidats/${c.slug}/`}
-        class="tap mt-auto inline-flex items-center justify-center rounded-control bg-brand-600 text-white text-sm font-medium px-4 py-2 hover:bg-brand-800">
-        Voir la fiche
-    </a>
+    <div class="couverture">
+        {exprimes > 0 ? (
+            <>
+                <div class="jauge" aria-hidden="true"><div class="jauge-barre" style={`width: ${part}%`}></div></div>
+                <p class="couverture-texte">S'est exprimé sur <strong>{exprimes}</strong> des {total} thèmes</p>
+            </>
+        ) : (
+            /* Une jauge vide se lirait comme une mauvaise note. Or un zéro dit surtout
+               que nous n'avons pas encore dépouillé de prise de parole de ce candidat. */
+            <p class="couverture-texte">Aucune mesure publiée à ce jour</p>
+        )}
+    </div>
+
+    <p class="appel" aria-hidden="true">Voir la fiche <span class="fleche">→</span></p>
 </article>
+
+<style>
+    .carte-candidat {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-card, 12px);
+        background: var(--bg);
+        transition: border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
+    }
+
+    .carte-candidat:hover {
+        border-color: var(--brand-600, #2563eb);
+        background: color-mix(in srgb, var(--brand-600, #2563eb) 4%, var(--bg));
+        transform: translateY(-1px);
+    }
+
+    /* Le focus clavier doit se voir sur la CARTE, pas sur le seul titre : c'est la carte
+       entière qui est la cible. */
+    .carte-candidat:focus-within {
+        border-color: var(--brand-600, #2563eb);
+        outline: 2px solid var(--brand-600, #2563eb);
+        outline-offset: 2px;
+    }
+
+    .carte-candidat:focus-within .lien-etendu:focus-visible { outline: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .carte-candidat { transition: none; }
+        .carte-candidat:hover { transform: none; }
+    }
+
+    .lien-etendu { color: inherit; text-decoration: none; }
+
+    .lien-etendu::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+
+    .tete { display: flex; align-items: center; gap: 0.75rem; }
+
+    .avatar {
+        position: relative;
+        display: grid;
+        place-items: center;
+        flex: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--avatar-fond);
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .avatar-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .identite { min-width: 0; }
+
+    .nom {
+        margin: 0;
+        font-weight: 600;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .parti, .slogan {
+        margin: 0;
+        font-size: 0.875rem;
+        color: var(--fg-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .slogan { font-style: italic; }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.75rem; }
+
+    .badge { padding: 0.15rem 0.5rem; border-radius: 999px; }
+
+    /* Les fonds étaient écrits en dur (#ecfdf5, #fffbeb) avec un texte foncé : en thème
+       sombre, cela donnait un texte vert bouteille sur un aplat clair, illisible et
+       étranger au reste de la page. `color-mix` fait suivre le thème. */
+    .badge-statut {
+        background: color-mix(in srgb, var(--fg) 8%, transparent);
+        color: var(--fg-muted);
+    }
+
+    .badge-vert {
+        background: color-mix(in srgb, #059669 14%, transparent);
+        color: color-mix(in srgb, #059669 70%, var(--fg));
+    }
+
+    .badge-ambre {
+        background: color-mix(in srgb, #d97706 14%, transparent);
+        color: color-mix(in srgb, #d97706 70%, var(--fg));
+    }
+
+    .couverture { margin-top: auto; }
+
+    .jauge {
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--fg) 10%, transparent);
+        overflow: hidden;
+    }
+
+    .jauge-barre { height: 100%; background: var(--brand-600, #2563eb); }
+
+    .couverture-texte {
+        margin: 0.35rem 0 0;
+        font-size: 0.75rem;
+        color: var(--fg-muted);
+    }
+
+    .couverture-texte strong { color: var(--fg); }
+
+    /* Remplace le bouton bleu plein, répété vingt-quatre fois : la carte entière est
+       devenue la cible, le bouton ne faisait plus que peser visuellement. */
+    .appel {
+        margin: 0;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--brand-600, #2563eb);
+    }
+
+    .fleche { display: inline-block; transition: transform 120ms ease; }
+
+    .carte-candidat:hover .fleche { transform: translateX(3px); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .fleche { transition: none; }
+        .carte-candidat:hover .fleche { transform: none; }
+    }
+</style>

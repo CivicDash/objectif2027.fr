@@ -1,0 +1,101 @@
+---
+import type { Evenement } from '@/lib/data';
+import { ECHEANCES } from '@/lib/echeances';
+
+interface Props { evenements: Evenement[]; jalons?: boolean; }
+const { evenements, jalons = false } = Astro.props;
+
+// Règle de date tenue partout ici : on ne construit JAMAIS un objet Date à partir d'une
+// chaîne « AAAA-MM-JJ » pour l'afficher. `new Date('2026-08-27')` est interprété en UTC
+// puis rendu en heure locale, ce qui affiche le 26 dans les fuseaux négatifs — et
+// symétriquement `new Date(a, m, j).toISOString()` renvoie J-1 en France. On découpe.
+const MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const jourMois = (iso: string) => { const [, m, j] = iso.slice(0, 10).split('-'); return `${+j} ${MOIS[+m - 1]}`; };
+const cleMois = (iso: string) => iso.slice(0, 7);
+const libelleMois = (cle: string) => { const [a, m] = cle.split('-'); return `${MOIS[+m - 1]} ${a}`; };
+
+type Ligne = { type: 'evt'; e: Evenement } | { type: 'jalon'; date: string; label: string };
+const lignes: Ligne[] = [
+    ...evenements.map((e) => ({ type: 'evt' as const, e })),
+    ...(jalons ? ECHEANCES.map((j) => ({ type: 'jalon' as const, date: j.date, label: j.label })) : []),
+].sort((a, b) => {
+    const da = a.type === 'evt' ? a.e.start : a.date;
+    const db = b.type === 'evt' ? b.e.start : b.date;
+    return db.localeCompare(da);
+});
+
+const groupes = new Map<string, Ligne[]>();
+for (const l of lignes) {
+    const cle = cleMois(l.type === 'evt' ? l.e.start : l.date);
+    groupes.set(cle, [...(groupes.get(cle) ?? []), l]);
+}
+---
+
+<ol class="relative border-l-2 ml-2 space-y-6 pl-5" style="border-color: var(--border)">
+    {[...groupes.entries()].map(([cle, items]) => (
+        <li>
+            <p class="text-xs font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">{libelleMois(cle)}</p>
+            <ul class="mt-2 space-y-2">
+                {items.map((l) => l.type === 'jalon' ? (
+                    <li class="relative rounded-card border-2 border-dashed p-3" style="border-color: var(--border)">
+                        <span class="absolute -left-[26px] w-3 h-3 rounded-full ring-2" style="background: var(--bg); border:2px solid var(--fg-muted)" aria-hidden="true"></span>
+                        <span class="text-xs font-mono" style="color: var(--fg-muted)">{jourMois(l.date)}</span>
+                        <p class="text-sm font-semibold mt-0.5">{l.label} de l'élection présidentielle</p>
+                    </li>
+                ) : (
+                    <li id={l.e.id} data-date={l.e.start} class="evt relative rounded-card border p-3" style="border-color: var(--border)">
+                        <span class="absolute -left-[26px] w-3 h-3 rounded-full" style={`background:${l.e.color}`} aria-hidden="true"></span>
+                        <div class="flex items-baseline gap-2 flex-wrap">
+                            <span class="text-xs font-mono" style="color: var(--fg-muted)">
+                                {l.e.precision_date === 'mois' ? libelleMois(cleMois(l.e.start)) : jourMois(l.e.start)}
+                            </span>
+                            <span class="text-xs px-1.5 py-0.5 rounded" style="background: var(--bg-soft); color: var(--fg-muted)">
+                                {l.e.icon} {l.e.type_label}
+                            </span>
+                            {l.e.statut !== 'confirme' && (
+                                <span class="text-xs px-1.5 py-0.5 rounded" style="background:rgba(217,119,6,0.15); color:#b45309">{l.e.statut}</span>
+                            )}
+                        </div>
+                        <p class="text-sm font-medium mt-1">{l.e.title}</p>
+                        {(l.e.lieu || l.e.ville || l.e.organisateur) && (
+                            <p class="text-xs" style="color: var(--fg-muted)">
+                                {[l.e.lieu, l.e.ville, l.e.organisateur].filter(Boolean).join(' · ')}
+                            </p>
+                        )}
+                        {l.e.candidats.length > 0 && (
+                            <div class="mt-1.5 flex flex-wrap gap-1.5">
+                                {l.e.candidats.map((c) => (
+                                    <a href={`/candidats/${c.slug}/${c.nb_citations > 0 ? '#prises-de-parole' : ''}`}
+                                       class="tap inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-full border"
+                                       style="border-color: var(--border)">
+                                        <span class="w-2 h-2 rounded-full" style={`background:${c.couleur_hex ?? '#64748b'}`} aria-hidden="true"></span>
+                                        {c.nom.replace(/^M\.\s*|^Mme\s*/, '')}
+                                        {c.nb_citations > 0 && <span class="opacity-60">· {c.nb_citations}</span>}
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                        <p class="text-xs mt-1.5">
+                            {l.e.urlVideo && <a href={l.e.urlVideo} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">▶ voir la source ↗</a>}
+                            {!l.e.urlVideo && l.e.urlSource && <a href={l.e.urlSource} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">source ↗</a>}
+                            {l.e.archive_url && <a href={l.e.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline ml-2">archive ↗</a>}
+                        </p>
+                        {l.e.note_methodologique && (
+                            <p class="text-xs mt-1 italic opacity-75" style="color: var(--fg-muted)">{l.e.note_methodologique}</p>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </li>
+    ))}
+</ol>
+
+<script>
+    // Le site est statique et n'est reconstruit que lorsque le contenu change : un
+    // « passé / à venir » calculé au build se périmerait en silence. 6 lignes suffisent.
+    const auj = new Date().toISOString().slice(0, 10);
+    for (const el of document.querySelectorAll<HTMLElement>('.evt[data-date]')) {
+        const d = (el.dataset.date ?? '').slice(0, 10);
+        if (d && d > auj) el.style.borderStyle = 'dashed';
+    }
+</script>

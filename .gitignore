@@ -11,3 +11,6 @@ npm-debug.log*
 
 # OS
 .DS_Store
+
+# portraits rapatriés au build par scripts/portraits.py
+public/portraits/

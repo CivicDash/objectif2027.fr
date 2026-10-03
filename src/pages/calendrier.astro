@@ -1,0 +1,44 @@
+---
+import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import FriseCampagne from '@/components/FriseCampagne.astro';
+import { evenementsRecents } from '@/lib/data';
+import { NOTE_ECHEANCES } from '@/lib/echeances';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+const evenements = evenementsRecents();
+---
+
+<Base
+    title="Le fil de la campagne — prises de parole analysées | Objectif 2027"
+    description="Les meetings, débats et discours de la campagne présidentielle 2027 que nous avons dépouillés, avec leurs sources et les candidats intervenus."
+    ogType="website"
+    jsonld={breadcrumbJsonLd([{ label: 'Le fil de la campagne' }])}>
+
+    <Breadcrumb items={[{ label: 'Le fil de la campagne' }]} />
+    <h1 class="text-2xl font-bold">Le fil de la campagne</h1>
+    <p class="mt-2 max-w-3xl" style="color: var(--fg-muted)">
+        Les prises de parole que nous avons dépouillées, source par source. Chaque événement
+        renvoie à sa vidéo ou à son texte d'origine, et chaque candidat à ses citations
+        horodatées.
+    </p>
+    <p class="mt-2 text-sm rounded-card border-l-4 pl-3 py-2 max-w-3xl" style="border-color:#94a3b8; color: var(--fg-muted)">
+        <strong>Cette liste n'est pas exhaustive.</strong> Elle reflète ce que nous avons eu le
+        temps d'analyser, pas l'activité réelle des candidats : l'absence d'un candidat ici ne
+        signifie pas qu'il ne s'exprime pas. {NOTE_ECHEANCES}
+    </p>
+
+    {evenements.length === 0 ? (
+        <div class="mt-6 rounded-card border p-5" style="border-color: var(--border); background: var(--bg-soft)">
+            <p class="font-medium">Aucune prise de parole publiée pour l'instant.</p>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Les sources sont en cours de dépouillement : chaque citation est vérifiée mot
+                pour mot avant d'être publiée.
+            </p>
+        </div>
+    ) : (
+        <div class="mt-6">
+            <FriseCampagne evenements={evenements} jalons />
+        </div>
+    )}
+</Base>

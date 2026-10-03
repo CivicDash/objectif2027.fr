@@ -1,4 +1,5 @@
 ---
+import { QUESTIONS_ACTIVES, CALENDRIER_ACTIF, QUIZ_ACTIF, JEU_ACTIF } from '@/lib/data';
 import '@/styles/global.css';
 
 export interface Props {
@@ -26,6 +27,18 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
 const imageAlt = ogImageAlt ?? `${title} — Objectif 2027`;
 const structured = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
 const annee = 2027;
+
+// Rubriques regroupées sous « Plus » : dans la barre du bas sur téléphone, dans un menu
+// déroulant entre 768 et 1 024 px. Cinq onglets tiennent juste sur 375 px, et toutes les
+// entrées ne tiennent pas dans le menu du haut avant lg.
+const rubriquesPlus = [
+    QUESTIONS_ACTIVES && { href: '/questions/', libelle: 'Questions clés' },
+    JEU_ACTIF && { href: '/jeu/', libelle: 'Qui a dit quoi ?' },
+    CALENDRIER_ACTIF && { href: '/calendrier/', libelle: 'Le fil de la campagne' },
+    { href: '/demarche/', libelle: 'Démarche' },
+].filter(Boolean) as { href: string; libelle: string }[];
+const estCourante = (href: string) => Astro.url.pathname.startsWith(href);
+const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
 ---
 
 <!doctype html>
@@ -70,12 +83,28 @@ const annee = 2027;
             <div class="mx-auto max-w-content px-4 h-14 flex items-center justify-between gap-6">
                 <a href="/" class="font-bold tracking-tight text-lg shrink-0">Objectif&nbsp;{annee}</a>
                 <!-- Navigation desktop uniquement (le mobile utilise la tab bar du bas) -->
-                <nav aria-label="Navigation principale" class="hidden md:flex items-center gap-7 text-sm font-medium">
+                <nav aria-label="Navigation principale" class="hidden md:flex items-center gap-5 lg:gap-7 text-sm font-medium">
                     <a href="/candidats/" class="hover:text-brand-600">Candidats</a>
                     <a href="/comparateur/" class="hover:text-brand-600">Comparateur</a>
-                    <a href="/quiz/" class="hover:text-brand-600">Quiz</a>
+                    {QUIZ_ACTIF && <a href="/quiz/" class="hover:text-brand-600">Quiz</a>}
                     <a href="/themes/" class="hover:text-brand-600">Thèmes</a>
-                    <a href="/demarche/" class="hover:text-brand-600">Démarche</a>
+                    {/* À partir de lg, tout tient en ligne ; avant, les rubriques secondaires
+                        passent dans le menu « Plus » ci-dessous. */}
+                    {JEU_ACTIF && <a href="/jeu/" class="hidden lg:inline hover:text-brand-600" title="Qui a dit quoi ?">Jeu</a>}
+                    {QUESTIONS_ACTIVES && <a href="/questions/" class="hidden lg:inline hover:text-brand-600" title="Questions clés">Questions</a>}
+                    {CALENDRIER_ACTIF && <a href="/calendrier/" class="hidden lg:inline hover:text-brand-600" title="Le fil de la campagne">Calendrier</a>}
+                    <a href="/demarche/" class="hidden lg:inline hover:text-brand-600">Démarche</a>
+                    <details class="menu-plus lg:hidden relative" data-menu-plus>
+                        <summary class:list={['cursor-pointer inline-flex items-center gap-1 hover:text-brand-600', plusCourant && 'text-brand-600']}>
+                            Plus
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                        </summary>
+                        <ul class="absolute right-0 top-full mt-3 w-60 rounded-card border py-2 shadow-lg z-30" style="background: var(--bg); border-color: var(--border)">
+                            {rubriquesPlus.map((r) => (
+                                <li><a href={r.href} aria-current={estCourante(r.href) ? 'page' : undefined} class="block px-4 py-2.5 hover:text-brand-600 aria-[current=page]:text-brand-600 aria-[current=page]:font-semibold">{r.libelle}</a></li>
+                            ))}
+                        </ul>
+                    </details>
                     <a href="/recherche/" aria-label="Recherche" class="hover:text-brand-600 inline-flex items-center" title="Recherche">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
                     </a>
@@ -103,14 +132,30 @@ const annee = 2027;
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
                 Comparer
             </a>
-            <a href="/quiz/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4 2.8c-.8.4-1 .9-1 1.7M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
-                Quiz
-            </a>
+            {QUIZ_ACTIF && (
+                <a href="/quiz/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 9a3 3 0 1 1 4 2.8c-.8.4-1 .9-1 1.7M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+                    Quiz
+                </a>
+            )}
             <a href="/themes/" class="flex-1 flex flex-col items-center gap-0.5 py-2 text-xs" style="min-height:56px">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                 Thèmes
             </a>
+            <details class="menu-plus flex-1" data-menu-plus>
+                <summary class:list={['h-full flex flex-col items-center gap-0.5 py-2 text-xs cursor-pointer', plusCourant && 'text-brand-600']} style="min-height:56px">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+                    Plus
+                </summary>
+                <!-- Panneau posé au-dessus de la barre ; la zone de sécurité iOS est comprise. -->
+                <ul class="fixed inset-x-0 border-t shadow-lg py-1" aria-label="Plus de rubriques"
+                    style="bottom: calc(56px + env(safe-area-inset-bottom)); background: var(--bg); border-color: var(--border)">
+                    {rubriquesPlus.map((r) => (
+                        <li><a href={r.href} aria-current={estCourante(r.href) ? 'page' : undefined}
+                               class="flex items-center px-5 text-base aria-[current=page]:text-brand-600 aria-[current=page]:font-semibold" style="min-height:48px">{r.libelle}</a></li>
+                    ))}
+                </ul>
+            </details>
         </nav>
 
         <footer class="border-t text-sm" style="border-color: var(--border); color: var(--fg-muted)">
@@ -121,14 +166,31 @@ const annee = 2027;
                 </p>
                 <p class="flex flex-wrap gap-x-4 gap-y-1">
                     <a href="/recherche/" class="hover:underline">Recherche</a>
+                    {JEU_ACTIF && <a href="/jeu/" class="hover:underline">Qui a dit quoi ?</a>}
+                    {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:underline">Questions clés</a>}
+                    {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:underline">Le fil de la campagne</a>}
                     <a href="/methodologie/" class="hover:underline">Méthodologie</a>
                     <a href="/mentions-legales/" class="hover:underline">Mentions légales</a>
                     <a href="/data/candidats.json" class="hover:underline">Données ouvertes</a>
                     <a href="https://civis-consilium.eu" class="hover:underline">À propos de l'association</a>
-                    <a href="https://civicdash.fr" class="hover:underline">La plateforme CivicDash</a>
+                    {/* civicdash.fr est suspendu (blocage chez le registrar) : la présentation reste en ligne sur le site de l'association. */}
+                    <a href="https://civis-consilium.eu/civicdash/" class="hover:underline">La plateforme CivicDash</a>
                     <a href="/signaler/" class="hover:underline">Signaler une erreur</a>
                 </p>
             </div>
         </footer>
+        <script>
+            for (const menu of document.querySelectorAll<HTMLDetailsElement>('details[data-menu-plus]')) {
+                document.addEventListener('click', (e) => {
+                    if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+                });
+                menu.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && menu.open) {
+                        menu.open = false;
+                        menu.querySelector('summary')?.focus();
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

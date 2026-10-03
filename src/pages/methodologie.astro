@@ -97,13 +97,85 @@ import { THEMES } from '@/lib/data';
         </section>
 
         <section>
-            <h2 class="text-lg font-semibold">Quiz d'affinité</h2>
+            <h2 class="text-lg font-semibold">Le quiz</h2>
             <p class="text-sm">
-                Le calcul est fait <strong>entièrement dans votre navigateur</strong> : aucune réponse n'est envoyée ni
-                conservée (les opinions politiques sont des données sensibles). Chaque question reprend, sans reformulation,
-                une <strong>mesure phare publiée</strong> d'un candidat (mesure vérifiée, sourcée, avec ses arguments pour et
-                contre) ; un candidat non exprimé sur un thème est exclu du calcul, jamais compté en désaccord. Le résultat
-                est donné <strong>par thème</strong> — il n'y a pas de « gagnant » global.
+                Le calcul est fait <strong>entièrement dans votre navigateur</strong> : aucune réponse n'est
+                envoyée, et rien n'est conservé, pas même sur votre machine — les opinions politiques sont des
+                données sensibles. Recharger la page efface tout.
+            </p>
+            <p class="text-sm mt-2">
+                Une question porte un <strong>intitulé neutre</strong>, rédigé par nous et relu ; ses options sont
+                les <strong>positions réellement défendues</strong>, chacune adossée à une ou plusieurs mesures
+                publiées et sourcées. Ce sont les mesures qui portent les candidats : une position commune à
+                trois d'entre eux les crédite tous les trois. Une question dont toutes les options viendraient
+                d'un même candidat ne peut pas être publiée.
+            </p>
+            <p class="text-sm mt-2">
+                L'ordre des options est <strong>tiré au sort à chaque session</strong>, et le nom des candidats
+                n'apparaît qu'<strong>après</strong> votre réponse : on répond ainsi au contenu, pas à l'étiquette.
+            </p>
+            <p class="text-sm mt-2">
+                Nous ne produisons <strong>aucun score et aucun classement</strong>. À la fin, vous voyez les
+                positions que vous avez retenues et qui les défend ; la conclusion vous appartient. Un candidat
+                qui ne figure pas sous une position ne s'y oppose pas forcément : le plus souvent, nous n'avons
+                pas encore dépouillé de prise de parole de sa part sur ce point.
+            </p>
+        </section>
+
+        <section id="chiffres-des-themes">
+            <h2 class="text-lg font-semibold">Les chiffres des thèmes : comment nous les choisissons et les vérifions</h2>
+            <p class="text-sm">
+                Notre règle : <strong>centraliser sans dénigrer, expliquer sans juger.</strong> Chaque thème présente des
+                repères chiffrés sous forme de <strong>questions neutres</strong> (« Combien d'immigrés vivent en France ? »),
+                auxquelles répondent les données publiques. Nous ne rendons <strong>aucun verdict</strong> : pas de « vrai »
+                ni de « faux », pas de jauge. Les chiffres décrivent ; ce qui est « trop » ou « pas assez » relève de votre
+                jugement.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Le choix des chiffres.</strong> Un repère figure dans un thème s'il porte sur un indicateur de référence
+                de la statistique publique (INSEE, DREES, Eurostat…) sur l'objet du thème, ou sur un indicateur invoqué par au
+                moins deux candidats dans leurs mesures publiées. La règle est la même pour tous les thèmes. Quand plusieurs
+                mesures existent (le stock et les flux, « immigré » et « étranger », un niveau et son évolution), nous les
+                montrons toutes.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Jamais à côté d'une proposition.</strong> Les chiffres sont posés au niveau du thème, avant la liste des
+                candidats, jamais accolés à la mesure d'un candidat : placer un chiffre à côté d'une proposition, ce serait
+                l'évaluer sans le dire.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Ce que les chiffres ne disent pas.</strong> Chaque repère comporte une section obligatoire sur les
+                limites des données : ce qu'elles ne mesurent pas, ce qui relève d'un choix politique. Un repère ne paraît jamais
+                sans elle.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Les chiffres.</strong> Tout chiffre porte sa valeur, son unité, son année et sa source. Toute
+                évolution s'écrit avec ses deux bornes (« 14,4 % en 2022 → 15,4 % en 2023 ») ; l'évolution d'un taux
+                s'exprime en points, pas en pourcentage.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Les sources.</strong> Producteurs publics (INSEE, DREES, Cour des comptes…) et organisations
+                internationales (Eurostat, OCDE) d'abord. Un chiffre d'association, de syndicat ou de think tank peut être
+                cité, mais comme l'estimation d'un acteur identifié, jamais comme le chiffre de référence. Quand l'État ne
+                mesure pas quelque chose, le repère le dit.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>L'Europe.</strong> Les comparaisons utilisent une seule source harmonisée, Eurostat, pour la France,
+                l'Allemagne, l'Italie, l'Espagne et la moyenne de l'UE-27 — même quand elle diffère du chiffre national, ce
+                que le repère signale. Une comparaison impossible est dite impossible. Les séries sont extraites chaque mois ;
+                une révision n'est publiée qu'après relecture, y compris des phrases qui la citent. Les données de chaque
+                graphique sont téléchargeables.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>La vérification.</strong> Seules les phrases vérifiées dans leur source sont affichées. Un repère peut
+                paraître avant que tous ses chiffres le soient : il indique alors combien d'éléments restent à sourcer, et
+                chacun s'affiche dès sa vérification.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Pourquoi ce format.</strong> Nous avons d'abord essayé de confronter des affirmations entendues
+                (« il y a trop de… ») aux données, avec un verdict sur leur partie mesurable. Nous y avons renoncé : choisir
+                les phrases à tester est déjà un choix éditorial, et un verdict se lit, et se partage, comme une prise de
+                position. Poser des questions neutres et montrer les données, avec leurs limites, laisse la conclusion à chacun.
             </p>
         </section>
     </div>

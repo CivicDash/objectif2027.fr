@@ -3,6 +3,28 @@ import meta from '@/data/meta.json';
 import themes from '@/data/themes.json';
 import candidatsIndex from '@/data/candidats.json';
 import comparateur from '@/data/comparateur.json';
+import controverses from '@/data/controverses.json';
+
+// Chargement tolérant : un import statique ferait échouer le build si le back-office
+// n'a pas encore livré le fichier — et deploy.sh figerait alors le site entier.
+//
+// Chemins RELATIFS, pas l'alias `@/` : pour un motif aliasé, Vite doit résoudre le
+// fichier, et lève « Invalid glob » s'il n'existe pas. Le motif `@/data/…` ne tolérait
+// donc rien du tout — il n'a simplement jamais rencontré de fichier manquant. Un chemin
+// relatif ne demande aucune résolution : absent, le glob rend un objet vide.
+const _cal = import.meta.glob<{ default: any }>('../data/calendrier.json', { eager: true });
+const _quiz = import.meta.glob<{ default: any }>('../data/quiz.json', { eager: true });
+const _jeu = import.meta.glob<{ default: any }>('../data/jeu.json', { eager: true });
+const _reperes = import.meta.glob<{ default: any }>('../data/reperes.json', { eager: true });
+
+export interface Controverse {
+    titre: string;
+    theme: string | null;
+    note_methodologique: string | null;
+    ordre?: number;
+    /** Volume du travail en cours, jamais son contenu. Null sous 2 candidats. */
+    chantier?: { candidats: number; mesures: number } | null;
+}
 
 export type EtatTheme = 'publie' | 'relevee' | 'en_traitement' | 'non_exprime';
 
@@ -21,6 +43,8 @@ export interface Photo {
 }
 
 export interface CandidatIndex {
+    nom?: string;
+    prenom?: string;
     slug: string;
     nom_complet: string;
     slogan?: string | null;
@@ -76,5 +100,441 @@ export function libelleEtat(etat: EtatTheme): string {
 
 // Ordre d'affichage neutre : alphabétique par nom (jamais éditorial).
 export function candidatsOrdreNeutre(): CandidatIndex[] {
-    return [...CANDIDATS].sort((a, b) => a.nom_complet.localeCompare(b.nom_complet, 'fr'));
+    return [...CANDIDATS].sort((a, b) => cleDeTri(a).localeCompare(cleDeTri(b), 'fr'));
+}
+
+/**
+ * Les fiches complètes dans le même ordre neutre.
+ *
+ * Quatre pages classaient les candidats chacune à sa façon — ordre du glob (donc par
+ * slug, donc par prénom), ordre de l'export, ou tri local sur `nom_complet`. Trois
+ * mécanismes, un même résultat : un classement par prénom présenté comme alphabétique.
+ */
+export function candidatsDetailOrdreNeutre(): any[] {
+    return Object.values(CANDIDATS_DETAIL)
+        .sort((a: any, b: any) => cleDeTri(a).localeCompare(cleDeTri(b), 'fr'));
+}
+
+/**
+ * Clé d'ordre alphabétique : NOM puis prénom.
+ *
+ * Le tri portait sur `nom_complet`, avec deux conséquences. Il classait par prénom —
+ * Éric Zemmour arrivait en sixième position, entre Clémentine et Fabien. Et il embarquait
+ * la civilité, triée comme du texte : « M. » et « Mme » formaient deux blocs, de sorte que
+ * les candidates préfixées « Mme » se retrouvaient groupées, ce qui est exactement ce
+ * qu'un ordre dit neutre ne doit pas produire.
+ *
+ * Le repli sur `nom_complet` sert le temps qu'un export livre les deux champs : le front
+ * peut être déployé avant le back-office.
+ */
+function cleDeTri(c: CandidatIndex): string {
+    const nom = (c as { nom?: string }).nom;
+    const prenom = (c as { prenom?: string }).prenom;
+    if (nom) return `${nom} ${prenom ?? ''}`.trim();
+
+    return c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
+}
+
+// ---------------------------------------------------------------------------
+// Controverses : une question qui structure un désaccord, et la note qui
+// explique POURQUOI les deux camps peuvent citer des données exactes. Chaque
+// argument y renvoie par son slug. Sans cette note, l'argumentaire pour/contre
+// se lit comme un match à points, ce qu'il n'est pas.
+// ---------------------------------------------------------------------------
+export const CONTROVERSES = controverses as Record<string, Controverse>;
+
+export function controverseParSlug(slug: string | null | undefined): Controverse | null {
+    return slug ? (CONTROVERSES[slug] ?? null) : null;
+}
+
+/** Controverses rattachées à un thème, dans l'ordre alphabétique de leur titre. */
+export function controversesDuTheme(themeSlug: string): (Controverse & { slug: string })[] {
+    return Object.entries(CONTROVERSES)
+        .filter(([, c]) => c.theme === themeSlug)
+        .map(([slug, c]) => ({ ...c, slug }))
+        .sort((a, b) => a.titre.localeCompare(b.titre, 'fr'));
+}
+
+// ---------------------------------------------------------------------------
+// Questions clés — navigation inverse : partir de la question, remonter aux
+// candidats. Ce lien n'existe QUE par la chaîne mesure → liaison → argument →
+// controverse : il faut traverser les fiches candidat. L'index est construit
+// une seule fois par build et partagé par les deux pages.
+// ---------------------------------------------------------------------------
+
+export interface SourceArg {
+    type: string; titre: string | null; url: string | null; media: string | null;
+    archive_url: string | null; fiabilite: string;
+    auteur?: string | null; date?: string | null; extrait?: string | null;
+}
+export interface ArgumentExporte {
+    ref: string; titre: string; contenu: string; type: string;
+    note_contextuelle: string | null; controverse: string | null; sources: SourceArg[];
+}
+export interface MesurePositionnee {
+    theme: string; titre: string; source_url: string | null;
+    /** arguments RESTREINTS à la question courante — sinon on mêle deux débats */
+    arguments: { pour: ArgumentExporte[]; contre: ArgumentExporte[] };
+}
+export interface PositionCandidat {
+    slug: string; nom_complet: string; couleur_hex: string | null;
+    mesures: MesurePositionnee[];
+}
+export interface UsageFait {
+    candidat_slug: string; candidat_nom: string; mesure: string;
+    sens: 'pour' | 'contre'; note_contextuelle: string | null;
+}
+export interface FaitVerse extends ArgumentExporte {
+    usages: UsageFait[];
+    /** invoqué dans les deux sens selon la mesure : le modèle rendu visible */
+    reversible: boolean;
+}
+export interface EtudeLiee {
+    url: string; titre: string; media: string | null; type: string;
+    fiabilite: string; archive_url: string | null;
+    auteur: string | null; date: string | null; extrait: string | null;
+    faits: string[];
+}
+export interface QuestionCle {
+    slug: string; titre: string; theme: string | null;
+    note_methodologique: string | null;
+    positions: PositionCandidat[];
+    faits: FaitVerse[];
+    etudes: EtudeLiee[];
+    chantier: { candidats: number; mesures: number } | null;
+}
+
+const RANG_FIABILITE: Record<string, number> = { haute: 0, moyenne: 1, basse: 2 };
+
+function construireIndexQuestions(): Map<string, QuestionCle> {
+    const index = new Map<string, QuestionCle>();
+    for (const [slug, c] of Object.entries(CONTROVERSES)) {
+        index.set(slug, {
+            slug, titre: c.titre, theme: c.theme,
+            note_methodologique: c.note_methodologique,
+            positions: [], faits: [], etudes: [],
+            chantier: c.chantier ?? null,
+        });
+    }
+
+    for (const cand of candidatsOrdreNeutre().map((c) => CANDIDATS_DETAIL[c.slug]).filter(Boolean)) {
+        const parQuestion = new Map<string, MesurePositionnee[]>();
+
+        for (const [theme, mesures] of Object.entries((cand as any).mesures_par_theme ?? {})) {
+            for (const m of (mesures as any[]) ?? []) {
+                // Une mesure peut porter des faits de PLUSIEURS questions : on éclate par
+                // question avant de rendre le face-à-face, sinon l'argumentaire d'une
+                // mesure afficherait des faits relevant d'un autre débat.
+                const parQ = new Map<string, { pour: ArgumentExporte[]; contre: ArgumentExporte[] }>();
+                for (const sens of ['pour', 'contre'] as const) {
+                    for (const a of ((m.arguments?.[sens] ?? []) as ArgumentExporte[])) {
+                        if (!a.controverse || !index.has(a.controverse)) continue;
+                        const b = parQ.get(a.controverse) ?? { pour: [], contre: [] };
+                        b[sens].push(a);
+                        parQ.set(a.controverse, b);
+                    }
+                }
+                for (const [qs, args] of parQ) {
+                    const liste = parQuestion.get(qs) ?? [];
+                    liste.push({ theme, titre: m.titre, source_url: m.source_url ?? null, arguments: args });
+                    parQuestion.set(qs, liste);
+                }
+            }
+        }
+
+        for (const [qs, mesures] of parQuestion) {
+            index.get(qs)!.positions.push({
+                slug: (cand as any).slug,
+                nom_complet: (cand as any).nom_complet,
+                couleur_hex: (cand as any).couleur_hex ?? null,
+                mesures,
+            });
+        }
+    }
+
+    for (const q of index.values()) {
+        // Faits dédoublonnés par `ref` : un même fait sert plusieurs mesures, parfois dans
+        // des sens opposés. On garde CHAQUE usage — le sens n'est jamais recollé au fait.
+        const faits = new Map<string, FaitVerse>();
+        for (const p of q.positions) {
+            for (const m of p.mesures) {
+                for (const sens of ['pour', 'contre'] as const) {
+                    for (const a of m.arguments[sens]) {
+                        const f = faits.get(a.ref) ?? { ...a, usages: [], reversible: false };
+                        f.usages.push({
+                            candidat_slug: p.slug, candidat_nom: p.nom_complet,
+                            mesure: m.titre, sens, note_contextuelle: a.note_contextuelle,
+                        });
+                        faits.set(a.ref, f);
+                    }
+                }
+            }
+        }
+        for (const f of faits.values()) {
+            f.reversible = f.usages.some((u) => u.sens === 'pour')
+                        && f.usages.some((u) => u.sens === 'contre');
+        }
+        q.faits = [...faits.values()].sort(
+            (a, b) => Number(b.reversible) - Number(a.reversible)
+                   || b.usages.length - a.usages.length
+                   || a.titre.localeCompare(b.titre, 'fr'),
+        );
+
+        // Études dédoublonnées par URL : une même étude étaye souvent plusieurs faits
+        // (RTE : coût complet ET coût de production). On liste les faits qui s'y appuient.
+        const etudes = new Map<string, EtudeLiee>();
+        for (const f of q.faits) {
+            for (const s of f.sources ?? []) {
+                if (!s.url) continue;
+                const e = etudes.get(s.url) ?? {
+                    url: s.url, titre: s.titre ?? s.media ?? s.url,
+                    media: s.media ?? null, type: s.type, fiabilite: s.fiabilite,
+                    archive_url: s.archive_url ?? null,
+                    auteur: s.auteur ?? null, date: s.date ?? null, extrait: s.extrait ?? null,
+                    faits: [],
+                };
+                if (!e.faits.includes(f.titre)) e.faits.push(f.titre);
+                etudes.set(s.url, e);
+            }
+        }
+        q.etudes = [...etudes.values()].sort(
+            (a, b) => (RANG_FIABILITE[a.fiabilite] ?? 9) - (RANG_FIABILITE[b.fiabilite] ?? 9)
+                   || b.faits.length - a.faits.length
+                   || a.titre.localeCompare(b.titre, 'fr'),
+        );
+    }
+
+    return index;
+}
+
+let _indexQuestions: Map<string, QuestionCle> | null = null;
+function indexQuestions(): Map<string, QuestionCle> {
+    return (_indexQuestions ??= construireIndexQuestions());
+}
+
+/** Toutes les questions clés publiées — ordre éditorial, puis titre. */
+export function questionsCles(): QuestionCle[] {
+    return [...indexQuestions().values()].sort(
+        (a, b) => ((CONTROVERSES[a.slug]?.ordre ?? 0) - (CONTROVERSES[b.slug]?.ordre ?? 0))
+               || a.titre.localeCompare(b.titre, 'fr'),
+    );
+}
+
+export function questionParSlug(slug: string): QuestionCle | null {
+    return indexQuestions().get(slug) ?? null;
+}
+
+/** Questions rattachées à un thème. */
+export function questionsDuTheme(themeSlug: string): QuestionCle[] {
+    return questionsCles().filter((q) => q.theme === themeSlug);
+}
+
+/**
+ * Y a-t-il quelque chose à montrer ? Test volontairement léger : Base.astro est importé
+ * par TOUTES les pages et ne doit pas déclencher la construction de l'index.
+ */
+export const QUESTIONS_ACTIVES = Object.keys(CONTROVERSES).length > 0;
+
+// ---------------------------------------------------------------------------
+// Calendrier des prises de parole
+// ---------------------------------------------------------------------------
+export interface EvenementCandidat {
+    slug: string; nom: string; couleur_hex: string | null; role: string; nb_citations: number;
+}
+export interface Evenement {
+    id: string; title: string; start: string; end: string | null; allDay: boolean;
+    color: string; precision_date: string; type: string; type_label: string; icon: string;
+    statut: string; lieu: string | null; ville: string | null;
+    organisateur: string | null; media: string | null; description: string | null;
+    candidats: EvenementCandidat[]; nb_citations: number;
+    urlVideo: string | null; urlSource: string | null; archive_url: string | null;
+    source: { type?: string; duree_s?: number | null; a_ete_depouille: boolean };
+    note_methodologique: string | null;
+}
+
+export const CALENDRIER: { election: string; evenements: Evenement[] } =
+    (Object.values(_cal)[0]?.default) ?? { election: '2027', evenements: [] };
+
+/** Événements du plus récent au plus ancien. Tri chronologique strict, jamais éditorial. */
+export function evenementsRecents(limite?: number): Evenement[] {
+    const tries = [...CALENDRIER.evenements].sort((a, b) => b.start.localeCompare(a.start));
+    return limite ? tries.slice(0, limite) : tries;
+}
+
+export const CALENDRIER_ACTIF = CALENDRIER.evenements.length > 0;
+
+/* ── Quiz thématique ─────────────────────────────────────────────────────────────── */
+
+export interface QuizOption {
+    ref: string;
+    libelle: string;
+    candidats: { slug: string; nom: string; couleur: string | null }[];
+    mesures: { titre: string; candidat_slug: string | null; source_url: string | null }[];
+}
+
+export interface QuizQuestion {
+    ref: string;
+    theme: string | null;
+    format: 'arbitrage' | 'accord';
+    intitule: string;
+    precision: string | null;
+    controverse: string | null;
+    options: QuizOption[];
+}
+
+/**
+ * Chargement tolérant : un import statique ferait échouer le build tant que le
+ * back-office n'a pas livré `quiz.json`, et deploy.sh figerait le site entier.
+ */
+export const QUIZ: { election: string; questions: QuizQuestion[] } =
+    (Object.values(_quiz)[0]?.default) ?? { election: '2027', questions: [] };
+
+export const QUIZ_ACTIF = QUIZ.questions.length > 0;
+
+/* ── Jeu « Qui a dit quoi ? » ─────────────────────────────────────────────────────── */
+
+export interface JeuCitation {
+    ref: string;
+    texte: string;
+    /** Notre résumé neutre, en discours indirect : rend la phrase compréhensible
+     *  hors de son contexte sans nommer son auteur. */
+    contexte: string;
+    candidat: string;
+    theme: string | null;
+    source: { titre?: string; url?: string; date?: string; reperage?: string };
+}
+
+export interface JeuCandidat {
+    slug: string;
+    nom: string;
+    couleur: string | null;
+}
+
+export const JEU: { election: string; candidats: JeuCandidat[]; citations: JeuCitation[] } =
+    (Object.values(_jeu)[0]?.default) ?? { election: '2027', candidats: [], citations: [] };
+
+// Cinq propositions par carte : il faut au moins cinq candidats dans le vivier, sinon le
+// jeu proposerait moins de choix qu'annoncé.
+export const JEU_ACTIF = JEU.candidats.length >= 5 && JEU.citations.length >= 10;
+
+/** Nombre de questions publiées par thème — sert à l'écran de choix des thèmes. */
+export function quizParTheme(): { slug: string; nom: string; questions: QuizQuestion[] }[] {
+    return THEMES.map((t) => ({
+        slug: t.slug,
+        nom: t.nom,
+        questions: QUIZ.questions.filter((q) => q.theme === t.slug),
+    }));
+}
+
+/* ── Repères chiffrés des thèmes ────────────────────────────────────────────────────
+ * Une question neutre posée dans un thème, et ce que disent les chiffres publics pour y
+ * répondre, avec leurs limites. Aucun verdict : le site décrit, le lecteur juge. (Le
+ * premier format, « Ce qu'on entend », jugeait des affirmations ; abandonné le 27/09/2026.) */
+
+export type SectionConstat = 'chiffres' | 'limites' | 'complement' | 'europe' | 'liens';
+
+export interface RepereSource {
+    cle: string;
+    producteur: string;
+    titre: string;
+    url: string | null;
+    archive_url: string | null;
+    categorie: 'producteur_public' | 'organisation_internationale' | 'recherche' | 'presse' | 'acteur_identifie';
+    date_publication: string | null;
+    date_consultation: string | null;
+}
+
+export interface RepereConstat {
+    id: number;
+    section: SectionConstat;
+    groupe: string | null;
+    texte: string;
+    sources: string[];
+}
+
+export interface OptionsGraphique {
+    decimales?: number;
+    suffixe?: string;
+    y_min?: number;
+    libelles?: string[];
+    panneaux?: string[];
+    mise_en_avant?: string;
+}
+
+export interface RepereGraphique {
+    /** Identifiant du constat qui accompagne le graphique : un graphique n'est jamais seul. */
+    constat: number | null;
+    type: 'courbes' | 'barres_groupees' | 'barres_empilees';
+    titre: string;
+    sous_titre: string | null;
+    indicateurs: string[];
+    options: OptionsGraphique;
+    note: string | null;
+}
+
+export interface Repere {
+    slug: string;
+    /** Le titre public : une question neutre, jamais une affirmation. */
+    question: string;
+    resume: string | null;
+    theme: string | null;
+    themes_secondaires: string[];
+    derniere_verification: string | null;
+    /** Seules les phrases vérifiées dans leur source partent ; leurs sources et graphiques avec. */
+    constats: RepereConstat[];
+    /** Phrases encore en cours de sourçage, par section : comptées, jamais montrées. */
+    a_sourcer?: Partial<Record<SectionConstat, number>>;
+    sources: RepereSource[];
+    graphiques: RepereGraphique[];
+}
+
+/** Nombre d'éléments d'un repère encore en cours de sourçage. */
+export function nbASourcer(r: Repere): number {
+    return Object.values(r.a_sourcer ?? {}).reduce((n, x) => n + (x ?? 0), 0);
+}
+
+/** « 1 élément », « 3 éléments ». */
+export function elements(n: number): string {
+    return `${n} élément${n > 1 ? 's' : ''}`;
+}
+
+export interface PointSerie { annee: number; valeur: number; statut: string }
+
+export interface Indicateur {
+    titre: string;
+    unite: string;
+    note_methodo: string | null;
+    sources: { code: string; url: string }[];
+    extraction: string | null;
+    series: Record<string, PointSerie[]>;
+}
+
+/**
+ * Chargement tolérant, comme le quiz : tant que le back-office n'a pas livré
+ * `reperes.json`, aucun repère — pas de section, pas de page.
+ */
+export const REPERES: {
+    election: string;
+    legende_statuts: Record<string, string>;
+    reperes: Repere[];
+    indicateurs: Record<string, Indicateur>;
+} = (Object.values(_reperes)[0]?.default) ?? { election: '2027', legende_statuts: {}, reperes: [], indicateurs: {} };
+
+export const REPERES_ACTIFS = REPERES.reperes.length > 0;
+
+/** Repères dont le thème principal ou un thème secondaire est `slug`, par ordre alphabétique
+ *  de la question : un ordre mécanique, jamais éditorial. */
+export function reperesDuTheme(slug: string): Repere[] {
+    return REPERES.reperes
+        .filter((r) => r.theme === slug || r.themes_secondaires.includes(slug))
+        .sort((a, b) => a.question.localeCompare(b.question, 'fr'));
+}
+
+/** Adresse publique d'un repère : sous son thème principal. */
+export function urlRepere(r: Repere): string {
+    return `/themes/${r.theme}/chiffres/${r.slug}/`;
+}
+
+export function indicateur(code: string): Indicateur | null {
+    return REPERES.indicateurs[code] ?? null;
 }

@@ -1,10 +1,10 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Comparateur from '@/islands/Comparateur.vue';
-import { CANDIDATS_DETAIL, THEMES } from '@/lib/data';
+import { candidatsDetailOrdreNeutre, THEMES } from '@/lib/data';
 
 // On ne transmet à l'island que le nécessaire (léger : peu de candidats).
-const candidats = Object.values(CANDIDATS_DETAIL).map((c: any) => ({
+const candidats = candidatsDetailOrdreNeutre().map((c: any) => ({
     slug: c.slug,
     nom_complet: c.nom_complet,
     couleur_hex: c.couleur_hex,

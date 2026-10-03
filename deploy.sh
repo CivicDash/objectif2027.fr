@@ -36,6 +36,13 @@ cp "$FRONT"/src/data/*.json "$FRONT/public/data/"
 rm -rf "$FRONT/public/data/candidats"
 cp -r "$FRONT/src/data/candidats" "$FRONT/public/data/candidats"
 
+# Portraits : rapatriés depuis Wikimedia et redimensionnés à 96 px, puis `photo.url` est
+# réécrit vers /portraits/. Sans cette étape, chaque visiteur télécharge 21 JPEG de 300 à
+# 500 px chez un tiers pour des pastilles de 48 px — d'où des portraits qui arrivent en
+# retard ou pas du tout, et l'IP du visiteur envoyée à Wikimedia. Idempotent : ne
+# retélécharge que ce qui a changé. Un échec ne bloque pas la mise en ligne.
+python3 "$FRONT/scripts/portraits.py" || echo "$(date -Is) portraits : étape en échec, URL distantes conservées"
+
 cd "$FRONT"
 # URL de l'API CivicDash pour le formulaire « Signaler une erreur » (inlinée au build).
 PUBLIC_CIVICDASH_API="${PUBLIC_CIVICDASH_API:-https://admin.objectif2027.fr}"

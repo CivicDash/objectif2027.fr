@@ -1,0 +1,208 @@
+---
+import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import AnchorNav from '@/components/AnchorNav.astro';
+import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
+import { questionsCles, questionParSlug, themeParSlug, candidatsDetailOrdreNeutre } from '@/lib/data';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+export function getStaticPaths() {
+    // Dictionnaire vide => aucune page générée. Pas de page morte par construction.
+    return questionsCles().map((q) => ({ params: { slug: q.slug }, props: { q } }));
+}
+const { q } = Astro.props;
+const theme = q.theme ? themeParSlug(q.theme) : null;
+
+const TYPE: Record<string, string> = {
+    etude: 'Étude', chiffrage: 'Chiffrage', avis_institution: 'Avis d\'institution',
+    precedent_historique: 'Précédent', comparaison_internationale: 'Comparaison',
+    faisabilite_juridique: 'Analyse juridique',
+};
+
+// Candidats ayant des mesures publiées sur le thème mais aucun fait rattaché à CETTE
+// question. « Pas encore rattaché » n'est pas « ne se prononce pas » : on le dit ainsi.
+const positionnes = new Set(q.positions.map((p) => p.slug));
+const autres = q.theme
+    ? candidatsDetailOrdreNeutre()
+        .filter((c: any) => c.etats_par_theme?.[q.theme!]?.etat === 'publie' && !positionnes.has(c.slug))
+        .map((c: any) => ({ slug: c.slug, nom: c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '') }))
+    : [];
+
+const ancres = [
+    { id: 'question', label: 'La question' },
+    ...(q.positions.length ? [{ id: 'positions', label: 'Qui propose quoi' }] : []),
+    ...(q.faits.length ? [{ id: 'faits', label: 'Les faits' }] : []),
+    ...(q.etudes.length ? [{ id: 'etudes', label: 'Les études' }] : []),
+];
+---
+
+<Base
+    title={q.titre.length > 55 ? q.titre : `${q.titre} | Objectif 2027`}
+    description={(q.note_methodologique ?? q.titre).slice(0, 155)}
+    ogImage={`/og/question-${q.slug}.png`}
+    ogImageAlt={`${q.titre} — Objectif 2027`}
+    ogType="article"
+    jsonld={breadcrumbJsonLd([{ label: 'Questions clés', href: '/questions/' }, { label: q.titre }])}>
+
+    <Breadcrumb items={[{ label: 'Questions clés', href: '/questions/' }, { label: q.titre }]} />
+
+    <section id="question" class="pt-2">
+        <h1 class="text-2xl font-bold">{q.titre}</h1>
+        {theme && (
+            <p class="mt-1 text-sm">
+                <a href={`/themes/${theme.slug}/`} class="text-brand-600 hover:underline">{theme.nom}</a>
+            </p>
+        )}
+        {q.note_methodologique && (
+            <div class="mt-4 rounded-card border-l-4 p-4" style="border-color:#94a3b8; background: var(--bg-soft)">
+                <p class="text-xs font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">Pourquoi ce désaccord</p>
+                <p class="mt-1.5 leading-relaxed">{q.note_methodologique}</p>
+            </div>
+        )}
+    </section>
+
+    {ancres.length > 1 && <AnchorNav items={ancres} onglets />}
+
+    {q.positions.length === 0 && (
+        <div class="mt-6 rounded-card border p-5" style="border-color: var(--border)">
+            <p class="font-medium">L'argumentaire de cette question est en cours de validation.</p>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                {q.chantier
+                    ? `${q.chantier.candidats} candidats et ${q.chantier.mesures} mesures sont déjà identifiés.`
+                    : 'Les faits sont en cours de sourçage.'}
+                {' '}Chaque fait doit être sourcé et chaque argument à charge doublement validé
+                avant d'être publié.
+            </p>
+        </div>
+    )}
+
+    {q.positions.length > 0 && (
+        <section id="positions" class="py-6">
+            <h2 class="text-xl font-bold">Qui propose quoi</h2>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Par ordre alphabétique. La position d'un candidat, c'est l'intitulé de sa mesure —
+                pas une étiquette que nous lui donnerions.
+            </p>
+            <div class="mt-4 space-y-4">
+                {q.positions.map((p) => (
+                    <article class="rounded-card border p-4" style={`border-color: var(--border); border-left: 3px solid ${p.couleur_hex ?? 'var(--border)'}`}>
+                        <a href={`/candidats/${p.slug}/`} class="font-semibold hover:text-brand-600">
+                            {p.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}
+                        </a>
+                        <ul class="mt-2 space-y-4">
+                            {p.mesures.map((m) => (
+                                <li>
+                                    <p class="text-sm font-medium">{m.titre}
+                                        {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1 text-xs">source ↗</a>}
+                                    </p>
+                                    <ArgumentaireVs arguments={m.arguments} controverse={null} dense={false} ancrageFaits />
+                                </li>
+                            ))}
+                        </ul>
+                    </article>
+                ))}
+            </div>
+            {autres.length > 0 && (
+                <p class="mt-4 text-sm" style="color: var(--fg-muted)">
+                    <strong>Autres candidats ayant des mesures publiées sur ce thème</strong> — aucune
+                    n'a encore de fait rattaché à cette question :
+                    {' '}{autres.map((c, i) => (<>{i > 0 && ', '}<a href={`/candidats/${c.slug}/`} class="text-brand-600 hover:underline">{c.nom}</a></>))}.
+                </p>
+            )}
+        </section>
+    )}
+
+    {q.faits.length > 0 && (
+        <section id="faits" class="py-6">
+            <h2 class="text-xl font-bold">Les faits versés au débat</h2>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Chaque fait n'apparaît qu'une fois, avec la liste des mesures qu'il appuie ou
+                contredit. Un même fait peut jouer dans les deux sens : son sens dépend de la
+                proposition examinée, pas du fait lui-même.
+            </p>
+            <ul class="mt-4 space-y-5">
+                {q.faits.map((f) => (
+                    <li id={`fait-${f.ref}`} class="fait rounded-card border p-4" style="border-color: var(--border)">
+                        <div class="flex flex-wrap items-baseline gap-2">
+                            <span class="text-xs px-1.5 py-0.5 rounded" style="background: var(--bg-soft); color: var(--fg-muted)">{TYPE[f.type] ?? f.type}</span>
+                            <span class="font-semibold text-sm">{f.titre}</span>
+                            {f.reversible && (
+                                <span class="text-xs px-1.5 py-0.5 rounded" style="background:rgba(148,163,184,0.2); color: var(--fg-muted)"
+                                      title="Ce fait étaye une proposition et en contredit une autre : c'est le sens de la liaison qui change, pas le fait.">
+                                    ⟲ invoqué dans les deux sens
+                                </span>
+                            )}
+                        </div>
+                        <p class="text-sm mt-1.5 leading-relaxed" style="color: var(--fg-muted)">{f.contenu}</p>
+                        <p class="text-xs mt-1.5">
+                            {(f.sources ?? []).map((s: any) => (
+                                <>
+                                    <a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{s.media ?? s.titre ?? 'source'} ↗</a>
+                                    {s.archive_url && <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>}
+                                    <span class="opacity-60"> · {s.fiabilite}</span>{' '}
+                                </>
+                            ))}
+                        </p>
+                        <ul class="mt-2 space-y-1.5">
+                            {f.usages.map((u) => (
+                                <li class="text-xs">
+                                    <span class="font-medium" style={u.sens === 'pour' ? 'color:#047857' : 'color:#b91c1c'}>
+                                        {u.sens === 'pour' ? 'à l\'appui' : 'en objection'}
+                                    </span>
+                                    {' · '}
+                                    <a href={`/candidats/${u.candidat_slug}/`} class="text-brand-600 hover:underline">{u.candidat_nom.replace(/^M\.\s*|^Mme\s*/, '')}</a>
+                                    {' — '}{u.mesure}
+
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    {q.etudes.length > 0 && (
+        <section id="etudes" class="py-6">
+            <h2 class="text-xl font-bold">Les études citées</h2>
+            <ul class="mt-3 space-y-3">
+                {q.etudes.map((e) => (
+                    <li class="rounded-card border p-3" style="border-color: var(--border)">
+                        <div class="flex flex-wrap items-baseline gap-2">
+                            <span class="text-xs px-1.5 py-0.5 rounded" style="background: var(--bg-soft); color: var(--fg-muted)">fiabilité {e.fiabilite}</span>
+                            <span class="text-sm font-medium">{e.titre}</span>
+                        </div>
+                        <p class="text-xs mt-0.5" style="color: var(--fg-muted)">
+                            {[e.auteur, e.media, e.date].filter(Boolean).join(' · ')}
+                        </p>
+                        <p class="text-xs mt-1" style="color: var(--fg-muted)">
+                            Étaye {e.faits.length} fait{e.faits.length > 1 ? 's' : ''} : {e.faits.join(' · ')}
+                        </p>
+                        {e.extrait && (
+                            <details class="mt-1">
+                                <summary class="cursor-pointer text-xs text-brand-600">Extrait</summary>
+                                <p class="text-xs mt-1 italic" style="color: var(--fg-muted)">« {e.extrait} »</p>
+                            </details>
+                        )}
+                        <p class="text-xs mt-1">
+                            <a href={e.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">lire ↗</a>
+                            {e.archive_url && <a href={e.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline ml-2">archive ↗</a>}
+                        </p>
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    <section id="methode" class="py-6">
+        <p class="text-sm" style="color: var(--fg-muted)">
+            Ces pages ne tranchent pas : les études disent ce qu'une mesure produit, jamais si
+            elle est souhaitable. <a href="/methodologie/" class="text-brand-600 hover:underline">Notre méthode</a>
+            {' · '}<a href="/signaler/" class="text-brand-600 hover:underline">Signaler une erreur</a>
+        </p>
+    </section>
+</Base>
+
+<style>
+    .fait { scroll-margin-top: 5rem; }
+</style>
