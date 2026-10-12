@@ -3,7 +3,7 @@ import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
-import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, controverseParSlug, type EtatTheme } from '@/lib/data';
+import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 import { datePrecise } from '@/lib/format';
 
@@ -101,7 +101,9 @@ function etatDe(slug: string): EtatTheme {
 
             <div class="mt-4 flex flex-wrap gap-2 text-xs">
                 <span class="px-2.5 py-1 rounded-full text-white font-medium" style={`background:${couleur}`}>{c.nuance}</span>
-                <span class="px-2.5 py-1 rounded-full" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
+                {parrainages
+                    ? <span class="px-2.5 py-1 rounded-full" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
+                    : <span class="px-2.5 py-1 rounded-full font-medium" style="background: color-mix(in srgb, var(--fg) 10%, transparent); color: var(--fg-muted)">{libelleStatutCandidature(c.statut_candidature)}</span>}
                 <span class="px-2.5 py-1 rounded-full" style="background: color-mix(in srgb, var(--fg) 7%, transparent)">
                     Exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes
                 </span>

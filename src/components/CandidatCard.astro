@@ -1,6 +1,6 @@
 ---
 import type { CandidatIndex } from '@/lib/data';
-import { badgeParrainages } from '@/lib/data';
+import { badgeParrainages, libelleStatutCandidature } from '@/lib/data';
 
 export interface Props {
     candidat: CandidatIndex;
@@ -18,10 +18,6 @@ const initiales = nom
     .toUpperCase();
 
 const couleur = c.couleur_hex ?? '#64748b';
-const statutLabel: Record<string, string> = {
-    declare: 'Déclaré', pressenti: 'Pressenti', investi: 'Investi',
-    parrainages_valides: '500 parrainages validés', retire: 'Retiré', elimine_t1: 'Éliminé T1',
-};
 
 const { themes_exprimes: exprimes, themes_total: total } = c.couverture;
 const part = total > 0 ? Math.round((exprimes / total) * 100) : 0;
@@ -52,10 +48,12 @@ const part = total > 0 ? Math.round((exprimes / total) * 100) : 0;
     </div>
 
     <div class="badges">
-        <span class="badge badge-statut">{statutLabel[c.statut_candidature] ?? c.statut_candidature}</span>
-        <span class:list={['badge', parrainages.ton === 'vert' ? 'badge-vert' : 'badge-ambre']}>
-            {parrainages.texte}
-        </span>
+        <span class="badge badge-statut">{libelleStatutCandidature(c.statut_candidature)}</span>
+        {parrainages && (
+            <span class:list={['badge', parrainages.ton === 'vert' ? 'badge-vert' : 'badge-ambre']}>
+                {parrainages.texte}
+            </span>
+        )}
     </div>
 
     <div class="couverture">

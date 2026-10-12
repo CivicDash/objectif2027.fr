@@ -73,10 +73,27 @@ export const CANDIDATS: CandidatIndex[] = (candidatsIndex as CandidatIndex[]).ma
 }));
 export const COMPARATEUR = comparateur as Record<string, Record<string, any[]>>;
 
+const LIBELLE_STATUT_CANDIDATURE: Record<string, string> = {
+    declare: 'Déclaré', pressenti: 'Pressenti', investi: 'Investi',
+    parrainages_valides: '500 parrainages validés', retire: 'Retiré',
+    elimine_t1: 'Éliminé au 1er tour', battu_primaire: 'Battu à la primaire',
+};
+export function libelleStatutCandidature(statut: string): string {
+    return LIBELLE_STATUT_CANDIDATURE[statut] ?? statut;
+}
+
+// Qui n'est plus en lice n'a plus de parrainages « en cours » : le badge disparaît et le
+// statut (retiré, battu à la primaire…) suffit à le dire.
+const HORS_COURSE = new Set(['retire', 'elimine_t1', 'battu_primaire']);
+export function horsCourse(statut: string): boolean {
+    return HORS_COURSE.has(statut);
+}
+
 const LIBELLE_PARRAINAGES: Record<string, { texte: string; ton: 'ambre' | 'vert' }> = {
     parrainages_valides: { texte: '500 parrainages validés', ton: 'vert' },
 };
-export function badgeParrainages(statut: string): { texte: string; ton: 'ambre' | 'vert' } {
+export function badgeParrainages(statut: string): { texte: string; ton: 'ambre' | 'vert' } | null {
+    if (horsCourse(statut)) return null;
     return LIBELLE_PARRAINAGES[statut] ?? { texte: 'Parrainages : en cours', ton: 'ambre' };
 }
 
