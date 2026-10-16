@@ -16,6 +16,7 @@ const _cal = import.meta.glob<{ default: any }>('../data/calendrier.json', { eag
 const _quiz = import.meta.glob<{ default: any }>('../data/quiz.json', { eager: true });
 const _jeu = import.meta.glob<{ default: any }>('../data/jeu.json', { eager: true });
 const _reperes = import.meta.glob<{ default: any }>('../data/reperes.json', { eager: true });
+const _budgets = import.meta.glob<{ default: any }>('../data/budgets.json', { eager: true });
 
 export interface Controverse {
     titre: string;
@@ -666,3 +667,115 @@ export function autourVide(a: Autour): boolean {
     return !a.personnalites.length && !a.prises_de_parole.length && !a.documents.length;
 }
 
+/* ── Cadrages budgétaires ────────────────────────────────────────────────────────────
+ * Une grille commune à tous les candidats, la référence officielle en regard. Chaque
+ * valeur est affichée telle que la source la donne : aucun total, aucune conversion
+ * (cumulé ↔ annuel, Md€ ↔ % du PIB), aucun classement, aucune couleur selon la valeur. */
+
+export type EtatRubrique = 'publie' | 'en_verification' | 'non_precise';
+export type EtatCadrage = 'publie' | 'en_traitement' | 'non_exprime';
+
+export interface LigneBudget extends Attribution {
+    libelle: string | null;
+    montant: number | null;
+    montant_max: number | null;
+    unite: string | null;
+    qualificatif: string | null;
+    /** Nul : la source ne dit pas si le montant est annuel ou cumulé. Jamais deviné. */
+    portee: string | null;
+    annee: number | null;
+    valeur_texte: string | null;
+    citation: string | null;
+    /** « hh:mm:ss » pour une vidéo, ou un repère écrit (page, paragraphe). */
+    reperage: string | null;
+    /** Lien horodaté vers le passage. */
+    url: string | null;
+    source: {
+        producteur?: string | null; titre?: string | null; url?: string | null;
+        date?: string | null; porteur?: PorteurDoc | null;
+    } | null;
+}
+
+export interface RubriqueCadrage { etat: EtatRubrique; lignes?: LigneBudget[] }
+
+export interface Cadrage {
+    ref: string;
+    nature: string;
+    nature_libelle: string;
+    titre: string;
+    date_source: string | null;
+    source: { titre: string; type: string | null; date: string | null; url: string | null; porteur: PorteurDoc | null } | null;
+    rubriques: Record<string, RubriqueCadrage>;
+    postes: LigneBudget[];
+    a_verifier: number;
+    note_methodologique: string | null;
+}
+
+export interface ReferenceBudget {
+    ref: string;
+    titre: string;
+    date_source: string | null;
+    note_methodologique: string | null;
+    rubriques: Record<string, RubriqueCadrage>;
+    postes: LigneBudget[];
+    a_verifier: number;
+}
+
+export interface CadrageCandidat { etat: EtatCadrage; cadrages?: Cadrage[] }
+
+export interface Budgets {
+    election: string;
+    /** Thème qui accueille le tableau ; nul tant qu'aucune référence n'est publiée. */
+    theme: string | null;
+    rubriques: { cle: string; libelle: string }[];
+    rubriques_reference: { cle: string; libelle: string }[];
+    natures: Record<string, string>;
+    unites: Record<string, string>;
+    qualificatifs: Record<string, string>;
+    portees: Record<string, string>;
+    reference: ReferenceBudget | null;
+    candidats: Record<string, CadrageCandidat>;
+}
+
+/**
+ * Chargement tolérant, comme les repères : sans `budgets.json`, ou tant qu'aucune référence
+ * officielle n'est publiée (`theme` nul), aucune section — ni tableau, ni grille, ni ancre.
+ */
+export const BUDGETS: Budgets = (Object.values(_budgets)[0]?.default) ?? {
+    election: '2027', theme: null, rubriques: [], rubriques_reference: [], natures: {},
+    unites: {}, qualificatifs: {}, portees: {}, reference: null, candidats: {},
+};
+
+export const BUDGETS_ACTIFS = !!BUDGETS.theme
+    && BUDGETS.rubriques.length > 0
+    && THEMES.some((t) => t.slug === BUDGETS.theme);
+
+/** État du cadrage d'un candidat, ou null si la rubrique est masquée ou le candidat absent. */
+export function cadrageDe(slug: string): CadrageCandidat | null {
+    if (!BUDGETS_ACTIFS) return null;
+    const c = BUDGETS.candidats?.[slug];
+    if (!c) return null;
+    // Un état « publié » sans cadrage lisible n'a rien à montrer : on ne l'invente pas.
+    if (c.etat === 'publie' && !(c.cadrages?.length)) return null;
+    return c;
+}
+
+const LIBELLE_ETAT_RUBRIQUE: Record<EtatRubrique, string> = {
+    publie: '',
+    en_verification: 'en cours de vérification',
+    non_precise: 'non précisé',
+};
+
+export function libelleEtatRubrique(etat: EtatRubrique | undefined): string {
+    return LIBELLE_ETAT_RUBRIQUE[etat ?? 'non_precise'] ?? 'non précisé';
+}
+
+const LIBELLE_ETAT_CADRAGE: Record<EtatCadrage, string> = {
+    publie: 'Cadrage publié',
+    en_traitement: 'En cours de traitement',
+    non_exprime: 'Non exprimé',
+};
+
+export function libelleEtatCadrage(etat: EtatCadrage): string {
+    return LIBELLE_ETAT_CADRAGE[etat] ?? etat;
+}

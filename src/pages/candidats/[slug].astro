@@ -4,9 +4,10 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
 import AutourDuCandidat from '@/components/AutourDuCandidat.astro';
+import CadrageBudgetaire from '@/components/CadrageBudgetaire.astro';
 import CitationsMesure from '@/components/CitationsMesure.astro';
 import Porteur from '@/components/Porteur.astro';
-import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, autourDe, autourVide, estCandidate, libelleTypeDocument, type EtatTheme } from '@/lib/data';
+import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, cadrageDe, autourDe, autourVide, estCandidate, libelleTypeDocument, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 import { attributionLocuteur, datePrecise } from '@/lib/format';
 
@@ -22,7 +23,9 @@ const parrainages = badgeParrainages(c.statut_candidature);
 const prisesDeParole = c.prises_de_parole ?? [];
 const avecEquipe = prisesDeParole.some((d: any) => d.citations?.some((x: any) => x.locuteur));
 
-// « Autour du candidat » : la parole du parti ou du groupe, jamais dans le programme.
+// Cadrage budgétaire (null : rubrique masquée, ou candidat absent de budgets.json) et
+// « Autour du candidat » (parole du parti ou du groupe : jamais dans le programme).
+const cadrage = cadrageDe(c.slug);
 const autour = autourDe(c);
 const afficherAutour = !autourVide(autour);
 const titreAutour = estCandidate(c) ? 'Autour de la candidate' : 'Autour du candidat';
@@ -63,6 +66,7 @@ function citationsParTheme(doc: any): [string, any[]][] {
 
 const ancres = [
     { id: 'programme', label: 'Programme' },
+    ...(cadrage ? [{ id: 'cadrage-budgetaire', label: 'Budget' }] : []),
     ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
     ...(afficherAutour ? [{ id: 'autour', label: titreAutour }] : []),
     { id: 'parcours', label: 'Parcours' },
@@ -261,6 +265,9 @@ function etatDe(slug: string): EtatTheme {
             )}
         </div>
     </section>
+
+    <!-- Cadrage budgétaire : la grille commune, la référence officielle en regard -->
+    {cadrage && <CadrageBudgetaire candidat={c} etat={cadrage} />}
 
     <!-- Prises de parole : citations vérifiables à la source (différenciateur) -->
     {prisesDeParole.length > 0 && (

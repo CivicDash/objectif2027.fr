@@ -1,0 +1,41 @@
+---
+/**
+ * Le contenu d'une case de la grille budgétaire : les lignes vérifiées, ou l'état honnête
+ * de la case. « Non précisé » : la source ne le dit pas. « En cours de vérification » :
+ * des chiffres existent mais aucun n'est encore vérifié — dire « non précisé » serait faux,
+ * et aucune valeur ne paraît avant vérification.
+ */
+import LigneBudget from '@/components/LigneBudget.astro';
+import { libelleEtatRubrique, type RubriqueCadrage } from '@/lib/data';
+
+interface Props {
+    rubrique: RubriqueCadrage | null | undefined;
+    compact?: boolean;
+}
+const { rubrique, compact = false } = Astro.props;
+const lignes = rubrique?.etat === 'publie' ? (rubrique.lignes ?? []) : [];
+// Dans le tableau du thème, une case garde sa hauteur lisible : au-delà de deux lignes, la
+// suite se déplie. Même règle pour tous, quelle que soit la valeur ; rien n'est retiré.
+const VISIBLES = 2;
+const visibles = compact ? lignes.slice(0, VISIBLES) : lignes;
+const repliees = compact ? lignes.slice(VISIBLES) : [];
+---
+{lignes.length > 0 ? (
+    <>
+        <ul class:list={[compact ? 'space-y-1.5' : 'space-y-2.5']}>
+            {visibles.map((l) => <li><LigneBudget ligne={l} compact={compact} /></li>)}
+        </ul>
+        {repliees.length > 0 && (
+            <details class="mt-1.5">
+                <summary class="cursor-pointer text-xs text-brand-600">+ {repliees.length} autre{repliees.length > 1 ? 's' : ''}</summary>
+                <ul class="space-y-1.5 mt-1.5">
+                    {repliees.map((l) => <li><LigneBudget ligne={l} compact={compact} /></li>)}
+                </ul>
+            </details>
+        )}
+    </>
+) : (
+    <span class:list={['italic', compact ? 'text-xs' : 'text-sm']} style="color: var(--fg-muted)">
+        {libelleEtatRubrique(rubrique?.etat === 'publie' ? 'non_precise' : rubrique?.etat)}
+    </span>
+)}

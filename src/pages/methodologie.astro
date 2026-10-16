@@ -1,6 +1,10 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { THEMES } from '@/lib/data';
+import { THEMES, BUDGETS, BUDGETS_ACTIFS } from '@/lib/data';
+
+// Les sections budgétaires ne décrivent que ce qui est affiché : tant qu'aucune référence
+// officielle n'est publiée, la rubrique est masquée partout, ici compris.
+const rubriquesBudget = BUDGETS.rubriques.map((r) => r.libelle.toLowerCase());
 ---
 
 <Base title="Méthodologie — Objectif 2027" description="Comment nous choisissons les thèmes, traitons les candidats à égalité, distinguons trois états d'expression, et construisons le quiz d'affinité.">
@@ -149,6 +153,65 @@ import { THEMES } from '@/lib/data';
                 une phrase n'est jamais détachée de son auteur.
             </p>
         </section>
+
+        {BUDGETS_ACTIFS && (
+            <section id="cadrage-budgetaire">
+                <h2 class="text-lg font-semibold">Cadrage budgétaire : une grille commune</h2>
+                <p class="text-sm">
+                    Quand un candidat ou son équipe de campagne présente un cadrage de ses finances publiques (premier cadrage,
+                    budget de première année, programme chiffré complet), nous rangeons ses chiffres dans <strong>la même grille
+                    pour tous</strong> : {rubriquesBudget.join(', ')}, puis les postes détaillés. Les rubriques sont toujours dans
+                    le même ordre ; une case vide se voit.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Aucun classement, aucune note, aucune évaluation.</strong> Nous ne reprenons pas les évaluations de
+                    think tanks ou d'instituts qui notent les programmes. Les candidats sont listés par ordre alphabétique, jamais
+                    selon un montant, et aucune couleur ne dépend d'une valeur.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Chaque chiffre est cité.</strong> Il est accompagné de la phrase qui le porte, de la personne qui l'a
+                    prononcée et d'un lien horodaté vers le passage de la vidéo ou du document. Il n'est affiché qu'après
+                    vérification à la source ; d'ici là, la case indique « en cours de vérification ».
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>« Non précisé »</strong> signifie que la source ne donne pas l'information. Ce n'est ni un oubli de
+                    notre part, ni un reproche.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Rien n'est calculé par nous.</strong> Pas de total, pas de solde recalculé, pas de conversion d'un
+                    montant cumulé en montant annuel, ni de milliards d'euros en points de PIB : un chiffre calculé ne serait plus
+                    un chiffre cité.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Les bases diffèrent, et nous les affichons telles quelles.</strong> L'un vise un niveau de déficit
+                    une année donnée, l'autre annonce un montant cumulé sur le quinquennat, un troisième présente un budget de
+                    première année. Ces chiffres ne se comparent pas terme à terme : la grille les rapproche pour qu'on les lise
+                    ensemble, chacun avec sa base (« par an », « cumulé », année visée). Quand la source ne dit pas si un montant
+                    est annuel ou cumulé, nous ne le devinons pas.
+                </p>
+            </section>
+        )}
+
+        {BUDGETS_ACTIFS && (
+            <section id="ligne-de-reference">
+                <h2 class="text-lg font-semibold">La ligne de référence</h2>
+                <p class="text-sm">
+                    En regard des cadrages figure une ligne de référence officielle : le projet de loi de finances (PLF), les
+                    comptes publics constatés par l'Insee et l'avis du Haut Conseil des finances publiques (HCFP). Elle donne un
+                    <strong>repère commun</strong> (où en sont le déficit et la dette, ce que prévoit le gouvernement) pour lire
+                    tous les cadrages dans le même contexte.
+                </p>
+                <p class="text-sm mt-2">
+                    Ce n'est <strong>pas un étalon de jugement</strong> : s'en écarter n'est ni une faute ni un mérite, et cette
+                    ligne n'est pas une proposition de candidat. Le PLF est le projet du gouvernement, soumis au vote du
+                    Parlement ; la loi de finances le remplace une fois votée.
+                </p>
+                <p class="text-sm mt-2">
+                    L'avis du HCFP porte sur <strong>le seul projet du gouvernement</strong> : le réalisme de ses prévisions. Il
+                    ne se prononce pas sur les cadrages des candidats, et nous ne l'y appliquons pas.
+                </p>
+            </section>
+        )}
 
         <section id="chiffres-des-themes">
             <h2 class="text-lg font-semibold">Les chiffres des thèmes : comment nous les choisissons et les vérifions</h2>
