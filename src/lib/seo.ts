@@ -1,6 +1,8 @@
 // Données structurées (JSON-LD) et helpers SEO — sans collecte, purement descriptif.
 // Toutes les fonctions renvoient des objets sérialisés tels quels par Base.astro.
 
+import { estCandidate, type Evenement } from '@/lib/data';
+
 const SITE = 'https://objectif2027.fr';
 const ORG_ID = 'https://civis-consilium.eu/#organization';
 
@@ -86,7 +88,7 @@ export function personJsonLd(c: any, site?: string) {
         ...(c.parti_soutien
             ? { affiliation: { '@type': 'Organization', name: c.parti_soutien } }
             : {}),
-        description: `Candidat à l'élection présidentielle française de 2027${
+        description: `${estCandidate(c) ? 'Candidate' : 'Candidat'} à l'élection présidentielle française de 2027${
             c.parti_soutien ? ` — ${c.parti_soutien}` : ''
         }. Programme, parcours et affaires, sourcés et neutres.`,
     };
@@ -108,4 +110,67 @@ export function candidatsItemListJsonLd(candidats: any[], site?: string) {
             name: nomAffiche(c.nom_complet),
         })),
     };
+}
+
+// Page datée (liste des candidats) : la date de mise à jour est celle des données publiées.
+export function pageDateeJsonLd(nom: string, chemin: string, dateModified: string | null | undefined, site?: string) {
+    const b = base(site);
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: nom,
+        url: `${b}${chemin}`,
+        inLanguage: 'fr-FR',
+        ...(dateModified ? { dateModified: dateModified.slice(0, 10) } : {}),
+        publisher: { '@id': ORG_ID },
+    };
+}
+
+/**
+ * Événements de campagne (meetings, débats, entretiens) au format schema.org/Event.
+ * Seuls partent ceux qui ont une date au jour et un lieu : une ville (événement en
+ * présentiel) ou, à défaut, une vidéo (diffusion). Les candidats sont des intervenants
+ * (`performer`), sans autre qualification ; rien n'est déduit qui ne soit dans la fiche.
+ */
+export function evenementsJsonLd(evenements: Evenement[], site?: string) {
+    const b = base(site);
+    return evenements
+        .filter((e) => e.precision_date === 'jour' && (e.ville || e.lieu || e.urlVideo))
+        .map((e) => {
+            const presentiel = Boolean(e.ville || e.lieu);
+            return {
+                '@context': 'https://schema.org',
+                '@type': 'Event',
+                name: e.title,
+                startDate: e.allDay ? e.start.slice(0, 10) : e.start,
+                ...(e.end ? { endDate: e.allDay ? e.end.slice(0, 10) : e.end } : {}),
+                eventStatus: 'https://schema.org/EventScheduled',
+                eventAttendanceMode: presentiel
+                    ? 'https://schema.org/OfflineEventAttendanceMode'
+                    : 'https://schema.org/OnlineEventAttendanceMode',
+                location: presentiel
+                    ? {
+                        '@type': 'Place',
+                        name: e.lieu ?? e.ville,
+                        address: {
+                            '@type': 'PostalAddress',
+                            ...(e.ville ? { addressLocality: e.ville } : {}),
+                            addressCountry: 'FR',
+                        },
+                    }
+                    : { '@type': 'VirtualLocation', url: e.urlVideo },
+                ...(e.organisateur ? { organizer: { '@type': 'Organization', name: e.organisateur } } : {}),
+                ...(e.candidats.length
+                    ? {
+                        performer: e.candidats.map((c) => ({
+                            '@type': 'Person',
+                            name: nomAffiche(c.nom),
+                            url: `${b}/candidats/${c.slug}/`,
+                        })),
+                    }
+                    : {}),
+                ...(e.description ? { description: e.description.slice(0, 300) } : {}),
+                url: `${b}/calendrier/#${e.id}`,
+            };
+        });
 }

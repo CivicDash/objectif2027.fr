@@ -62,7 +62,7 @@ const LIBELLE_TYPE: Record<string, string> = {
 };
 ---
 
-<Base title={`${theme.nom} — positions des candidats | Objectif 2027`} description={`Ce que les candidats à la présidentielle 2027 proposent (ou non) sur : ${theme.nom}.`} ogImage={`/og/theme-${theme.slug}.png`} ogImageAlt={`${theme.nom} — positions des candidats · Objectif 2027`} ogType="article" jsonld={breadcrumbJsonLd([{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }])}>
+<Base title={`${theme.nom} : les propositions des candidats à la présidentielle 2027 | Objectif 2027`} description={`${theme.nom} : ce que proposent (ou non) les candidats à la présidentielle 2027, côte à côte, avec citations vérifiables, sources et arguments pour et contre.`} ogImage={`/og/theme-${theme.slug}.png`} ogImageAlt={`${theme.nom} — positions des candidats · Objectif 2027`} ogType="article" jsonld={breadcrumbJsonLd([{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }])}>
     <Breadcrumb items={[{ label: 'Thèmes', href: '/themes/' }, { label: theme.nom }]} />
     <h1 class="text-2xl font-bold">{theme.nom}</h1>
     {theme.description && <p class="mt-1" style="color: var(--fg-muted)">{theme.description}</p>}

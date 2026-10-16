@@ -86,7 +86,7 @@ function etatDe(slug: string): EtatTheme {
 }
 ---
 
-<Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
+<Base title={`${nom} : programme 2027, propositions et parcours | Objectif 2027`} description={`${nom}${c.parti_soutien ? ` (${c.parti_soutien})` : ''}, ${estCandidate(c) ? 'candidate' : 'candidat'} à la présidentielle 2027 : propositions thème par thème avec citations vérifiables, parcours, affaires judiciaires. Sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
     <Breadcrumb items={[{ label: 'Candidats', href: '/candidats/' }, { label: nom }]} />
 
     <!-- Bannière candidat : bloc unique moderne, 100 % couleur (pas d'image requise).

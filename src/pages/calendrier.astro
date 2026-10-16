@@ -4,16 +4,16 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import FriseCampagne from '@/components/FriseCampagne.astro';
 import { evenementsRecents } from '@/lib/data';
 import { NOTE_ECHEANCES } from '@/lib/echeances';
-import { breadcrumbJsonLd } from '@/lib/seo';
+import { breadcrumbJsonLd, evenementsJsonLd } from '@/lib/seo';
 
 const evenements = evenementsRecents();
 ---
 
 <Base
-    title="Le fil de la campagne — prises de parole analysées | Objectif 2027"
-    description="Les meetings, débats et discours de la campagne présidentielle 2027 que nous avons dépouillés, avec leurs sources et les candidats intervenus."
+    title="Campagne présidentielle 2027 : meetings, débats et entretiens des candidats | Objectif 2027"
+    description="Les meetings, débats, discours et entretiens de la campagne présidentielle 2027, avec la vidéo d'origine, les candidats présents et leurs citations vérifiables."
     ogType="website"
-    jsonld={breadcrumbJsonLd([{ label: 'Le fil de la campagne' }])}>
+    jsonld={[breadcrumbJsonLd([{ label: 'Le fil de la campagne' }]), ...evenementsJsonLd(evenements)]}>
 
     <Breadcrumb items={[{ label: 'Le fil de la campagne' }]} />
     <h1 class="text-2xl font-bold">Le fil de la campagne</h1>
