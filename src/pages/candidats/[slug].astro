@@ -9,7 +9,7 @@ import CitationsMesure from '@/components/CitationsMesure.astro';
 import Porteur from '@/components/Porteur.astro';
 import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, cadrageDe, autourDe, autourVide, estCandidate, libelleTypeDocument, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
-import { attributionLocuteur, datePrecise } from '@/lib/format';
+import { attributionLocuteur, dateFr, datePrecise } from '@/lib/format';
 
 export function getStaticPaths() {
     return Object.values(CANDIDATS_DETAIL).map((c: any) => ({ params: { slug: c.slug }, props: { candidat: c } }));
@@ -434,7 +434,7 @@ function etatDe(slug: string): EtatTheme {
         ) : (
             <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
                 Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification :
-                {c.affaires?.derniere_verification ?? META.genere_le}.
+                {dateFr((c.affaires?.derniere_verification ?? META.genere_le)?.slice(0, 10))}.
                 Une absence d'information n'est pas une preuve d'absence d'affaire.
             </div>
         )}
