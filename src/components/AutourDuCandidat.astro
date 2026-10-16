@@ -1,0 +1,122 @@
+---
+/**
+ * « Autour du candidat » : la parole de son parti ou de son groupe parlementaire. Une autre
+ * vision, qui peut différer de la sienne — publiée à côté de la fiche, jamais dedans : ni
+ * mesure, ni comparateur, ni couverture des thèmes.
+ *
+ * Le nom de qui parle est écrit DANS l'élément de la citation : la recherche (Pagefind)
+ * découpe ses extraits par élément, et une phrase ne doit jamais y apparaître détachée de
+ * son auteur — encore moins attribuée, par proximité, au candidat de la page.
+ */
+import Porteur from '@/components/Porteur.astro';
+import { THEMES, duCandidat as deLaOuDu, estCandidate, leCandidat, libelleTypeDocument, type Autour } from '@/lib/data';
+import { attributionLocuteur, dateFr, estTimecode } from '@/lib/format';
+
+interface Props {
+    candidat: { slug: string; civilite?: string | null; nom_complet?: string };
+    autour: Autour;
+}
+const { candidat, autour } = Astro.props;
+const candidate = estCandidate(candidat);
+const titre = candidate ? 'Autour de la candidate' : 'Autour du candidat';
+const qui = leCandidat(candidat);
+const duCandidat = deLaOuDu(candidat);
+const nomTheme = (slug: string | null) => THEMES.find((t) => t.slug === slug)?.nom ?? null;
+---
+<section id="autour" class="py-6">
+    <h2 class="text-xl font-bold mb-1">{titre}</h2>
+    <p class="text-sm mb-4" style="color: var(--fg-muted)">
+        Ces propos et documents viennent de son parti ou de son groupe parlementaire, pas {duCandidat} :
+        ils ne figurent ni dans son programme, ni dans le comparateur. Leur vision peut différer de la
+        sienne ; chaque propos reste attribué à qui l'a tenu.
+        <a href="/methodologie/#qui-parle" class="text-brand-600 hover:underline">Qui parle ?</a>
+    </p>
+
+    {autour.personnalites.length > 0 && (
+        <div class="mb-4">
+            <h3 class="text-sm font-semibold mb-2">Personnalités citées</h3>
+            <ul class="flex flex-wrap gap-2">
+                {autour.personnalites.map((p) => (
+                    <li class="text-xs px-2.5 py-1 rounded-full border" style="border-color: var(--border)">
+                        <span class="font-medium">{p.nom}</span>{p.role && <span style="color: var(--fg-muted)">, {p.role}</span>}
+                        <span style="color: var(--fg-muted)"> · {p.nb_citations} citation{p.nb_citations > 1 ? 's' : ''}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+
+    {autour.documents.length > 0 && (
+        <div class="mb-4">
+            <h3 class="text-sm font-semibold mb-2">Documents</h3>
+            <ul class="space-y-2">
+                {autour.documents.map((d) => (
+                    <li class="rounded-card border p-3" style="border-color: var(--border)">
+                        <p class="text-sm font-medium">
+                            {d.url
+                                ? <a href={d.url} target="_blank" rel="nofollow noopener" class="hover:text-brand-600 hover:underline">{d.titre} ↗</a>
+                                : d.titre}
+                        </p>
+                        {(d.nb_chapitres > 0 || d.nb_entrees > 0) && (
+                            <p class="text-xs" style="color: var(--fg-muted)">
+                                {d.nb_chapitres} chapitre{d.nb_chapitres > 1 ? 's' : ''} · {d.nb_entrees} entrée{d.nb_entrees > 1 ? 's' : ''} référencée{d.nb_entrees > 1 ? 's' : ''}
+                            </p>
+                        )}
+                        <Porteur porteur={d.porteur} candidat={candidat} class="mt-1" />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+
+    {autour.prises_de_parole.length > 0 && (
+        <div class="space-y-3">
+            <h3 class="text-sm font-semibold">Prises de parole</h3>
+            {autour.prises_de_parole.map((doc) => (
+                <details class="rounded-card border" style="border-color: var(--border)" open={autour.prises_de_parole.length === 1}>
+                    <summary class="cursor-pointer p-4 flex items-center justify-between gap-2 flex-wrap">
+                        <span class="font-semibold text-sm">{doc.titre}</span>
+                        <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">
+                            {libelleTypeDocument(doc.type)}{doc.date ? ` · ${dateFr(doc.date)}` : ''} · {doc.citations.length} citation{doc.citations.length > 1 ? 's' : ''}
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 space-y-3">
+                        <Porteur porteur={doc.porteur} candidat={candidat} />
+                        {doc.url && <a href={doc.url} target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
+                        <ul class="space-y-3">
+                            {doc.citations.map((cit) => {
+                                const qui = attributionLocuteur(cit);
+                                return (
+                                    <li class="text-sm border-l-2 pl-3" style="border-color: var(--border)">
+                                        <p>
+                                            <span class="italic">« {cit.citation} »</span>
+                                            <span class="text-xs" style="color: var(--fg-muted)"> — {qui || doc.porteur?.libelle || 'propos du parti'}</span>
+                                        </p>
+                                        {(cit.resume || nomTheme(cit.theme)) && (
+                                            <p class="text-xs mt-1" style="color: var(--fg-muted)">
+                                                {nomTheme(cit.theme) && <span class="font-medium">{nomTheme(cit.theme)}</span>}
+                                                {nomTheme(cit.theme) && cit.resume && ' · '}
+                                                {cit.resume}
+                                            </p>
+                                        )}
+                                        {cit.verifier_url && (
+                                            <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
+                                               class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
+                                                ▶ Vérifier{estTimecode(cit.timecode) ? ` à ${cit.timecode}` : ' à la source'}
+                                            </a>
+                                        )}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                </details>
+            ))}
+        </div>
+    )}
+
+    <p class="text-xs mt-3" style="color: var(--fg-muted)">
+        Ce que propose {qui} {candidate ? 'elle-même' : 'lui-même'} ou son équipe de campagne figure dans la section
+        <a href="#programme" class="text-brand-600 hover:underline">Programme</a>.
+    </p>
+</section>

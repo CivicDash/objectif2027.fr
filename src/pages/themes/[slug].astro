@@ -2,6 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
+import CitationsMesure from '@/components/CitationsMesure.astro';
 import { THEMES, candidatsDetailOrdreNeutre, themeParSlug, controversesDuTheme, controverseParSlug, reperesDuTheme, urlRepere, nbASourcer, elements, type EtatTheme } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
 
@@ -126,6 +127,7 @@ const LIBELLE_TYPE: Record<string, string> = {
                             {mesures.map((m: any) => (
                                 <li class="text-sm">
                                     <span class="font-medium">{m.titre}</span>
+                                    <CitationsMesure mesure={m} />
                                     <ArgumentaireVs arguments={m.arguments} controverse={null} compact />
                                 </li>
                             ))}
@@ -133,7 +135,7 @@ const LIBELLE_TYPE: Record<string, string> = {
                     )}
                     {etat === 'relevee' && (
                         <ul class="mt-2 text-sm list-disc pl-5" style="color: var(--fg-muted)">
-                            {relevees.map((m: any) => <li>{m.titre}{m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}</li>)}
+                            {relevees.map((m: any) => <li>{m.titre}{m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}<CitationsMesure mesure={m} /></li>)}
                         </ul>
                     )}
                 </div>

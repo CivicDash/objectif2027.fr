@@ -555,3 +555,114 @@ export function urlRepere(r: Repere): string {
 export function indicateur(code: string): Indicateur | null {
     return REPERES.indicateurs[code] ?? null;
 }
+
+/* ── Qui parle ? Candidat, équipe de campagne, parti ────────────────────────────────
+ * Chaque propos reste attribué à qui l'a prononcé. `qualite_locuteur` nul : le candidat
+ * lui-même. `equipe_campagne` : une personnalité de son équipe, qui parle pour SON projet
+ * (ses propos peuvent fonder une mesure, attribuée et nommée). `parti` : la vision d'un
+ * parti ou d'un groupe parlementaire, qui peut différer de celle du candidat — elle ne
+ * paraît que dans « Autour du candidat », jamais comme une mesure. */
+
+export type QualiteLocuteur = 'equipe_campagne' | 'parti';
+
+export interface Attribution {
+    locuteur?: string | null;
+    role_locuteur?: string | null;
+    qualite_locuteur?: QualiteLocuteur | string | null;
+}
+
+export interface Endossement { url: string | null; date: string | null; note: string | null }
+
+/** Qui porte un document : le candidat, son équipe, un parti ou un groupe parlementaire. */
+export interface PorteurDoc {
+    type: 'candidat' | 'equipe_campagne' | 'parti' | 'groupe_parlementaire' | string;
+    libelle: string | null;
+    /** Preuve que le candidat endosse le document : exigée pour tout porteur autre que lui. */
+    endossement: Endossement | null;
+}
+
+const LIBELLE_PORTEUR: Record<string, string> = {
+    equipe_campagne: 'équipe de campagne',
+    parti: 'parti',
+    groupe_parlementaire: 'groupe parlementaire',
+};
+
+const LIBELLE_QUALITE: Record<string, string> = {
+    equipe_campagne: 'équipe de campagne',
+    parti: 'parti',
+};
+
+/** Une candidate : `civilite` d'abord, la civilité du nom complet en repli (ancien export). */
+export function estCandidate(c: { civilite?: string | null; nom_complet?: string } | null | undefined): boolean {
+    if (!c) return false;
+    if (c.civilite) return c.civilite === 'Mme';
+    return /^Mme\s/.test(c.nom_complet ?? '');
+}
+
+/** « le candidat » / « la candidate ». */
+export function leCandidat(c: Parameters<typeof estCandidate>[0]): string {
+    return estCandidate(c) ? 'la candidate' : 'le candidat';
+}
+
+/** « du candidat » / « de la candidate ». */
+export function duCandidat(c: Parameters<typeof estCandidate>[0]): string {
+    return estCandidate(c) ? 'de la candidate' : 'du candidat';
+}
+
+/** Type de porteur en toutes lettres, en minuscules : « parti », « équipe de campagne »… */
+export function libellePorteur(type: string, candidat?: Parameters<typeof estCandidate>[0]): string {
+    if (type === 'candidat') return leCandidat(candidat);
+    return LIBELLE_PORTEUR[type] ?? type;
+}
+
+export function libelleQualite(qualite: string | null | undefined): string | null {
+    return qualite ? (LIBELLE_QUALITE[qualite] ?? qualite) : null;
+}
+
+/** Types de documents des prises de parole, en toutes lettres. */
+export const LIBELLE_TYPE_DOCUMENT: Record<string, string> = {
+    video: 'vidéo', audio: 'audio', article: 'article', communique: 'communiqué',
+    programme_officiel: 'programme officiel', programme: 'programme', conference: 'conférence de presse',
+    meeting: 'meeting', interview: 'interview', debat: 'débat', discours: 'discours', emission: 'émission',
+};
+
+export function libelleTypeDocument(type: string | null | undefined): string {
+    return type ? (LIBELLE_TYPE_DOCUMENT[type] ?? type) : '';
+}
+
+/* ── Autour du candidat ──────────────────────────────────────────────────────────────
+ * La parole d'un parti ou d'un groupe parlementaire : publiée à côté de la fiche, jamais
+ * dedans — ni mesure, ni comparateur, ni couverture. */
+
+export interface CitationAutour extends Attribution {
+    theme: string | null;
+    resume: string | null;
+    citation: string;
+    timecode: string | null;
+    timestamp_s: number | null;
+    verifier_url: string | null;
+}
+
+export interface Autour {
+    personnalites: { nom: string; role: string | null; qualite: string | null; nb_citations: number }[];
+    prises_de_parole: {
+        titre: string; type: string | null; date: string | null; url: string | null;
+        porteur: PorteurDoc | null; citations: CitationAutour[];
+    }[];
+    documents: { titre: string; url: string | null; porteur: PorteurDoc | null; nb_chapitres: number; nb_entrees: number }[];
+}
+
+/** « Autour du candidat », toujours sous la même forme : tableaux vides si l'export est ancien. */
+export function autourDe(c: any): Autour {
+    const a = c?.autour_du_candidat ?? {};
+    return {
+        personnalites: Array.isArray(a.personnalites) ? a.personnalites : [],
+        prises_de_parole: Array.isArray(a.prises_de_parole) ? a.prises_de_parole : [],
+        documents: Array.isArray(a.documents) ? a.documents : [],
+    };
+}
+
+export function autourVide(a: Autour): boolean {
+    return !a.personnalites.length && !a.prises_de_parole.length && !a.documents.length;
+}
+

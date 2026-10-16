@@ -52,3 +52,30 @@ export function texteRiche(t: string): string {
 export function textePlat(t: string): string {
     return t.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1');
 }
+
+/** Un repère « hh:mm:ss » (ou « h:mm ») de vidéo, par opposition à un repère écrit. */
+export function estTimecode(reperage: string | null | undefined): boolean {
+    return !!reperage && /^\d{1,2}:\d{2}(:\d{2})?$/.test(reperage.trim());
+}
+
+/* ── Qui parle ? ─────────────────────────────────────────────────────────────────── */
+
+const QUALITES: Record<string, string> = { equipe_campagne: 'équipe de campagne', parti: 'parti' };
+
+/**
+ * « Éric Coquerel, député (équipe de campagne) » — vide pour le candidat lui-même.
+ * Se place DANS l'élément de la citation : un extrait de recherche ne doit jamais
+ * détacher une phrase de qui l'a prononcée.
+ */
+export function attributionLocuteur(a: { locuteur?: string | null; role_locuteur?: string | null; qualite_locuteur?: string | null } | null | undefined): string {
+    if (!a?.locuteur) return '';
+    const qualite = a.qualite_locuteur ? (QUALITES[a.qualite_locuteur] ?? a.qualite_locuteur) : null;
+    return `${a.locuteur}${a.role_locuteur ? `, ${a.role_locuteur}` : ''}${qualite ? ` (${qualite})` : ''}`;
+}
+
+/** « Portée par l'équipe de campagne : Éric Coquerel (député) » — vide si `porte_par` est nul. */
+export function porteParTexte(p: { qualite?: string; locuteurs?: { nom: string; role: string | null }[] } | null | undefined): string {
+    if (!p?.locuteurs?.length) return '';
+    const noms = p.locuteurs.map((l) => `${l.nom}${l.role ? ` (${l.role})` : ''}`).join(', ');
+    return `Portée par l'équipe de campagne : ${noms}`;
+}

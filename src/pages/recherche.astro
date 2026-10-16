@@ -19,6 +19,10 @@ import Base from '@/layouts/Base.astro';
                     element: '#recherche',
                     showSubResults: true,
                     showImages: false,
+                    // Une citation (15 mots au plus) est suivie de « — Nom, rôle » quand ce
+                    // n'est pas le candidat qui parle : l'extrait doit être assez long pour
+                    // ne jamais montrer la phrase sans son auteur.
+                    excerptLength: 40,
                     translations: {
                         placeholder: 'Rechercher un candidat, une mesure, un thème…',
                         zero_results: 'Aucun résultat pour « [SEARCH_TERM] »',

@@ -3,9 +3,12 @@ import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
-import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, type EtatTheme } from '@/lib/data';
+import AutourDuCandidat from '@/components/AutourDuCandidat.astro';
+import CitationsMesure from '@/components/CitationsMesure.astro';
+import Porteur from '@/components/Porteur.astro';
+import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, autourDe, autourVide, estCandidate, libelleTypeDocument, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
-import { datePrecise } from '@/lib/format';
+import { attributionLocuteur, datePrecise } from '@/lib/format';
 
 export function getStaticPaths() {
     return Object.values(CANDIDATS_DETAIL).map((c: any) => ({ params: { slug: c.slug }, props: { candidat: c } }));
@@ -17,6 +20,12 @@ const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
 const parrainages = badgeParrainages(c.statut_candidature);
 
 const prisesDeParole = c.prises_de_parole ?? [];
+const avecEquipe = prisesDeParole.some((d: any) => d.citations?.some((x: any) => x.locuteur));
+
+// « Autour du candidat » : la parole du parti ou du groupe, jamais dans le programme.
+const autour = autourDe(c);
+const afficherAutour = !autourVide(autour);
+const titreAutour = estCandidate(c) ? 'Autour de la candidate' : 'Autour du candidat';
 
 // HATVP (déclaration d'intérêts) — affichée seulement si un statut a été arbitré au BO.
 const hatvp = c.hatvp ?? { statut: 'a_verifier' };
@@ -55,6 +64,7 @@ function citationsParTheme(doc: any): [string, any[]][] {
 const ancres = [
     { id: 'programme', label: 'Programme' },
     ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
+    ...(afficherAutour ? [{ id: 'autour', label: titreAutour }] : []),
     { id: 'parcours', label: 'Parcours' },
     { id: 'affaires', label: 'Affaires' },
     ...(hatvp.statut === 'lie' ? [{ id: 'hatvp', label: 'Intérêts (HATVP)' }] : []),
@@ -147,6 +157,9 @@ function etatDe(slug: string): EtatTheme {
                         <p class="text-xs mt-0.5" style="color: var(--fg-muted)">
                             {c.programme_complet.nb_chapitres} chapitres · {c.programme_complet.nb_entrees} entrées référencées
                         </p>
+                        {c.programme_complet.porteur && c.programme_complet.porteur.type !== 'candidat' && (
+                            <Porteur porteur={c.programme_complet.porteur} candidat={c} class="mt-0.5" />
+                        )}
                     </div>
                     {c.programme_complet.url && (
                         <a href={c.programme_complet.url} target="_blank" rel="nofollow noopener"
@@ -198,6 +211,7 @@ function etatDe(slug: string): EtatTheme {
                                     <li class="text-sm">
                                         <span class="font-medium">{m.titre}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                        <CitationsMesure mesure={m} />
                                         <ArgumentaireVs arguments={m.arguments} controverse={controverseDe(m)} compact />
                                     </li>
                                 ))}
@@ -211,6 +225,7 @@ function etatDe(slug: string): EtatTheme {
                                             <span class="font-medium">{m.titre}</span>
                                             {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
                                             {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            <CitationsMesure mesure={m} />
                                         </li>
                                     ))}
                                 </ul>
@@ -254,6 +269,7 @@ function etatDe(slug: string): EtatTheme {
             <p class="text-sm mb-4" style="color: var(--fg-muted)">
                 Propos et engagements repérés dans les meetings, interviews et programmes officiels, en cours de traitement par notre équipe.
                 <strong>Chaque citation est vérifiable à la source en un clic.</strong>
+                {avecEquipe && <> Quand une personnalité de son équipe de campagne parle, son nom et son rôle suivent la citation.</>}
             </p>
             <div class="space-y-3">
                 {prisesDeParole.map((doc: any, iDoc: number) => (
@@ -261,10 +277,11 @@ function etatDe(slug: string): EtatTheme {
                         <summary class="cursor-pointer p-4 flex items-center justify-between gap-2 flex-wrap">
                             <span class="font-semibold text-sm">{doc.titre}</span>
                             <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">
-                                {({ video: 'vidéo', audio: 'audio', article: 'article', communique: 'communiqué', programme_officiel: 'programme officiel' }[doc.type] ?? doc.type)}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
+                                {libelleTypeDocument(doc.type)}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
                             </span>
                         </summary>
                         <div class="px-4 pb-4 space-y-3">
+                            {doc.porteur && doc.porteur.type !== 'candidat' && <Porteur porteur={doc.porteur} candidat={c} />}
                             {doc.url && <a href={doc.url} target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
                             {citationsParTheme(doc).map(([theme, citations]) => (
                                 <details class="border-l-2 pl-3" style="border-color: var(--border)" open={doc.citations.length <= 8}>
@@ -274,7 +291,12 @@ function etatDe(slug: string): EtatTheme {
                                     <ul class="space-y-3 mt-1">
                                         {citations.map((cit: any) => (
                                             <li class="text-sm">
-                                                <p class="italic">« {cit.citation} »</p>
+                                                {/* L'auteur dans le même élément que la citation : un extrait de
+                                                    recherche ne doit jamais l'en détacher. */}
+                                                <p>
+                                                    <span class="italic">« {cit.citation} »</span>
+                                                    {attributionLocuteur(cit) && <span class="text-xs" style="color: var(--fg-muted)"> — {attributionLocuteur(cit)}</span>}
+                                                </p>
                                                 {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
                                                 {cit.verifier_url && (
                                                     <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
@@ -293,6 +315,9 @@ function etatDe(slug: string): EtatTheme {
             </div>
         </section>
     )}
+
+    <!-- Autour du candidat : la parole du parti ou du groupe, à part du programme -->
+    {afficherAutour && <AutourDuCandidat candidat={c} autour={autour} />}
 
     <!-- Parcours -->
     <section id="parcours" class="py-6">
