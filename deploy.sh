@@ -55,7 +55,11 @@ fi
 cp -a "$SITE/favicon.ico" dist/ 2>/dev/null || true
 rm -rf "$SITE.new"; cp -a dist "$SITE.new"
 chown -R civicdash:www-data "$SITE.new"
-mv "$SITE" "$SITE.old" && mv "$SITE.new" "$SITE" && rm -rf "$SITE.old"
+mv "$SITE" "$SITE.old" && mv "$SITE.new" "$SITE"
+# IndexNow : signale aux moteurs (Bing, Qwant, Ecosia, DuckDuckGo…) les pages nouvelles,
+# modifiées ou retirées, par comparaison avec la version précédente. Jamais bloquant.
+python3 "$FRONT/scripts/indexnow.py" "$SITE.old" "$SITE" || true
+rm -rf "$SITE.old"
 rm -rf "$FRONT/node_modules" "$FRONT/dist"
 
 echo "$(date -Is) rebuild OK — en ligne (hash $NEW)"
