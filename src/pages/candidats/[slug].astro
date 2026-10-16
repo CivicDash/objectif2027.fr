@@ -1,9 +1,15 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
+import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
 import AnchorNav from '@/components/AnchorNav.astro';
-import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, type EtatTheme } from '@/lib/data';
+import AutourDuCandidat from '@/components/AutourDuCandidat.astro';
+import CadrageBudgetaire from '@/components/CadrageBudgetaire.astro';
+import CitationsMesure from '@/components/CitationsMesure.astro';
+import Porteur from '@/components/Porteur.astro';
+import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, cadrageDe, autourDe, autourVide, estCandidate, libelleTypeDocument, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
+import { attributionLocuteur, dateFr, datePrecise } from '@/lib/format';
 
 export function getStaticPaths() {
     return Object.values(CANDIDATS_DETAIL).map((c: any) => ({ params: { slug: c.slug }, props: { candidat: c } }));
@@ -15,6 +21,14 @@ const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
 const parrainages = badgeParrainages(c.statut_candidature);
 
 const prisesDeParole = c.prises_de_parole ?? [];
+const avecEquipe = prisesDeParole.some((d: any) => d.citations?.some((x: any) => x.locuteur));
+
+// Cadrage budgétaire (null : rubrique masquée, ou candidat absent de budgets.json) et
+// « Autour du candidat » (parole du parti ou du groupe : jamais dans le programme).
+const cadrage = cadrageDe(c.slug);
+const autour = autourDe(c);
+const afficherAutour = !autourVide(autour);
+const titreAutour = estCandidate(c) ? 'Autour de la candidate' : 'Autour du candidat';
 
 // HATVP (déclaration d'intérêts) — affichée seulement si un statut a été arbitré au BO.
 const hatvp = c.hatvp ?? { statut: 'a_verifier' };
@@ -22,6 +36,16 @@ const revenusHatvp = Object.entries(hatvp.summary?.revenus_par_annee ?? {})
     .map(([annee, v]: any) => ({ annee, total: Number(v?.total ?? v ?? 0) }))
     .sort((a, b) => a.annee.localeCompare(b.annee));
 const revenusMax = Math.max(1, ...revenusHatvp.map((r) => r.total));
+// Bandeau de présomption : un libellé par statut (règles éditoriales). « Décision non
+// définitive » ne convient pas tant qu'aucun jugement n'a été rendu.
+const BANDEAU_STATUT: Record<string, string> = {
+    en_cours: 'Aucun jugement n\'a été rendu dans ce dossier.',
+    mis_en_examen: 'Aucun jugement n\'a été rendu dans ce dossier.',
+    condamne_premiere_instance: 'Décision non définitive : appel possible ou en cours.',
+    condamne_appel: 'Décision non définitive : pourvoi en cassation en cours.',
+};
+// Étapes de procédure datées à l'année (2004), au mois (2015-03) ou au jour (2017-06-30).
+const dateEtape = (d: string) => datePrecise(d, d.length === 4 ? 'annee' : d.length === 7 ? 'mois' : 'jour');
 const fmtEur = (v: number) => v ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v) : '—';
 
 // Regroupement du programme : publiés, puis relevés, puis en traitement, non-exprimés repliés.
@@ -42,18 +66,27 @@ function citationsParTheme(doc: any): [string, any[]][] {
 
 const ancres = [
     { id: 'programme', label: 'Programme' },
+    ...(cadrage ? [{ id: 'cadrage-budgetaire', label: 'Budget' }] : []),
     ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
+    ...(afficherAutour ? [{ id: 'autour', label: titreAutour }] : []),
     { id: 'parcours', label: 'Parcours' },
     { id: 'affaires', label: 'Affaires' },
     ...(hatvp.statut === 'lie' ? [{ id: 'hatvp', label: 'Intérêts (HATVP)' }] : []),
 ];
+
+// La controverse d'une mesure est portée par ses arguments : tous ceux d'un même
+// désaccord y renvoient par le même slug. On prend la première rencontrée.
+function controverseDe(m: any) {
+    const args = [...(m.arguments?.pour ?? []), ...(m.arguments?.contre ?? [])];
+    return controverseParSlug(args.find((a: any) => a.controverse)?.controverse);
+}
 
 function etatDe(slug: string): EtatTheme {
     return (c.etats_par_theme?.[slug]?.etat ?? 'non_exprime') as EtatTheme;
 }
 ---
 
-<Base title={`${nom} — programme et parcours | Objectif 2027`} description={`${nom} (${c.parti_soutien ?? ''}) : programme thème par thème, parcours, affaires judiciaires — sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
+<Base title={`${nom} : programme 2027, propositions et parcours | Objectif 2027`} description={`${nom}${c.parti_soutien ? ` (${c.parti_soutien})` : ''}, ${estCandidate(c) ? 'candidate' : 'candidat'} à la présidentielle 2027 : propositions thème par thème avec citations vérifiables, parcours, affaires judiciaires. Sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
     <Breadcrumb items={[{ label: 'Candidats', href: '/candidats/' }, { label: nom }]} />
 
     <!-- Bannière candidat : bloc unique moderne, 100 % couleur (pas d'image requise).
@@ -82,7 +115,9 @@ function etatDe(slug: string): EtatTheme {
 
             <div class="mt-4 flex flex-wrap gap-2 text-xs">
                 <span class="px-2.5 py-1 rounded-full text-white font-medium" style={`background:${couleur}`}>{c.nuance}</span>
-                <span class="px-2.5 py-1 rounded-full" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
+                {parrainages
+                    ? <span class="px-2.5 py-1 rounded-full" style={parrainages.ton === 'vert' ? 'background:#ecfdf5;color:#047857' : 'background:#fffbeb;color:#b45309'}>{parrainages.texte}</span>
+                    : <span class="px-2.5 py-1 rounded-full font-medium" style="background: color-mix(in srgb, var(--fg) 10%, transparent); color: var(--fg-muted)">{libelleStatutCandidature(c.statut_candidature)}</span>}
                 <span class="px-2.5 py-1 rounded-full" style="background: color-mix(in srgb, var(--fg) 7%, transparent)">
                     Exprimé sur {c.couverture.themes_exprimes} / {c.couverture.themes_total} thèmes
                 </span>
@@ -126,6 +161,9 @@ function etatDe(slug: string): EtatTheme {
                         <p class="text-xs mt-0.5" style="color: var(--fg-muted)">
                             {c.programme_complet.nb_chapitres} chapitres · {c.programme_complet.nb_entrees} entrées référencées
                         </p>
+                        {c.programme_complet.porteur && c.programme_complet.porteur.type !== 'candidat' && (
+                            <Porteur porteur={c.programme_complet.porteur} candidat={c} class="mt-0.5" />
+                        )}
                     </div>
                     {c.programme_complet.url && (
                         <a href={c.programme_complet.url} target="_blank" rel="nofollow noopener"
@@ -177,32 +215,8 @@ function etatDe(slug: string): EtatTheme {
                                     <li class="text-sm">
                                         <span class="font-medium">{m.titre}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
-                                        {(m.arguments?.pour?.length > 0 || m.arguments?.contre?.length > 0) && (
-                                            <details class="mt-1">
-                                                <summary class="cursor-pointer text-xs text-brand-600">Arguments pour / contre</summary>
-                                                <div class="mt-1 space-y-2">
-                                                    {['pour', 'contre'].map((sens) => (m.arguments?.[sens]?.length > 0 && (
-                                                        <div>
-                                                            <p class="text-xs font-semibold" style={sens === 'pour' ? 'color:#047857' : 'color:#b91c1c'}>{sens === 'pour' ? 'Pour' : 'Contre'}</p>
-                                                            <ul class="text-xs list-disc pl-4 space-y-1" style="color: var(--fg-muted)">
-                                                                {m.arguments[sens].map((a: any) => (
-                                                                    <li>
-                                                                        {a.contenu}
-                                                                        {a.note_contextuelle && <span class="block opacity-70 italic">{a.note_contextuelle}</span>}
-                                                                        {(a.sources ?? []).map((s: any) => (
-                                                                            <>
-                                                                                {' '}<a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline whitespace-nowrap">— {s.media ?? s.titre ?? 'source'} ↗</a>
-                                                                                {s.archive_url && <a href={s.archive_url} target="_blank" rel="nofollow noopener" class="opacity-60 hover:underline"> (archive)</a>}
-                                                                            </>
-                                                                        ))}
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    )))}
-                                                </div>
-                                            </details>
-                                        )}
+                                        <CitationsMesure mesure={m} />
+                                        <ArgumentaireVs arguments={m.arguments} controverse={controverseDe(m)} compact />
                                     </li>
                                 ))}
                             </ul>
@@ -215,6 +229,7 @@ function etatDe(slug: string): EtatTheme {
                                             <span class="font-medium">{m.titre}</span>
                                             {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
                                             {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            <CitationsMesure mesure={m} />
                                         </li>
                                     ))}
                                 </ul>
@@ -251,6 +266,9 @@ function etatDe(slug: string): EtatTheme {
         </div>
     </section>
 
+    <!-- Cadrage budgétaire : la grille commune, la référence officielle en regard -->
+    {cadrage && <CadrageBudgetaire candidat={c} etat={cadrage} />}
+
     <!-- Prises de parole : citations vérifiables à la source (différenciateur) -->
     {prisesDeParole.length > 0 && (
         <section id="prises-de-parole" class="py-6">
@@ -258,6 +276,7 @@ function etatDe(slug: string): EtatTheme {
             <p class="text-sm mb-4" style="color: var(--fg-muted)">
                 Propos et engagements repérés dans les meetings, interviews et programmes officiels, en cours de traitement par notre équipe.
                 <strong>Chaque citation est vérifiable à la source en un clic.</strong>
+                {avecEquipe && <> Quand une personnalité de son équipe de campagne parle, son nom et son rôle suivent la citation.</>}
             </p>
             <div class="space-y-3">
                 {prisesDeParole.map((doc: any, iDoc: number) => (
@@ -265,10 +284,11 @@ function etatDe(slug: string): EtatTheme {
                         <summary class="cursor-pointer p-4 flex items-center justify-between gap-2 flex-wrap">
                             <span class="font-semibold text-sm">{doc.titre}</span>
                             <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">
-                                {({ video: 'vidéo', audio: 'audio', article: 'article', communique: 'communiqué', programme_officiel: 'programme officiel' }[doc.type] ?? doc.type)}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
+                                {libelleTypeDocument(doc.type)}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
                             </span>
                         </summary>
                         <div class="px-4 pb-4 space-y-3">
+                            {doc.porteur && doc.porteur.type !== 'candidat' && <Porteur porteur={doc.porteur} candidat={c} />}
                             {doc.url && <a href={doc.url} target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
                             {citationsParTheme(doc).map(([theme, citations]) => (
                                 <details class="border-l-2 pl-3" style="border-color: var(--border)" open={doc.citations.length <= 8}>
@@ -278,7 +298,12 @@ function etatDe(slug: string): EtatTheme {
                                     <ul class="space-y-3 mt-1">
                                         {citations.map((cit: any) => (
                                             <li class="text-sm">
-                                                <p class="italic">« {cit.citation} »</p>
+                                                {/* L'auteur dans le même élément que la citation : un extrait de
+                                                    recherche ne doit jamais l'en détacher. */}
+                                                <p>
+                                                    <span class="italic">« {cit.citation} »</span>
+                                                    {attributionLocuteur(cit) && <span class="text-xs" style="color: var(--fg-muted)"> — {attributionLocuteur(cit)}</span>}
+                                                </p>
                                                 {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
                                                 {cit.verifier_url && (
                                                     <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
@@ -298,6 +323,9 @@ function etatDe(slug: string): EtatTheme {
         </section>
     )}
 
+    <!-- Autour du candidat : la parole du parti ou du groupe, à part du programme -->
+    {afficherAutour && <AutourDuCandidat candidat={c} autour={autour} />}
+
     <!-- Parcours -->
     <section id="parcours" class="py-6">
         <h2 class="text-xl font-bold mb-3">Parcours</h2>
@@ -307,7 +335,7 @@ function etatDe(slug: string): EtatTheme {
                     <li>
                         <div class="text-sm font-medium">{e.titre}{e.organisation && <span style="color: var(--fg-muted)"> · {e.organisation}</span>}</div>
                         <div class="text-xs" style="color: var(--fg-muted)">
-                            {e.date_debut ?? '?'}{e.date_fin ? ` — ${e.date_fin}` : ' — en cours'}
+                            {e.date_debut ? datePrecise(e.date_debut, e.precision_debut) : '?'}{e.date_fin ? ` — ${datePrecise(e.date_fin, e.precision_fin)}` : ' — en cours'}
                             {e.source_url && <a href={e.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                         </div>
                         {e.actions?.length > 0 && (
@@ -347,7 +375,7 @@ function etatDe(slug: string): EtatTheme {
                     <article class="rounded-card border overflow-hidden" style="border-color: var(--border)">
                         {a.presomption_innocence && (
                             <p class="text-sm px-4 py-3" style="background:#fffbeb; color:#92400e; border-bottom:1px solid var(--border)">
-                                ⚠ Décision de justice non définitive. <strong>La présomption d'innocence s'applique.</strong>
+                                ⚠ {BANDEAU_STATUT[a.statut_judiciaire] ?? 'Décision de justice non définitive.'} <strong>La présomption d'innocence s'applique.</strong>
                                 {a.aucune_mise_en_examen && ' Aucune mise en examen n\'a été prononcée à ce jour.'}
                             </p>
                         )}
@@ -369,6 +397,23 @@ function etatDe(slug: string): EtatTheme {
                             {a.position_interesse && (
                                 <p class="text-xs mt-2 italic" style="color: var(--fg-muted)">Position de l'intéressé : {a.position_interesse}</p>
                             )}
+                            {a.chronologie?.length > 0 && (
+                                <details class="mt-3">
+                                    <summary class="text-xs cursor-pointer text-brand-600 hover:underline">
+                                        Chronologie de la procédure ({a.chronologie.length} étape{a.chronologie.length > 1 ? 's' : ''})
+                                    </summary>
+                                    <ol class="mt-2 ml-1 border-l-2 space-y-2" style="border-color: var(--border)">
+                                        {a.chronologie.map((e: any) => (
+                                            <li class="pl-3 text-xs relative">
+                                                <span class="absolute rounded-full" style="left:-5px; top:5px; width:8px; height:8px; background: var(--fg-muted)"></span>
+                                                <span class="font-mono whitespace-nowrap" style="color: var(--fg-muted)">{dateEtape(e.date)}</span>
+                                                <span> — {e.fait}</span>
+                                                {e.source && <a href={e.source} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </details>
+                            )}
                             {a.sources?.length > 0 && (
                                 <p class="text-xs mt-3" style="color: var(--fg-muted)">
                                     {a.sources.length} source(s) vérifiée(s) :
@@ -389,8 +434,63 @@ function etatDe(slug: string): EtatTheme {
         ) : (
             <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
                 Aucune affaire judiciaire recensée à ce jour dans notre base — dernière vérification :
-                {c.affaires?.derniere_verification ?? META.genere_le}.
+                {dateFr((c.affaires?.derniere_verification ?? META.genere_le)?.slice(0, 10))}.
                 Une absence d'information n'est pas une preuve d'absence d'affaire.
+            </div>
+        )}
+
+        {c.affaires?.sanctions_electorales?.length > 0 && (
+            <div class="mt-6">
+                <h3 class="text-base font-semibold">Décisions du juge de l'élection</h3>
+                <p class="text-xs mb-3" style="color: var(--fg-muted)">
+                    Ces décisions ne sont pas des condamnations pénales : elles sanctionnent une règle du code électoral,
+                    comme le dépôt d'un compte de campagne. <a href="/methodologie/#volet-judiciaire" class="text-brand-600 hover:underline">Règle d'affichage</a>
+                </p>
+                <div class="space-y-4">
+                    {c.affaires.sanctions_electorales.map((s: any) => (
+                        <article class="rounded-card border p-4" style="border-color: var(--border)">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <h4 class="font-semibold">{s.titre}</h4>
+                                <span class="text-xs px-2 py-1 rounded-full whitespace-nowrap" style="background: var(--bg-soft); color: var(--fg-muted); border: 1px solid var(--border)">Non pénale</span>
+                            </div>
+                            {s.autorite && <p class="text-xs mb-2" style="color: var(--fg-muted)">{s.autorite}</p>}
+                            {s.duree_mois && s.date_decision && (
+                                <p class="text-sm font-medium mb-2">
+                                    Inéligibilité de {s.duree_mois} mois prononcée le {datePrecise(s.date_decision, 'jour')}{s.fin && (s.echue ? `, échue le ${datePrecise(s.fin, 'jour')}` : `, jusqu'au ${datePrecise(s.fin, 'jour')}`)}.
+                                </p>
+                            )}
+                            {s.description && <p class="text-sm">{s.description}</p>}
+                            {s.position_interesse && (
+                                <p class="text-xs mt-2 italic" style="color: var(--fg-muted)">Position de l'intéressé : {s.position_interesse}</p>
+                            )}
+                            {s.chronologie?.length > 0 && (
+                                <details class="mt-3">
+                                    <summary class="text-xs cursor-pointer text-brand-600 hover:underline">
+                                        Chronologie ({s.chronologie.length} étape{s.chronologie.length > 1 ? 's' : ''})
+                                    </summary>
+                                    <ol class="mt-2 ml-1 border-l-2 space-y-2" style="border-color: var(--border)">
+                                        {s.chronologie.map((e: any) => (
+                                            <li class="pl-3 text-xs relative">
+                                                <span class="absolute rounded-full" style="left:-5px; top:5px; width:8px; height:8px; background: var(--fg-muted)"></span>
+                                                <span class="font-mono whitespace-nowrap" style="color: var(--fg-muted)">{dateEtape(e.date)}</span>
+                                                <span> — {e.fait}</span>
+                                                {e.source && <a href={e.source} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </details>
+                            )}
+                            {s.sources?.length > 0 && (
+                                <p class="text-xs mt-3" style="color: var(--fg-muted)">
+                                    {s.sources.length} source(s) vérifiée(s) :
+                                    {s.sources.map((src: any, i: number) => (
+                                        <span> {i > 0 ? '· ' : ''}{src.url ? <a href={src.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{src.media}</a> : src.media}{src.archive_url && <a href={src.archive_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline"> (archive)</a>}</span>
+                                    ))}
+                                </p>
+                            )}
+                        </article>
+                    ))}
+                </div>
             </div>
         )}
     </section>

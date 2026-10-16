@@ -2,18 +2,45 @@
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import CandidatCard from '@/components/CandidatCard.astro';
-import { candidatsOrdreNeutre } from '@/lib/data';
-import { candidatsItemListJsonLd, breadcrumbJsonLd } from '@/lib/seo';
+import { candidatsOrdreNeutre, META } from '@/lib/data';
+import { dateFr } from '@/lib/format';
+import { candidatsItemListJsonLd, breadcrumbJsonLd, pageDateeJsonLd } from '@/lib/seo';
 
 const candidats = candidatsOrdreNeutre();
+const miseAJour = META.genere_le ? dateFr(String(META.genere_le).slice(0, 10)) : null;
+
+// Décompte par statut, dans un ordre fixe (celui de la procédure), jamais éditorial.
+const COMPTES: [string, string, string][] = [
+    ['declare', 'déclaré', 'déclarés'],
+    ['investi', 'investi par son parti', 'investis par leur parti'],
+    ['parrainages_valides', 'avec 500 parrainages validés', 'avec 500 parrainages validés'],
+    ['pressenti', 'pressenti', 'pressentis'],
+    ['retire', 'retiré', 'retirés'],
+    ['battu_primaire', 'battu à une primaire', 'battus à une primaire'],
+    ['elimine_t1', 'éliminé au premier tour', 'éliminés au premier tour'],
+];
+const decompte = COMPTES
+    .map(([statut, un, plusieurs]) => {
+        const n = candidats.filter((c: any) => c.statut_candidature === statut).length;
+        return n ? `${n} ${n > 1 ? plusieurs : un}` : null;
+    })
+    .filter(Boolean)
+    .join(', ');
 ---
 
-<Base title="Les candidats — Objectif 2027" description="La liste des candidats à l'élection présidentielle 2027, traités de façon strictement identique. Parcours, programmes et sources."
-      jsonld={[candidatsItemListJsonLd(candidats), breadcrumbJsonLd([{ label: 'Candidats' }])]}>
+<Base title="Liste des candidats à la présidentielle 2027 | Objectif 2027"
+      description={`Les ${candidats.length} candidats à l'élection présidentielle 2027 suivis par Objectif 2027${miseAJour ? `, liste mise à jour le ${miseAJour}` : ''} : parcours, propositions et sources, avec les mêmes rubriques pour tous.`}
+      jsonld={[candidatsItemListJsonLd(candidats), breadcrumbJsonLd([{ label: 'Candidats' }]), pageDateeJsonLd('Liste des candidats à la présidentielle 2027', '/candidats/', META.genere_le)]}>
     <Breadcrumb items={[{ label: 'Candidats' }]} />
-    <h1 class="text-2xl font-bold py-2">Les candidats</h1>
-    <p class="text-sm mb-4" style="color: var(--fg-muted)">
-        {candidats.length} candidats — ordre alphabétique, mêmes rubriques pour tous.
+    <h1 class="text-2xl font-bold py-2">Les candidats à l'élection présidentielle 2027</h1>
+    <p class="text-sm" style="color: var(--fg-muted)">
+        {candidats.length} candidats suivis{miseAJour && <>, liste mise à jour le <time datetime={String(META.genere_le).slice(0, 10)}>{miseAJour}</time></>}{decompte && <> : {decompte}</>}.
+        Ordre alphabétique, mêmes rubriques pour tous.
+    </p>
+    <p class="text-sm mt-1 mb-4" style="color: var(--fg-muted)">
+        Nous suivons tous les candidats déclarés, recensés par au moins deux listes de référence, jusqu'à la date limite
+        des parrainages (12 mars 2027), puis ceux dont le Conseil constitutionnel valide la candidature.
+        <a href="/methodologie/#candidats-suivis" class="text-brand-600 hover:underline">La règle</a>
     </p>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {candidats.map((c) => <CandidatCard candidat={c} />)}

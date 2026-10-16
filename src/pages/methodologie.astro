@@ -1,11 +1,31 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { THEMES } from '@/lib/data';
+import { THEMES, BUDGETS, BUDGETS_ACTIFS } from '@/lib/data';
+
+// Les sections budgétaires ne décrivent que ce qui est affiché : tant qu'aucune référence
+// officielle n'est publiée, la rubrique est masquée partout, ici compris.
+const rubriquesBudget = BUDGETS.rubriques.map((r) => r.libelle.toLowerCase());
 ---
 
 <Base title="Méthodologie — Objectif 2027" description="Comment nous choisissons les thèmes, traitons les candidats à égalité, distinguons trois états d'expression, et construisons le quiz d'affinité.">
     <div class="py-4 space-y-6 max-w-2xl">
         <h1 class="text-2xl font-bold">Méthodologie</h1>
+
+        <section id="candidats-suivis">
+            <h2 class="text-lg font-semibold">Quels candidats suivons-nous ?</h2>
+            <p class="text-sm">
+                <strong>Jusqu'à la date limite de dépôt des parrainages (12 mars 2027)</strong>, nous suivons toutes les
+                personnes qui ont publiquement déclaré leur candidature, dès lors que cette déclaration figure sur au moins
+                <strong>deux listes de référence</strong> tenues par des médias (par exemple franceinfo et LCP). Aucune
+                sélection n'est faite selon les sondages, la notoriété ou le parti : chaque candidat déclaré a sa fiche,
+                son parcours et le même traitement.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Après cette date</strong>, seuls les candidats dont la candidature a été validée par le Conseil
+                constitutionnel restent suivis. Un candidat qui se retire ou qui perd une primaire reste visible, avec la
+                mention de son statut.
+            </p>
+        </section>
 
         <section>
             <h2 class="text-lg font-semibold">Une grille de thèmes neutre</h2>
@@ -84,7 +104,7 @@ import { THEMES } from '@/lib/data';
             </p>
         </section>
 
-        <section>
+        <section id="volet-judiciaire">
             <h2 class="text-lg font-semibold">Volet judiciaire : règle d'affichage</h2>
             <p class="text-sm">
                 Les fiches n'affichent que les <strong>procédures en cours</strong> visant le candidat (ou des faits
@@ -94,16 +114,181 @@ import { THEMES } from '@/lib/data';
                 procédure, jamais la personne</strong> — il s'applique identiquement à tous les candidats.
                 <em>(Règle adoptée par l'association le 14/07/2026.)</em>
             </p>
+            <p class="text-sm mt-2">
+                Les <strong>décisions du juge de l'élection</strong> (Conseil constitutionnel, Conseil d'État, tribunal
+                administratif), comme une inéligibilité pour un compte de campagne non déposé, ne sont <strong>pas des
+                condamnations pénales</strong>. Elles sont affichées <strong>à part</strong>, avec la mention « non pénale »,
+                leur durée et la date à laquelle elles prennent ou ont pris fin. <em>(Règle adoptée par l'association le 16/10/2026.)</em>
+            </p>
         </section>
 
         <section>
-            <h2 class="text-lg font-semibold">Quiz d'affinité</h2>
+            <h2 class="text-lg font-semibold">Le quiz</h2>
             <p class="text-sm">
-                Le calcul est fait <strong>entièrement dans votre navigateur</strong> : aucune réponse n'est envoyée ni
-                conservée (les opinions politiques sont des données sensibles). Chaque question reprend, sans reformulation,
-                une <strong>mesure phare publiée</strong> d'un candidat (mesure vérifiée, sourcée, avec ses arguments pour et
-                contre) ; un candidat non exprimé sur un thème est exclu du calcul, jamais compté en désaccord. Le résultat
-                est donné <strong>par thème</strong> — il n'y a pas de « gagnant » global.
+                Le calcul est fait <strong>entièrement dans votre navigateur</strong> : aucune réponse n'est
+                envoyée, et rien n'est conservé, pas même sur votre machine — les opinions politiques sont des
+                données sensibles. Recharger la page efface tout.
+            </p>
+            <p class="text-sm mt-2">
+                Une question porte un <strong>intitulé neutre</strong>, rédigé par nous et relu ; ses options sont
+                les <strong>positions réellement défendues</strong>, chacune adossée à une ou plusieurs mesures
+                publiées et sourcées. Ce sont les mesures qui portent les candidats : une position commune à
+                trois d'entre eux les crédite tous les trois. Une question dont toutes les options viendraient
+                d'un même candidat ne peut pas être publiée.
+            </p>
+            <p class="text-sm mt-2">
+                L'ordre des options est <strong>tiré au sort à chaque session</strong>, et le nom des candidats
+                n'apparaît qu'<strong>après</strong> votre réponse : on répond ainsi au contenu, pas à l'étiquette.
+            </p>
+            <p class="text-sm mt-2">
+                Nous ne produisons <strong>aucun score et aucun classement</strong>. À la fin, vous voyez les
+                positions que vous avez retenues et qui les défend ; la conclusion vous appartient. Un candidat
+                qui ne figure pas sous une position ne s'y oppose pas forcément : le plus souvent, nous n'avons
+                pas encore dépouillé de prise de parole de sa part sur ce point.
+            </p>
+        </section>
+
+        <section id="qui-parle">
+            <h2 class="text-lg font-semibold">Qui parle ? Candidat, équipe de campagne, parti</h2>
+            <p class="text-sm">
+                Chaque propos est attribué à la personne qui l'a <strong>réellement</strong> tenu. Trois cas, jamais confondus :
+            </p>
+            <ul class="list-disc pl-5 space-y-1 text-sm mt-2">
+                <li><strong>Le candidat lui-même</strong> — ses propos fondent ses mesures, sans mention particulière.</li>
+                <li><strong>Son équipe de campagne</strong> — une personnalité qui s'exprime pour le projet du candidat
+                    (porte-parole, responsable du programme, élu chargé du chiffrage…). Ses propos peuvent fonder une mesure
+                    ou un cadrage budgétaire du candidat, mais elle reste nommée : « — Nom, rôle (équipe de campagne) » sur
+                    chaque citation, et « Portée par l'équipe de campagne » sur une mesure dont toutes les sources viennent
+                    d'elle.</li>
+                <li><strong>Son parti ou son groupe parlementaire</strong> — une organisation qui a sa propre vision, et
+                    celle-ci peut différer de celle du candidat. Ses documents et ses propos paraissent dans une section
+                    distincte de la fiche, « Autour du candidat » : <strong>jamais comme des mesures du candidat</strong>,
+                    ni dans le comparateur, ni dans la couverture des thèmes.</li>
+            </ul>
+            <p class="text-sm mt-2">
+                Quand un document n'émane pas du candidat lui-même, nous exigeons avant de le publier une
+                <strong>preuve qu'il l'endosse</strong> (déclaration, page de son site, présentation commune), affichée avec
+                sa date et son lien. Sans elle, le document n'est pas publié.
+            </p>
+            <p class="text-sm mt-2">
+                Le nom de qui parle est écrit à côté de chaque citation, y compris dans les extraits de la recherche du site :
+                une phrase n'est jamais détachée de son auteur.
+            </p>
+        </section>
+
+        {BUDGETS_ACTIFS && (
+            <section id="cadrage-budgetaire">
+                <h2 class="text-lg font-semibold">Cadrage budgétaire : une grille commune</h2>
+                <p class="text-sm">
+                    Quand un candidat ou son équipe de campagne présente un cadrage de ses finances publiques (premier cadrage,
+                    budget de première année, programme chiffré complet), nous rangeons ses chiffres dans <strong>la même grille
+                    pour tous</strong> : {rubriquesBudget.join(', ')}, puis les postes détaillés. Les rubriques sont toujours dans
+                    le même ordre ; une case vide se voit.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Aucun classement, aucune note, aucune évaluation.</strong> Nous ne reprenons pas les évaluations de
+                    think tanks ou d'instituts qui notent les programmes. Les candidats sont listés par ordre alphabétique, jamais
+                    selon un montant, et aucune couleur ne dépend d'une valeur.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Chaque chiffre est cité.</strong> Il est accompagné de la phrase qui le porte, de la personne qui l'a
+                    prononcée et d'un lien horodaté vers le passage de la vidéo ou du document. Il n'est affiché qu'après
+                    vérification à la source ; d'ici là, la case indique « en cours de vérification ».
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>« Non précisé »</strong> signifie que la source ne donne pas l'information. Ce n'est ni un oubli de
+                    notre part, ni un reproche.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Rien n'est calculé par nous.</strong> Pas de total, pas de solde recalculé, pas de conversion d'un
+                    montant cumulé en montant annuel, ni de milliards d'euros en points de PIB : un chiffre calculé ne serait plus
+                    un chiffre cité.
+                </p>
+                <p class="text-sm mt-2">
+                    <strong>Les bases diffèrent, et nous les affichons telles quelles.</strong> L'un vise un niveau de déficit
+                    une année donnée, l'autre annonce un montant cumulé sur le quinquennat, un troisième présente un budget de
+                    première année. Ces chiffres ne se comparent pas terme à terme : la grille les rapproche pour qu'on les lise
+                    ensemble, chacun avec sa base (« par an », « cumulé », année visée). Quand la source ne dit pas si un montant
+                    est annuel ou cumulé, nous ne le devinons pas.
+                </p>
+            </section>
+        )}
+
+        {BUDGETS_ACTIFS && (
+            <section id="ligne-de-reference">
+                <h2 class="text-lg font-semibold">La ligne de référence</h2>
+                <p class="text-sm">
+                    En regard des cadrages figure une ligne de référence officielle : le projet de loi de finances (PLF), les
+                    comptes publics constatés par l'Insee et l'avis du Haut Conseil des finances publiques (HCFP). Elle donne un
+                    <strong>repère commun</strong> (où en sont le déficit et la dette, ce que prévoit le gouvernement) pour lire
+                    tous les cadrages dans le même contexte.
+                </p>
+                <p class="text-sm mt-2">
+                    Ce n'est <strong>pas un étalon de jugement</strong> : s'en écarter n'est ni une faute ni un mérite, et cette
+                    ligne n'est pas une proposition de candidat. Le PLF est le projet du gouvernement, soumis au vote du
+                    Parlement ; la loi de finances le remplace une fois votée.
+                </p>
+                <p class="text-sm mt-2">
+                    L'avis du HCFP porte sur <strong>le seul projet du gouvernement</strong> : le réalisme de ses prévisions. Il
+                    ne se prononce pas sur les cadrages des candidats, et nous ne l'y appliquons pas.
+                </p>
+            </section>
+        )}
+
+        <section id="chiffres-des-themes">
+            <h2 class="text-lg font-semibold">Les chiffres des thèmes : comment nous les choisissons et les vérifions</h2>
+            <p class="text-sm">
+                Notre règle : <strong>centraliser sans dénigrer, expliquer sans juger.</strong> Chaque thème présente des
+                repères chiffrés sous forme de <strong>questions neutres</strong> (« Combien d'immigrés vivent en France ? »),
+                auxquelles répondent les données publiques. Nous ne rendons <strong>aucun verdict</strong> : pas de « vrai »
+                ni de « faux », pas de jauge. Les chiffres décrivent ; ce qui est « trop » ou « pas assez » relève de votre
+                jugement.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Le choix des chiffres.</strong> Un repère figure dans un thème s'il porte sur un indicateur de référence
+                de la statistique publique (INSEE, DREES, Eurostat…) sur l'objet du thème, ou sur un indicateur invoqué par au
+                moins deux candidats dans leurs mesures publiées. La règle est la même pour tous les thèmes. Quand plusieurs
+                mesures existent (le stock et les flux, « immigré » et « étranger », un niveau et son évolution), nous les
+                montrons toutes.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Jamais à côté d'une proposition.</strong> Les chiffres sont posés au niveau du thème, avant la liste des
+                candidats, jamais accolés à la mesure d'un candidat : placer un chiffre à côté d'une proposition, ce serait
+                l'évaluer sans le dire.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Ce que les chiffres ne disent pas.</strong> Chaque repère comporte une section obligatoire sur les
+                limites des données : ce qu'elles ne mesurent pas, ce qui relève d'un choix politique. Un repère ne paraît jamais
+                sans elle.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Les chiffres.</strong> Tout chiffre porte sa valeur, son unité, son année et sa source. Toute
+                évolution s'écrit avec ses deux bornes (« 14,4 % en 2022 → 15,4 % en 2023 ») ; l'évolution d'un taux
+                s'exprime en points, pas en pourcentage.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Les sources.</strong> Producteurs publics (INSEE, DREES, Cour des comptes…) et organisations
+                internationales (Eurostat, OCDE) d'abord. Un chiffre d'association, de syndicat ou de think tank peut être
+                cité, mais comme l'estimation d'un acteur identifié, jamais comme le chiffre de référence. Quand l'État ne
+                mesure pas quelque chose, le repère le dit.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>L'Europe.</strong> Les comparaisons utilisent une seule source harmonisée, Eurostat, pour la France,
+                l'Allemagne, l'Italie, l'Espagne et la moyenne de l'UE-27 — même quand elle diffère du chiffre national, ce
+                que le repère signale. Une comparaison impossible est dite impossible. Les séries sont extraites chaque mois ;
+                une révision n'est publiée qu'après relecture, y compris des phrases qui la citent. Les données de chaque
+                graphique sont téléchargeables.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>La vérification.</strong> Seules les phrases vérifiées dans leur source sont affichées. Un repère peut
+                paraître avant que tous ses chiffres le soient : il indique alors combien d'éléments restent à sourcer, et
+                chacun s'affiche dès sa vérification.
+            </p>
+            <p class="text-sm mt-2">
+                <strong>Pourquoi ce format.</strong> Nous avons d'abord essayé de confronter des affirmations entendues
+                (« il y a trop de… ») aux données, avec un verdict sur leur partie mesurable. Nous y avons renoncé : choisir
+                les phrases à tester est déjà un choix éditorial, et un verdict se lit, et se partage, comme une prise de
+                position. Poser des questions neutres et montrer les données, avec leurs limites, laisse la conclusion à chacun.
             </p>
         </section>
     </div>

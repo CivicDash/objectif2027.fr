@@ -1,10 +1,10 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Comparateur from '@/islands/Comparateur.vue';
-import { CANDIDATS_DETAIL, THEMES } from '@/lib/data';
+import { candidatsDetailOrdreNeutre, THEMES } from '@/lib/data';
 
 // On ne transmet à l'island que le nécessaire (léger : peu de candidats).
-const candidats = Object.values(CANDIDATS_DETAIL).map((c: any) => ({
+const candidats = candidatsDetailOrdreNeutre().map((c: any) => ({
     slug: c.slug,
     nom_complet: c.nom_complet,
     couleur_hex: c.couleur_hex,
@@ -14,7 +14,7 @@ const candidats = Object.values(CANDIDATS_DETAIL).map((c: any) => ({
 }));
 ---
 
-<Base title="Comparateur des programmes — Objectif 2027" description="Comparez côte à côte les programmes des candidats à la présidentielle 2027, thème par thème, avec arguments pour et contre sourcés.">
+<Base title="Comparateur des programmes de la présidentielle 2027, thème par thème | Objectif 2027" description="Comparez côte à côte les programmes des candidats à la présidentielle 2027, thème par thème, avec arguments pour et contre sourcés.">
     <h1 class="text-2xl font-bold py-4">Comparateur</h1>
     <p class="text-sm mb-4" style="color: var(--fg-muted)">
         Sélectionnez 2 à 4 candidats et un thème. Le lien de la page encode votre sélection : partagez-le tel quel.

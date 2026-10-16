@@ -1,0 +1,74 @@
+---
+/**
+ * Cadrage budgétaire d'un candidat, sur sa fiche : le plus récent en entier, les plus
+ * anciens repliés dessous. Trois états honnêtes, comme pour les thèmes : publié, en cours
+ * de traitement (aucun chiffre ne paraît avant vérification), non exprimé.
+ *
+ * Ni note, ni classement, ni total, ni conversion : la grille rapproche des chiffres cités,
+ * elle ne les évalue pas.
+ */
+import GrilleCadrage from '@/components/GrilleCadrage.astro';
+import { BUDGETS, duCandidat, leCandidat, themeParSlug, type CadrageCandidat } from '@/lib/data';
+
+interface Props {
+    candidat: { slug: string; civilite?: string | null; nom_complet?: string };
+    etat: CadrageCandidat;
+}
+const { candidat, etat } = Astro.props;
+const cadrages = etat.etat === 'publie' ? (etat.cadrages ?? []) : [];
+const [actuel, ...anciens] = cadrages;
+const qui = leCandidat(candidat);
+const deQui = duCandidat(candidat);
+const theme = BUDGETS.theme ? themeParSlug(BUDGETS.theme) : null;
+---
+<section id="cadrage-budgetaire" class="py-6">
+    <h2 class="text-xl font-bold mb-1">Cadrage budgétaire</h2>
+    {actuel ? (
+        <p class="text-sm mb-4" style="color: var(--fg-muted)">
+            Les chiffres présentés par {qui} ou son équipe de campagne, rangés dans la grille commune à tous
+            les candidats, en regard de la référence officielle. Chaque chiffre est cité tel que la source le
+            donne, avec sa base (niveau atteint, montant cumulé, première année) : nous n'en calculons ni total
+            ni conversion. <a href="/methodologie/#cadrage-budgetaire" class="text-brand-600 hover:underline">Méthode</a>
+        </p>
+    ) : (
+        <p class="text-sm mb-3" style="color: var(--fg-muted)">
+            Les cadrages des finances publiques présentés par les candidats ou leur équipe de campagne, dans
+            une grille commune. <a href="/methodologie/#cadrage-budgetaire" class="text-brand-600 hover:underline">Méthode</a>
+        </p>
+    )}
+
+    {actuel && <GrilleCadrage cadrage={actuel} candidat={candidat} />}
+
+    {anciens.length > 0 && (
+        <details class="mt-3 rounded-card border p-4" style="border-color: var(--border)">
+            <summary class="cursor-pointer text-sm font-medium">
+                {anciens.length > 1 ? `Autres cadrages publiés (${anciens.length})` : 'Autre cadrage publié (1)'}
+            </summary>
+            <p class="text-xs mt-1" style="color: var(--fg-muted)">Du plus récent au plus ancien, chacun dans la même grille.</p>
+            <div class="mt-3 space-y-3">
+                {anciens.map((cad) => <GrilleCadrage cadrage={cad} candidat={candidat} />)}
+            </div>
+        </details>
+    )}
+
+    {etat.etat === 'en_traitement' && (
+        <div class="rounded-card border p-4 text-sm" style="border-color: var(--border)">
+            Un cadrage budgétaire présenté par {qui} ou son équipe a été repéré : il est
+            <strong>en cours de vérification</strong> par notre équipe. Aucun de ses chiffres n'est
+            affiché avant d'avoir été vérifié à la source.
+        </div>
+    )}
+
+    {etat.etat === 'non_exprime' && (
+        <div class="rounded-card border p-4 text-sm" style="border-color: var(--border); color: var(--fg-muted)">
+            Aucun cadrage budgétaire {deQui} ou de son équipe de campagne n'a été repéré à ce jour, selon nos relevés.
+        </div>
+    )}
+
+    {theme && (
+        <p class="text-xs mt-3" style="color: var(--fg-muted)">
+            Les cadrages de tous les candidats, dans la même grille :
+            <a href={`/themes/${theme.slug}/#cadrages`} class="text-brand-600 hover:underline">{theme.nom} →</a>
+        </p>
+    )}
+</section>

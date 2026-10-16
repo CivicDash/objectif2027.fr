@@ -1,0 +1,79 @@
+---
+import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import { questionsCles, themeParSlug } from '@/lib/data';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+const questions = questionsCles();
+
+// Groupées par thème : les 15 thèmes sont l'ossature du site, et le regroupement
+// évite un ordre qui paraîtrait éditorial.
+const parTheme = new Map<string, typeof questions>();
+for (const q of questions) {
+    const cle = q.theme ?? '—';
+    parTheme.set(cle, [...(parTheme.get(cle) ?? []), q]);
+}
+---
+
+<Base
+    title="Questions clés — ce qui fait débat | Objectif 2027"
+    description="Les questions sur lesquelles les candidats à la présidentielle 2027 divergent : qui propose quoi, et ce que disent les études sourcées."
+    ogType="website"
+    jsonld={breadcrumbJsonLd([{ label: 'Questions clés' }])}>
+
+    <Breadcrumb items={[{ label: 'Questions clés' }]} />
+    <h1 class="text-2xl font-bold">Questions clés</h1>
+    <p class="mt-2 max-w-3xl" style="color: var(--fg-muted)">
+        Une question clé, c'est un point sur lequel les candidats divergent réellement — et sur
+        lequel des travaux d'institutions ou de chercheurs existent. Pour chacune, nous
+        expliquons d'abord <strong>pourquoi les deux camps peuvent citer des données exactes</strong>,
+        puis nous montrons qui propose quoi, et les faits versés au débat avec leurs sources.
+    </p>
+    <p class="mt-2 text-sm">
+        <a href="/methodologie/" class="text-brand-600 hover:underline">Comment nous construisons ces pages →</a>
+    </p>
+
+    {questions.length === 0 ? (
+        <div class="mt-6 rounded-card border p-5" style="border-color: var(--border); background: var(--bg-soft)">
+            <p class="font-medium">Aucune question publiée pour l'instant.</p>
+            <p class="text-sm mt-1" style="color: var(--fg-muted)">
+                Les argumentaires sont en cours de constitution : chaque fait doit être sourcé,
+                et chaque argument à charge passe par une double validation avant publication.
+            </p>
+        </div>
+    ) : (
+        <div class="mt-6 space-y-7">
+            {[...parTheme.entries()].map(([themeSlug, liste]) => {
+                const theme = themeParSlug(themeSlug);
+                return (
+                    <section aria-labelledby={`t-${themeSlug}`}>
+                        <h2 id={`t-${themeSlug}`} class="text-sm font-semibold uppercase tracking-wide" style="color: var(--fg-muted)">
+                            {theme?.nom ?? themeSlug}
+                        </h2>
+                        <ul class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {liste.map((q) => (
+                                <li class="rounded-card border p-4" style="border-color: var(--border)">
+                                    <a href={`/questions/${q.slug}/`} class="font-semibold hover:text-brand-600">{q.titre}</a>
+                                    {q.note_methodologique && (
+                                        <p class="text-sm mt-1 line-clamp-3" style="color: var(--fg-muted)">{q.note_methodologique}</p>
+                                    )}
+                                    <p class="text-xs mt-2" style="color: var(--fg-muted)">
+                                        {q.positions.length > 0 ? (
+                                            <>{q.positions.length} candidat{q.positions.length > 1 ? 's' : ''} ·
+                                             {' '}{q.faits.length} fait{q.faits.length > 1 ? 's' : ''} sourcé{q.faits.length > 1 ? 's' : ''}</>
+                                        ) : q.chantier ? (
+                                            <>Argumentaire en cours de validation — {q.chantier.candidats} candidats,
+                                             {' '}{q.chantier.mesures} mesures identifiées</>
+                                        ) : (
+                                            <>Argumentaire en cours de constitution</>
+                                        )}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                );
+            })}
+        </div>
+    )}
+</Base>
