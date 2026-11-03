@@ -12,6 +12,8 @@ export const GET: APIRoute = ({ site }) => {
         ...(QUIZ_ACTIF ? ['/quiz/'] : []),
         ...(JEU_ACTIF ? ['/jeu/'] : []),
         '/themes/',
+        '/budgets/',
+        '/budgets/2027/',
         ...(QUESTIONS_ACTIVES ? ['/questions/'] : []),
         ...(CALENDRIER_ACTIF ? ['/calendrier/'] : []),
         '/recherche/',

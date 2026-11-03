@@ -113,6 +113,14 @@ const LIBELLE_TYPE: Record<string, string> = {
         </section>
     )}
 
+    {theme.slug === 'fiscalite-budget' && (
+        <p class="mt-6 rounded-card border p-4 text-sm" style="border-color: var(--border); background: var(--bg-soft)">
+            <strong>Budgets 2027 :</strong> le projet du gouvernement, le contre-budget du Rassemblement national et le budget de première année de La France insoumise,
+            <a href="/budgets/2027/" class="text-brand-600 hover:underline">comparés chiffre par chiffre</a>.
+            Toute la section : <a href="/budgets/" class="text-brand-600 hover:underline">Budgets</a>.
+        </p>
+    )}
+
     {avecCadrages && <TableauCadrages />}
 
     <h2 id="candidats" class="text-lg font-semibold mt-8">Ce que proposent les candidats</h2>

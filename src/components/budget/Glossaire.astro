@@ -1,0 +1,46 @@
+---
+/**
+ * Glossaire de la section Budgets : les mots techniques d'un budget, en langage courant.
+ * Aucun sigle n'est employé ailleurs dans la section sans être expliqué ici.
+ */
+const termes: [string, string][] = [
+    ["Budget de l'État (loi de finances)", "La loi votée chaque année par le Parlement, qui fixe les recettes et les dépenses de l'État."],
+    ['Projet de loi de finances', "Le budget proposé par le gouvernement, avant son examen et son vote par le Parlement."],
+    ['Loi de finances rectificative', "Un budget corrigé en cours d'année, par exemple après une élection."],
+    ['Contre-budget', "Un budget proposé par un parti d'opposition à la place de celui du gouvernement."],
+    ['PIB (produit intérieur brut)', "La richesse produite en France en un an. Exprimer un montant en % du PIB le rapporte à la taille de l'économie. Selon le Haut Conseil des finances publiques, 0,9 point de PIB représente environ 28 milliards d'euros."],
+    ['Déficit public', "Ce qui manque, sur une année, pour que les recettes de l'État, de la Sécurité sociale et des collectivités locales couvrent leurs dépenses. Il est financé par l'emprunt."],
+    ['Dette publique', "La somme de tout ce qui a été emprunté et pas encore remboursé."],
+    ['Solde primaire, excédent primaire', "Le solde des comptes avant le paiement des intérêts de la dette. Un excédent primaire signifie que les recettes couvrent les dépenses, intérêts mis à part ; il peut aller avec un déficit une fois les intérêts payés."],
+    ['Intérêts de la dette (charge de la dette)', "Ce que coûtent chaque année les emprunts passés."],
+    ['Prélèvements obligatoires', "L'ensemble des impôts et des cotisations sociales."],
+    ['« À politique inchangée »', "L'évolution qu'auraient les comptes si aucune mesure nouvelle n'était prise. Le gouvernement compte son effort par rapport à elle."],
+    ['Haut Conseil des finances publiques', "Organisme indépendant, placé auprès de la Cour des comptes, qui donne son avis sur les prévisions du gouvernement avant le vote du budget."],
+    ['Multiplicateur budgétaire', "La variation de l'activité économique quand l'État dépense ou économise un euro. Sa valeur se discute et dépend de la conjoncture."],
+    ['Impôts de production', "Des taxes payées par les entreprises quel que soit leur bénéfice, comme la cotisation foncière des entreprises (CFE), la contribution sociale de solidarité des sociétés (C3S) et la cotisation sur la valeur ajoutée des entreprises (CVAE)."],
+    ['Impôt sur la fortune', "Un impôt sur le patrimoine des ménages les plus aisés, supprimé en 2018 et remplacé par un impôt sur la seule fortune immobilière."],
+    ['« Flat tax »', "Le taux unique d'imposition des revenus du capital (intérêts, dividendes, plus-values), en place depuis 2018."],
+    ['Taxe « Zucman »', "Un impôt minimal de 2 % sur les patrimoines de plus de 100 millions d'euros, proposé par l'économiste Gabriel Zucman."],
+    ['Prix de transfert', "Les prix auxquels les sociétés d'un même groupe se facturent entre elles ; ils déterminent dans quel pays les bénéfices sont déclarés."],
+    ['Niches fiscales et sociales', "Les réductions, crédits ou exonérations d'impôts et de cotisations accordés à certains contribuables ou à certaines activités."],
+    ["Point d'indice", "La valeur qui sert de base au calcul du salaire des fonctionnaires."],
+    ['Collectivités locales', "Les communes, les départements et les régions. L'État leur rembourse une partie de la TVA payée sur leurs investissements, par un fonds appelé FCTVA."],
+    ['Sécurité sociale', "Les régimes de retraite, d'assurance maladie, de famille et d'accidents du travail, financés surtout par les cotisations."],
+];
+---
+
+<section id="glossaire" aria-labelledby="t-glossaire" class="glossaire">
+    <h2 id="t-glossaire" class="text-lg font-semibold">Glossaire</h2>
+    <dl>
+        {termes.map(([terme, definition]) => (
+            <div><dt>{terme}</dt><dd>{definition}</dd></div>
+        ))}
+    </dl>
+</section>
+
+<style>
+    .glossaire { display: grid; gap: 12px; }
+    .glossaire dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px 24px; }
+    .glossaire dt { font-weight: 600; font-size: .92rem; }
+    .glossaire dd { margin: 2px 0 0; font-size: .9rem; color: var(--fg-muted); }
+</style>

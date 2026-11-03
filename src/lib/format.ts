@@ -16,7 +16,8 @@ export function nombreFr(valeur: number, decimales = 1): string {
 export function dateFr(iso: string | null | undefined): string {
     if (!iso) return '';
     const [a, m, j] = iso.split('-').map(Number);
-    return new Date(Date.UTC(a, m - 1, j)).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+    // « 1er octobre », pas « 1 octobre » : l'usage typographique français.
+    return new Date(Date.UTC(a, m - 1, j)).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).replace(/^1 /, '1er ');
 }
 
 /**

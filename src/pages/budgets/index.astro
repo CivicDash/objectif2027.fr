@@ -1,0 +1,59 @@
+---
+/**
+ * Section Budgets : comprendre un budget, comparer les budgets proposés, et la grille des
+ * cadrages de tous les candidats à côté des chiffres officiels.
+ * Symétrie : tous les candidats figurent dans la grille, « non exprimé » compris.
+ */
+import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import TableauCadrages from '@/components/TableauCadrages.astro';
+import TroisMots from '@/components/budget/TroisMots.astro';
+import Glossaire from '@/components/budget/Glossaire.astro';
+import B from '@/editorial/budget-2027.json';
+import { BUDGETS_ACTIFS } from '@/lib/data';
+import { dateFr } from '@/lib/format';
+import { breadcrumbJsonLd } from '@/lib/seo';
+---
+
+<Base
+    title="Budgets de la présidentielle 2027 : ce que proposent les candidats | Objectif 2027"
+    description="Comprendre un budget, comparer le projet du gouvernement aux budgets des partis, et retrouver les chiffres de chaque candidat à côté des chiffres officiels. Sourcé, sans total ni classement."
+    jsonld={breadcrumbJsonLd([{ label: 'Budgets' }])}>
+    <Breadcrumb items={[{ label: 'Budgets' }]} />
+
+    <div class="section-budgets">
+        <header class="intro">
+            <h1 class="text-2xl font-bold">Les budgets de la présidentielle</h1>
+            <p>Ce que les candidats proposent pour les finances publiques, chiffre par chiffre, à côté des chiffres officiels. Chaque montant est cité avec sa source et sa base ; nous n'en calculons ni total ni classement.</p>
+        </header>
+
+        <a class="carte-lien" href="/budgets/2027/">
+            <span class="surtitre">Comparaison · sources vérifiées au {dateFr(B.verifie_au)}</span>
+            <strong>Trois budgets pour 2027</strong>
+            <span>Le projet du gouvernement, le contre-budget du Rassemblement national et le budget de première année de La France insoumise : déficit visé, recettes, dépenses, logiques économiques et détail poste par poste.</span>
+            <span class="lire">Voir la comparaison →</span>
+        </a>
+
+        <TroisMots />
+
+        {BUDGETS_ACTIFS && <TableauCadrages />}
+
+        <p class="renvoi">Les propositions des candidats sur les impôts et la dépense publique, mesure par mesure : <a href="/themes/fiscalite-budget/">thème Fiscalité &amp; budget</a>. Les règles de présentation des chiffres : <a href="/methodologie/#cadrage-budgetaire">méthodologie</a>.</p>
+
+        <Glossaire />
+    </div>
+</Base>
+
+<style>
+    .section-budgets { display: grid; gap: 36px; padding-top: 8px; }
+    .intro { display: grid; gap: 10px; max-width: 70ch; }
+    .intro p { color: var(--fg-muted); }
+    .carte-lien { display: grid; gap: 6px; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: var(--fg); background: var(--bg-soft); max-width: 72ch; }
+    .carte-lien:hover strong, .carte-lien:focus-visible strong { text-decoration: underline; text-underline-offset: 3px; }
+    .carte-lien strong { font-size: 1.15rem; }
+    .carte-lien span { color: var(--fg-muted); font-size: .92rem; }
+    .carte-lien .surtitre { font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .carte-lien .lire { color: var(--fg); font-weight: 600; }
+    .renvoi { font-size: .9rem; color: var(--fg-muted); max-width: 72ch; }
+    .renvoi a { text-decoration: underline; text-underline-offset: 2px; }
+</style>

@@ -38,7 +38,11 @@ const rubriquesPlus = [
     { href: '/demarche/', libelle: 'Démarche' },
 ].filter(Boolean) as { href: string; libelle: string }[];
 const estCourante = (href: string) => Astro.url.pathname.startsWith(href);
+// Sur téléphone, « Budgets » (entrée principale du menu du haut) ouvre le panneau « Plus » :
+// la barre du bas tient tout juste à cinq onglets.
+const rubriquesPlusMobile = [{ href: '/budgets/', libelle: 'Budgets' }, ...rubriquesPlus];
 const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
+const plusCourantMobile = rubriquesPlusMobile.some((r) => estCourante(r.href));
 ---
 
 <!doctype html>
@@ -88,6 +92,7 @@ const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
                     <a href="/comparateur/" class="hover:text-brand-600">Comparateur</a>
                     {QUIZ_ACTIF && <a href="/quiz/" class="hover:text-brand-600">Quiz</a>}
                     <a href="/themes/" class="hover:text-brand-600">Thèmes</a>
+                    <a href="/budgets/" class="hover:text-brand-600">Budgets</a>
                     {/* À partir de lg, tout tient en ligne ; avant, les rubriques secondaires
                         passent dans le menu « Plus » ci-dessous. */}
                     {JEU_ACTIF && <a href="/jeu/" class="hidden lg:inline hover:text-brand-600" title="Qui a dit quoi ?">Jeu</a>}
@@ -143,14 +148,14 @@ const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
                 Thèmes
             </a>
             <details class="menu-plus flex-1" data-menu-plus>
-                <summary class:list={['h-full flex flex-col items-center gap-0.5 py-2 text-xs cursor-pointer', plusCourant && 'text-brand-600']} style="min-height:56px">
+                <summary class:list={['h-full flex flex-col items-center gap-0.5 py-2 text-xs cursor-pointer', plusCourantMobile && 'text-brand-600']} style="min-height:56px">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
                     Plus
                 </summary>
                 <!-- Panneau posé au-dessus de la barre ; la zone de sécurité iOS est comprise. -->
                 <ul class="fixed inset-x-0 border-t shadow-lg py-1" aria-label="Plus de rubriques"
                     style="bottom: calc(56px + env(safe-area-inset-bottom)); background: var(--bg); border-color: var(--border)">
-                    {rubriquesPlus.map((r) => (
+                    {rubriquesPlusMobile.map((r) => (
                         <li><a href={r.href} aria-current={estCourante(r.href) ? 'page' : undefined}
                                class="flex items-center px-5 text-base aria-[current=page]:text-brand-600 aria-[current=page]:font-semibold" style="min-height:48px">{r.libelle}</a></li>
                     ))}
@@ -166,6 +171,7 @@ const plusCourant = rubriquesPlus.some((r) => estCourante(r.href));
                 </p>
                 <p class="flex flex-wrap gap-x-4 gap-y-1">
                     <a href="/recherche/" class="hover:underline">Recherche</a>
+                    <a href="/budgets/" class="hover:underline">Budgets</a>
                     {JEU_ACTIF && <a href="/jeu/" class="hover:underline">Qui a dit quoi ?</a>}
                     {QUESTIONS_ACTIVES && <a href="/questions/" class="hover:underline">Questions clés</a>}
                     {CALENDRIER_ACTIF && <a href="/calendrier/" class="hover:underline">Le fil de la campagne</a>}
