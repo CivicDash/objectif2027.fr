@@ -100,6 +100,15 @@ const NATURE_EVOLUTION: Record<string, string> = {
     precision: 'Précision',
     revirement: 'Position modifiée',
 };
+// Libellé d'une étape selon sa place dans le temps : la déclaration la plus ancienne ouvre la
+// frise, même si la mesure du comparateur est née plus tard d'une autre prise de parole.
+function libelleEtape(m: any, i: number): string {
+    const e = m.evolutions[i];
+    if (i === 0) return 'Première formulation relevée';
+    if (e.nature === 'origine') return 'Formulation retenue au comparateur';
+    return NATURE_EVOLUTION[e.nature] ?? 'Évolution';
+}
+
 function derniereEvolution(m: any): string | null {
     const etapes = (m.evolutions ?? []).filter((e: any) => e.nature !== 'origine');
     const e = etapes[etapes.length - 1];
@@ -315,10 +324,10 @@ function ditDans(m: any): string | null {
                                             <details class="mt-1">
                                                 <summary class="cursor-pointer text-xs text-brand-600">{derniereEvolution(m)} · voir l'évolution</summary>
                                                 <ol class="evolution mt-1">
-                                                    {m.evolutions.map((e: any) => (
+                                                    {m.evolutions.map((e: any, i: number) => (
                                                         <li class="text-xs">
                                                             <span class="font-semibold">{e.date ? dateFr(e.date) : 'Date non précisée'}</span>
-                                                            <span style="color: var(--fg-muted)"> · {NATURE_EVOLUTION[e.nature] ?? e.nature}</span>
+                                                            <span style="color: var(--fg-muted)"> · {libelleEtape(m, i)}</span>
                                                             {e.chiffrage && <span> · {e.chiffrage}</span>}
                                                             <p class="italic">« {e.citation} »{e.source && <span class="not-italic" style="color: var(--fg-muted)"> — {e.source}</span>}</p>
                                                             {e.verifier_url && <a href={e.verifier_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">▶ Vérifier{e.timecode && /^\d{2}:\d{2}:\d{2}$/.test(e.timecode) ? ` à ${e.timecode}` : ' à la source'}</a>}
@@ -352,10 +361,10 @@ function ditDans(m: any): string | null {
                                                 <details class="mt-1">
                                                     <summary class="cursor-pointer text-xs text-brand-600">{derniereEvolution(m)} · voir l'évolution</summary>
                                                     <ol class="evolution mt-1">
-                                                        {m.evolutions.map((e: any) => (
+                                                        {m.evolutions.map((e: any, i: number) => (
                                                             <li class="text-xs">
                                                                 <span class="font-semibold">{e.date ? dateFr(e.date) : 'Date non précisée'}</span>
-                                                                <span style="color: var(--fg-muted)"> · {NATURE_EVOLUTION[e.nature] ?? e.nature}</span>
+                                                                <span style="color: var(--fg-muted)"> · {libelleEtape(m, i)}</span>
                                                                 {e.chiffrage && <span> · {e.chiffrage}</span>}
                                                                 <p class="italic">« {e.citation} »{e.source && <span class="not-italic" style="color: var(--fg-muted)"> — {e.source}</span>}</p>
                                                                 {e.verifier_url && <a href={e.verifier_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">▶ Vérifier{e.timecode && /^\d{2}:\d{2}:\d{2}$/.test(e.timecode) ? ` à ${e.timecode}` : ' à la source'}</a>}
