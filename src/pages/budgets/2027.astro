@@ -6,7 +6,8 @@
  * Règles, celles de toute la section Budgets :
  *  - chaque chiffre tel que sa source le donne, avec sa base et son lien ;
  *  - aucun total recalculé, aucune conversion, aucun classement entre documents ;
- *  - couleurs fixes par document, dans l'ordre chronologique, jamais celles des partis ;
+ *  - chaque parti dans la couleur de son candidat sur le site (fiches, comparateur), éclaircie
+ *    pour la lisibilité ; le gouvernement, qui n'est pas un parti, en gris neutre ;
  *  - aucun sigle technique sans explication : glossaire en bas de page.
  * Données : src/editorial/budget-2027.json, produit par Visualisations/budget-2027/construire.py.
  * Tout est rendu au build ; le script ne fait qu'ajouter le filtre, les onglets et les bulles.
@@ -335,10 +336,10 @@ const titre = 'Trois budgets pour 2027';
 
 <style>
     .budget {
-        --plf: #2a78d6; --rn: #eb6834; --lfi: #1baf7a; --grille: color-mix(in srgb, var(--border) 70%, transparent);
+        --plf: #81878f; --rn: #165695; --lfi: #7f4dd6; --grille: color-mix(in srgb, var(--border) 70%, transparent);
         display: grid; gap: 40px; padding-top: 8px; font-variant-numeric: tabular-nums;
     }
-    @media (prefers-color-scheme: dark) { .budget { --plf: #3987e5; --rn: #d95926; --lfi: #199e70; } }
+    @media (prefers-color-scheme: dark) { .budget { --plf: #8f949b; --rn: #156ec0; --lfi: #9964e5; } }
     [data-doc="plf"] { --c: var(--plf); }
     [data-doc="rn"] { --c: var(--rn); }
     [data-doc="lfi"] { --c: var(--lfi); }
