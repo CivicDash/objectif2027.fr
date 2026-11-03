@@ -92,6 +92,20 @@ const aDesArguments = (m: any) => (m.arguments?.pour?.length ?? 0) + (m.argument
 
 // Redites : une mesure reprise d'une prise de parole à l'autre (règle de comptage dans la
 // méthodologie, « Les propositions récurrentes »). Rien sous une seule prise de parole.
+// Évolution d'une mesure (chiffre modifié, précision, revirement) : faits datés, libellés
+// neutres. La mention sous le titre donne la dernière étape ; le détail est replié.
+const NATURE_EVOLUTION: Record<string, string> = {
+    origine: 'Première formulation',
+    chiffre_modifie: 'Chiffre modifié',
+    precision: 'Précision',
+    revirement: 'Position modifiée',
+};
+function derniereEvolution(m: any): string | null {
+    const etapes = (m.evolutions ?? []).filter((e: any) => e.nature !== 'origine');
+    const e = etapes[etapes.length - 1];
+    return e ? `${NATURE_EVOLUTION[e.nature] ?? 'Évolution'}${e.date ? ` le ${dateFr(e.date)}` : ''}` : null;
+}
+
 function ditDans(m: any): string | null {
     const pp = m.prises_de_parole;
     if (!pp || pp.nombre < 2) return null;
@@ -297,6 +311,22 @@ function ditDans(m: any): string | null {
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                         {ditDans(m) && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{ditDans(m)}</p>}
                                         <CitationsMesure mesure={m} />
+                                        {derniereEvolution(m) && (
+                                            <details class="mt-1">
+                                                <summary class="cursor-pointer text-xs text-brand-600">{derniereEvolution(m)} · voir l'évolution</summary>
+                                                <ol class="evolution mt-1">
+                                                    {m.evolutions.map((e: any) => (
+                                                        <li class="text-xs">
+                                                            <span class="font-semibold">{e.date ? dateFr(e.date) : 'Date non précisée'}</span>
+                                                            <span style="color: var(--fg-muted)"> · {NATURE_EVOLUTION[e.nature] ?? e.nature}</span>
+                                                            {e.chiffrage && <span> · {e.chiffrage}</span>}
+                                                            <p class="italic">« {e.citation} »{e.source && <span class="not-italic" style="color: var(--fg-muted)"> — {e.source}</span>}</p>
+                                                            {e.verifier_url && <a href={e.verifier_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">▶ Vérifier{e.timecode && /^\d{2}:\d{2}:\d{2}$/.test(e.timecode) ? ` à ${e.timecode}` : ' à la source'}</a>}
+                                                        </li>
+                                                    ))}
+                                                </ol>
+                                            </details>
+                                        )}
                                         {aDesArguments(m) && (
                                             <details class="mt-1">
                                                 <summary class="cursor-pointer text-xs text-brand-600">Arguments pour et contre</summary>
@@ -318,6 +348,22 @@ function ditDans(m: any): string | null {
                                             {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                             {ditDans(m) && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{ditDans(m)}</p>}
                                             <CitationsMesure mesure={m} />
+                                            {derniereEvolution(m) && (
+                                                <details class="mt-1">
+                                                    <summary class="cursor-pointer text-xs text-brand-600">{derniereEvolution(m)} · voir l'évolution</summary>
+                                                    <ol class="evolution mt-1">
+                                                        {m.evolutions.map((e: any) => (
+                                                            <li class="text-xs">
+                                                                <span class="font-semibold">{e.date ? dateFr(e.date) : 'Date non précisée'}</span>
+                                                                <span style="color: var(--fg-muted)"> · {NATURE_EVOLUTION[e.nature] ?? e.nature}</span>
+                                                                {e.chiffrage && <span> · {e.chiffrage}</span>}
+                                                                <p class="italic">« {e.citation} »{e.source && <span class="not-italic" style="color: var(--fg-muted)"> — {e.source}</span>}</p>
+                                                                {e.verifier_url && <a href={e.verifier_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">▶ Vérifier{e.timecode && /^\d{2}:\d{2}:\d{2}$/.test(e.timecode) ? ` à ${e.timecode}` : ' à la source'}</a>}
+                                                            </li>
+                                                        ))}
+                                                    </ol>
+                                                </details>
+                                        )}
                                         </li>
                                     ))}
                                 </ul>
@@ -614,6 +660,8 @@ function ditDans(m: any): string | null {
     .theme-nb { min-width: 1.4rem; text-align: center; padding: 1px 6px; border-radius: 999px; font-size: .72rem; font-weight: 600; background: var(--bg-soft); color: var(--fg-muted); font-variant-numeric: tabular-nums; }
     /* Une mesure par ligne, séparées d'un filet : la liste se parcourt d'un coup d'œil. */
     .mesures > li + li { border-top: 1px solid var(--border); }
+    /* Évolution d'une mesure : une frise verticale, une étape par ligne. */
+    .evolution { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--border); display: grid; gap: 6px; }
     /* « Proposition récurrente » : un comptage, pas un jugement — couleur neutre, lien vers la règle. */
     .recurrente { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 999px; font-size: .7rem; font-weight: 600; vertical-align: 1px; background: color-mix(in srgb, var(--fg) 9%, transparent); color: var(--fg); text-decoration: none; }
 </style>
