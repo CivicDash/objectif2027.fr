@@ -20,7 +20,8 @@ const couleur = c.couleur_hex ?? '#64748b';
 const nom = c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '');
 const parrainages = badgeParrainages(c.statut_candidature);
 
-const prisesDeParole = c.prises_de_parole ?? [];
+// Prises de parole en tête de fiche, la plus récente d'abord (sans date : en dernier).
+const prisesDeParole = [...(c.prises_de_parole ?? [])].sort((a: any, b: any) => (b.date ?? '').localeCompare(a.date ?? ''));
 const avecEquipe = prisesDeParole.some((d: any) => d.citations?.some((x: any) => x.locuteur));
 
 // Cadrage budgétaire (null : rubrique masquée, ou candidat absent de budgets.json) et
@@ -65,9 +66,9 @@ function citationsParTheme(doc: any): [string, any[]][] {
 }
 
 const ancres = [
+    ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
     { id: 'programme', label: 'Programme' },
     ...(cadrage ? [{ id: 'cadrage-budgetaire', label: 'Budget' }] : []),
-    ...(prisesDeParole.length ? [{ id: 'prises-de-parole', label: 'Prises de parole' }] : []),
     ...(afficherAutour ? [{ id: 'autour', label: titreAutour }] : []),
     { id: 'parcours', label: 'Parcours' },
     { id: 'affaires', label: 'Affaires' },
@@ -84,6 +85,10 @@ function controverseDe(m: any) {
 function etatDe(slug: string): EtatTheme {
     return (c.etats_par_theme?.[slug]?.etat ?? 'non_exprime') as EtatTheme;
 }
+
+// L'argumentaire pour/contre est replié par défaut : déplié sous chaque mesure, il noyait
+// la liste. Pas de décompte « 2 pour · 3 contre » dans le bouton, qui se lirait comme un verdict.
+const aDesArguments = (m: any) => (m.arguments?.pour?.length ?? 0) + (m.arguments?.contre?.length ?? 0) > 0;
 ---
 
 <Base title={`${nom} : programme 2027, propositions et parcours | Objectif 2027`} description={`${nom}${c.parti_soutien ? ` (${c.parti_soutien})` : ''}, ${estCandidate(c) ? 'candidate' : 'candidat'} à la présidentielle 2027 : propositions thème par thème avec citations vérifiables, parcours, affaires judiciaires. Sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
@@ -149,6 +154,62 @@ function etatDe(slug: string): EtatTheme {
 
     <AnchorNav items={ancres} />
 
+    <!-- Prises de parole : citations vérifiables à la source (différenciateur) -->
+    {prisesDeParole.length > 0 && (
+        <section id="prises-de-parole" class="py-6">
+            <h2 class="text-xl font-bold mb-1">Prises de parole</h2>
+            <p class="text-sm mb-4" style="color: var(--fg-muted)">
+                Propos et engagements repérés dans les meetings, interviews et programmes officiels, en cours de traitement par notre équipe.
+                <strong>Chaque citation est vérifiable à la source en un clic.</strong>
+                {avecEquipe && <> Quand une personnalité de son équipe de campagne parle, son nom et son rôle suivent la citation.</>}
+            </p>
+            <div class="space-y-3">
+                {prisesDeParole.map((doc: any, iDoc: number) => (
+                    <details class="rounded-card border" style="border-color: var(--border)" open={iDoc === 0}>
+                        <summary class="cursor-pointer p-4 grid gap-1">
+                            <span class="flex items-center gap-2 flex-wrap text-xs" style="color: var(--fg-muted)">
+                                <span class="px-2 py-0.5 rounded-full font-medium" style={`background: color-mix(in srgb, ${couleur} 12%, var(--bg)); color: var(--fg)`}>{libelleTypeDocument(doc.type)}</span>
+                                {doc.date && <span>{dateFr(doc.date)}</span>}
+                                <span>· {doc.citations.length} citation{doc.citations.length > 1 ? 's' : ''}</span>
+                            </span>
+                            <span class="font-semibold text-sm">{doc.titre}</span>
+                        </summary>
+                        <div class="px-4 pb-4 space-y-3">
+                            {doc.porteur && doc.porteur.type !== 'candidat' && <Porteur porteur={doc.porteur} candidat={c} />}
+                            {doc.url && <a href={doc.url} target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
+                            {citationsParTheme(doc).map(([theme, citations]) => (
+                                <details class="border-l-2 pl-3" style="border-color: var(--border)" open={doc.citations.length <= 8}>
+                                    <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wide py-1" style="color: var(--fg-muted)">
+                                        {theme} ({citations.length})
+                                    </summary>
+                                    <ul class="space-y-3 mt-1">
+                                        {citations.map((cit: any) => (
+                                            <li class="text-sm">
+                                                {/* L'auteur dans le même élément que la citation : un extrait de
+                                                    recherche ne doit jamais l'en détacher. */}
+                                                <p>
+                                                    <span class="italic">« {cit.citation} »</span>
+                                                    {attributionLocuteur(cit) && <span class="text-xs" style="color: var(--fg-muted)"> — {attributionLocuteur(cit)}</span>}
+                                                </p>
+                                                {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
+                                                {cit.verifier_url && (
+                                                    <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
+                                                       class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
+                                                        ▶ Vérifier{cit.timecode ? ` à ${cit.timecode}` : ' à la source'}
+                                                    </a>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </details>
+                            ))}
+                        </div>
+                    </details>
+                ))}
+            </div>
+        </section>
+    )}
+
     <!-- Programme par thème (3 états honnêtes) — publiés d'abord, non-exprimés repliés -->
     <section id="programme" class="py-6">
         <h2 class="text-xl font-bold mb-3">Programme</h2>
@@ -190,6 +251,16 @@ function etatDe(slug: string): EtatTheme {
             </div>
         )}
 
+        {[...themesPublies, ...themesReleves].length > 1 && (
+            <nav class="flex flex-wrap gap-1.5 mb-3" aria-label="Thèmes du programme">
+                {[...themesPublies, ...themesReleves].map((t) => (
+                    <a href={`#theme-${t.slug}`} class="theme-puce">
+                        {t.nom}<span class="theme-nb">{c.etats_par_theme?.[t.slug]?.nb_mesures ?? 0}</span>
+                    </a>
+                ))}
+            </nav>
+        )}
+
         <div class="space-y-3">
             {[...themesPublies, ...themesReleves, ...themesTraitement].map((t) => {
                 const etat = etatDe(t.slug);
@@ -197,7 +268,7 @@ function etatDe(slug: string): EtatTheme {
                 const mesures = c.mesures_par_theme?.[t.slug] ?? [];
                 const relevees = c.mesures_relevees_par_theme?.[t.slug] ?? [];
                 return (
-                    <div class="rounded-card border p-4" style="border-color: var(--border)">
+                    <div id={`theme-${t.slug}`} class="rounded-card border p-4 scroll-mt-24" style={`border-color: var(--border); border-left: 4px solid ${couleur}`}>
                         <div class="flex items-center justify-between gap-3">
                             <h3 class="font-semibold">{t.nom}</h3>
                             <span class="text-xs px-2 py-1 rounded-full whitespace-nowrap"
@@ -210,22 +281,27 @@ function etatDe(slug: string): EtatTheme {
                             </span>
                         </div>
                         {etat === 'publie' && (
-                            <ul class="mt-3 space-y-2">
+                            <ul class="mt-2 mesures">
                                 {mesures.map((m: any) => (
-                                    <li class="text-sm">
+                                    <li class="text-sm py-2.5">
                                         <span class="font-medium">{m.titre}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                         <CitationsMesure mesure={m} />
-                                        <ArgumentaireVs arguments={m.arguments} controverse={controverseDe(m)} compact />
+                                        {aDesArguments(m) && (
+                                            <details class="mt-1">
+                                                <summary class="cursor-pointer text-xs text-brand-600">Arguments pour et contre</summary>
+                                                <ArgumentaireVs arguments={m.arguments} controverse={controverseDe(m)} compact />
+                                            </details>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
                         )}
                         {etat === 'relevee' && (
                             <>
-                                <ul class="mt-3 space-y-2">
+                                <ul class="mt-2 mesures">
                                     {relevees.map((m: any) => (
-                                        <li class="text-sm">
+                                        <li class="text-sm py-2.5">
                                             <span class="font-medium">{m.titre}</span>
                                             {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
                                             {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
@@ -268,60 +344,6 @@ function etatDe(slug: string): EtatTheme {
 
     <!-- Cadrage budgétaire : la grille commune, la référence officielle en regard -->
     {cadrage && <CadrageBudgetaire candidat={c} etat={cadrage} />}
-
-    <!-- Prises de parole : citations vérifiables à la source (différenciateur) -->
-    {prisesDeParole.length > 0 && (
-        <section id="prises-de-parole" class="py-6">
-            <h2 class="text-xl font-bold mb-1">Prises de parole</h2>
-            <p class="text-sm mb-4" style="color: var(--fg-muted)">
-                Propos et engagements repérés dans les meetings, interviews et programmes officiels, en cours de traitement par notre équipe.
-                <strong>Chaque citation est vérifiable à la source en un clic.</strong>
-                {avecEquipe && <> Quand une personnalité de son équipe de campagne parle, son nom et son rôle suivent la citation.</>}
-            </p>
-            <div class="space-y-3">
-                {prisesDeParole.map((doc: any, iDoc: number) => (
-                    <details class="rounded-card border" style="border-color: var(--border)" open={prisesDeParole.length === 1 && iDoc === 0}>
-                        <summary class="cursor-pointer p-4 flex items-center justify-between gap-2 flex-wrap">
-                            <span class="font-semibold text-sm">{doc.titre}</span>
-                            <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">
-                                {libelleTypeDocument(doc.type)}{doc.date ? ` · ${doc.date}` : ''} · {doc.citations.length} citation(s)
-                            </span>
-                        </summary>
-                        <div class="px-4 pb-4 space-y-3">
-                            {doc.porteur && doc.porteur.type !== 'candidat' && <Porteur porteur={doc.porteur} candidat={c} />}
-                            {doc.url && <a href={doc.url} target="_blank" rel="nofollow noopener" class="text-xs text-brand-600 hover:underline">Voir le document source ↗</a>}
-                            {citationsParTheme(doc).map(([theme, citations]) => (
-                                <details class="border-l-2 pl-3" style="border-color: var(--border)" open={doc.citations.length <= 8}>
-                                    <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wide py-1" style="color: var(--fg-muted)">
-                                        {theme} ({citations.length})
-                                    </summary>
-                                    <ul class="space-y-3 mt-1">
-                                        {citations.map((cit: any) => (
-                                            <li class="text-sm">
-                                                {/* L'auteur dans le même élément que la citation : un extrait de
-                                                    recherche ne doit jamais l'en détacher. */}
-                                                <p>
-                                                    <span class="italic">« {cit.citation} »</span>
-                                                    {attributionLocuteur(cit) && <span class="text-xs" style="color: var(--fg-muted)"> — {attributionLocuteur(cit)}</span>}
-                                                </p>
-                                                {cit.resume && <p class="text-xs mt-1" style="color: var(--fg-muted)">{cit.resume}</p>}
-                                                {cit.verifier_url && (
-                                                    <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
-                                                       class="tap inline-flex items-center mt-1 text-xs font-medium text-brand-600 hover:underline">
-                                                        ▶ Vérifier{cit.timecode ? ` à ${cit.timecode}` : ' à la source'}
-                                                    </a>
-                                                )}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </details>
-                            ))}
-                        </div>
-                    </details>
-                ))}
-            </div>
-        </section>
-    )}
 
     <!-- Autour du candidat : la parole du parti ou du groupe, à part du programme -->
     {afficherAutour && <AutourDuCandidat candidat={c} autour={autour} />}
@@ -572,3 +594,12 @@ function etatDe(slug: string): EtatTheme {
         <a href="/candidats/" class="tap inline-flex items-center rounded-control border text-sm px-4 py-2" style="border-color: var(--border)">← Tous les candidats</a>
     </div>
 </Base>
+
+<style>
+    /* Index des thèmes du programme : une pastille par thème, avec son nombre de mesures. */
+    .theme-puce { display: inline-flex; align-items: center; gap: 6px; padding: 4px 6px 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-size: .78rem; color: var(--fg); background: var(--bg); text-decoration: none; }
+    .theme-puce:hover, .theme-puce:focus-visible { border-color: var(--fg-muted); }
+    .theme-nb { min-width: 1.4rem; text-align: center; padding: 1px 6px; border-radius: 999px; font-size: .72rem; font-weight: 600; background: var(--bg-soft); color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+    /* Une mesure par ligne, séparées d'un filet : la liste se parcourt d'un coup d'œil. */
+    .mesures > li + li { border-top: 1px solid var(--border); }
+</style>
