@@ -89,6 +89,14 @@ function etatDe(slug: string): EtatTheme {
 // L'argumentaire pour/contre est replié par défaut : déplié sous chaque mesure, il noyait
 // la liste. Pas de décompte « 2 pour · 3 contre » dans le bouton, qui se lirait comme un verdict.
 const aDesArguments = (m: any) => (m.arguments?.pour?.length ?? 0) + (m.arguments?.contre?.length ?? 0) > 0;
+
+// Redites : une mesure reprise d'une prise de parole à l'autre (règle de comptage dans la
+// méthodologie, « Les propositions récurrentes »). Rien sous une seule prise de parole.
+function ditDans(m: any): string | null {
+    const pp = m.prises_de_parole;
+    if (!pp || pp.nombre < 2) return null;
+    return `Dite dans ${pp.nombre} prises de parole${pp.derniere ? `, la dernière fois le ${dateFr(pp.derniere)}` : ''}`;
+}
 ---
 
 <Base title={`${nom} : programme 2027, propositions et parcours | Objectif 2027`} description={`${nom}${c.parti_soutien ? ` (${c.parti_soutien})` : ''}, ${estCandidate(c) ? 'candidate' : 'candidat'} à la présidentielle 2027 : propositions thème par thème avec citations vérifiables, parcours, affaires judiciaires. Sourcé et neutre.`} ogImage={`/og/${c.slug}.png`} ogImageAlt={`${nom} — fiche candidat Objectif 2027`} ogType="profile" jsonld={[personJsonLd(c), breadcrumbJsonLd([{ label: 'Candidats', href: '/candidats/' }, { label: nom }])]}>
@@ -284,8 +292,10 @@ const aDesArguments = (m: any) => (m.arguments?.pour?.length ?? 0) + (m.argument
                             <ul class="mt-2 mesures">
                                 {mesures.map((m: any) => (
                                     <li class="text-sm py-2.5">
+                                        {m.prises_de_parole?.recurrente && <a class="recurrente" href="/methodologie/#propositions-recurrentes" title="Dite dans au moins trois prises de parole distinctes : voir la règle">Proposition récurrente</a>}
                                         <span class="font-medium">{m.titre}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                        {ditDans(m) && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{ditDans(m)}</p>}
                                         <CitationsMesure mesure={m} />
                                         {aDesArguments(m) && (
                                             <details class="mt-1">
@@ -302,9 +312,11 @@ const aDesArguments = (m: any) => (m.arguments?.pour?.length ?? 0) + (m.argument
                                 <ul class="mt-2 mesures">
                                     {relevees.map((m: any) => (
                                         <li class="text-sm py-2.5">
+                                            {m.prises_de_parole?.recurrente && <a class="recurrente" href="/methodologie/#propositions-recurrentes" title="Dite dans au moins trois prises de parole distinctes : voir la règle">Proposition récurrente</a>}
                                             <span class="font-medium">{m.titre}</span>
                                             {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
                                             {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
+                                            {ditDans(m) && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{ditDans(m)}</p>}
                                             <CitationsMesure mesure={m} />
                                         </li>
                                     ))}
@@ -602,4 +614,6 @@ const aDesArguments = (m: any) => (m.arguments?.pour?.length ?? 0) + (m.argument
     .theme-nb { min-width: 1.4rem; text-align: center; padding: 1px 6px; border-radius: 999px; font-size: .72rem; font-weight: 600; background: var(--bg-soft); color: var(--fg-muted); font-variant-numeric: tabular-nums; }
     /* Une mesure par ligne, séparées d'un filet : la liste se parcourt d'un coup d'œil. */
     .mesures > li + li { border-top: 1px solid var(--border); }
+    /* « Proposition récurrente » : un comptage, pas un jugement — couleur neutre, lien vers la règle. */
+    .recurrente { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 999px; font-size: .7rem; font-weight: 600; vertical-align: 1px; background: color-mix(in srgb, var(--fg) 9%, transparent); color: var(--fg); text-decoration: none; }
 </style>
