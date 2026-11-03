@@ -5,6 +5,7 @@ import AnchorNav from '@/components/AnchorNav.astro';
 import ArgumentaireVs from '@/components/ArgumentaireVs.astro';
 import { questionsCles, questionParSlug, themeParSlug, candidatsDetailOrdreNeutre } from '@/lib/data';
 import { breadcrumbJsonLd } from '@/lib/seo';
+import { texteMesure } from '@/lib/format';
 
 export function getStaticPaths() {
     // Dictionnaire vide => aucune page générée. Pas de page morte par construction.
@@ -93,7 +94,7 @@ const ancres = [
                         <ul class="mt-2 space-y-4">
                             {p.mesures.map((m) => (
                                 <li>
-                                    <p class="text-sm font-medium">{m.titre}
+                                    <p class="text-sm font-medium">{texteMesure(m)}
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1 text-xs">source ↗</a>}
                                     </p>
                                     <ArgumentaireVs arguments={m.arguments} controverse={null} dense={false} ancrageFaits />

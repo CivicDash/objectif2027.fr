@@ -1,5 +1,6 @@
 <script setup>
 import { computed, nextTick, ref } from 'vue';
+import { texteMesure } from '@/lib/format';
 
 /**
  * Quiz thématique.
@@ -274,7 +275,7 @@ const nbSansAvis = computed(() =>
                         </summary>
                         <ul class="mt-2 space-y-1.5">
                             <li v-for="(m, j) in c.option.mesures" :key="j" class="text-sm">
-                                {{ m.titre }}
+                                {{ texteMesure(m) }}
                                 <a v-if="m.source_url" :href="m.source_url" target="_blank" rel="nofollow noopener"
                                    class="text-brand-600 hover:underline text-xs"> source ↗</a>
                             </li>

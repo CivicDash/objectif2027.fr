@@ -125,7 +125,7 @@ async function partager() {
                             <span v-if="m.argumente" class="ml-1 text-xs px-1.5 py-0.5 rounded" style="background:#ecfdf5;color:#047857" title="Arguments pour et contre sourcés">⚖ argumenté</span>
                         </summary>
                         <div class="mt-2 text-sm space-y-2">
-                            <p v-if="m.resume" style="color: var(--fg-muted)">{{ m.resume }}</p>
+                            <p v-if="m.resume && m.resume !== m.titre" style="color: var(--fg-muted)">{{ m.resume }}</p>
                             <p v-if="porteParTexte(m.porte_par)" class="text-xs" style="color: var(--fg-muted)">{{ porteParTexte(m.porte_par) }}</p>
                             <div v-if="m.citations?.length">
                                 <p class="text-xs font-semibold" style="color: var(--fg-muted)">{{ m.citations.length > 1 ? 'Citations à la source' : 'Citation à la source' }}</p>

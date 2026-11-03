@@ -9,7 +9,7 @@ import CitationsMesure from '@/components/CitationsMesure.astro';
 import Porteur from '@/components/Porteur.astro';
 import { CANDIDATS_DETAIL, THEMES, META, badgeParrainages, libelleStatutCandidature, controverseParSlug, cadrageDe, autourDe, autourVide, estCandidate, libelleTypeDocument, type EtatTheme } from '@/lib/data';
 import { personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
-import { attributionLocuteur, dateFr, datePrecise } from '@/lib/format';
+import { attributionLocuteur, dateFr, datePrecise, texteMesure } from '@/lib/format';
 
 export function getStaticPaths() {
     return Object.values(CANDIDATS_DETAIL).map((c: any) => ({ params: { slug: c.slug }, props: { candidat: c } }));
@@ -316,7 +316,7 @@ function ditDans(m: any): string | null {
                                 {mesures.map((m: any) => (
                                     <li class="text-sm py-2.5">
                                         {m.prises_de_parole?.recurrente && <a class="recurrente" href="/methodologie/#propositions-recurrentes" title="Dite dans au moins trois prises de parole distinctes : voir la règle">Proposition récurrente</a>}
-                                        <span class="font-medium">{m.titre}</span>
+                                        <span class="font-medium">{texteMesure(m)}</span>
                                         {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                         {ditDans(m) && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{ditDans(m)}</p>}
                                         <CitationsMesure mesure={m} />
@@ -352,7 +352,7 @@ function ditDans(m: any): string | null {
                                     {relevees.map((m: any) => (
                                         <li class="text-sm py-2.5">
                                             {m.prises_de_parole?.recurrente && <a class="recurrente" href="/methodologie/#propositions-recurrentes" title="Dite dans au moins trois prises de parole distinctes : voir la règle">Proposition récurrente</a>}
-                                            <span class="font-medium">{m.titre}</span>
+                                            <span class="font-medium">{texteMesure(m)}</span>
                                             {m.statut === 'annoncee' && <span class="ml-1 text-[11px] px-1.5 py-0.5 rounded" style="background:var(--bg-soft);color:var(--fg-muted)">Annonce</span>}
                                             {m.source_url && <a href={m.source_url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline ml-1">source ↗</a>}
                                             {ditDans(m) && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{ditDans(m)}</p>}

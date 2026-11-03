@@ -12,6 +12,14 @@ export function nombreFr(valeur: number, decimales = 1): string {
     return f.format(valeur);
 }
 
+/**
+ * Texte complet d'une mesure : son résumé, sinon son titre. Le titre peut être coupé au
+ * dernier mot entier (« … ») pour tenir dans un intitulé ; le résumé ne l'est jamais.
+ */
+export function texteMesure(m: { titre: string; resume?: string | null }): string {
+    return m.resume || m.titre;
+}
+
 /** « 2026-09-26 » → « 26 septembre 2026 ». */
 export function dateFr(iso: string | null | undefined): string {
     if (!iso) return '';

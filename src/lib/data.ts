@@ -190,7 +190,7 @@ export interface ArgumentExporte {
     note_contextuelle: string | null; controverse: string | null; sources: SourceArg[];
 }
 export interface MesurePositionnee {
-    theme: string; titre: string; source_url: string | null;
+    theme: string; titre: string; resume: string | null; source_url: string | null;
     /** arguments RESTREINTS à la question courante — sinon on mêle deux débats */
     arguments: { pour: ArgumentExporte[]; contre: ArgumentExporte[] };
 }
@@ -254,7 +254,7 @@ function construireIndexQuestions(): Map<string, QuestionCle> {
                 }
                 for (const [qs, args] of parQ) {
                     const liste = parQuestion.get(qs) ?? [];
-                    liste.push({ theme, titre: m.titre, source_url: m.source_url ?? null, arguments: args });
+                    liste.push({ theme, titre: m.titre, resume: m.resume ?? null, source_url: m.source_url ?? null, arguments: args });
                     parQuestion.set(qs, liste);
                 }
             }
@@ -387,7 +387,7 @@ export interface QuizOption {
     ref: string;
     libelle: string;
     candidats: { slug: string; nom: string; couleur: string | null }[];
-    mesures: { titre: string; candidat_slug: string | null; source_url: string | null }[];
+    mesures: { titre: string; resume?: string | null; candidat_slug: string | null; source_url: string | null }[];
 }
 
 export interface QuizQuestion {
