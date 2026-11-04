@@ -1,0 +1,1050 @@
+{
+ "_provenance": "Généré par Visualisations/budget-2027/construire.py à partir des cadrages vérifiés et du dossier de presse du projet de budget 2027. Ne pas modifier à la main.",
+ "genere_le": "2026-11-03",
+ "verifie_au": "2026-10-16",
+ "documents": [
+  {
+   "id": "plf",
+   "court": "Gouvernement",
+   "nom": "Projet de budget de l'État pour 2027 (projet de loi de finances)",
+   "porteur": "Gouvernement",
+   "date": "2026-10-01",
+   "nature": "Le budget que le gouvernement soumet au Parlement pour 2027, déposé à l'Assemblée nationale le 1er octobre 2026.",
+   "base": "L'effort est compté par rapport à ce qui se passerait sans mesure nouvelle (« à politique inchangée »).",
+   "sources": [
+    {
+     "texte": "Dossier de presse « Budget 2027 » du gouvernement",
+     "url": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf"
+    },
+    {
+     "texte": "Avis du Haut Conseil des finances publiques, organisme indépendant qui juge les prévisions du gouvernement",
+     "url": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027"
+    }
+   ]
+  },
+  {
+   "id": "rn",
+   "court": "Rassemblement national",
+   "nom": "Contre-budget 2027 du Rassemblement national",
+   "porteur": "Présenté par Jordan Bardella, président du Rassemblement national, à la conférence de presse de Marine Le Pen",
+   "date": "2026-10-06",
+   "nature": "Le budget que le Rassemblement national propose à la place de celui du gouvernement, pour la première année du mandat.",
+   "base": "La base de comparaison des montants n’est pas précisée par la source.",
+   "sources": [
+    {
+     "texte": "Conférence de presse du 6 octobre 2026 (vidéo)",
+     "url": "https://www.youtube.com/watch?v=AukTdzBcgpc"
+    }
+   ]
+  },
+  {
+   "id": "lfi",
+   "court": "La France insoumise",
+   "nom": "Budget de première année de La France insoumise",
+   "porteur": "Présenté par Éric Coquerel, député, président de la commission des finances de l'Assemblée, à la conférence de presse de Jean-Luc Mélenchon",
+   "date": "2026-10-14",
+   "nature": "Ce que serait un budget corrigé en cours d'année (« loi de finances rectificative »), voté après les élections du printemps 2027.",
+   "base": "La base de comparaison des montants n’est pas précisée par la source.",
+   "sources": [
+    {
+     "texte": "Conférence de presse du 14 octobre 2026 (vidéo)",
+     "url": "https://www.youtube.com/watch?v=u4_Iyt1L1I8"
+    }
+   ]
+  }
+ ],
+ "deficit": {
+  "depart": {
+   "valeur": 5.4,
+   "libelle": "2026, prévision révisée",
+   "source": {
+    "texte": "Projet de budget 2027, tableau « Chiffres clés » : déficit public 2026 révisé à 5,4 % du PIB",
+    "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf"
+   }
+  },
+  "lignes": [
+   {
+    "doc": "plf",
+    "valeur": 5.0,
+    "etiquette": "5,0 %",
+    "texte": "5,0 % du PIB",
+    "source": {
+     "citation": "Pour 2027, le Gouvernement a fixé une cible de déficit de 5,0 % du PIB",
+     "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+     "locuteur": "Dossier de presse du projet de budget 2027"
+    }
+   },
+   {
+    "doc": "rn",
+    "valeur": null,
+    "texte": "Excédent primaire en 2027 : les recettes dépasseraient les dépenses, intérêts de la dette mis à part. Le déficit public n'est pas chiffré en % du PIB",
+    "source": {
+     "citation": "notre contrebudget prévoit donc une amélioration du solde public de 72 milliards d'euros, ce qui permettrait d'atteindre un excédent primaire.",
+     "timecode": "00:52:02",
+     "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3122s",
+     "locuteur": "Jordan Bardella"
+    }
+   },
+   {
+    "doc": "lfi",
+    "valeur": 5.0,
+    "etiquette": "5 %",
+    "texte": "5 % du PIB",
+    "source": {
+     "citation": "Soit faire passer le déficit de 5,4 % en 2026 à 5 % du PIB.",
+     "timecode": "00:54:51",
+     "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3291s",
+     "locuteur": "Éric Coquerel"
+    }
+   }
+  ]
+ },
+ "leviers": [
+  {
+   "doc": "plf",
+   "annonce": "43 milliards d’euros de mesures nouvelles ; effort total de 54 milliards d’euros avec le plein effet des mesures engagées en 2026",
+   "barres": [
+    {
+     "cote": "recettes",
+     "signe": 1,
+     "montant": 18,
+     "texte": "+18 milliards",
+     "libelle": "Mesures nouvelles en recettes",
+     "source": {
+      "citation": "Le Gouvernement a également présenté un chiffrage de l'effort par rapport à un scénario « à politique inchangée », totalisant 43 Md€ (18 Md€ en recettes et 25 Md€ en dépenses).",
+      "lien": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027",
+      "locuteur": "Avis du Haut Conseil des finances publiques, 1er octobre 2026"
+     },
+     "note": null
+    },
+    {
+     "cote": "depenses",
+     "signe": -1,
+     "montant": 25,
+     "texte": "−25 milliards",
+     "libelle": "Mesures nouvelles en dépenses",
+     "source": {
+      "citation": "Le Gouvernement a également présenté un chiffrage de l'effort par rapport à un scénario « à politique inchangée », totalisant 43 Md€ (18 Md€ en recettes et 25 Md€ en dépenses).",
+      "lien": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027",
+      "locuteur": "Avis du Haut Conseil des finances publiques, 1er octobre 2026"
+     },
+     "note": null
+    }
+   ]
+  },
+  {
+   "doc": "rn",
+   "annonce": "Amélioration du solde public de 72 milliards d’euros (selon la source)",
+   "barres": [
+    {
+     "cote": "recettes",
+     "signe": 1,
+     "montant": 34,
+     "texte": "≈ +34 milliards",
+     "libelle": "Recettes retrouvées",
+     "source": {
+      "citation": "près de 34 milliards d'euros de retour de recettes",
+      "timecode": "00:54:07",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3247s",
+      "locuteur": "Jordan Bardella"
+     },
+     "note": null
+    },
+    {
+     "cote": "recettes",
+     "signe": -1,
+     "montant": 27,
+     "texte": "≈ −27 milliards",
+     "libelle": "Baisse nette de la fiscalité",
+     "source": {
+      "citation": "près de 27 milliards d'euros de baisse nette de la fiscalité",
+      "timecode": "00:54:12",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3252s",
+      "locuteur": "Jordan Bardella"
+     },
+     "note": null
+    },
+    {
+     "cote": "depenses",
+     "signe": -1,
+     "montant": 64,
+     "texte": "−64 milliards",
+     "libelle": "Baisse nette de la dépense",
+     "note": "Montant net : il intègre 16 milliards d’euros de dépenses nouvelles, selon l’orateur.",
+     "source": {
+      "citation": "64 milliards d'euros de baisse nette de la dépense publique",
+      "timecode": "00:54:05",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3245s",
+      "locuteur": "Jordan Bardella"
+     }
+    }
+   ]
+  },
+  {
+   "doc": "lfi",
+   "annonce": "25 milliards d’euros affectés à la diminution de la dette (selon la source)",
+   "barres": [
+    {
+     "cote": "recettes",
+     "signe": 1,
+     "montant": 106.4,
+     "texte": "+106,4 milliards",
+     "libelle": "Recettes nouvelles",
+     "source": {
+      "citation": "C'est une taxe totale 106,4 milliards d'euros.",
+      "timecode": "00:54:06",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3246s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "cote": "depenses",
+     "signe": 1,
+     "montant": 80,
+     "texte": "plus de +80 milliards",
+     "libelle": "Dépenses nouvelles",
+     "source": {
+      "citation": "nous injectons plus de 80 milliards d'euros dans les carnets de commande",
+      "timecode": "00:54:17",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3257s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    }
+   ]
+  }
+ ],
+ "logiques": [
+  {
+   "doc": "plf",
+   "fait": "+18 milliards d’euros de recettes et −25 milliards d’euros de dépenses par rapport à une politique inchangée.",
+   "mots": [
+    {
+     "citation": "En 2027, nous reprenons le chemin de la consolidation budgétaire.",
+     "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+     "locuteur": "Roland Lescure, ministre de l’Économie, dossier de presse du projet de budget"
+    }
+   ],
+   "paris": [
+    {
+     "texte": "Croissance de 1,0 % en 2027.",
+     "source": {
+      "citation": "Cette trajectoire repose sur une prévision de croissance de 1,0 %.",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     }
+    },
+    {
+     "texte": "Jugée « optimiste » par le Haut Conseil des finances publiques : les autres prévisions sont un à trois dixièmes plus basses.",
+     "source": {
+      "citation": "Les prévisions de croissance des organismes auditionnés par le Haut Conseil, ou celles effectuées par d’autres prévisionnistes, se situent pour la plupart entre un et trois dixièmes en-dessous de celle du Gouvernement.",
+      "lien": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027",
+      "locuteur": "Avis du Haut Conseil des finances publiques"
+     }
+    }
+   ]
+  },
+  {
+   "doc": "rn",
+   "fait": "Baisse nette de la dépense de 64 milliards d’euros, baisses d’impôts et recettes retrouvées.",
+   "mots": [
+    {
+     "citation": "cette trajectoire n'est pas un plan d'austérité. Bien au contraire, elle permet de financer des droits nouveaux",
+     "timecode": "00:39:58",
+     "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=2398s",
+     "locuteur": "Marine Le Pen"
+    },
+    {
+     "citation": "le choc de compétitivité sera doublé d'un choc de consommation avec les baisses massives de TVA",
+     "timecode": "00:38:37",
+     "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=2317s",
+     "locuteur": "Marine Le Pen"
+    }
+   ],
+   "paris": [
+    {
+     "texte": "Effet récessif des économies d’au plus 0,5 point de PIB.",
+     "source": {
+      "citation": "nous estimons au pire que l'effet récessif des économies sera de 0,5 points de PIB",
+      "timecode": "00:38:52",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=2332s",
+      "locuteur": "Marine Le Pen"
+     }
+    },
+    {
+     "texte": "Gain de croissance d’au moins 2,3 points sur le quinquennat.",
+     "source": {
+      "citation": "le gain de croissance sur le quinquena estimé au minimum à 2,3 points de PIB, soit un bilan positif sur la croissance de 1,8 points",
+      "timecode": "00:38:56",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=2336s",
+      "locuteur": "Marine Le Pen"
+     }
+    },
+    {
+     "texte": "Le redressement des comptes est calculé sans aucun gain de croissance.",
+     "source": {
+      "citation": "le rétablissement des finances publiques que nous calculons ne prennent en compte aucun gain de croissance",
+      "timecode": "00:39:13",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=2353s",
+      "locuteur": "Marine Le Pen"
+     }
+    }
+   ]
+  },
+  {
+   "doc": "lfi",
+   "fait": "+106,4 milliards d’euros de recettes et plus de 80 milliards d’euros de dépenses nouvelles.",
+   "mots": [
+    {
+     "citation": "Nous opposons le cercle vertueux de la relance écologique et sociale",
+     "timecode": "00:28:44",
+     "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=1724s",
+     "locuteur": "Jean-Luc Mélenchon"
+    },
+    {
+     "citation": "La première chose, c'est de relancer l'activité par les revenus issus du travail",
+     "timecode": "00:37:04",
+     "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2224s",
+     "locuteur": "Éric Coquerel"
+    },
+    {
+     "citation": "une politique de relance, c'est une politique qui crée de l'emploi, qui augmente les salaires",
+     "timecode": "01:15:46",
+     "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=4546s",
+     "locuteur": "Éric Coquerel"
+    }
+   ],
+   "paris": [
+    {
+     "texte": "Environ +0,5 point de croissance induit par le budget, quand celui du gouvernement en retrancherait 0,5.",
+     "source": {
+      "citation": "Donc il a baissé en réalité la croissance de 0,5 points",
+      "timecode": "00:55:07",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3307s",
+      "locuteur": "Éric Coquerel"
+     }
+    }
+   ]
+  }
+ ],
+ "natures": {
+  "recette": "Recettes en plus",
+  "baisse_impot": "Impôts en moins",
+  "depense": "Dépenses en plus",
+  "economie": "Dépenses en moins"
+ },
+ "postes": {
+  "plf": {
+   "postes": [
+    {
+     "nature": "depense",
+     "libelle": "Armées (mission « Défense »)",
+     "montant": 6.4,
+     "texte": "+6,4 milliards",
+     "source": {
+      "citation": "les Armées verront leur budget augmenter de +6,4 Md€, pour porter la mission « Défense » à 63,4 Md€ en 2027",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Intérieur",
+     "montant": 1.0,
+     "texte": "+1,0 milliards",
+     "source": {
+      "citation": "les budgets de la Justice et de l’Intérieur bénéficieront respectivement de +0,4 Md€ et +1,0 Md€",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Justice",
+     "montant": 0.4,
+     "texte": "+0,4 milliards",
+     "source": {
+      "citation": "les budgets de la Justice et de l’Intérieur bénéficieront respectivement de +0,4 Md€ et +1,0 Md€",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     },
+     "note": null
+    },
+    {
+     "nature": "economie",
+     "libelle": "État : effort en dépenses",
+     "montant": 9.0,
+     "texte": "plus de 9 milliards",
+     "source": {
+      "citation": "Dans le budget 2027, l’État portera un effort de plus de 9 Md€ en dépenses, soit autant que les administrations de sécurité sociale",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     },
+     "note": null
+    },
+    {
+     "nature": "economie",
+     "libelle": "Collectivités locales : contribution à l’effort budgétaire",
+     "montant": 2.5,
+     "texte": "−2,5 milliards",
+     "source": {
+      "citation": "Une contribution progressive des collectivités locales à l’effort budgétaire (CPEB) sera instituée en 2027, pour −2,5 Md€",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     },
+     "note": null
+    },
+    {
+     "nature": "economie",
+     "libelle": "Collectivités locales : remboursement de TVA sur leurs investissements, recentré",
+     "montant": 2.1,
+     "texte": "−2,1 milliards",
+     "source": {
+      "citation": "le fonds de compensation de la taxe sur la valeur ajoutée (FCTVA) sera recentré sur le soutien aux dépenses de mobilités et de transition écologique (−2,1 Md€)",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     },
+     "note": null
+    }
+   ],
+   "autres": [
+    {
+     "libelle": "Sécurité sociale",
+     "texte": "déficit spontané estimé à 22,6 milliards d’euros, ramené à 12,7 milliards d’euros",
+     "source": {
+      "citation": "Le déficit spontané de la Sécurité sociale pour 2027 est estimé à 22,6 Md€ […] La trajectoire de redressement décidée par le Gouvernement doit ramener le déficit à 12,7 Md€.",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     }
+    },
+    {
+     "libelle": "Crédits des ministères",
+     "texte": "gelés en euros courants, hors Armées",
+     "source": {
+      "citation": "les crédits des ministères seront gelés en euros courants, hors effort en faveur de nos Armées",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     }
+    }
+   ],
+   "precision": "Le dossier de presse détaille l’effort par grands secteurs, pas mesure par mesure : seules les lignes chiffrées y figurent."
+  },
+  "rn": {
+   "postes": [
+    {
+     "nature": "economie",
+     "libelle": "Immigration",
+     "montant": 12.0,
+     "texte": "12 milliards",
+     "note": null,
+     "source": {
+      "citation": "12 milliards d'euros sur les dépenses liées à l'immigration",
+      "timecode": "00:54:55",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3295s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    {
+     "nature": "economie",
+     "libelle": "Rationalisation de la dépense publique",
+     "montant": 24.0,
+     "texte": "24 milliards",
+     "note": "24 milliards d’euros, puis « 22 milliards » dans la suite de la même intervention (00:55:39).",
+     "source": {
+      "citation": "24 milliards d'euros de rationalisation de la dépense publique",
+      "timecode": "00:54:49",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3289s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    {
+     "nature": "economie",
+     "libelle": "Sécurité sociale",
+     "montant": 20.0,
+     "texte": "20 milliards",
+     "note": null,
+     "source": {
+      "citation": "20 milliards d'euros sur la sécurité sociale",
+      "timecode": "00:54:53",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3293s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    {
+     "nature": "baisse_impot",
+     "libelle": "Impôts de production (trois taxes sur les entreprises)",
+     "montant": 17.0,
+     "texte": "−17 milliards",
+     "note": null,
+     "source": {
+      "citation": "nous proposons d'abord 17 milliards d'euros de baisse de fiscalité qui pénalisent directement la production.",
+      "timecode": "01:00:45",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3645s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    {
+     "nature": "depense",
+     "libelle": "Dépenses nouvelles",
+     "montant": 16.0,
+     "texte": "16 milliards",
+     "note": null,
+     "source": {
+      "citation": "16 milliards d'euros de dépenses nouvelles",
+      "timecode": "00:55:20",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3320s",
+      "locuteur": "Jordan Bardella"
+     }
+    }
+   ],
+   "autres": [
+    {
+     "libelle": "Contribution à l'Union européenne",
+     "texte": "9 milliards d’euros ; contribution nette plafonnée à 5 milliards d’euros",
+     "source": {
+      "citation": "9 milliards sur notre contribution à l'Union européenne",
+      "timecode": "00:54:59",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3299s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    {
+     "libelle": "Gain des ménages : énergie (TVA, accises, logement)",
+     "texte": "≈ 500 € par an et par ménage",
+     "source": {
+      "citation": "nous estimons qu'un ménage pourra économiser de l'ordre de 500 € par an sur sa facture énergétique",
+      "timecode": "01:02:16",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3736s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    {
+     "libelle": "Gain des ménages : TVA à 0 % sur 100 produits",
+     "texte": "≈ 100 € par an",
+     "source": {
+      "citation": "nous estimons le gain supplémentaire autour de 100 € par an",
+      "timecode": "01:02:25",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3745s",
+      "locuteur": "Jordan Bardella"
+     }
+    }
+   ]
+  },
+  "lfi": {
+   "postes": [
+    {
+     "nature": "depense",
+     "libelle": "Salaires des fonctionnaires (point d’indice)",
+     "montant": 17.0,
+     "texte": "17 milliards",
+     "source": {
+      "citation": "qui aura un coût de 17 milliards.",
+      "timecode": "00:37:20",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2240s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Indexation des pensions et prestations sociales, +10 % pour une autre prestation",
+     "montant": 8.0,
+     "texte": "8 milliards",
+     "source": {
+      "citation": "de l'augmenter de 10 % ce qui aura un coût de 8 milliards.",
+      "timecode": "00:37:30",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2250s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Garantie d'autonomie des jeunes en formation (jusqu'au seuil de pauvreté)",
+     "montant": 9.5,
+     "texte": "9,5 milliards",
+     "source": {
+      "citation": "nous la comptabilisons à 9,5 milliards d'euros.",
+      "timecode": "00:38:17",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2297s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Éducation nationale : 10 000 postes",
+     "montant": 0.5,
+     "texte": "500 millions",
+     "source": {
+      "citation": "ce qui coûtera 500 millions d'euros.",
+      "timecode": "00:40:53",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2453s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Gratuité de la cantine",
+     "montant": 3.6,
+     "texte": "3,6 milliards",
+     "source": {
+      "citation": "D'où la gratuité de la cantine qui coûtera 3,6 milliards d'euros.",
+      "timecode": "00:40:56",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2456s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Postes d'enseignants à l'université (après l'abolition de Parcoursup)",
+     "montant": 3.5,
+     "texte": "3,5 milliards",
+     "source": {
+      "citation": "au nom de 250000 soit à 3,5 milliards d'euros.",
+      "timecode": "00:41:11",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2471s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Hôpital : 10 000 postes de soignants",
+     "montant": 3.0,
+     "texte": "3 milliards",
+     "source": {
+      "citation": "redonner un souffle aux hôpitaux avec 3 milliards d'euros",
+      "timecode": "00:41:55",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2515s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Violences faites aux femmes et aux enfants",
+     "montant": 5.0,
+     "texte": "5 milliards",
+     "source": {
+      "citation": "les violences faites aux femmes et aux enfants de 5 milliards d'euros.",
+      "timecode": "00:42:52",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2572s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Plan contre le sans-abrisme",
+     "montant": 3.0,
+     "texte": "3 milliards",
+     "source": {
+      "citation": "ce plan du sans-abrisme à 3 milliards d'euros",
+      "timecode": "00:43:23",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2603s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Rétablissement des budgets ministériels en baisse depuis 2025, indexés sur l'inflation",
+     "montant": 7.0,
+     "texte": "près de 7 milliards",
+     "source": {
+      "citation": "ce qui fera une somme globale de près de 7 milliards d'euros.",
+      "timecode": "00:43:55",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2635s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Adaptation au dérèglement climatique (canicules, incendies, sécheresse)",
+     "montant": 10.0,
+     "texte": "10 milliards",
+     "source": {
+      "citation": "Donc ce plan nécessaire c'est un plan de 10 milliards d'euros.",
+      "timecode": "00:46:39",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2799s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Retraite à 62 ans (abrogation de la réforme de 2023)",
+     "montant": 9.0,
+     "texte": "9 milliards",
+     "source": {
+      "citation": "avec un coût qui est estimé à 9 milliards d'euros.",
+      "timecode": "00:47:11",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2831s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "depense",
+     "libelle": "Abrogation des réformes de l'assurance chômage",
+     "montant": 3.0,
+     "texte": "3 milliards",
+     "source": {
+      "citation": "l'assurance chômage, c'est-à-dire 3 milliards d'euros.",
+      "timecode": "00:47:37",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2857s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Impôt sur la fortune « climatique »",
+     "montant": 10.0,
+     "texte": "10 milliards",
+     "source": {
+      "citation": "un ISF climatique à hauteur de 10 milliards d'euros.",
+      "timecode": "00:49:08",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2948s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Fin du taux unique sur les revenus du capital (« flat tax »)",
+     "montant": 9.0,
+     "texte": "9 milliards",
+     "source": {
+      "citation": "la suppression de la FLAC taxe qui est le bouclier social du capital. C'est 9 milliards d'euros.",
+      "timecode": "00:49:14",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2954s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Taxe « Zucman » sur les patrimoines de plus de 100 millions d’euros",
+     "montant": 15.0,
+     "texte": "15 milliards",
+     "source": {
+      "citation": "la taxe Zucman sur le patrimoine des centimillionnaires qui est à 15 milliards d'euros",
+      "timecode": "00:49:23",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=2963s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Taxe sur les héritages",
+     "montant": 20.0,
+     "texte": "20 milliards",
+     "source": {
+      "citation": "C'est une taxe sur les héritages que nous estimons à 20 milliards d'euros.",
+      "timecode": "00:50:11",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3011s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Rabot des principales niches fiscales et sociales",
+     "montant": 22.0,
+     "texte": "22 milliards (sur environ 100 milliards de niches)",
+     "source": {
+      "citation": "22 milliards qui sont récupérés sur les niches.",
+      "timecode": "00:50:41",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3041s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Bénéfices des multinationales recalculés selon leur chiffre d’affaires en France (« prix de transfert »)",
+     "montant": 5.0,
+     "texte": "5 milliards",
+     "source": {
+      "citation": "C'est content pour l'instant de la chiffrer à 5 milliards, ce qui est incontestable.",
+      "timecode": "00:52:24",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3144s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Lutte contre la fraude",
+     "montant": 2.0,
+     "texte": "2 milliards",
+     "source": {
+      "citation": "2 milliards sur les fraudes.",
+      "timecode": "00:52:38",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3158s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Taxe de 10 % sur les annulations d'actions (rachats)",
+     "montant": 2.5,
+     "texte": "2,5 milliards",
+     "source": {
+      "citation": "rachats d'action 2,5 milliards.",
+      "timecode": "00:52:48",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3168s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Impôt sur les sociétés progressif (jusqu'à 33 %)",
+     "montant": 3.0,
+     "texte": "3 milliards",
+     "source": {
+      "citation": "Réforme de l'impôt sur les sociétés 3 milliards.",
+      "timecode": "00:53:03",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3183s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Taxe sur les transactions financières",
+     "montant": 5.0,
+     "texte": "5 milliards",
+     "source": {
+      "citation": "une taxe sur les transactions financières, elle est classique 5 milliards",
+      "timecode": "00:53:33",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3213s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    },
+    {
+     "nature": "recette",
+     "libelle": "Taxe sur les cryptomonnaies",
+     "montant": 1.0,
+     "texte": "1 milliards",
+     "source": {
+      "citation": "qui rapporte 1 milliard d'euros.",
+      "timecode": "00:53:54",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3234s",
+      "locuteur": "Éric Coquerel"
+     },
+     "note": null
+    }
+   ],
+   "autres": [
+    {
+     "libelle": "Diminution de la dette (dette)",
+     "texte": "25 milliards d’euros",
+     "source": {
+      "citation": "il y aurait 25 milliards, celui que nous présentons attribués à la diminution de la dette.",
+      "timecode": "00:22:40",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=1360s",
+      "locuteur": null
+     }
+    },
+    {
+     "libelle": "Réorientation de l'épargne vers l'économie française (recettes de TVA induites)",
+     "texte": "100 milliards d’euros réorientés ; environ 18 milliards d’euros de recettes",
+     "source": {
+      "citation": "il s'agit de 100 milliards dans le premier budget, ça fait donc 180 milliards qui euh pardon ça fait donc 18 milliards",
+      "timecode": "00:26:08",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=1568s",
+      "locuteur": null
+     }
+    },
+    {
+     "libelle": "Investissements financés par l'épargne des Français (financement)",
+     "texte": "100 milliards d’euros par an ; 500 milliards d’euros en 5 ans",
+     "source": {
+      "citation": "si chaque année nous arrivons à draîner 100 milliards d'euros pour qu'au bout de 5 ans nous ayons déjà eu 500 milliards d'investissements",
+      "timecode": "00:56:43",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3403s",
+      "locuteur": "Éric Coquerel"
+     }
+    },
+    {
+     "libelle": "Plafond du livret A porté à 30 000 € (financement)",
+     "texte": "30 à 40 milliards d’euros",
+     "source": {
+      "citation": "Ça fait selon le président même de la Caisse des dépôts environ 30 à 40 milliards",
+      "timecode": "00:57:05",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3425s",
+      "locuteur": "Éric Coquerel"
+     }
+    },
+    {
+     "libelle": "Baisse de la contribution à l'Union européenne",
+     "texte": "environ 9 milliards d’euros",
+     "source": {
+      "citation": "c'est-à-dire à peu près 9 milliards d'euros. Vous remarquerez que nous ne l'avons pas mis dans notre estimation budgétaire.",
+      "timecode": "01:17:13",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=4633s",
+      "locuteur": "Éric Coquerel"
+     }
+    },
+    {
+     "libelle": "Eau et assainissement en Guadeloupe",
+     "texte": "plus d'1 milliards d’euros",
+     "source": {
+      "citation": "Il faut investir plus d'un milliard pour la crise de l'assistance.",
+      "timecode": "01:10:09",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=4209s",
+      "locuteur": "Éric Coquerel"
+     }
+    },
+    {
+     "libelle": "Cotisations sur les dividendes et rachats d'actions (piste pour la retraite à 60 ans)",
+     "texte": "10 milliards d’euros",
+     "source": {
+      "citation": "C'était un amendement qui était passé d'ailleurs hein au PLFSS qui rapporte 10 milliards.",
+      "timecode": "01:15:30",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=4530s",
+      "locuteur": "Éric Coquerel"
+     }
+    }
+   ]
+  }
+ },
+ "hypotheses": [
+  {
+   "libelle": "Croissance de l'économie en 2027",
+   "valeurs": {
+    "plf": {
+     "texte": "1,0 % ; jugée « optimiste » par le Haut Conseil des finances publiques",
+     "source": {
+      "citation": "le chiffre de croissance retenu par le Gouvernement apparaît comme optimiste au regard des dernières évolutions",
+      "lien": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027",
+      "locuteur": "Avis du Haut Conseil des finances publiques"
+     }
+    },
+    "rn": null,
+    "lfi": {
+     "texte": "environ +0,5 point induit par le budget",
+     "source": {
+      "citation": "Donc il a baissé en réalité la croissance de 0,5 points",
+      "timecode": "00:55:07",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=3307s",
+      "locuteur": "Éric Coquerel"
+     }
+    }
+   }
+  },
+  {
+   "libelle": "Dette publique fin 2027",
+   "valeurs": {
+    "plf": {
+     "texte": "121,7 % du PIB",
+     "source": {
+      "citation": "La dette publique atteindrait 121,7 % du PIB.",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     }
+    },
+    "rn": {
+     "texte": "121 % du PIB (trajectoire présentée par Marine Le Pen le même jour)",
+     "source": {
+      "citation": "qui passerait de 121 % en 2027 à 112 % en 2032",
+      "timecode": "00:26:55",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=1615s",
+      "locuteur": null
+     }
+    },
+    "lfi": null
+   }
+  },
+  {
+   "libelle": "Intérêts de la dette",
+   "valeurs": {
+    "plf": {
+     "texte": "+12 milliards d’euros en 2027 (selon le Haut Conseil des finances publiques)",
+     "source": {
+      "citation": "les principales hausses de dépenses en 2027 seraient la charge d’intérêts (+12 Md€)",
+      "lien": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027",
+      "locuteur": "Avis du Haut Conseil des finances publiques"
+     }
+    },
+    "rn": {
+     "texte": "91 milliards d’euros par an (niveau actuel cité)",
+     "source": {
+      "citation": "91 milliards d'euros. C'est le prix annuel de notre endettement.",
+      "timecode": "00:52:30",
+      "lien": "https://www.youtube.com/watch?v=AukTdzBcgpc&t=3150s",
+      "locuteur": "Jordan Bardella"
+     }
+    },
+    "lfi": {
+     "texte": "2,6 % du PIB aujourd’hui, 2,9 % l’an prochain",
+     "source": {
+      "citation": "elle est de 2,6 %, elle va monter vraisemblablement à 2,9 l'an prochain.",
+      "timecode": "00:31:05",
+      "lien": "https://www.youtube.com/watch?v=u4_Iyt1L1I8&t=1865s",
+      "locuteur": "Éric Coquerel"
+     }
+    }
+   }
+  },
+  {
+   "libelle": "Impôts et cotisations (prélèvements obligatoires) en 2027",
+   "valeurs": {
+    "plf": {
+     "texte": "44,2 % du PIB",
+     "source": {
+      "citation": "Taux de prélèvements obligatoires nets des crédits d’impôt (en % de PIB) : 43,6 (2025) ; 43,9 (2026) ; 44,2 (2027)",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     }
+    },
+    "rn": null,
+    "lfi": null
+   }
+  },
+  {
+   "libelle": "Dépenses publiques 2027",
+   "valeurs": {
+    "plf": {
+     "texte": "56,9 % du PIB",
+     "source": {
+      "citation": "Dépenses publiques hors crédits d’impôt (% de PIB) : 56,6 (2025) ; 57,1 (2026) ; 56,9 (2027)",
+      "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+      "locuteur": "Dossier de presse du projet de budget 2027"
+     }
+    },
+    "rn": null,
+    "lfi": null
+   }
+  }
+ ],
+ "constat_2025": {
+  "deficit": 5.1,
+  "dette": 115.7,
+  "lien": "https://www.insee.fr/fr/statistiques/8997691"
+ },
+ "situation_2026": {
+  "deficit": 5.4,
+  "dette": 119.3,
+  "lien": "https://solidarites.gouv.fr/sites/solidarite/files/2026-10/DP-BUDGET-2027.pdf",
+  "source": "Projet de budget 2027 du gouvernement, tableau « Chiffres clés » (prévision révisée pour 2026)"
+ },
+ "repere_pib": {
+  "texte": "0,9 point de PIB représente environ 28 milliards d'euros",
+  "lien": "https://www.hcfp.fr/liste-avis/avis-ndeg2026-5-lois-de-finances-2027",
+  "citation": "l’effort structurel serait de 0,9 point de PIB (environ 28 Md€)"
+ }
+}

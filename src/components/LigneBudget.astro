@@ -1,0 +1,109 @@
+---
+/**
+ * Une valeur de cadrage budgétaire, telle que la source la donne : montant, unité, portée
+ * et année ne sont jamais convertis. La citation qui la porte et le lien horodaté
+ * l'accompagnent toujours ; une personnalité de l'équipe de campagne reste nommée.
+ *
+ * Mode `compact` (tableau du thème) : la valeur et le lien vers le passage, sans la
+ * citation, qui reste lisible sur la fiche du candidat.
+ */
+import { BUDGETS, type LigneBudget } from '@/lib/data';
+import { attributionLocuteur, dateFr, estTimecode, montantBudget } from '@/lib/format';
+
+interface Props {
+    ligne: LigneBudget;
+    compact?: boolean;
+}
+const { ligne: l, compact = false } = Astro.props;
+
+const valeur = montantBudget(l, BUDGETS) || '—';
+// Un chiffre en gras ; une valeur en toutes lettres (souvent une phrase) en graisse normale.
+const chiffre = l.unite !== 'texte' && l.montant !== null && l.montant !== undefined;
+const attribution = attributionLocuteur(l);
+// En compact, le rôle (souvent long) passe en infobulle : le nom et la qualité restent visibles.
+const attributionCourte = l.locuteur
+    ? `${l.locuteur}${l.qualite_locuteur === 'equipe_campagne' ? ' (équipe de campagne)' : ''}`
+    : '';
+const citation = (l.citation ?? '').trim();
+const timecode = estTimecode(l.reperage);
+// Ligne de la référence officielle : sourcée par un producteur public, pas par un passage.
+const sourceRef = l.source?.producteur ? l.source : null;
+const sourcePropre = !sourceRef && l.source?.titre ? l.source : null;
+---
+{compact ? (
+    <div class="lb lb-compact">
+        <p>
+            {l.libelle && <span style="color: var(--fg-muted)">{l.libelle} : </span>}
+            <span class:list={[{ 'font-semibold': chiffre }]}>{valeur}</span>
+        </p>
+        {attributionCourte && (
+            <p class="lb-qui" title={attribution}>— {attributionCourte}</p>
+        )}
+        {sourceRef ? (
+            <p class="lb-qui">
+                {sourceRef.url
+                    ? <a href={sourceRef.url} target="_blank" rel="nofollow noopener" class="lb-lien text-brand-600 hover:underline">{sourceRef.producteur} ↗</a>
+                    : sourceRef.producteur}
+            </p>
+        ) : l.url && (
+            <a href={l.url} target="_blank" rel="nofollow noopener" class="lb-lien font-medium text-brand-600 hover:underline">
+                {timecode ? `▶ ${l.reperage}` : 'source ↗'}
+            </a>
+        )}
+    </div>
+) : (
+    <div class="lb">
+        <p>
+            {l.libelle && <span style="color: var(--fg-muted)">{l.libelle} : </span>}
+            <span class:list={[{ 'font-semibold': chiffre }]}>{valeur}</span>
+        </p>
+        {attribution && <p class="lb-qui">— {attribution}</p>}
+        {sourceRef ? (
+            <p class="lb-qui">
+                Source : {sourceRef.producteur}{sourceRef.titre && <>, {sourceRef.url
+                    ? <a href={sourceRef.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{sourceRef.titre} ↗</a>
+                    : sourceRef.titre}</>}{sourceRef.date && <>, {dateFr(sourceRef.date)}</>}
+            </p>
+        ) : sourcePropre && (
+            <p class="lb-qui">
+                Source : {sourcePropre.url
+                    ? <a href={sourcePropre.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{sourcePropre.titre} ↗</a>
+                    : sourcePropre.titre}{sourcePropre.date && <>, {dateFr(sourcePropre.date)}</>}
+            </p>
+        )}
+        {((!sourceRef && l.url) || citation) && (
+            <div class="lb-actions">
+                {!sourceRef && l.url && (
+                    <a href={l.url} target="_blank" rel="nofollow noopener" class="lb-lien text-xs font-medium text-brand-600 hover:underline">
+                        {timecode ? `▶ Vérifier à ${l.reperage}` : `Vérifier à la source${l.reperage ? ` (${l.reperage})` : ''} ↗`}
+                    </a>
+                )}
+                {citation && (
+                    <details class="lb-citation">
+                        <summary class="lb-sommaire cursor-pointer text-xs text-brand-600">Citation</summary>
+                        <p class="text-xs">
+                            <span class="italic">« {citation} »</span>{attribution && <span> — {attribution}</span>}
+                        </p>
+                    </details>
+                )}
+            </div>
+        )}
+    </div>
+)}
+
+<style>
+    .lb { line-height: 1.45; }
+    .lb-compact { font-size: 0.75rem; }
+    .lb-qui { font-size: 0.75rem; color: var(--fg-muted); margin-top: 0.125rem; }
+    .lb-compact .lb-qui { font-size: 0.6875rem; }
+    /* Le lien horodaté et la citation sur une même ligne ; la citation dépliée passe dessous. */
+    .lb-actions { display: flex; flex-wrap: wrap; align-items: flex-start; column-gap: 1rem; }
+    .lb-citation[open] { flex-basis: 100%; order: 1; }
+    .lb-lien { display: inline-flex; align-items: center; min-height: 28px; }
+    .lb-sommaire { padding: 0.3rem 0; }
+    /* Au doigt, des cibles de 44 px comme partout ailleurs sur le site. */
+    @media (pointer: coarse) {
+        .lb-lien { min-height: 44px; }
+        .lb-sommaire { padding: 0.75rem 0; }
+    }
+</style>

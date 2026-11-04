@@ -1,6 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
+import GrapheThemes from '@/components/GrapheThemes.astro';
 import { THEMES, CANDIDATS_DETAIL, type EtatTheme } from '@/lib/data';
 
 const candidats = Object.values(CANDIDATS_DETAIL);
@@ -25,6 +26,8 @@ function couverture(slug: string) {
         Grille neutre, identique pour tous les candidats — jamais dérivée d'un programme (voir
         <a href="/methodologie/" class="text-brand-600 hover:underline">méthodologie</a>).
     </p>
+
+    <GrapheThemes />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {THEMES.map((t) => {

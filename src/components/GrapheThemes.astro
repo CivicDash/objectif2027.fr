@@ -1,0 +1,154 @@
+---
+import { CANDIDATS_DETAIL, THEMES } from '@/lib/data';
+
+/**
+ * Répartition thématique de la campagne.
+ *
+ * Deux lectures côte à côte, et c'est volontaire. Le nombre de mesures dit le volume ;
+ * le nombre de candidats dit si le sujet est réellement partagé. Un thème peut être gros
+ * parce qu'il occupe la campagne, ou seulement parce qu'un candidat publie beaucoup —
+ * sur un histogramme les deux se ressemblent, et seul le second chiffre les sépare.
+ *
+ * La barre est dessinée DANS la ligne du thème, en CSS. Une première version la plaçait
+ * dans un SVG au-dessus de la liste : les barres flottaient alors dans un bloc à part,
+ * sans rapport visuel avec les libellés, et le graphe ne se lisait plus du tout.
+ * Pas de bibliothèque de graphes : le site est statique, et il doit rester lisible sans
+ * JavaScript.
+ */
+const candidats = Object.values(CANDIDATS_DETAIL) as any[];
+
+const lignes = THEMES.map((t) => {
+    const parCandidat = candidats
+        .map((c) => (c.mesures_par_theme?.[t.slug] ?? []).length)
+        .filter((n) => n > 0);
+
+    return {
+        slug: t.slug,
+        nom: t.nom,
+        mesures: parCandidat.reduce((a, b) => a + b, 0),
+        candidats: parCandidat.length,
+        tete: parCandidat.length ? Math.max(...parCandidat) : 0,
+    };
+}).sort((a, b) => b.mesures - a.mesures);
+
+const total = lignes.reduce((a, l) => a + l.mesures, 0);
+const maxi = Math.max(1, ...lignes.map((l) => l.mesures));
+const nbCandidats = candidats.length;
+
+// Un thème dont plus de la moitié des mesures vient d'une seule personne ne mesure pas
+// le débat. Le seuil est arbitraire et assumé : il sert à attirer l'œil, pas à trancher.
+const monoPortes = lignes.filter((l) => l.mesures >= 10 && l.tete / l.mesures > 0.5);
+---
+
+<section class="rounded-card border p-4" style="border-color: var(--border)">
+    <h2 class="font-semibold">Ce dont la campagne parle</h2>
+    <p class="text-xs mt-1" style="color: var(--fg-muted)">
+        {total} mesures publiées, réparties sur {lignes.length} thèmes. La longueur de la barre
+        donne le volume ; le nombre de candidats dit si le sujet est partagé ou porté par
+        quelques-uns.
+    </p>
+
+    <ol class="graphe-themes">
+        {lignes.map((l) => (
+            <li>
+                <a class="gt-nom" href={`/themes/${l.slug}/`}>{l.nom}</a>
+                <span class="gt-chiffres">
+                    <strong>{l.mesures}</strong> mesure{l.mesures > 1 ? 's' : ''}
+                    {' · '}
+                    {l.candidats} candidat{l.candidats > 1 ? 's' : ''} sur {nbCandidats}
+                </span>
+                {/* Décoratif : les valeurs sont déjà en texte juste au-dessus. */}
+                <div class="gt-piste" aria-hidden="true">
+                    <div class="gt-barre" style={`width: ${Math.max(1, (l.mesures / maxi) * 100)}%`}></div>
+                </div>
+            </li>
+        ))}
+    </ol>
+
+    {monoPortes.length > 0 && (
+        <p class="text-xs mt-3" style="color: var(--fg-muted)">
+            À lire avec précaution : sur {monoPortes.map((l) => l.nom).join(', ')},
+            plus de la moitié des mesures vient d'un seul candidat. Le volume y dit surtout
+            qui s'est exprimé, pas l'importance du sujet dans la campagne.
+        </p>
+    )}
+
+    <p class="text-xs mt-2" style="color: var(--fg-muted)">
+        Ce décompte porte sur les mesures publiées à ce jour, relevées dans les prises de
+        parole que nous avons dépouillées. Il grandit à mesure du travail et ne mesure pas,
+        à lui seul, l'importance d'un sujet — voir la
+        <a href="/methodologie/" class="text-brand-600 hover:underline">méthodologie</a>.
+    </p>
+</section>
+
+<style>
+    .graphe-themes {
+        list-style: none;
+        margin: 0.75rem 0 0;
+        padding: 0;
+    }
+
+    .graphe-themes li {
+        display: grid;
+        /* Colonne de libellés à largeur bornée : les noms vont de « Santé » à
+           « Institutions & démocratie », et un `auto` ferait sauter l'origine des barres
+           d'une ligne à l'autre. */
+        grid-template-columns: minmax(8rem, 13rem) 1fr auto;
+        align-items: center;
+        column-gap: 0.75rem;
+        padding: 0.3rem 0;
+        border-top: 1px solid var(--border);
+    }
+
+    /* Placement EXPLICITE : dans le DOM l'ordre est nom → chiffres → barre, qui est le bon
+       ordre de lecture et le bon ordre au clavier. Laissé au placement automatique, la barre
+       tombait dans la troisième colonne, dimensionnée sur son contenu — donc large de zéro,
+       et invisible. */
+    .gt-nom {
+        grid-column: 1;
+        grid-row: 1;
+        color: var(--fg);
+        font-size: 0.875rem;
+        text-decoration: none;
+    }
+
+    .gt-nom:hover { text-decoration: underline; }
+
+    .gt-chiffres {
+        grid-column: 3;
+        grid-row: 1;
+        font-size: 0.75rem;
+        color: var(--fg-muted);
+        white-space: nowrap;
+        text-align: right;
+    }
+
+    .gt-chiffres strong { color: var(--fg); }
+
+    .gt-piste {
+        grid-column: 2;
+        grid-row: 1;
+        height: 10px;
+        border-radius: 3px;
+        background: color-mix(in srgb, var(--fg) 8%, transparent);
+    }
+
+    .gt-barre {
+        height: 100%;
+        border-radius: 3px;
+        background: var(--brand-600, #2563eb);
+    }
+
+    /* En dessous de 640 px, la barre passe sous le libellé plutôt que de se réduire à
+       un trait. L'ordre visuel reste nom → chiffres → barre. */
+    @media (max-width: 640px) {
+        .graphe-themes li {
+            grid-template-columns: 1fr auto;
+            row-gap: 0.3rem;
+        }
+
+        .gt-nom { grid-column: 1; grid-row: 1; }
+        .gt-chiffres { grid-column: 2; grid-row: 1; }
+        .gt-piste { grid-column: 1 / -1; grid-row: 2; }
+    }
+</style>

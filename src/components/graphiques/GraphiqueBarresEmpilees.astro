@@ -1,0 +1,99 @@
+---
+// Barres empilées à 100 % : la structure d'un total, un pays par ligne, sa dernière année
+// complète écrite à droite (annexe D.4). Les catégories sont en gris : une catégorie, qui
+// n'est pas un pays, ne prend jamais la couleur de la France. Celle qu'on met en avant
+// est hachurée, et sa valeur répétée en bout de ligne.
+import type { Indicateur } from '@/lib/data';
+import { PAYS, NOMS, anneeCompletePays, echelle, valeurEn, valeurFr, type Gabarit } from '@/lib/graphique';
+import { nombreFr } from '@/lib/format';
+
+interface Props {
+    indicateurs: Indicateur[];
+    codes: string[];
+    gabarit: Gabarit;
+    libelles: string[];
+    miseEnAvant?: string;
+    decimales?: number;
+    classe: string;
+    etiquette: string;
+    motif: string;
+}
+const { indicateurs, codes, gabarit: g, libelles, miseEnAvant, decimales = 1, classe, etiquette, motif } = Astro.props;
+
+const compact = g.largeur < 500;
+const colPays = compact ? 80 : 104;
+const colDroite = compact ? 76 : 118;
+const hBarre = 26;
+const hLigne = hBarre + 12;
+const iAvant = miseEnAvant ? codes.indexOf(miseEnAvant) : -1;
+
+const lignes = PAYS.map((p) => {
+    const annee = anneeCompletePays(indicateurs, p);
+    const valeurs = annee ? indicateurs.map((ind) => valeurEn(ind, p, annee)!.valeur) : [];
+    return { pays: p, annee, valeurs };
+}).filter((l) => l.annee);
+
+const x0 = colPays;
+const x = echelle(0, 100, x0, g.largeur - colDroite);
+const enTete = g.police + 10;
+const hLegende = compact ? libelles.length * (g.police + 8) : Math.ceil(libelles.length / 2) * (g.police + 8);
+const yLegende = enTete + lignes.length * hLigne + 10;
+const hauteur = yLegende + hLegende + 4;
+const largeurLegende = (g.largeur - x0) / 2;
+---
+<svg viewBox={`0 0 ${g.largeur} ${hauteur}`} class={classe} role="img" aria-label={etiquette} font-size={g.police}>
+    <defs>
+        <pattern id={motif} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" class="hachure" />
+        </pattern>
+    </defs>
+    {iAvant >= 0 && (
+        <text x={g.largeur} y={g.police} text-anchor="end">{compact ? libelles[iAvant].split(' ')[0] : libelles[iAvant]}</text>
+    )}
+    {lignes.map((l, i) => {
+        const y0 = enTete + i * hLigne;
+        let cumul = 0;
+        const fr = l.pays === 'FR';
+        return (
+            <g>
+                <text x="0" y={y0 + hBarre / 2} dominant-baseline="middle" class={fr ? 'fr' : 'fort'}>{NOMS[l.pays]}</text>
+                {l.valeurs.map((v, k) => {
+                    const debut = cumul;
+                    cumul += v;
+                    const w = x(Math.min(cumul, 100)) - x(debut);
+                    const avant = k === iAvant;
+                    const cls = avant ? 'seg-4' : `seg-${Math.min(k, 3)}`;
+                    return (
+                        <>
+                            <rect x={x(debut)} y={y0} width={Math.max(0, w)} height={hBarre} class={`${cls} seg-bord`} />
+                            {avant && <rect x={x(debut)} y={y0} width={Math.max(0, w)} height={hBarre} fill={`url(#${motif})`} />}
+                            {!avant && w >= g.police * 2.6 && (
+                                <text x={x(debut) + w / 2} y={y0 + hBarre / 2} text-anchor="middle" dominant-baseline="middle"
+                                      class={k <= 1 ? 'sur-fonce' : 'sur-clair'}>{nombreFr(v, 0)}</text>
+                            )}
+                        </>
+                    );
+                })}
+                {iAvant >= 0 && (
+                    <text x={g.largeur} y={y0 + hBarre / 2} text-anchor="end" dominant-baseline="middle" class={fr ? 'fr' : 'fort'}>
+                        {valeurFr(l.valeurs[iAvant], decimales, ' %')} <tspan font-weight="400">({l.annee})</tspan>
+                    </text>
+                )}
+            </g>
+        );
+    })}
+    {libelles.map((lib, k) => {
+        const col = compact ? 0 : k % 2;
+        const rang = compact ? k : Math.floor(k / 2);
+        const lx = x0 + col * largeurLegende;
+        const ly = yLegende + rang * (g.police + 8);
+        const avant = k === iAvant;
+        return (
+            <g>
+                <rect x={lx} y={ly} width="14" height="12" class={`${avant ? 'seg-4' : `seg-${Math.min(k, 3)}`} seg-bord`} />
+                {avant && <rect x={lx} y={ly} width="14" height="12" fill={`url(#${motif})`} />}
+                <text x={lx + 20} y={ly + 6} dominant-baseline="middle">{lib}</text>
+            </g>
+        );
+    })}
+</svg>

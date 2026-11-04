@@ -1,0 +1,85 @@
+---
+// Barres groupées horizontales : deux sous-populations par pays, la même année, et
+// l'écart en points écrit sous chaque paire (annexe D.4). Axe à zéro, obligatoire pour
+// des barres. La seconde barre est hachurée : la couleur ne porte jamais seule le sens.
+import type { Indicateur } from '@/lib/data';
+import { PAYS, NOMS, echelle, valeurEn, valeurFr, pasRond, type Gabarit } from '@/lib/graphique';
+import { nombreFr } from '@/lib/format';
+
+interface Props {
+    indicateurs: [Indicateur, Indicateur];
+    annee: number;
+    gabarit: Gabarit;
+    libelles: [string, string];
+    decimales?: number;
+    suffixe?: string;
+    classe: string;
+    etiquette: string;
+    motif: string;
+}
+const { indicateurs: [a, b], annee, gabarit: g, libelles, decimales = 1, suffixe = '', classe, etiquette, motif } = Astro.props;
+
+const compact = g.largeur < 500;
+const colPays = compact ? 84 : 110;
+const colValeur = compact ? 58 : 70;
+const hBarre = 15;
+const hLigne = hBarre * 2 + 4 + g.police + 16;
+// Légende sur une ligne en large, sur deux en compact (sinon le second libellé déborde).
+const pasLegende = g.police + 8;
+const legende = (compact ? 2 : 1) * pasLegende + 10;
+const leg2 = compact ? { x: colPays, y: pasLegende } : { x: colPays + 190, y: 0 };
+
+const lignes = PAYS.map((p) => ({ pays: p, v1: valeurEn(a, p, annee), v2: valeurEn(b, p, annee) }));
+const max = Math.max(...lignes.flatMap((l) => [l.v1?.valeur ?? 0, l.v2?.valeur ?? 0]));
+const pas = pasRond(max, 4);
+const borne = Math.ceil(max / pas) * pas;
+const x0 = colPays;
+const x = echelle(0, borne, x0, g.largeur - colValeur);
+const hauteur = legende + lignes.length * hLigne + 4;
+---
+<svg viewBox={`0 0 ${g.largeur} ${hauteur}`} class={classe} role="img" aria-label={etiquette} font-size={g.police}>
+    <defs>
+        <pattern id={motif} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" class="hachure" />
+        </pattern>
+        <pattern id={`${motif}-fr`} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" class="hachure-FR" />
+        </pattern>
+    </defs>
+
+    <!-- Légende -->
+    <rect x={x0} y="2" width="14" height="12" class="barre-autre" />
+    <text x={x0 + 20} y="8" dominant-baseline="middle">{libelles[0]}</text>
+    <rect x={leg2.x} y={leg2.y + 2} width="14" height="12" class="barre-claire" />
+    <rect x={leg2.x} y={leg2.y + 2} width="14" height="12" fill={`url(#${motif})`} />
+    <text x={leg2.x + 20} y={leg2.y + 8} dominant-baseline="middle">{libelles[1]}</text>
+
+    {lignes.map((l, i) => {
+        const y0 = legende + i * hLigne;
+        const fr = l.pays === 'FR';
+        return (
+            <g>
+                <text x="0" y={y0 + hBarre} dominant-baseline="middle" class={fr ? 'fr' : 'fort'}>{NOMS[l.pays]}</text>
+                <line class="g-base" x1={x0} x2={x0} y1={y0 - 2} y2={y0 + hBarre * 2 + 6} />
+                {l.v1 ? (
+                    <>
+                        <rect x={x0} y={y0} width={Math.max(0, x(l.v1.valeur) - x0)} height={hBarre} class={fr ? 'barre-FR' : 'barre-autre'} />
+                        <text x={x(l.v1.valeur) + 5} y={y0 + hBarre / 2} dominant-baseline="middle" class={fr ? 'fr' : ''}>{valeurFr(l.v1.valeur, decimales, suffixe)}</text>
+                    </>
+                ) : <text x={x0 + 5} y={y0 + hBarre / 2} dominant-baseline="middle">non disponible</text>}
+                {l.v2 ? (
+                    <>
+                        <rect x={x0} y={y0 + hBarre + 4} width={Math.max(0, x(l.v2.valeur) - x0)} height={hBarre} class={fr ? 'barre-claire-FR' : 'barre-claire'} />
+                        <rect x={x0} y={y0 + hBarre + 4} width={Math.max(0, x(l.v2.valeur) - x0)} height={hBarre} fill={`url(#${fr ? `${motif}-fr` : motif})`} />
+                        <text x={x(l.v2.valeur) + 5} y={y0 + hBarre * 1.5 + 4} dominant-baseline="middle" class={fr ? 'fr' : ''}>{valeurFr(l.v2.valeur, decimales, suffixe)}</text>
+                    </>
+                ) : <text x={x0 + 5} y={y0 + hBarre * 1.5 + 4} dominant-baseline="middle">non disponible</text>}
+                {l.v1 && l.v2 && (
+                    <text x={x0} y={y0 + hBarre * 2 + 4 + g.police} class={fr ? 'fr' : ''}>
+                        écart : {nombreFr(l.v1.valeur - l.v2.valeur, 1)} point{Math.abs(l.v1.valeur - l.v2.valeur) >= 2 ? 's' : ''}
+                    </text>
+                )}
+            </g>
+        );
+    })}
+</svg>

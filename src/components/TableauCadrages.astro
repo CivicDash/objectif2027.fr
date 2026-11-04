@@ -1,0 +1,240 @@
+---
+/**
+ * Les cadrages budgétaires de tous les candidats, dans la même grille, sur la page du
+ * thème qui les accueille.
+ *
+ * Règles de neutralité, toutes tenues ici :
+ *  - une ligne par candidat, dans l'ordre alphabétique neutre du site — jamais trié selon
+ *    une valeur ;
+ *  - aucune couleur selon la valeur, aucun total, aucune conversion (cumulé ↔ annuel,
+ *    Md€ ↔ % du PIB) : chaque chiffre garde la base que lui donne sa source ;
+ *  - la référence officielle forme un bloc à part, qui dit qu'elle n'est pas une
+ *    proposition : un repère commun, pas un étalon.
+ * Sous 1 024 px, chaque ligne devient une carte.
+ */
+import CelluleBudget from '@/components/CelluleBudget.astro';
+import { BUDGETS, cadrageDe, candidatsDetailOrdreNeutre, libelleEtatCadrage, libelleTypeDocument, type LigneBudget } from '@/lib/data';
+import { dateFr } from '@/lib/format';
+
+// « Autres objectifs » regroupe des engagements hétérogènes (effectifs, ratios de dépense…) :
+// ils restent sur la fiche de chaque candidat, où la grille est complète.
+const RUBRIQUES_HORS_TABLEAU = new Set(['autre_objectif']);
+const rubriques = BUDGETS.rubriques.filter((r) => !RUBRIQUES_HORS_TABLEAU.has(r.cle));
+const nbColonnes = rubriques.length + 3; // candidat, nature, rubriques, source
+const reference = BUDGETS.reference;
+
+const lignes = candidatsDetailOrdreNeutre()
+    .map((c: any) => ({ c, etat: cadrageDe(c.slug) }))
+    .filter((x) => x.etat !== null);
+const nom = (c: any) => String(c.nom_complet).replace(/^M\.\s*|^Mme\s*/, '');
+const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+
+// Sources de la référence, dédoublonnées par URL, dans l'ordre de la grille.
+const sourcesReference: { producteur: string; titre: string | null; url: string | null; date: string | null }[] = [];
+if (reference) {
+    const toutes: LigneBudget[] = [
+        ...[...BUDGETS.rubriques, ...BUDGETS.rubriques_reference].flatMap((r) => reference.rubriques?.[r.cle]?.lignes ?? []),
+        ...(reference.postes ?? []),
+    ];
+    for (const l of toutes) {
+        const s = l.source;
+        if (!s?.producteur) continue;
+        const cle = s.url ?? `${s.producteur}|${s.titre}`;
+        if (sourcesReference.some((x) => (x.url ?? `${x.producteur}|${x.titre}`) === cle)) continue;
+        sourcesReference.push({ producteur: s.producteur, titre: s.titre ?? null, url: s.url ?? null, date: s.date ?? null });
+    }
+}
+const constats = reference
+    ? BUDGETS.rubriques_reference
+        .map((r) => ({ ...r, rubrique: reference.rubriques?.[r.cle] }))
+        .filter((x) => x.rubrique?.etat === 'publie')
+    : [];
+---
+{lignes.length > 0 && (
+    <section id="cadrages" class="mt-6">
+        <h2 class="text-lg font-semibold">Les cadrages budgétaires des candidats</h2>
+        <p class="text-sm mt-1" style="color: var(--fg-muted)">
+            Tous les candidats dans la même grille, par ordre alphabétique. Chaque chiffre est cité tel que
+            sa source le donne, et tous n'ont pas la même base : niveau atteint une année donnée, montant
+            cumulé sur plusieurs années, budget de première année. Nous n'en calculons ni total ni
+            conversion, et n'en tirons aucun classement.
+            <a href="/methodologie/#cadrage-budgetaire" class="text-brand-600 hover:underline">Méthode</a>
+        </p>
+
+        <div class="tc-cadre mt-3">
+            <table class="tc">
+                <caption class="sr-only">Cadrages budgétaires des candidats, grille commune, et référence officielle</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="tc-col-nom">Candidat</th>
+                        <th scope="col" class="tc-col-nature">Nature</th>
+                        {rubriques.map((r) => <th scope="col">{r.libelle}</th>)}
+                        <th scope="col" class="tc-col-source">Source</th>
+                    </tr>
+                </thead>
+
+                {reference && (
+                    <tbody class="tc-ref">
+                        <tr>
+                            <th scope="colgroup" colspan={nbColonnes} class="tc-ref-titre">
+                                Référence officielle ({reference.titre}) — n'est pas une proposition de candidat
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tc-nom">Référence officielle</th>
+                            <td data-label="Nature"><div>{reference.date_source ? dateFr(reference.date_source) : '—'}</div></td>
+                            {rubriques.map((r) => (
+                                <td data-label={r.libelle}><div><CelluleBudget rubrique={reference.rubriques?.[r.cle]} compact /></div></td>
+                            ))}
+                            <td data-label="Source">
+                                <ul class="space-y-1">
+                                    {sourcesReference.map((s) => (
+                                        <li>
+                                            {s.url
+                                                ? <a href={s.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline" title={s.titre ?? undefined}>{s.producteur} ↗</a>
+                                                : s.producteur}
+                                            {s.date && <span class="block" style="color: var(--fg-muted)">{dateFr(s.date)}</span>}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </td>
+                        </tr>
+                        {constats.length > 0 && (
+                            <tr>
+                                <td colspan={nbColonnes} class="tc-constats" data-label="Situation constatée">
+                                    <ul class="tc-constats-liste">
+                                        {constats.map((x) => (
+                                            <li>
+                                                <span class="font-semibold">{x.libelle}</span>
+                                                <CelluleBudget rubrique={x.rubrique} compact />
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                )}
+
+                <tbody class="tc-candidats">
+                    {lignes.map(({ c, etat }) => {
+                        const cad = etat!.etat === 'publie' ? etat!.cadrages![0] : null;
+                        const autres = etat!.etat === 'publie' ? etat!.cadrages!.length - 1 : 0;
+                        return cad ? (
+                            <tr>
+                                <th scope="row" class="tc-nom">
+                                    <a href={`/candidats/${c.slug}/#cadrage-budgetaire`} class="hover:text-brand-600">{nom(c)}</a>
+                                </th>
+                                <td data-label="Nature">
+                                    <div>
+                                        <span class="font-semibold">{cad.nature_libelle}</span>
+                                        <span class="block" style="color: var(--fg-muted)">{cad.titre}</span>
+                                    </div>
+                                </td>
+                                {rubriques.map((r) => (
+                                    <td data-label={r.libelle}><div><CelluleBudget rubrique={cad.rubriques?.[r.cle]} compact /></div></td>
+                                ))}
+                                <td data-label="Source"><div>
+                                    {cad.source && (
+                                        <p>
+                                            {cad.source.url
+                                                ? <a href={cad.source.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline" title={cad.source.titre}>{majuscule(libelleTypeDocument(cad.source.type) || 'source')} ↗</a>
+                                                : (majuscule(libelleTypeDocument(cad.source.type)) || cad.source.titre)}
+                                            {(cad.source.date ?? cad.date_source) && <span class="block" style="color: var(--fg-muted)">{dateFr(cad.source.date ?? cad.date_source)}</span>}
+                                        </p>
+                                    )}
+                                    <a href={`/candidats/${c.slug}/#cadrage-budgetaire`} class="tc-fiche text-brand-600 hover:underline">Citations et détail →</a>
+                                    {autres > 0 && (
+                                        <span class="block mt-1" style="color: var(--fg-muted)">
+                                            + {autres} autre{autres > 1 ? 's' : ''} cadrage{autres > 1 ? 's' : ''} sur la fiche
+                                        </span>
+                                    )}
+                                </div></td>
+                            </tr>
+                        ) : (
+                            <tr class="tc-vide">
+                                <th scope="row" class="tc-nom">
+                                    <a href={`/candidats/${c.slug}/`} class="hover:text-brand-600">{nom(c)}</a>
+                                </th>
+                                <td colspan={nbColonnes - 1} class="tc-etat">
+                                    {libelleEtatCadrage(etat!.etat)}
+                                    <span style="color: var(--fg-muted)">
+                                        {etat!.etat === 'en_traitement'
+                                            ? ' — cadrage repéré, chiffres en cours de vérification'
+                                            : ' — aucun cadrage budgétaire repéré à ce jour'}
+                                    </span>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+        {reference?.note_methodologique && (
+            <p class="text-xs mt-2" style="color: var(--fg-muted)">{reference.note_methodologique}</p>
+        )}
+    </section>
+)}
+
+<style>
+    .tc { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.75rem; line-height: 1.45; }
+    .tc th, .tc td { padding: 0.55rem 0.5rem; vertical-align: top; text-align: left; border-top: 1px solid var(--border); }
+    .tc thead th { border-top: 0; font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--fg-muted); }
+    .tc-col-nom { width: 8.5rem; }
+    .tc-col-nature { width: 8rem; }
+    .tc-col-source { width: 8rem; }
+    .tc-nom { font-weight: 600; font-size: 0.8125rem; }
+
+    /* La référence : un bloc à part, fond distinct et filet épais, jamais une ligne parmi
+       les autres. */
+    .tc-ref tr > * { background: var(--bg-soft); }
+    .tc-ref-titre { font-size: 0.8125rem; font-weight: 700; border-top: 2px solid var(--border) !important; }
+    .tc-ref tr:last-child > * { border-bottom: 3px solid var(--border); }
+    .tc-constats-liste { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+    .tc-constats-liste > li { max-width: 26rem; }
+
+    .tc-vide th, .tc-vide td { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+    .tc-etat { font-style: italic; }
+    .tc-fiche { display: inline-flex; align-items: center; min-height: 28px; }
+    @media (pointer: coarse) { .tc-fiche { min-height: 44px; } }
+
+    @media (min-width: 1024px) {
+        .tc-cadre { overflow-x: auto; }
+        .tc { min-width: 960px; }
+    }
+
+    /* Sous 1 024 px : une carte par candidat, chaque case annoncée par son intitulé. */
+    @media (max-width: 1023px) {
+        .tc, .tc tbody, .tc tr, .tc th, .tc td { display: block; width: auto; }
+        .tc thead { display: none; }
+        .tc th, .tc td { border-top: 0; padding: 0; }
+        .tc tr { border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
+        .tc td { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 0.75rem; padding: 0.4rem 0; border-top: 1px dashed var(--border); }
+        .tc td::before {
+            content: attr(data-label);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--fg-muted);
+        }
+        .tc-nom { font-size: 0.9375rem; padding-bottom: 0.25rem !important; }
+
+        .tc-ref { border: 2px solid var(--border); border-radius: 12px; background: var(--bg-soft); padding: 0.25rem 0 0.5rem; }
+        .tc-ref tr { border: 0; margin: 0; padding: 0.5rem 1rem 0; }
+        .tc-ref tr > * { background: transparent; border-bottom: 0 !important; }
+        .tc-ref-titre { border-top: 0 !important; }
+        .tc-constats { display: block !important; }
+        .tc-constats::before { display: block; margin-bottom: 0.25rem; }
+        .tc-constats-liste { flex-direction: column; gap: 0.5rem; }
+
+        .tc-ref .tc-nom { display: none; }
+        .tc-vide { display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 0 0.5rem; margin-top: 0.4rem !important; padding: 0.45rem 0.75rem !important; }
+        .tc-vide .tc-nom { font-size: 0.875rem; padding-bottom: 0 !important; }
+        .tc-vide td { display: inline; border-top: 0; padding: 0; }
+        .tc-vide td::before { content: none; }
+    }
+    @media (max-width: 420px) {
+        .tc td { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.5rem; }
+    }
+</style>

@@ -1,0 +1,541 @@
+---
+/**
+ * Trois budgets pour 2027 : le projet du gouvernement, le contre-budget du Rassemblement
+ * national et le budget de première année de La France insoumise, chiffre par chiffre.
+ *
+ * Règles, celles de toute la section Budgets :
+ *  - chaque chiffre tel que sa source le donne, avec sa base et son lien ;
+ *  - aucun total recalculé, aucune conversion, aucun classement entre documents ;
+ *  - chaque parti dans la couleur de son candidat sur le site (fiches, comparateur), éclaircie
+ *    pour la lisibilité ; le gouvernement, qui n'est pas un parti, en gris neutre ;
+ *  - aucun sigle technique sans explication : glossaire en bas de page.
+ * Données : src/editorial/budget-2027.json, produit par Visualisations/budget-2027/construire.py.
+ * Tout est rendu au build ; le script ne fait qu'ajouter le filtre, les onglets et les bulles.
+ */
+import Base from '@/layouts/Base.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Glossaire from '@/components/budget/Glossaire.astro';
+import B from '@/editorial/budget-2027.json';
+import { dateFr } from '@/lib/format';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+type Source = { citation?: string | null; description?: string; lien?: string; locuteur?: string | null; timecode?: string | null };
+
+const fmt = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1 });
+const docs = Object.fromEntries(B.documents.map((d) => [d.id, d]));
+const libelleLien = (s: Source | undefined, defaut = 'source ↗') => (s?.timecode ? `▶ ${s.timecode}` : defaut);
+const bulle = (titre: string, valeur: string, s?: Source) => ({
+    'data-bulle': '',
+    'data-titre': titre,
+    'data-valeur': valeur,
+    'data-citation': s?.citation ?? '',
+    'data-qui': [s?.locuteur, s?.timecode].filter(Boolean).join(' · ') || s?.description || '',
+    tabindex: 0,
+});
+
+// Graphique du déficit : une échelle de 0 à 6 % du PIB pour toutes les lignes.
+const xD = (v: number) => (v / 6) * 100;
+const dep = B.deficit.depart;
+
+// Grands leviers : une échelle commune de −110 à +110 milliards, zéro au centre.
+const MIN = -110, MAX = 110;
+const xL = (v: number) => ((v - MIN) / (MAX - MIN)) * 100;
+const z = xL(0);
+const geometrie = (signe: number, montant: number) => {
+    const v = signe * montant;
+    return { gauche: v >= 0 ? z : xL(v), largeur: Math.abs(xL(v) - z), positif: v >= 0 };
+};
+
+// Poste par poste : une échelle commune de 0 à 25 milliards pour les trois documents.
+const xP = (v: number) => Math.min(100, (v / 25) * 100);
+const natures = Object.entries(B.natures) as [string, string][];
+const postesDe = (id: string, nature: string) =>
+    (B.postes as any)[id].postes.filter((p: any) => p.nature === nature).sort((a: any, b: any) => b.montant - a.montant);
+
+const titre = 'Trois budgets pour 2027';
+---
+
+<Base
+    title="Budget 2027 : le gouvernement, le Rassemblement national et La France insoumise comparés | Objectif 2027"
+    description="Le projet de budget 2027 du gouvernement, le contre-budget du Rassemblement national et le budget de première année de La France insoumise, chiffre par chiffre, chacun avec sa source et sa base."
+    ogType="article"
+    jsonld={breadcrumbJsonLd([{ label: 'Budgets', href: '/budgets/' }, { label: titre }])}>
+    <Breadcrumb items={[{ label: 'Budgets', href: '/budgets/' }, { label: titre }]} />
+
+    <div class="budget" id="budget">
+        <header class="prose">
+            <h1 class="text-2xl font-bold">{titre}</h1>
+            <p>Le projet de budget de l'État présenté par le gouvernement, le contre-budget du Rassemblement national et le budget de première année esquissé par La France insoumise, chiffre par chiffre. Chaque montant est cité tel que sa source le donne, avec le lien pour le vérifier.</p>
+            <p>Les trois documents ne mesurent pas leurs montants par rapport à la même base. Nous ne les additionnons pas, ne les convertissons pas et n'en tirons aucun classement.</p>
+            <p>Les mots techniques (déficit, PIB, solde primaire…) sont expliqués dans le <a href="#glossaire">glossaire</a>, en bas de page.</p>
+            <p class="etat"><span>Sources vérifiées au {dateFr(B.verifie_au)}</span></p>
+        </header>
+
+        <div class="filtre" role="group" aria-label="Documents affichés" hidden data-filtre>
+            <span class="muet">Afficher :</span>
+            {B.documents.map((d) => (
+                <button class="puce" type="button" data-doc={d.id} data-puce={d.id} aria-pressed="true">
+                    <span class="pastille" aria-hidden="true"></span>{d.court}
+                </button>
+            ))}
+        </div>
+
+        <section aria-labelledby="t-docs">
+            <h2 id="t-docs" class="text-lg font-semibold">Les trois documents</h2>
+            <div class="docs">
+                {B.documents.map((d) => (
+                    <article class="doc" data-doc={d.id}>
+                        <h3><span class="pastille" aria-hidden="true"></span>{d.court}</h3>
+                        <dl>
+                            <div><dt>Document</dt><dd>{d.nom}</dd></div>
+                            <div><dt>Présenté le</dt><dd>{dateFr(d.date)} · {d.porteur}</dd></div>
+                            <div><dt>Nature</dt><dd>{d.nature}</dd></div>
+                            <div><dt>Base des montants</dt><dd>{d.base}</dd></div>
+                            <div><dt>Sources</dt><dd>{d.sources.map((s, i) => (<>{i > 0 && <br />}<a href={s.url} target="_blank" rel="noopener">{s.texte}</a></>))}</dd></div>
+                        </dl>
+                    </article>
+                ))}
+            </div>
+        </section>
+
+        <section aria-labelledby="t-def">
+            <div class="prose">
+                <h2 id="t-def" class="text-lg font-semibold">Le déficit visé pour 2027</h2>
+                <p>Le déficit public, c'est ce qui manque sur l'année pour que les recettes couvrent les dépenses. Il est exprimé en pourcentage du PIB, la richesse produite en France en un an. Le point de départ est la prévision révisée du gouvernement pour 2026.</p>
+            </div>
+            <figure class="figure" aria-labelledby="t-def">
+                <div class="points">
+                    <div class="pt-ligne">
+                        <div class="pt-nom muet">{dep.libelle}</div>
+                        <div class="piste">
+                            <span class="repere" style={`left:${xD(3)}%`} aria-hidden="true"></span>
+                            <span class="point depart" style={`left:${xD(dep.valeur)}%`} aria-label={`${dep.libelle} : ${fmt.format(dep.valeur)} % du PIB`}
+                                  {...bulle(dep.libelle, `${fmt.format(dep.valeur)} % du PIB`, { description: dep.source.texte })}></span>
+                            <span class="pt-val muet" style={`left:${xD(dep.valeur)}%`}>{fmt.format(dep.valeur)} %</span>
+                        </div>
+                    </div>
+                    {B.deficit.lignes.map((l: any) => (
+                        <div class="pt-ligne" data-doc={l.doc}>
+                            <div class="pt-nom"><span class="pastille" aria-hidden="true"></span>{docs[l.doc].court}</div>
+                            {l.valeur == null ? (
+                                <div class="pt-texte">{l.texte} <a href={l.source.lien} target="_blank" rel="noopener">{libelleLien(l.source)}</a></div>
+                            ) : (
+                                <div class="piste">
+                                    <span class="repere" style={`left:${xD(3)}%`} aria-hidden="true"></span>
+                                    <span class="point" style={`left:${xD(l.valeur)}%`} aria-label={`${docs[l.doc].court} : ${l.texte}`} {...bulle(docs[l.doc].court, l.texte, l.source)}></span>
+                                    <span class="pt-val" style={`left:${xD(l.valeur)}%`}>{l.etiquette}</span>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                <div class="axe" aria-hidden="true">{[0, 1, 2, 3, 4, 5, 6].map((t) => <span style={`left:${xD(t)}%`}>{t} %</span>)}</div>
+                <figcaption class="legende">Déficit public, en % du PIB. Le trait vertical marque 3 %, la limite fixée par les règles budgétaires européennes.</figcaption>
+                <details>
+                    <summary>Voir les chiffres en tableau</summary>
+                    <div class="tableau-ext">
+                        <table>
+                            <thead><tr><th>Document</th><th>Déficit public 2027</th><th>Source</th></tr></thead>
+                            <tbody>
+                                <tr><td>{dep.libelle}</td><td>{fmt.format(dep.valeur)} % du PIB</td><td><a href={dep.source.lien} target="_blank" rel="noopener">Dossier de presse du projet de budget</a></td></tr>
+                                {B.deficit.lignes.map((l: any) => (
+                                    <tr data-doc={l.doc}><td>{docs[l.doc].court}</td><td>{l.texte}</td><td><a href={l.source.lien} target="_blank" rel="noopener">{libelleLien(l.source)}</a></td></tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            </figure>
+        </section>
+
+        <section aria-labelledby="t-lev">
+            <div class="prose">
+                <h2 id="t-lev" class="text-lg font-semibold">Les grands leviers annoncés</h2>
+                <p>Ce que chaque document change, côté recettes et côté dépenses, en milliards d'euros pour 2027. À droite du zéro, ce qui augmente ; à gauche, ce qui diminue. Les trois documents partagent la même échelle, mais pas la même base de comparaison.</p>
+            </div>
+            <figure class="figure" aria-labelledby="t-lev">
+                {B.leviers.map((l: any) => (
+                    <div class="lev-doc" data-doc={l.doc}>
+                        <div class="lev-tete"><span class="pastille" aria-hidden="true"></span>{docs[l.doc].court}</div>
+                        <div class="lev-cols">
+                            {[['recettes', 'Recettes'], ['depenses', 'Dépenses']].map(([cote, nomCote]) => {
+                                const barres = l.barres.filter((b: any) => b.cote === cote);
+                                return (
+                                    <div class="lev-col">
+                                        <h4>{nomCote}</h4>
+                                        {barres.length === 0 && <p class="vide">Non précisé</p>}
+                                        {barres.map((b: any) => {
+                                            const g = geometrie(b.signe, b.montant);
+                                            return (
+                                                <div class="barre">
+                                                    <div class="barre-lib"><span>{b.libelle} <a href={b.source.lien} target="_blank" rel="noopener">{libelleLien(b.source)}</a></span><b>{b.texte}</b></div>
+                                                    <div class="track">
+                                                        <span class="zero" style={`left:${z}%`}></span>
+                                                        <span class:list={['fill', g.positif ? 'pos' : 'neg']} style={`left:${g.gauche}%;width:${g.largeur}%`}
+                                                              aria-label={`${b.libelle} : ${b.texte}`} {...bulle(`${docs[l.doc].court} · ${b.libelle}`, b.texte, b.source)}></span>
+                                                    </div>
+                                                    {b.note && <p class="petit muet">{b.note}</p>}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <p class="annonce">Annoncé : {l.annonce}</p>
+                    </div>
+                ))}
+                <div class="echelle" aria-hidden="true">
+                    {[0, 1].map(() => <div>{[-100, -50, 0, 50, 100].map((t) => <span style={`left:${xL(t)}%`}>{t > 0 ? `+${t}` : t}</span>)}</div>)}
+                </div>
+                <figcaption class="legende">Échelle en milliards d'euros.</figcaption>
+                <details>
+                    <summary>Voir les chiffres en tableau</summary>
+                    <div class="tableau-ext">
+                        <table>
+                            <thead><tr><th>Document</th><th>Côté</th><th>Levier</th><th>Montant</th><th>Source</th></tr></thead>
+                            <tbody>
+                                {B.leviers.flatMap((l: any) => l.barres.map((b: any) => (
+                                    <tr data-doc={l.doc}><td>{docs[l.doc].court}</td><td>{b.cote === 'recettes' ? 'Recettes' : 'Dépenses'}</td><td>{b.libelle}{b.note && <><br /><span class="muet">{b.note}</span></>}</td><td>{b.texte}</td><td><a href={b.source.lien} target="_blank" rel="noopener">{libelleLien(b.source)}</a></td></tr>
+                                )))}
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            </figure>
+        </section>
+
+        <section aria-labelledby="t-log">
+            <div class="prose">
+                <h2 id="t-log" class="text-lg font-semibold">Logiques économiques : ce que chacun parie</h2>
+                <p>Chaque budget repose sur un pari : l'effet qu'il aura sur la croissance. Voici ce que chaque document fait, comment ses auteurs le présentent, avec leurs mots, et l'hypothèse de croissance qu'ils annoncent.</p>
+            </div>
+            <div class="logiques">
+                {B.logiques.map((l: any) => (
+                    <article class="logique" data-doc={l.doc}>
+                        <h3><span class="pastille" aria-hidden="true"></span>{docs[l.doc].court}</h3>
+                        <div><h4>Ce qui est fait</h4><p>{l.fait}</p></div>
+                        <div class="mots">
+                            <h4>Dans ses mots</h4>
+                            {l.mots.map((m: any) => (
+                                <blockquote><q>{m.citation}</q><span>{m.locuteur} <a href={m.lien} target="_blank" rel="noopener">{libelleLien(m)}</a></span></blockquote>
+                            ))}
+                        </div>
+                        <div>
+                            <h4>Son pari sur la croissance</h4>
+                            <ul>{l.paris.map((p: any) => <li>{p.texte} <a href={p.source.lien} target="_blank" rel="noopener">{libelleLien(p.source)}</a></li>)}</ul>
+                        </div>
+                    </article>
+                ))}
+            </div>
+            <div class="figure debat">
+                <h3>Le débat de fond : l'effet multiplicateur</h3>
+                <p>Les économistes appellent multiplicateur budgétaire la variation de l'activité quand l'État dépense ou économise un euro. Sa valeur se discute et dépend de la conjoncture ; c'est elle qui départage les paris ci-dessus.</p>
+                <ul>
+                    <li><strong>Logique de relance.</strong> Une dépense publique supplémentaire soutient la demande : emplois, salaires, consommation. L'activité créée rapporte des recettes qui financent une partie de la dépense.</li>
+                    <li><strong>Logique de baisse des dépenses avec baisses d'impôts.</strong> L'effet récessif des économies reste limité, et les baisses d'impôts soutiennent l'investissement et la consommation. Le redressement vient d'abord de la dépense en moins.</li>
+                </ul>
+                <p class="petit muet">Nous présentons les deux logiques sans dire laquelle est juste : les prévisions ne se vérifient qu'après coup.</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="t-postes">
+            <div class="prose">
+                <h2 id="t-postes" class="text-lg font-semibold">Le détail, poste par poste</h2>
+                <p>Les lignes chiffrées de chaque document, regroupées selon leur effet. Un lien mène au passage exact de la source : la minute de la vidéo, ou le dossier de presse.</p>
+            </div>
+            <div class="figure">
+                <div class="onglets" role="tablist" aria-label="Document" hidden data-onglets>
+                    {B.documents.map((d, i) => (
+                        <button class="onglet" role="tab" type="button" id={`onglet-${d.id}`} data-doc={d.id} data-onglet={d.id}
+                                aria-controls={`panneau-${d.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+                            <span class="pastille" aria-hidden="true"></span>{d.court}
+                        </button>
+                    ))}
+                </div>
+                {B.documents.map((d) => {
+                    const P = (B.postes as any)[d.id];
+                    return (
+                        <div class="panneau" role="tabpanel" id={`panneau-${d.id}`} aria-labelledby={`onglet-${d.id}`} data-doc={d.id} data-panneau={d.id}>
+                            <h3 class="panneau-titre"><span class="pastille" aria-hidden="true"></span>{d.court}</h3>
+                            {P.precision && <p class="petit muet">{P.precision}</p>}
+                            {natures.map(([nature, nomNature]) => {
+                                const ps = postesDe(d.id, nature);
+                                return ps.length > 0 && (
+                                    <div class="groupe">
+                                        <h4>{nomNature}</h4>
+                                        {ps.map((p: any) => (
+                                            <div class="poste">
+                                                <div class="poste-lib">{p.libelle} <a href={p.source.lien} target="_blank" rel="noopener">{libelleLien(p.source, 'dossier de presse ↗')}</a></div>
+                                                <div class="track"><span class="fill" style={`width:${xP(p.montant)}%`} aria-label={`${p.libelle} : ${p.texte}`} {...bulle(p.libelle, p.texte, p.source)}></span></div>
+                                                <div class="poste-val">{p.texte}</div>
+                                                {p.note && <div class="poste-note">{p.note}</div>}
+                                            </div>
+                                        ))}
+                                    </div>
+                                );
+                            })}
+                            {P.autres?.length > 0 && (
+                                <ul class="autres">
+                                    <li class="muet petit">Autres annonces, sans montant pour 2027 ou hors du budget de l'année :</li>
+                                    {P.autres.map((a: any) => (
+                                        <li>{a.libelle.replace(/\s*\((dette|financement|dépense|recette|économies)\)$/, '')}{a.texte && a.texte !== a.libelle ? ` : ${a.texte}` : ''} <a href={a.source.lien} target="_blank" rel="noopener">{libelleLien(a.source)}</a></li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    );
+                })}
+                <p class="legende">Barres sur une même échelle, de 0 à 25 milliards d'euros, pour les trois documents.</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="t-hyp">
+            <div class="prose">
+                <h2 id="t-hyp" class="text-lg font-semibold">Ce que chaque document suppose</h2>
+                <p>Les hypothèses et repères chiffrés que chacun donne pour 2027. « Non précisé » signifie que la source ne le dit pas.</p>
+            </div>
+            <div class="figure tableau-ext">
+                <table>
+                    <thead>
+                        <tr><th>Repère</th>{B.documents.map((d) => <th data-doc={d.id}><span class="pastille" aria-hidden="true"></span>{d.court}</th>)}</tr>
+                    </thead>
+                    <tbody>
+                        {B.hypotheses.map((h: any) => (
+                            <tr>
+                                <th scope="row">{h.libelle}</th>
+                                {B.documents.map((d) => {
+                                    const v = h.valeurs[d.id];
+                                    return v
+                                        ? <td data-doc={d.id}>{v.texte}<br /><a href={v.source.lien} target="_blank" rel="noopener">{libelleLien(v.source)}</a></td>
+                                        : <td data-doc={d.id} class="np">Non précisé</td>;
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section aria-labelledby="t-meth" class="methode">
+            <h2 id="t-meth" class="text-lg font-semibold">Méthode</h2>
+            <ul>
+                <li>Les montants du gouvernement viennent du dossier de presse de son projet de budget pour 2027 et de l'avis du Haut Conseil des finances publiques du 1er octobre 2026.</li>
+                <li>Ceux du Rassemblement national et de La France insoumise viennent des conférences de presse filmées : chaque citation a été retrouvée mot pour mot dans la transcription, avec la minute où elle est prononcée.</li>
+                <li>Un montant suivi de « ≈ » ou de « plus de » reprend la formulation de l'orateur. Quand un orateur donne deux chiffres pour le même poste, les deux sont indiqués.</li>
+                <li>Les bases diffèrent : le gouvernement mesure son effort par rapport à une évolution « à politique inchangée » ; le Rassemblement national et La France insoumise ne précisent pas la leur. C'est pourquoi la page n'affiche ni total recalculé ni écart entre documents.</li>
+                <li>Constat de départ : en 2025, le déficit public a été de {fmt.format(B.constat_2025.deficit)} % du PIB et la dette de {fmt.format(B.constat_2025.dette)} % (<a href={B.constat_2025.lien} target="_blank" rel="noopener">Insee</a>).</li>
+                <li>Les annonces faites après le {dateFr(B.verifie_au)} ne figurent pas encore sur cette page. La <a href="/methodologie/#cadrage-budgetaire">méthodologie</a> détaille les règles communes à tous les budgets.</li>
+            </ul>
+        </section>
+
+        <Glossaire />
+    </div>
+    <div class="bulle" role="tooltip" hidden data-bulle-boite></div>
+</Base>
+
+<style>
+    .budget {
+        --plf: #81878f; --rn: #165695; --lfi: #7f4dd6; --grille: color-mix(in srgb, var(--border) 70%, transparent);
+        display: grid; gap: 40px; padding-top: 8px; font-variant-numeric: tabular-nums;
+    }
+    @media (prefers-color-scheme: dark) { .budget { --plf: #8f949b; --rn: #156ec0; --lfi: #9964e5; } }
+    [data-doc="plf"] { --c: var(--plf); }
+    [data-doc="rn"] { --c: var(--rn); }
+    [data-doc="lfi"] { --c: var(--lfi); }
+    .budget :global([data-masque]) { display: none !important; }
+    section { display: grid; gap: 16px; }
+    .prose { display: grid; gap: 10px; max-width: 70ch; }
+    .prose p { color: var(--fg-muted); }
+    .muet { color: var(--fg-muted); }
+    .petit { font-size: .84rem; }
+    a { text-decoration: underline; text-underline-offset: 2px; }
+    .etat span { display: inline-block; font-size: .8rem; color: var(--fg-muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+    .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); flex: none; }
+
+    .filtre { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .filtre[hidden] { display: none; }
+    .puce { font: inherit; font-size: .9rem; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--fg); border-radius: 999px; padding: 6px 14px; min-height: 40px; }
+    .puce[aria-pressed="false"] { color: var(--fg-muted); background: transparent; }
+    .puce[aria-pressed="false"] .pastille { background: transparent; box-shadow: inset 0 0 0 2px var(--c); }
+
+    .docs, .logiques { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .doc, .logique { border: 1px solid var(--border); border-top: 3px solid var(--c); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; align-content: start; min-width: 0; background: var(--bg); }
+    .doc h3, .logique h3, .panneau-titre { display: flex; gap: 8px; align-items: center; font-weight: 600; margin: 0; }
+    .doc dl { margin: 0; display: grid; gap: 6px; font-size: .88rem; }
+    .doc dt, h4 { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-muted); margin: 0; }
+    .doc dd { margin: 0; color: var(--fg-muted); }
+
+    .figure { margin: 0; border: 1px solid var(--border); border-radius: 10px; padding: 18px; display: grid; gap: 14px; background: var(--bg); min-width: 0; }
+    .legende { font-size: .8rem; color: var(--fg-muted); }
+
+    .points { display: grid; gap: 4px; }
+    .pt-ligne { display: grid; grid-template-columns: minmax(8rem, 13rem) 1fr; gap: 12px; align-items: center; min-height: 44px; }
+    .pt-nom { font-size: .9rem; display: flex; gap: 8px; align-items: center; }
+    .piste { position: relative; height: 32px; }
+    .piste::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--grille); }
+    .repere { position: absolute; top: -6px; bottom: -6px; border-left: 1px solid var(--fg-muted); }
+    .point { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px var(--bg); cursor: help; }
+    .point.depart { background: var(--bg); box-shadow: inset 0 0 0 2px var(--fg-muted), 0 0 0 2px var(--bg); }
+    .pt-val { position: absolute; top: 50%; transform: translate(12px, -50%); font-size: .86rem; font-weight: 600; white-space: nowrap; }
+    .pt-texte { font-size: .88rem; color: var(--fg-muted); }
+    .axe { position: relative; height: 22px; margin-left: calc(min(13rem, 34%) + 12px); }
+    .axe span { position: absolute; transform: translateX(-50%); font-size: .76rem; color: var(--fg-muted); white-space: nowrap; }
+    .axe span:last-child { transform: translateX(-100%); }
+
+    .lev-doc { display: grid; gap: 10px; padding-top: 14px; border-top: 1px solid var(--grille); }
+    .lev-doc:first-child { border-top: 0; padding-top: 0; }
+    .lev-tete { display: flex; gap: 8px; align-items: center; font-weight: 600; }
+    .lev-cols, .echelle { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .lev-col { display: grid; gap: 10px; align-content: start; min-width: 0; }
+    .barre { display: grid; gap: 4px; }
+    .barre-lib { font-size: .88rem; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .barre-lib b { white-space: nowrap; }
+    .barre-lib a, .poste-lib a, .autres a, td a, .logique a { font-size: .76rem; color: var(--fg-muted); white-space: nowrap; }
+    .track { position: relative; height: 14px; }
+    .track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--grille); }
+    .zero { position: absolute; top: -4px; bottom: -4px; border-left: 1px solid var(--fg-muted); }
+    .fill { position: absolute; top: 2px; bottom: 2px; background: var(--c); cursor: help; }
+    .fill.pos { border-radius: 0 4px 4px 0; }
+    .fill.neg { border-radius: 4px 0 0 4px; }
+    .annonce { font-size: .86rem; color: var(--fg-muted); }
+    .vide { font-size: .86rem; color: var(--fg-muted); font-style: italic; }
+    .echelle { font-size: .74rem; color: var(--fg-muted); }
+    .echelle div { position: relative; height: 16px; }
+    .echelle span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+
+    .logique p, .logique li { font-size: .9rem; color: var(--fg-muted); }
+    .logique ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+    .mots { display: grid; gap: 8px; }
+    blockquote { margin: 0; padding-left: 10px; border-left: 2px solid var(--c); font-size: .9rem; display: grid; gap: 2px; }
+    blockquote span { font-size: .78rem; color: var(--fg-muted); }
+    .debat ul { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; color: var(--fg-muted); max-width: 75ch; }
+    .debat p { color: var(--fg-muted); max-width: 75ch; }
+    .debat h3 { margin: 0; font-weight: 600; }
+
+    .onglets { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--border); }
+    .onglets[hidden] { display: none; }
+    .onglet { font: inherit; font-size: .92rem; background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 12px; cursor: pointer; color: var(--fg-muted); display: inline-flex; gap: 8px; align-items: center; min-height: 44px; }
+    .onglet[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--c); font-weight: 600; }
+    .panneau { display: grid; gap: 10px; }
+    .panneau + .panneau { padding-top: 18px; border-top: 1px solid var(--grille); }
+    :global(.budget.js) .panneau-titre { display: none; }
+    :global(.budget.js) .panneau + .panneau { padding-top: 0; border-top: 0; }
+    .groupe { display: grid; gap: 8px; }
+    .poste { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr) 8.5rem; gap: 12px; align-items: center; font-size: .9rem; }
+    .poste .track { height: 12px; }
+    .poste .fill { left: 0; border-radius: 0 4px 4px 0; }
+    .poste-val { text-align: right; font-weight: 600; white-space: nowrap; }
+    .poste-note { grid-column: 1 / -1; font-size: .8rem; color: var(--fg-muted); margin-top: -4px; }
+    .autres { display: grid; gap: 6px; font-size: .88rem; color: var(--fg-muted); padding: 12px 0 0; margin: 0; list-style: none; border-top: 1px solid var(--grille); }
+
+    .tableau-ext { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+    th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--grille); }
+    thead th { font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; color: var(--fg-muted); white-space: nowrap; }
+    thead th .pastille { margin-right: 6px; vertical-align: middle; }
+    .np { color: var(--fg-muted); font-style: italic; }
+    details { font-size: .88rem; }
+    summary { cursor: pointer; color: var(--fg-muted); }
+    details[open] summary { margin-bottom: 10px; }
+    .methode ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--fg-muted); max-width: 72ch; }
+
+    .bulle { position: fixed; z-index: 30; max-width: min(360px, calc(100vw - 32px)); background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: .84rem; box-shadow: 0 6px 24px rgb(0 0 0 / .16); pointer-events: none; display: grid; gap: 4px; }
+    .bulle[hidden] { display: none; }
+    .bulle :global(q) { font-style: italic; color: var(--fg-muted); }
+    .bulle :global(.qui) { color: var(--fg-muted); font-size: .78rem; }
+
+    @media (max-width: 640px) {
+        .pt-ligne { grid-template-columns: 1fr; gap: 2px; }
+        .axe { margin-left: 0; }
+        .lev-cols, .echelle { grid-template-columns: 1fr; }
+        .echelle div:nth-child(2) { display: none; }
+        .poste { grid-template-columns: minmax(0, 1fr) 7rem; }
+        .poste .track { grid-column: 1 / -1; grid-row: 2; }
+    }
+</style>
+
+<script>
+    // Amélioration progressive : sans script, tout est visible, les trois panneaux à la suite.
+    const racine = document.getElementById('budget');
+    if (racine) {
+        racine.classList.add('js');
+        const masques = new Set<string>();
+        const appliquer = () => {
+            racine.querySelectorAll<HTMLElement>('[data-doc]').forEach((el) => {
+                if (el.matches('.puce, .onglet')) return;
+                const doc = el.dataset.doc ?? '';
+                const masque = masques.has(doc) || (el.dataset.panneau !== undefined && el.dataset.panneau !== ongletActif);
+                masque ? el.setAttribute('data-masque', '') : el.removeAttribute('data-masque');
+            });
+            racine.querySelectorAll<HTMLButtonElement>('[data-puce]').forEach((b) => b.setAttribute('aria-pressed', String(!masques.has(b.dataset.puce!))));
+            racine.querySelectorAll<HTMLButtonElement>('[data-onglet]').forEach((b) => {
+                const actif = b.dataset.onglet === ongletActif;
+                b.hidden = masques.has(b.dataset.onglet!);
+                b.setAttribute('aria-selected', String(actif));
+                b.tabIndex = actif ? 0 : -1;
+            });
+        };
+        let ongletActif = 'plf';
+        const visibles = () => ['plf', 'rn', 'lfi'].filter((d) => !masques.has(d));
+
+        const filtre = racine.querySelector<HTMLElement>('[data-filtre]');
+        if (filtre) filtre.hidden = false;
+        racine.querySelectorAll<HTMLButtonElement>('[data-puce]').forEach((b) => b.addEventListener('click', () => {
+            const d = b.dataset.puce!;
+            if (!masques.has(d) && visibles().length === 1) return; // au moins un document
+            masques.has(d) ? masques.delete(d) : masques.add(d);
+            if (masques.has(ongletActif)) ongletActif = visibles()[0];
+            appliquer();
+        }));
+
+        const onglets = racine.querySelector<HTMLElement>('[data-onglets]');
+        if (onglets) {
+            onglets.hidden = false;
+            onglets.addEventListener('click', (e) => {
+                const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-onglet]');
+                if (b) { ongletActif = b.dataset.onglet!; appliquer(); }
+            });
+            onglets.addEventListener('keydown', (e) => {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+                const ids = visibles();
+                const i = (ids.indexOf(ongletActif) + (e.key === 'ArrowRight' ? 1 : ids.length - 1)) % ids.length;
+                ongletActif = ids[i]; appliquer();
+                racine.querySelector<HTMLElement>(`#onglet-${ongletActif}`)?.focus();
+            });
+        }
+        appliquer();
+
+        // Bulles : survol, focus clavier ou toucher ; elles se ferment en quittant la marque.
+        const boite = document.querySelector<HTMLElement>('[data-bulle-boite]');
+        const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+        const montrer = (el: HTMLElement) => {
+            if (!boite) return;
+            const d = el.dataset;
+            boite.innerHTML = `<strong>${esc(d.titre ?? '')}</strong><span>${esc(d.valeur ?? '')}</span>`
+                + (d.citation ? `<q>${esc(d.citation)}</q>` : '')
+                + (d.qui ? `<span class="qui">${esc(d.qui)}</span>` : '');
+            boite.hidden = false;
+            const r = el.getBoundingClientRect(), b = boite.getBoundingClientRect();
+            const ligne = el.closest('.barre, .poste, .pt-ligne')?.getBoundingClientRect() ?? r;
+            const left = Math.min(Math.max(8, r.left + r.width / 2 - b.width / 2), innerWidth - b.width - 8);
+            let top = ligne.top - b.height - 8;
+            if (top < 8) top = Math.min(ligne.bottom + 8, innerHeight - b.height - 8);
+            boite.style.left = `${left}px`; boite.style.top = `${top}px`;
+        };
+        const cacher = () => { if (boite) boite.hidden = true; };
+        const marque = (e: Event) => (e.target as HTMLElement | null)?.closest<HTMLElement>('[data-bulle]');
+        racine.addEventListener('pointerover', (e) => { if ((e as PointerEvent).pointerType === 'touch') return; const el = marque(e); el ? montrer(el) : cacher(); });
+        racine.addEventListener('pointerout', (e) => {
+            const el = marque(e), vers = (e as PointerEvent).relatedTarget as Node | null;
+            if (el && !(vers && el.contains(vers)) && document.activeElement !== el) cacher();
+        });
+        racine.addEventListener('focusin', (e) => { const el = marque(e); el ? montrer(el) : cacher(); });
+        racine.addEventListener('focusout', cacher);
+        racine.addEventListener('click', (e) => { const el = marque(e); el ? montrer(el) : cacher(); });
+        document.documentElement.addEventListener('pointerleave', cacher);
+        addEventListener('scroll', cacher, { passive: true });
+        addEventListener('resize', cacher);
+        addEventListener('keydown', (e) => { if (e.key === 'Escape') cacher(); });
+    }
+</script>

@@ -1,0 +1,48 @@
+---
+/**
+ * Qui a formulé une mesure, et avec quels mots.
+ *
+ *  - `porte_par` non nul : toutes les sources de la mesure viennent de l'équipe de campagne.
+ *    La mesure reste celle du projet du candidat, mais ceux qui l'ont énoncée sont nommés.
+ *  - `citations` : les propos d'appui, chacun avec son auteur DANS l'élément de la citation
+ *    (rien pour le candidat lui-même) et son lien horodaté.
+ */
+import { attributionLocuteur, estTimecode, porteParTexte } from '@/lib/format';
+
+interface Props {
+    mesure: {
+        porte_par?: { qualite?: string; locuteurs?: { nom: string; role: string | null }[] } | null;
+        citations?: { citation: string; timecode: string | null; verifier_url: string | null; locuteur?: string | null; role_locuteur?: string | null; qualite_locuteur?: string | null }[];
+    };
+}
+const { mesure: m } = Astro.props;
+const portePar = porteParTexte(m.porte_par);
+const citations = (m.citations ?? []).filter((c) => c.citation?.trim());
+---
+{portePar && <p class="text-xs mt-0.5" style="color: var(--fg-muted)">{portePar}</p>}
+{citations.length > 0 && (
+    <details class="mt-1">
+        <summary class="cursor-pointer text-xs text-brand-600">
+            {citations.length > 1 ? `Citations à la source (${citations.length})` : 'Citation à la source'}
+        </summary>
+        <ul class="mt-1 space-y-2 border-l-2 pl-3" style="border-color: var(--border)">
+            {citations.map((cit) => {
+                const qui = attributionLocuteur(cit);
+                return (
+                    <li class="text-xs">
+                        <p>
+                            <span class="italic">« {cit.citation} »</span>
+                            {qui && <span style="color: var(--fg-muted)"> — {qui}</span>}
+                        </p>
+                        {cit.verifier_url && (
+                            <a href={cit.verifier_url} target="_blank" rel="nofollow noopener"
+                               class="tap inline-flex items-center font-medium text-brand-600 hover:underline">
+                                ▶ Vérifier{estTimecode(cit.timecode) ? ` à ${cit.timecode}` : ' à la source'}
+                            </a>
+                        )}
+                    </li>
+                );
+            })}
+        </ul>
+    </details>
+)}

@@ -1,34 +1,150 @@
 ---
 /**
- * Barre d'ancres sticky — pilules segmentées avec état actif suivi au scroll
- * (IntersectionObserver inline, ~15 lignes, aucune donnée collectée).
- * items : [{ id, label }] — les id correspondent aux sections de la page.
+ * Barre de sections collante.
+ *
+ * Deux modes :
+ *  - ancres (défaut) : pilules qui font défiler vers la section, état actif suivi au
+ *    scroll. Toute la page reste visible.
+ *  - onglets (`onglets`) : une seule section affichée à la fois. Réservé aux pages
+ *    dont la longueur est le problème — une page question fait plusieurs dizaines de
+ *    milliers de caractères, et la voir d'un bloc décourage avant d'avoir commencé.
+ *
+ * Le mode onglets est une AMÉLIORATION PROGRESSIVE : sans JavaScript, rien n'est masqué
+ * et la page se comporte comme avant. On ne cache jamais du contenu sourcé derrière un
+ * script qui pourrait ne pas s'exécuter.
  */
 export interface Props {
     items: { id: string; label: string }[];
+    onglets?: boolean;
 }
-const { items } = Astro.props;
+const { items, onglets = false } = Astro.props;
 ---
 
-<nav aria-label="Sections de la page" class="anchor-nav">
-    <div class="anchor-nav-track">
+<nav aria-label="Sections de la page" class="anchor-nav" data-onglets={onglets ? 'oui' : undefined}>
+    <div class="anchor-nav-track" role={onglets ? 'tablist' : undefined}>
         {items.map((a, i) => (
-            <a href={`#${a.id}`} data-spy={a.id} class:list={['anchor-pill', { actif: i === 0 }]}>{a.label}</a>
+            <a href={`#${a.id}`} data-spy={a.id} id={`onglet-${a.id}`}
+               role={onglets ? 'tab' : undefined}
+               aria-controls={onglets ? a.id : undefined}
+               class:list={['anchor-pill', { actif: i === 0 }]}>{a.label}</a>
         ))}
     </div>
 </nav>
 
 <script is:inline>
+    // Ce script est émis À L'ENDROIT du composant, donc AVANT les sections qu'il pilote :
+    // au moment où il s'exécute, `getElementById('faits')` renvoie null. Il faut attendre
+    // que le document soit analysé. Le défaut existait déjà pour le suivi au scroll, en
+    // silence — les sections manquantes étaient simplement ignorées.
     (() => {
-        const pills = [...document.querySelectorAll('.anchor-nav [data-spy]')];
-        if (!pills.length || !('IntersectionObserver' in window)) return;
-        const byId = Object.fromEntries(pills.map((p) => [p.dataset.spy, p]));
+        const demarrer = () => {
+        const nav = document.querySelector('.anchor-nav');
+        if (!nav) return;
+        const pills = [...nav.querySelectorAll('[data-spy]')];
+        if (!pills.length) return;
+
         const setActif = (id) => pills.forEach((p) => p.classList.toggle('actif', p.dataset.spy === id));
-        const io = new IntersectionObserver((entries) => {
-            const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.target.offsetTop - b.target.offsetTop)[0];
-            if (visible) setActif(visible.target.id);
-        }, { rootMargin: '-15% 0px -65% 0px' });
-        pills.forEach((p) => { const s = document.getElementById(p.dataset.spy); if (s) io.observe(s); });
-        pills.forEach((p) => p.addEventListener('click', () => setActif(p.dataset.spy)));
+
+        if (nav.dataset.onglets !== 'oui') {
+            if (!('IntersectionObserver' in window)) return;
+            const io = new IntersectionObserver((entries) => {
+                const visible = entries
+                    .filter((e) => e.isIntersecting)
+                    .sort((a, b) => a.target.offsetTop - b.target.offsetTop)[0];
+                if (visible) setActif(visible.target.id);
+            }, { rootMargin: '-15% 0px -65% 0px' });
+            pills.forEach((p) => { const s = document.getElementById(p.dataset.spy); if (s) io.observe(s); });
+            pills.forEach((p) => p.addEventListener('click', () => setActif(p.dataset.spy)));
+            return;
+        }
+
+        // ── Mode onglets ────────────────────────────────────────────────────────────
+        const panneaux = new Map();
+        for (const p of pills) {
+            const s = document.getElementById(p.dataset.spy);
+            if (!s) continue;
+            s.setAttribute('role', 'tabpanel');
+            s.setAttribute('aria-labelledby', p.id);
+            s.setAttribute('tabindex', '-1');
+            panneaux.set(p.dataset.spy, s);
+        }
+        if (panneaux.size < 2) return;
+
+        function activer(id, deplacerLeFocus) {
+            if (!panneaux.has(id)) return false;
+            for (const [cle, s] of panneaux) s.hidden = cle !== id;
+            for (const p of pills) {
+                const estActif = p.dataset.spy === id;
+                p.classList.toggle('actif', estActif);
+                p.setAttribute('aria-selected', estActif ? 'true' : 'false');
+                p.setAttribute('tabindex', estActif ? '0' : '-1');
+                if (estActif && deplacerLeFocus) p.focus();
+            }
+            return true;
+        }
+
+        // Quel panneau contient cette ancre ? Sert aux liens profonds comme aux renvois
+        // internes « #fait-… », qui pointent depuis un onglet vers un autre.
+        const panneauDe = (hash) => {
+            if (!hash || hash.length < 2) return null;
+            const cible = document.getElementById(decodeURIComponent(hash.slice(1)));
+            if (!cible) return null;
+            for (const [cle, s] of panneaux) if (s === cible || s.contains(cible)) return { cle, cible };
+            return null;
+        };
+
+        pills.forEach((p) => p.addEventListener('click', (e) => {
+            e.preventDefault();
+            activer(p.dataset.spy, false);
+            history.replaceState(null, '', '#' + p.dataset.spy);
+            nav.scrollIntoView({ block: 'nearest' });
+        }));
+
+        // Navigation au clavier, motif ARIA des onglets.
+        nav.addEventListener('keydown', (e) => {
+            const i = pills.indexOf(document.activeElement);
+            if (i < 0) return;
+            const pas = { ArrowRight: 1, ArrowLeft: -1, Home: -Infinity, End: Infinity }[e.key];
+            if (pas === undefined) return;
+            e.preventDefault();
+            const j = pas === -Infinity ? 0
+                : pas === Infinity ? pills.length - 1
+                : (i + pas + pills.length) % pills.length;
+            activer(pills[j].dataset.spy, true);
+        });
+
+        // Un renvoi vers un fait part de « Qui propose quoi » et arrive dans « Les faits » :
+        // sans cela, le clic ne ferait rien, la cible étant dans un panneau masqué.
+        document.addEventListener('click', (e) => {
+            const lien = e.target.closest('a[href^="#"]');
+            if (!lien || nav.contains(lien)) return;
+            const trouve = panneauDe(lien.getAttribute('href'));
+            if (!trouve) return;
+            e.preventDefault();
+            activer(trouve.cle, false);
+            history.replaceState(null, '', lien.getAttribute('href'));
+            trouve.cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        const depuisUrl = panneauDe(location.hash);
+        if (depuisUrl) {
+            activer(depuisUrl.cle, false);
+            // Le panneau vient d'être démasqué : à la frame suivante la mise en page
+            // n'est pas encore stabilisée, et le saut atterrissait plus d'un millier de
+            // pixels trop haut. Deux frames, puis une nouvelle tentative au chargement
+            // complet — les portraits et les polices décalent encore le contenu après.
+            const aller = () => depuisUrl.cible.scrollIntoView({ block: 'start' });
+            requestAnimationFrame(() => requestAnimationFrame(aller));
+            window.addEventListener('load', aller, { once: true });
+        } else {
+            activer(pills[0].dataset.spy, false);
+        }
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', demarrer, { once: true });
+        } else {
+            demarrer();
+        }
     })();
 </script>

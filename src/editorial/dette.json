@@ -1,0 +1,1766 @@
+{
+ "verifie_au": "2026-11-04",
+ "eurostat": {
+  "maj": "2026-10-21",
+  "derniere_annee": 2025,
+  "dernier_trimestre": "2026-Q2",
+  "lien": "https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_edpt1/default/table?lang=fr"
+ },
+ "presidences": [
+  {
+   "nom": "Nicolas Sarkozy",
+   "debut": "2007-05-16",
+   "fin": "2012-05-15",
+   "t0": "2007-Q2",
+   "t1": "2012-Q2",
+   "dette_debut": 1278,
+   "dette_fin": 1923,
+   "pib_debut": 67.5,
+   "pib_fin": 92.6,
+   "hausse": 645,
+   "annees": 5.0,
+   "par_an": 129
+  },
+  {
+   "nom": "François Hollande",
+   "debut": "2012-05-15",
+   "fin": "2017-05-14",
+   "t0": "2012-Q2",
+   "t1": "2017-Q2",
+   "dette_debut": 1923,
+   "dette_fin": 2281,
+   "pib_debut": 92.6,
+   "pib_fin": 101.2,
+   "hausse": 359,
+   "annees": 5.0,
+   "par_an": 72
+  },
+  {
+   "nom": "Emmanuel Macron",
+   "debut": "2017-05-14",
+   "fin": null,
+   "t0": "2017-Q2",
+   "t1": "2026-Q2",
+   "dette_debut": 2281,
+   "dette_fin": 3596,
+   "pib_debut": 101.2,
+   "pib_fin": 119.1,
+   "hausse": 1314,
+   "annees": 9.0,
+   "par_an": 146
+  }
+ ],
+ "crises": [
+  {
+   "libelle": "Crise financière",
+   "de": 2008,
+   "a": 2009
+  },
+  {
+   "libelle": "Crise sanitaire",
+   "de": 2020,
+   "a": 2021
+  },
+  {
+   "libelle": "Flambée des prix de l'énergie",
+   "de": 2022,
+   "a": 2023
+  }
+ ],
+ "trajectoire": [
+  {
+   "annee": 2002,
+   "dette_md": 967.0,
+   "dette_pib": 61.3,
+   "provisoire": false
+  },
+  {
+   "annee": 2003,
+   "dette_md": 1060.0,
+   "dette_pib": 65.4,
+   "provisoire": false
+  },
+  {
+   "annee": 2004,
+   "dette_md": 1134.0,
+   "dette_pib": 66.9,
+   "provisoire": false
+  },
+  {
+   "annee": 2005,
+   "dette_md": 1201.0,
+   "dette_pib": 68.2,
+   "provisoire": false
+  },
+  {
+   "annee": 2006,
+   "dette_md": 1207.0,
+   "dette_pib": 65.4,
+   "provisoire": false
+  },
+  {
+   "annee": 2007,
+   "dette_md": 1269.0,
+   "dette_pib": 65.5,
+   "provisoire": false
+  },
+  {
+   "annee": 2008,
+   "dette_md": 1389.0,
+   "dette_pib": 69.8,
+   "provisoire": false
+  },
+  {
+   "annee": 2009,
+   "dette_md": 1627.0,
+   "dette_pib": 84.1,
+   "provisoire": false
+  },
+  {
+   "annee": 2010,
+   "dette_md": 1722.0,
+   "dette_pib": 86.3,
+   "provisoire": false
+  },
+  {
+   "annee": 2011,
+   "dette_md": 1830.0,
+   "dette_pib": 88.7,
+   "provisoire": false
+  },
+  {
+   "annee": 2012,
+   "dette_md": 1916.0,
+   "dette_pib": 91.7,
+   "provisoire": false
+  },
+  {
+   "annee": 2013,
+   "dette_md": 2005.0,
+   "dette_pib": 94.6,
+   "provisoire": false
+  },
+  {
+   "annee": 2014,
+   "dette_md": 2071.0,
+   "dette_pib": 96.2,
+   "provisoire": false
+  },
+  {
+   "annee": 2015,
+   "dette_md": 2135.0,
+   "dette_pib": 97.0,
+   "provisoire": false
+  },
+  {
+   "annee": 2016,
+   "dette_md": 2191.0,
+   "dette_pib": 98.1,
+   "provisoire": false
+  },
+  {
+   "annee": 2017,
+   "dette_md": 2263.0,
+   "dette_pib": 98.8,
+   "provisoire": false
+  },
+  {
+   "annee": 2018,
+   "dette_md": 2321.0,
+   "dette_pib": 98.5,
+   "provisoire": false
+  },
+  {
+   "annee": 2019,
+   "dette_md": 2387.0,
+   "dette_pib": 98.2,
+   "provisoire": false
+  },
+  {
+   "annee": 2020,
+   "dette_md": 2664.0,
+   "dette_pib": 114.9,
+   "provisoire": false
+  },
+  {
+   "annee": 2021,
+   "dette_md": 2829.0,
+   "dette_pib": 112.8,
+   "provisoire": false
+  },
+  {
+   "annee": 2022,
+   "dette_md": 2956.0,
+   "dette_pib": 111.4,
+   "provisoire": false
+  },
+  {
+   "annee": 2023,
+   "dette_md": 3103.0,
+   "dette_pib": 109.5,
+   "provisoire": false
+  },
+  {
+   "annee": 2024,
+   "dette_md": 3306.0,
+   "dette_pib": 112.6,
+   "provisoire": false
+  },
+  {
+   "annee": 2025,
+   "dette_md": 3460.0,
+   "dette_pib": 115.7,
+   "provisoire": false
+  }
+ ],
+ "deficits": [
+  {
+   "annee": 2003,
+   "hausse_dette": 93.6,
+   "deficit": 66.3,
+   "interets": 46.7,
+   "primaire": 19.7,
+   "ajustements": 27.3,
+   "deficit_pib": 4.1
+  },
+  {
+   "annee": 2004,
+   "hausse_dette": 73.9,
+   "deficit": 60.3,
+   "interets": 47.5,
+   "primaire": 12.8,
+   "ajustements": 13.6,
+   "deficit_pib": 3.6
+  },
+  {
+   "annee": 2005,
+   "hausse_dette": 67.1,
+   "deficit": 61.8,
+   "interets": 47.8,
+   "primaire": 14.0,
+   "ajustements": 5.3,
+   "deficit_pib": 3.5
+  },
+  {
+   "annee": 2006,
+   "hausse_dette": 5.8,
+   "deficit": 49.1,
+   "interets": 48.1,
+   "primaire": 1.0,
+   "ajustements": -43.2,
+   "deficit_pib": 2.7
+  },
+  {
+   "annee": 2007,
+   "hausse_dette": 61.5,
+   "deficit": 57.9,
+   "interets": 52.1,
+   "primaire": 5.8,
+   "ajustements": 3.6,
+   "deficit_pib": 3.0
+  },
+  {
+   "annee": 2008,
+   "hausse_dette": 120.5,
+   "deficit": 69.7,
+   "interets": 57.2,
+   "primaire": 12.5,
+   "ajustements": 50.9,
+   "deficit_pib": 3.5
+  },
+  {
+   "annee": 2009,
+   "hausse_dette": 237.8,
+   "deficit": 142.8,
+   "interets": 49.3,
+   "primaire": 93.6,
+   "ajustements": 94.9,
+   "deficit_pib": 7.4
+  },
+  {
+   "annee": 2010,
+   "hausse_dette": 95.0,
+   "deficit": 142.8,
+   "interets": 50.7,
+   "primaire": 92.1,
+   "ajustements": -47.8,
+   "deficit_pib": 7.2
+  },
+  {
+   "annee": 2011,
+   "hausse_dette": 108.0,
+   "deficit": 109.4,
+   "interets": 56.0,
+   "primaire": 53.4,
+   "ajustements": -1.4,
+   "deficit_pib": 5.3
+  },
+  {
+   "annee": 2012,
+   "hausse_dette": 85.7,
+   "deficit": 108.0,
+   "interets": 54.9,
+   "primaire": 53.0,
+   "ajustements": -22.3,
+   "deficit_pib": 5.2
+  },
+  {
+   "annee": 2013,
+   "hausse_dette": 89.1,
+   "deficit": 104.7,
+   "interets": 49.4,
+   "primaire": 55.3,
+   "ajustements": -15.6,
+   "deficit_pib": 4.9
+  },
+  {
+   "annee": 2014,
+   "hausse_dette": 66.2,
+   "deficit": 98.5,
+   "interets": 47.3,
+   "primaire": 51.2,
+   "ajustements": -32.3,
+   "deficit_pib": 4.6
+  },
+  {
+   "annee": 2015,
+   "hausse_dette": 63.7,
+   "deficit": 85.7,
+   "interets": 44.7,
+   "primaire": 41.0,
+   "ajustements": -21.9,
+   "deficit_pib": 3.9
+  },
+  {
+   "annee": 2016,
+   "hausse_dette": 55.7,
+   "deficit": 84.0,
+   "interets": 42.4,
+   "primaire": 41.6,
+   "ajustements": -28.4,
+   "deficit_pib": 3.8
+  },
+  {
+   "annee": 2017,
+   "hausse_dette": 72.8,
+   "deficit": 77.1,
+   "interets": 41.0,
+   "primaire": 36.0,
+   "ajustements": -4.3,
+   "deficit_pib": 3.4
+  },
+  {
+   "annee": 2018,
+   "hausse_dette": 57.5,
+   "deficit": 54.6,
+   "interets": 41.7,
+   "primaire": 13.0,
+   "ajustements": 2.8,
+   "deficit_pib": 2.3
+  },
+  {
+   "annee": 2019,
+   "hausse_dette": 66.7,
+   "deficit": 58.2,
+   "interets": 36.9,
+   "primaire": 21.4,
+   "ajustements": 8.4,
+   "deficit_pib": 2.4
+  },
+  {
+   "annee": 2020,
+   "hausse_dette": 276.5,
+   "deficit": 207.1,
+   "interets": 29.7,
+   "primaire": 177.4,
+   "ajustements": 69.4,
+   "deficit_pib": 8.9
+  },
+  {
+   "annee": 2021,
+   "hausse_dette": 164.9,
+   "deficit": 165.1,
+   "interets": 34.8,
+   "primaire": 130.3,
+   "ajustements": -0.2,
+   "deficit_pib": 6.6
+  },
+  {
+   "annee": 2022,
+   "hausse_dette": 126.9,
+   "deficit": 125.9,
+   "interets": 50.9,
+   "primaire": 75.0,
+   "ajustements": 1.0,
+   "deficit_pib": 4.7
+  },
+  {
+   "annee": 2023,
+   "hausse_dette": 147.6,
+   "deficit": 151.9,
+   "interets": 53.4,
+   "primaire": 98.5,
+   "ajustements": -4.3,
+   "deficit_pib": 5.4
+  },
+  {
+   "annee": 2024,
+   "hausse_dette": 202.8,
+   "deficit": 169.1,
+   "interets": 60.1,
+   "primaire": 109.0,
+   "ajustements": 33.7,
+   "deficit_pib": 5.8
+  },
+  {
+   "annee": 2025,
+   "hausse_dette": 154.0,
+   "deficit": 151.6,
+   "interets": 65.7,
+   "primaire": 85.9,
+   "ajustements": 2.4,
+   "deficit_pib": 5.1
+  }
+ ],
+ "cumuls": {
+  "macron": {
+   "hausse_dette": 1197,
+   "deficit": 1084,
+   "interets": 373,
+   "primaire": 710,
+   "ajustements": 113,
+   "de": 2018,
+   "a": 2025
+  },
+  "crises": {
+   "hausse_dette": 568,
+   "deficit": 498,
+   "interets": 115,
+   "primaire": 383,
+   "ajustements": 70,
+   "de": 2020,
+   "a": 2022
+  },
+  "apres_crises": {
+   "hausse_dette": 504,
+   "deficit": 473,
+   "interets": 179,
+   "primaire": 293,
+   "ajustements": 32,
+   "de": 2023,
+   "a": 2025
+  },
+  "hollande": {
+   "hausse_dette": 348,
+   "deficit": 450,
+   "interets": 225,
+   "primaire": 225,
+   "ajustements": -102,
+   "de": 2013,
+   "a": 2017
+  },
+  "sarkozy": {
+   "hausse_dette": 647,
+   "deficit": 573,
+   "interets": 268,
+   "primaire": 305,
+   "ajustements": 74,
+   "de": 2008,
+   "a": 2012
+  }
+ },
+ "recettes_depenses": [
+  {
+   "annee": 2002,
+   "recettes": 50.7,
+   "depenses": 53.9,
+   "interets": 3.0
+  },
+  {
+   "annee": 2003,
+   "recettes": 50.3,
+   "depenses": 54.4,
+   "interets": 2.9
+  },
+  {
+   "annee": 2004,
+   "recettes": 50.4,
+   "depenses": 54.0,
+   "interets": 2.8
+  },
+  {
+   "annee": 2005,
+   "recettes": 50.8,
+   "depenses": 54.3,
+   "interets": 2.7
+  },
+  {
+   "annee": 2006,
+   "recettes": 51.1,
+   "depenses": 53.8,
+   "interets": 2.6
+  },
+  {
+   "annee": 2007,
+   "recettes": 50.6,
+   "depenses": 53.6,
+   "interets": 2.7
+  },
+  {
+   "annee": 2008,
+   "recettes": 50.8,
+   "depenses": 54.3,
+   "interets": 2.9
+  },
+  {
+   "annee": 2009,
+   "recettes": 50.6,
+   "depenses": 58.0,
+   "interets": 2.5
+  },
+  {
+   "annee": 2010,
+   "recettes": 50.6,
+   "depenses": 57.7,
+   "interets": 2.5
+  },
+  {
+   "annee": 2011,
+   "recettes": 51.7,
+   "depenses": 57.0,
+   "interets": 2.7
+  },
+  {
+   "annee": 2012,
+   "recettes": 52.7,
+   "depenses": 57.9,
+   "interets": 2.6
+  },
+  {
+   "annee": 2013,
+   "recettes": 53.7,
+   "depenses": 58.6,
+   "interets": 2.3
+  },
+  {
+   "annee": 2014,
+   "recettes": 53.8,
+   "depenses": 58.4,
+   "interets": 2.2
+  },
+  {
+   "annee": 2015,
+   "recettes": 53.7,
+   "depenses": 57.6,
+   "interets": 2.0
+  },
+  {
+   "annee": 2016,
+   "recettes": 53.6,
+   "depenses": 57.4,
+   "interets": 1.9
+  },
+  {
+   "annee": 2017,
+   "recettes": 54.3,
+   "depenses": 57.7,
+   "interets": 1.8
+  },
+  {
+   "annee": 2018,
+   "recettes": 54.0,
+   "depenses": 56.4,
+   "interets": 1.8
+  },
+  {
+   "annee": 2019,
+   "recettes": 53.0,
+   "depenses": 55.3,
+   "interets": 1.5
+  },
+  {
+   "annee": 2020,
+   "recettes": 52.8,
+   "depenses": 61.7,
+   "interets": 1.3
+  },
+  {
+   "annee": 2021,
+   "recettes": 52.9,
+   "depenses": 59.5,
+   "interets": 1.4
+  },
+  {
+   "annee": 2022,
+   "recettes": 53.7,
+   "depenses": 58.4,
+   "interets": 1.9
+  },
+  {
+   "annee": 2023,
+   "recettes": 51.4,
+   "depenses": 56.8,
+   "interets": 1.9
+  },
+  {
+   "annee": 2024,
+   "recettes": 51.2,
+   "depenses": 57.0,
+   "interets": 2.0
+  },
+  {
+   "annee": 2025,
+   "recettes": 52.2,
+   "depenses": 57.3,
+   "interets": 2.2
+  }
+ ],
+ "interets": [
+  {
+   "annee": 2002,
+   "md": 47.8,
+   "pib": 3.0
+  },
+  {
+   "annee": 2003,
+   "md": 46.7,
+   "pib": 2.9
+  },
+  {
+   "annee": 2004,
+   "md": 47.5,
+   "pib": 2.8
+  },
+  {
+   "annee": 2005,
+   "md": 47.8,
+   "pib": 2.7
+  },
+  {
+   "annee": 2006,
+   "md": 48.1,
+   "pib": 2.6
+  },
+  {
+   "annee": 2007,
+   "md": 52.1,
+   "pib": 2.7
+  },
+  {
+   "annee": 2008,
+   "md": 57.2,
+   "pib": 2.9
+  },
+  {
+   "annee": 2009,
+   "md": 49.3,
+   "pib": 2.5
+  },
+  {
+   "annee": 2010,
+   "md": 50.7,
+   "pib": 2.5
+  },
+  {
+   "annee": 2011,
+   "md": 56.0,
+   "pib": 2.7
+  },
+  {
+   "annee": 2012,
+   "md": 54.9,
+   "pib": 2.6
+  },
+  {
+   "annee": 2013,
+   "md": 49.4,
+   "pib": 2.3
+  },
+  {
+   "annee": 2014,
+   "md": 47.3,
+   "pib": 2.2
+  },
+  {
+   "annee": 2015,
+   "md": 44.7,
+   "pib": 2.0
+  },
+  {
+   "annee": 2016,
+   "md": 42.4,
+   "pib": 1.9
+  },
+  {
+   "annee": 2017,
+   "md": 41.0,
+   "pib": 1.8
+  },
+  {
+   "annee": 2018,
+   "md": 41.7,
+   "pib": 1.8
+  },
+  {
+   "annee": 2019,
+   "md": 36.9,
+   "pib": 1.5
+  },
+  {
+   "annee": 2020,
+   "md": 29.7,
+   "pib": 1.3
+  },
+  {
+   "annee": 2021,
+   "md": 34.8,
+   "pib": 1.4
+  },
+  {
+   "annee": 2022,
+   "md": 50.9,
+   "pib": 1.9
+  },
+  {
+   "annee": 2023,
+   "md": 53.4,
+   "pib": 1.9
+  },
+  {
+   "annee": 2024,
+   "md": 60.1,
+   "pib": 2.0
+  },
+  {
+   "annee": 2025,
+   "md": 65.7,
+   "pib": 2.2
+  }
+ ],
+ "fonctions": {
+  "de": 2017,
+  "a": 2024,
+  "prix_pct": 21.5,
+  "lignes": [
+   {
+    "code": "GF10",
+    "libelle": "Protection sociale (retraites, famille, chômage, pauvreté…)",
+    "sous": false,
+    "md_debut": 557.1,
+    "md_fin": 693.0,
+    "volume_pct": 2.4
+   },
+   {
+    "code": "GF1002",
+    "libelle": "dont retraites et vieillesse",
+    "sous": true,
+    "md_debut": 310.3,
+    "md_fin": 392.0,
+    "volume_pct": 4.0
+   },
+   {
+    "code": "GF07",
+    "libelle": "Santé",
+    "sous": false,
+    "md_debut": 190.0,
+    "md_fin": 261.2,
+    "volume_pct": 13.1
+   },
+   {
+    "code": "GF09",
+    "libelle": "Enseignement",
+    "sous": false,
+    "md_debut": 118.7,
+    "md_fin": 148.6,
+    "volume_pct": 3.1
+   },
+   {
+    "code": "GF04",
+    "libelle": "Affaires économiques (aides aux entreprises, transports, énergie, emploi)",
+    "sous": false,
+    "md_debut": 149.2,
+    "md_fin": 166.1,
+    "volume_pct": -8.4
+   },
+   {
+    "code": "GF01",
+    "libelle": "Services généraux des administrations",
+    "sous": false,
+    "md_debut": 149.9,
+    "md_fin": 181.1,
+    "volume_pct": -0.5
+   },
+   {
+    "code": "GF0107",
+    "libelle": "dont intérêts de la dette",
+    "sous": true,
+    "md_debut": 45.0,
+    "md_fin": 58.9,
+    "volume_pct": 7.7
+   },
+   {
+    "code": "GF02",
+    "libelle": "Défense",
+    "sous": false,
+    "md_debut": 40.1,
+    "md_fin": 54.2,
+    "volume_pct": 11.2
+   },
+   {
+    "code": "GF03",
+    "libelle": "Police, justice, prisons, pompiers",
+    "sous": false,
+    "md_debut": 37.8,
+    "md_fin": 52.1,
+    "volume_pct": 13.3
+   },
+   {
+    "code": "GF06",
+    "libelle": "Logement et équipements collectifs",
+    "sous": false,
+    "md_debut": 25.2,
+    "md_fin": 42.1,
+    "volume_pct": 37.3
+   },
+   {
+    "code": "GF08",
+    "libelle": "Culture, sport et loisirs",
+    "sous": false,
+    "md_debut": 33.1,
+    "md_fin": 43.1,
+    "volume_pct": 7.1
+   },
+   {
+    "code": "GF05",
+    "libelle": "Protection de l'environnement",
+    "sous": false,
+    "md_debut": 20.3,
+    "md_fin": 30.3,
+    "volume_pct": 22.8
+   },
+   {
+    "code": "TOTAL",
+    "libelle": "Ensemble des dépenses publiques",
+    "sous": false,
+    "md_debut": 1321.4,
+    "md_fin": 1671.8,
+    "volume_pct": 4.1
+   }
+  ]
+ },
+ "cice_ecriture": {
+  "texte": "Attention à un effet d'écriture : le crédit d'impôt pour la compétitivité et l'emploi était compté comme une dépense jusqu'en 2018. Remplacé en 2019 par un allègement de cotisations sociales, il est depuis compté en moindres recettes. Une partie de la baisse des deux courbes entre 2017 et 2019 tient à ce changement.",
+  "source": "Insee Première n° 2093, février 2026",
+  "lien": "https://www.insee.fr/fr/statistiques/8735252"
+ },
+ "interets_projection": {
+  "texte": "Selon le Haut Conseil des finances publiques, les intérêts atteindraient 91 milliards d'euros en 2027, soit 2,9 % du PIB. La Cour des comptes prévoit plus de 100 milliards vers 2029.",
+  "source": "Haut Conseil des finances publiques, avis n° 2026-5 du 25 septembre 2026",
+  "lien": "https://www.hcfp.fr/sites/default/files/2026-10/Avis%20HCFP%202026-5%20-%20PLF-PLFSS%202027.pdf",
+  "source2": "Cour des comptes, La situation et les perspectives des finances publiques, juin 2026",
+  "lien2": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+ },
+ "economies_definition": {
+  "texte": "Que veut dire « économies » ? Le gouvernement les compte par rapport à l'évolution qu'aurait eue la dépense sans mesure nouvelle (« à politique inchangée »). La Cour des comptes les compte par rapport à la hausse moyenne de la dépense de 2015 à 2019 (+1,0 % par an hors inflation), une période où, souligne-t-elle, des efforts importants avaient déjà été faits : réformes des retraites, baisse des dotations aux collectivités, baisse des allocations familiales. Dans les deux cas, une dépense peut augmenter malgré des « économies ».",
+  "source": "Cour des comptes, juin 2026, encadré p. 85-86",
+  "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+ },
+ "efforts_recents": [
+  {
+   "texte": "En 2025, le déficit a baissé grâce à 23 milliards d'euros de hausses d'impôts ; la dépense publique hors intérêts a continué d'augmenter plus vite que l'activité (1 694 milliards, +1,4 % hors inflation pour l'ensemble des dépenses).",
+   "source": "Cour des comptes, juin 2026",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+  },
+  {
+   "texte": "Hors crédits d'impôt, la dépense publique représente 56,6 % du PIB en 2025, 2,0 points de plus qu'avant la crise sanitaire alors que la plupart des mesures exceptionnelles ont pris fin : c'est l'« effet de cliquet » dont parle la Cour des comptes.",
+   "source": "Cour des comptes, juin 2026",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+  },
+  {
+   "texte": "Les hausses d'impôts décidées pour 2025 et 2026 atteignent 37 milliards d'euros, après « une longue séquence de baisse des prélèvements obligatoires entre 2015 et 2023 ». Le taux de prélèvements obligatoires remonte à 43,6 % du PIB en 2025, le plus élevé de la zone euro.",
+   "source": "Cour des comptes, juin 2026",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+  }
+ ],
+ "deux_lectures": {
+  "intro": "Le déficit vient-il de dépenses trop fortes ou de recettes trop faibles ? Les institutions ne répondent pas de la même façon, parce qu'elles ne partent pas de la même année.",
+  "lectures": [
+   {
+    "titre": "Depuis 2017 : surtout moins de recettes",
+    "texte": "De 2017 à 2024, le déficit passe de 3,4 % à 5,8 % du PIB. Selon l'OFCE, centre de recherche économique de Sciences Po, le taux de prélèvements obligatoires a baissé de 2,5 points de PIB sur la période (1,6 point pour les ménages, 0,9 pour les entreprises), tandis que la dépense hors intérêts a légèrement reculé rapportée à la richesse produite.",
+    "source": "OFCE, Working Paper n° 13, juillet 2025",
+    "lien": "https://ofce.github.io/psmt/PB.pdf"
+   },
+   {
+    "titre": "Depuis 2019 : surtout plus de dépenses",
+    "texte": "Rapportée au PIB, la dépense publique hors crédits d'impôt est en 2025 2,0 points au-dessus de son niveau d'avant la crise sanitaire, alors que la plupart des mesures exceptionnelles ont pris fin : la Cour des comptes parle d'« effet de cliquet ». Selon elle, les déficits hors intérêts accumulés depuis 2020 expliquent entièrement la hausse de la dette rapportée au PIB depuis la crise sanitaire.",
+    "source": "Cour des comptes, juin 2025 et juin 2026",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+   }
+  ],
+  "conclusion": "Les deux constats sont exacts et compatibles : les recettes ont baissé surtout entre 2017 et 2019, les dépenses ont augmenté surtout à partir de 2020."
+ },
+ "couts_crises": {
+  "sanitaire": {
+   "titre": "Crise sanitaire",
+   "chiffre": "157 milliards d'euros",
+   "texte": "Dépenses de soutien et de relance des administrations publiques en 2020 et 2021 : fonds de solidarité pour les entreprises (39,8 milliards), activité partielle (34,3), santé (32), plan de relance (25,4), exonérations de cotisations, revenus de remplacement. S'y ajoutent 34,9 milliards en 2022 et 12,4 milliards en 2023. Ces montants ne comptent pas les recettes perdues pendant la récession ; le plan de relance a été financé à 40 % par l'Union européenne.",
+   "source": "Cour des comptes, La situation et les perspectives des finances publiques, juillet 2022, tableau 8 ; juillet 2024, tableau 3",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+  },
+  "energie": {
+   "titre": "Flambée des prix de l'énergie",
+   "chiffre": "72 milliards d'euros bruts, 36 nets",
+   "texte": "Coût pour le budget de l'État des boucliers tarifaires et des aides contre la hausse des prix de l'énergie, de l'automne 2021 à 2024. Le coût net déduit ce que la hausse des prix a rapporté par ailleurs à l'État (moindres soutiens aux énergies renouvelables, contribution sur les rentes des producteurs d'électricité). D'autres estimations, sur d'autres périmètres, vont de 60 milliards (Banque de France, aides aux ménages en 2022 et 2023) à 86 milliards (Cour des comptes, janvier 2025, ensemble des mesures liées aux prix de l'énergie).",
+   "source": "Cour des comptes, Les mesures exceptionnelles de lutte contre la hausse des prix de l'énergie, mars 2024",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/293446.pdf"
+  },
+  "parts_intro": "Quelle part de la hausse de la dette les crises expliquent-elles ? Aucune institution publique n'a fait ce calcul en euros. Deux estimations, qui ne comptent pas de la même façon :",
+  "parts": [
+   {
+    "qui": "OFCE, centre de recherche de Sciences Po (mai 2024)",
+    "texte": "De 2016 à 2023, les crises et les effets passagers expliquent 52 % de la hausse de la dette rapportée au PIB, et 69 % si l'on compte le plan de relance comme une mesure de crise. Le reste vient de choix budgétaires durables. Parmi eux, 40 milliards d'euros par an en 2023 de mesures non prévues et non financées, pour l'essentiel des baisses d'impôts ou des hausses abandonnées : renoncement à la hausse de la taxe carbone, baisse des impôts de production, fin de la taxe d'habitation pour les 20 % les plus aisés, baisse de l'impôt sur le revenu.",
+    "lien": "https://ofce.sciences-po.fr/blog2024/fr/2024/20240524_RSMPXR/crises_et_dettes.fr.pdf"
+   },
+   {
+    "qui": "François Ecalle, ancien magistrat de la Cour des comptes, sous serment devant une commission d'enquête de l'Assemblée nationale (mai 2024)",
+    "texte": "Sur les 911 milliards d'euros de hausse de fin 2016 à fin 2023, le déficit déjà présent avant 2017, « l'héritage de l'histoire de cinquante ans de politique économique », explique 50 à 70 % ; les mesures de hausse ou de baisse des dépenses et des recettes décidées de 2017 à 2023, crises comprises, 20 à 35 % ; la conjoncture, 0 à 10 %.",
+    "lien": "https://questions.assemblee-nationale.fr/dyn/16/comptes-rendus/cedette/l16cedette2324003_compte-rendu.pdf"
+   }
+  ],
+  "financiere": {
+   "titre": "Crise financière",
+   "chiffre": "46 milliards d'euros",
+   "texte": "Coût budgétaire du plan de relance de 2009-2010 : 35,3 milliards en 2009 et 10,9 en 2010, prêts au secteur automobile compris.",
+   "source": "Cour des comptes, La situation et les perspectives des finances publiques, juin 2010",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/104000325.pdf"
+  }
+ },
+ "derapage": {
+  "texte": "En 2023 et 2024, le déficit a été bien plus élevé que prévu : 5,8 % du PIB constatés en 2024 contre 4,4 % prévus dans le budget. Une commission d'enquête de l'Assemblée nationale chiffre les recettes manquantes par rapport aux prévisions à 20,7 milliards d'euros en 2023 et 40,1 milliards en 2024 (impôt sur les sociétés, TVA, impôt sur le revenu, contribution sur les producteurs d'électricité). Les recettes ont progressé moins vite que l'activité, ce que les prévisions n'avaient pas anticipé.",
+  "source": "Assemblée nationale, rapport n° 1274 de la commission des finances dotée des prérogatives d'une commission d'enquête, avril 2025",
+  "lien": "https://www.assemblee-nationale.fr/dyn/17/rapports/cion_fin/l17b1274-ti_rapport-enquete.pdf"
+ },
+ "detenteurs": {
+  "texte": "Fin 2025, 52,7 % de la dette publique française est détenue par des investisseurs étrangers, 15,6 % par la banque centrale (titres rachetés par l'Eurosystème), 16,7 % par les banques françaises et 15,0 % par d'autres acteurs français. La durée moyenne de la dette de l'État est de 8,5 ans : une hausse des taux ne se répercute que progressivement.",
+  "source": "Agence France Trésor, Rapport sur la dette 2027 (d'après le Fonds monétaire international)",
+  "lien": "https://www.tresor.economie.gouv.fr/Articles/a03a2517-7707-459d-adbc-c721d82d51c7/files/c386b8c2-b030-4a25-8912-79a7d259aa0e"
+ },
+ "richesse": {
+  "intro": "Le patrimoine du pays est très élevé : 19 559 milliards d'euros fin 2024, plus de cinq fois la dette publique. Mais il appartient surtout aux ménages, il est très inégalement réparti, et celui des administrations publiques diminue.",
+  "chiffres": [
+   {
+    "valeur": "19 559 Md€",
+    "texte": "Patrimoine de la France fin 2024 : logements, terrains, équipements, et avoirs financiers nets de ce qui est dû à l'étranger",
+    "source": "Insee Première n° 2081, novembre 2025",
+    "lien": "https://www.insee.fr/fr/statistiques/8661938"
+   },
+   {
+    "valeur": "14 953 Md€",
+    "texte": "dont patrimoine des ménages, soit 8,2 fois leur revenu disponible annuel",
+    "source": "Insee Première n° 2081",
+    "lien": "https://www.insee.fr/fr/statistiques/8661938"
+   },
+   {
+    "valeur": "690 Md€",
+    "texte": "dont patrimoine des administrations publiques, en baisse de 234 milliards en 2023 et de 50 milliards en 2024 ; hors bâtiments et infrastructures, leur patrimoine financier est négatif de 2 132 milliards",
+    "source": "Insee Première n° 2081",
+    "lien": "https://www.insee.fr/fr/statistiques/8661938"
+   },
+   {
+    "valeur": "48 %",
+    "texte": "du patrimoine des ménages détenu par les 10 % les mieux dotés, début 2024 ; la moitié la moins dotée en détient 7 %",
+    "source": "Insee Focus n° 371, décembre 2025",
+    "lien": "https://www.insee.fr/fr/statistiques/8672665"
+   }
+  ],
+  "limites": [
+   "En 2023 et 2024, le patrimoine des ménages a augmenté moins vite que les prix : hors inflation, il a légèrement baissé.",
+   "La richesse privée ne finance pas directement la dette publique : elle n'y contribue qu'à travers les impôts, dont le niveau et la répartition relèvent de choix politiques. Les baisses et hausses d'impôts depuis 2012 sont détaillées plus haut."
+  ]
+ },
+ "aides": {
+  "intro": [
+   "Il n'existe pas de définition unique des aides publiques aux entreprises : selon ce que l'on compte, les montants publiés vont d'environ 60 à plus de 200 milliards d'euros par an. Il s'agit surtout d'impôts et de cotisations en moins, plus que de sommes versées.",
+   "La commission d'enquête du Sénat qui a établi le chiffre le plus élevé souligne aussi que les prélèvements sur les entreprises sont élevés en France, pour financer le modèle social, et que les aides doivent s'apprécier dans ce contexte."
+  ],
+  "chiffres": [
+   {
+    "valeur": "211 Md€",
+    "texte": "Aides publiques aux entreprises en 2023 au sens large : dépenses fiscales, allègements de cotisations, prêts et garanties de la banque publique d'investissement, subventions. 108 milliards au sens strict.",
+    "source": "Sénat, commission d'enquête, juillet 2025",
+    "lien": "https://www.senat.fr/rap/r24-808-1/r24-808-11.pdf"
+   },
+   {
+    "valeur": "60 à 166 Md€",
+    "texte": "Aides publiques aux entreprises en 2024 selon le premier recensement officiel annexé au budget : 59,8 milliards d'aides ciblées, 166,1 milliards avec les allègements généraux de cotisations et les taux réduits de TVA.",
+    "source": "Direction générale du Trésor, octobre 2026",
+    "lien": "https://www.tresor.economie.gouv.fr/Articles/2026/10/14/aides-publiques-aux-entreprises-un-nouveau-jaune-budgetaire-pour-mieux-les-recenser"
+   },
+   {
+    "valeur": "75 Md€",
+    "texte": "Exonérations de cotisations sociales en 2023, plus de 80 milliards en 2024. Rapportées au PIB, elles sont passées de 1,1 % en 2004 à 2,8 % en 2022.",
+    "source": "Cour des comptes, rapport sur la Sécurité sociale, mai 2025",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2025-05/20250526-RALFSS-2025-Maitriser-dynamique-allegements-generaux-de-cotisations-sociales.pdf"
+   },
+   {
+    "valeur": "7,8 Md€",
+    "texte": "Crédit d'impôt recherche, chaque année : la plus importante des aides à l'innovation.",
+    "source": "Annexe au projet de budget 2027 sur les aides aux entreprises",
+    "lien": "https://www.tresor.economie.gouv.fr/Articles/2026/10/14/aides-publiques-aux-entreprises-un-nouveau-jaune-budgetaire-pour-mieux-les-recenser"
+   }
+  ],
+  "efficacite": [
+   {
+    "texte": "Crédit d'impôt pour la compétitivité et l'emploi : selon son comité de suivi, l'effet le plus vraisemblable est de l'ordre de 100 000 emplois créés ou sauvegardés sur 2013-2015, dans une fourchette allant de 10 000 à 200 000.",
+    "source": "France Stratégie, octobre 2017",
+    "lien": "https://www.strategie-plan.gouv.fr/publications/evaluation-credit-dimpot-competitivite-lemploi-synthese-travaux-dapprofondissement"
+   },
+   {
+    "texte": "Allègements de cotisations patronales : leur effet sur l'emploi est établi lorsqu'ils sont concentrés près du salaire minimum, et s'atténue à mesure qu'ils s'étendent vers les salaires plus élevés. Le Conseil d'analyse économique (2019) puis la mission Bozio-Wasmer (2024) concluent dans le même sens.",
+    "source": "France Stratégie, rapport Bozio-Wasmer, octobre 2024",
+    "lien": "https://www.strategie-plan.gouv.fr/files/2024-11/rapport_vffff_241003.pdf"
+   },
+   {
+    "texte": "Remplacement de l'impôt sur la fortune par l'impôt sur la fortune immobilière : manque à gagner estimé à 4,5 milliards d'euros en 2022 ; les évaluations n'ont pas mis en évidence d'effet sur l'investissement des entreprises dont les actionnaires en ont le plus bénéficié, une évaluation que le comité juge « très compliquée ».",
+    "source": "France Stratégie, comité d'évaluation des réformes de la fiscalité du capital, octobre 2023",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-2023-rapport-isf-quatrieme_rapport_complet_17octobre_avis_0.pdf"
+   },
+   {
+    "texte": "La Cour des comptes relève que 14 % des dépenses fiscales ne sont pas chiffrées et que le nombre de bénéficiaires est inconnu pour 43 % d'entre elles.",
+    "source": "Cour des comptes, avril 2025",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2025-04/NEB-2024-Depenses-fiscales.pdf"
+   }
+  ]
+ },
+ "prelevements": {
+  "source": "Insee, taux de prélèvements obligatoires (comptes nationaux, base 2020), août 2026",
+  "lien": "https://www.insee.fr/fr/statistiques/2381412",
+  "valeurs": [
+   {
+    "annee": 2002,
+    "valeur": 42.5,
+    "provisoire": false
+   },
+   {
+    "annee": 2003,
+    "valeur": 42.3,
+    "provisoire": false
+   },
+   {
+    "annee": 2004,
+    "valeur": 42.4,
+    "provisoire": false
+   },
+   {
+    "annee": 2005,
+    "valeur": 42.7,
+    "provisoire": false
+   },
+   {
+    "annee": 2006,
+    "valeur": 43.0,
+    "provisoire": false
+   },
+   {
+    "annee": 2007,
+    "valeur": 42.3,
+    "provisoire": false
+   },
+   {
+    "annee": 2008,
+    "valeur": 42.1,
+    "provisoire": false
+   },
+   {
+    "annee": 2009,
+    "valeur": 41.2,
+    "provisoire": false
+   },
+   {
+    "annee": 2010,
+    "valeur": 41.4,
+    "provisoire": false
+   },
+   {
+    "annee": 2011,
+    "valeur": 42.6,
+    "provisoire": false
+   },
+   {
+    "annee": 2012,
+    "valeur": 43.9,
+    "provisoire": false
+   },
+   {
+    "annee": 2013,
+    "valeur": 44.8,
+    "provisoire": false
+   },
+   {
+    "annee": 2014,
+    "valeur": 44.6,
+    "provisoire": false
+   },
+   {
+    "annee": 2015,
+    "valeur": 44.5,
+    "provisoire": false
+   },
+   {
+    "annee": 2016,
+    "valeur": 44.6,
+    "provisoire": false
+   },
+   {
+    "annee": 2017,
+    "valeur": 45.3,
+    "provisoire": false
+   },
+   {
+    "annee": 2018,
+    "valeur": 44.9,
+    "provisoire": false
+   },
+   {
+    "annee": 2019,
+    "valeur": 44.0,
+    "provisoire": false
+   },
+   {
+    "annee": 2020,
+    "valeur": 44.3,
+    "provisoire": false
+   },
+   {
+    "annee": 2021,
+    "valeur": 44.2,
+    "provisoire": false
+   },
+   {
+    "annee": 2022,
+    "valeur": 45.0,
+    "provisoire": false
+   },
+   {
+    "annee": 2023,
+    "valeur": 43.2,
+    "provisoire": false
+   },
+   {
+    "annee": 2024,
+    "valeur": 42.7,
+    "provisoire": false
+   },
+   {
+    "annee": 2025,
+    "valeur": 43.6,
+    "provisoire": true
+   }
+  ]
+ },
+ "mesures": {
+  "intro": [
+   "Le taux de prélèvements obligatoires, c'est-à-dire l'ensemble des impôts et cotisations rapporté au PIB, a augmenté de 2011 à 2017, puis baissé jusqu'en 2024, avant de remonter en 2025.",
+   "Voici les principales mesures depuis 2012, chacune avec le chiffrage de l'organisme cité. Il s'agit seulement de leur effet sur les recettes : leurs effets sur l'emploi, l'investissement ou le pouvoir d'achat se discutent, et sont évoqués plus bas pour les aides aux entreprises.",
+   "Un cas à part : en 2019, le crédit d'impôt pour la compétitivité et l'emploi a été remplacé par un allègement de cotisations pérenne d'un montant comparable, d'environ 20 milliards d'euros par an. Pour le budget de l'État, l'année de transition a cumulé le remboursement des crédits d'impôt passés et le nouvel allègement."
+  ],
+  "periodes": [
+   {
+    "nom": "Présidence de François Hollande (2012-2017)",
+    "lignes": [
+     {
+      "mesure": "Hausse de la TVA (taux normal de 19,6 à 20 %, taux intermédiaire de 7 à 10 %)",
+      "annee": "2014",
+      "effet": 6.5,
+      "texte": "+6,5",
+      "source": "Insee, Tableaux de l'économie française 2016",
+      "lien": "https://www.insee.fr/fr/statistiques/fichier/1906710/T16F132.pdf",
+      "note": "5,6 milliards prévus par le gouvernement. Elle devait financer en partie le crédit d'impôt pour la compétitivité et l'emploi."
+     },
+     {
+      "mesure": "Fin de l'exonération des heures supplémentaires",
+      "annee": "2012",
+      "effet": 4.6,
+      "texte": "+4,6",
+      "source": "Insee, Tableaux de l'économie française 2015",
+      "lien": "https://www.insee.fr/fr/statistiques/fichier/1288614/T15F132.pdf",
+      "note": "Somme des chiffrages de l'Insee pour 2012, 2013 et 2014 (calcul)."
+     },
+     {
+      "mesure": "Limitation de la déduction des intérêts d'emprunt des entreprises",
+      "annee": "2013",
+      "effet": 2.7,
+      "texte": "+2,7",
+      "source": "Assemblée nationale, rapport n° 251 sur le budget 2013",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rapports/r0251-ti.pdf"
+     },
+     {
+      "mesure": "Prélèvements sociaux sur les revenus du capital : +2 points",
+      "annee": "2012",
+      "effet": 2.6,
+      "texte": "+2,6",
+      "source": "Assemblée nationale, rapport n° 79",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rapports/r0079.pdf"
+     },
+     {
+      "mesure": "Forfait social sur l'épargne salariale porté de 8 à 20 %",
+      "annee": "2012",
+      "effet": 2.3,
+      "texte": "+2,3",
+      "source": "Assemblée nationale, rapport n° 79",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rapports/r0079.pdf"
+     },
+     {
+      "mesure": "Revenus du capital soumis au barème de l'impôt sur le revenu",
+      "annee": "2013",
+      "effet": 1.4,
+      "texte": "+1,4",
+      "source": "Assemblée nationale, rapport n° 251",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rapports/r0251-ti.pdf"
+     },
+     {
+      "mesure": "Impôt sur la fortune : retour au barème progressif",
+      "annee": "2013",
+      "effet": 1.0,
+      "texte": "+1,0",
+      "source": "Assemblée nationale, rapport n° 251",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rapports/r0251-ti.pdf"
+     },
+     {
+      "mesure": "Tranche d'impôt sur le revenu à 45 %",
+      "annee": "2013",
+      "effet": 0.3,
+      "texte": "+0,3",
+      "source": "Assemblée nationale, rapport n° 251",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rapports/r0251-ti.pdf"
+     },
+     {
+      "mesure": "Crédit d'impôt pour la compétitivité et l'emploi",
+      "annee": "2013-2018",
+      "effet": -20,
+      "texte": "environ −20",
+      "source": "France Stratégie, rapport du comité de suivi, 2018",
+      "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-_rapport_cice-2018-02-10.pdf",
+      "note": "De 18 à 23 milliards par an de 2014 à 2018 ; 111,6 milliards au total pour les salaires de 2013 à 2018 (calcul). Compté comme une dépense par l'Insee."
+     },
+     {
+      "mesure": "Pacte de responsabilité : allègements de cotisations",
+      "annee": "2015-2016",
+      "effet": -10,
+      "texte": "environ −10",
+      "source": "Assemblée nationale, rapport d'information n° 3684",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf",
+      "note": "Somme des chiffrages du gouvernement pour 2017 (calcul)."
+     },
+     {
+      "mesure": "Baisse du taux de l'impôt sur les sociétés vers 28 %, votée fin 2016",
+      "annee": "2017-2020",
+      "effet": -7.1,
+      "texte": "−7,1",
+      "source": "Assemblée nationale, rapport n° 273 sur le budget 2018",
+      "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b0273-tiii_rapport-fond.pdf",
+      "note": "Montant en régime de croisière."
+     },
+     {
+      "mesure": "Baisse de l'impôt sur le revenu des ménages modestes",
+      "annee": "2014-2017",
+      "effet": -5,
+      "texte": "environ −5",
+      "source": "Assemblée nationale, rapport d'information n° 3684",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+     },
+     {
+      "mesure": "Fin de la surtaxe d'impôt sur les sociétés",
+      "annee": "2017",
+      "effet": -2.6,
+      "texte": "−2,6",
+      "source": "Insee, Tableaux de l'économie française 2018",
+      "lien": "https://insee.fr/fr/statistiques/fichier/3303532/TEF2018_132.pdf"
+     },
+     {
+      "mesure": "Contribution sociale de solidarité des sociétés : abattements",
+      "annee": "2015-2016",
+      "effet": -2.0,
+      "texte": "−2,0",
+      "source": "Assemblée nationale, rapport d'information n° 3684",
+      "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+     }
+    ]
+   },
+   {
+    "nom": "Présidence d'Emmanuel Macron (depuis 2017)",
+    "lignes": [
+     {
+      "mesure": "Suppression de la taxe d'habitation sur les résidences principales",
+      "annee": "2018-2023",
+      "effet": -18.9,
+      "texte": "−18,9",
+      "source": "Cour des comptes, janvier 2025",
+      "lien": "https://www.ccomptes.fr/sites/default/files/2025-01/20250115-Levolution-de-la-repartition-des-impots-locaux-entre-menages-et-entreprises-et-de-la-deterritorialisation-de-limpot_0.pdf",
+      "note": "Gain des ménages en 2023, dont 5,7 milliards pour les 20 % les plus aisés ; la Cour parle d'effets « anti-redistributifs ». Les collectivités sont compensées par l'État."
+     },
+     {
+      "mesure": "Baisse des impôts de production",
+      "annee": "2021",
+      "effet": -10.1,
+      "texte": "−10,1",
+      "source": "Sénat, rapport général n° 138 sur le budget 2021",
+      "lien": "https://www.senat.fr/rap/l20-138-21/l20-138-211.pdf",
+      "note": "Dont 7,2 milliards de cotisation sur la valeur ajoutée des entreprises ; une partie revient par l'impôt sur les sociétés."
+     },
+     {
+      "mesure": "Baisse de l'impôt sur le revenu",
+      "annee": "2020",
+      "effet": -5,
+      "texte": "−5",
+      "source": "Assemblée nationale, rapport n° 2301 sur le budget 2020",
+      "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b2301-tii_rapport-fond.pdf"
+     },
+     {
+      "mesure": "Impôt sur la fortune remplacé par l'impôt sur la fortune immobilière",
+      "annee": "2018",
+      "effet": -4.5,
+      "texte": "−4,5",
+      "source": "France Stratégie, octobre 2023",
+      "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-2023-rapport-isf-quatrieme_rapport_complet_17octobre_avis_0.pdf",
+      "note": "3,2 milliards prévus en 2018 ; 4,5 milliards en 2022 selon France Stratégie."
+     },
+     {
+      "mesure": "Heures supplémentaires sans cotisations salariales ni impôt sur le revenu",
+      "annee": "2019",
+      "effet": -4.4,
+      "texte": "−4,4",
+      "source": "Projet de loi de finances 2026, annexe « Voies et moyens »",
+      "lien": "https://www.assemblee-nationale.fr/dyn/dyn/contenu/visualisation/1087933/file/Voies_et_moyens_Tome_2_2026.pdf",
+      "note": "3,8 milliards prévus ; 4,4 constatés en 2024."
+     },
+     {
+      "mesure": "Baisse du taux de l'impôt sur les sociétés à 25 %",
+      "annee": "2018-2022",
+      "effet": -4.1,
+      "texte": "−4,1",
+      "source": "Assemblée nationale, rapport n° 273 sur le budget 2018",
+      "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b0273-tiii_rapport-fond.pdf",
+      "note": "Part votée en 2017 ; 11,2 milliards par an à partir de 2023 avec la baisse votée fin 2016."
+     },
+     {
+      "mesure": "Suppression progressive de la cotisation sur la valeur ajoutée des entreprises",
+      "annee": "2023",
+      "effet": -4,
+      "texte": "−4",
+      "source": "Sénat, rapport général sur le budget 2023",
+      "lien": "https://www.senat.fr/rap/l22-115-21/l22-115-211.pdf",
+      "note": "Les étapes suivantes ont été reportées."
+     },
+     {
+      "mesure": "Suppression de la contribution à l'audiovisuel public",
+      "annee": "2022",
+      "effet": -3.2,
+      "texte": "−3,2",
+      "source": "Assemblée nationale, rapport n° 147",
+      "lien": "https://www.assemblee-nationale.fr/dyn/16/rapports/cion_fin/l16b0147_rapport-fond.pdf",
+      "note": "L'audiovisuel public est désormais financé par une part de TVA."
+     },
+     {
+      "mesure": "Gel de la hausse prévue de la taxe carbone",
+      "annee": "2019",
+      "effet": -2.9,
+      "texte": "−2,9",
+      "source": "Cour des comptes, juillet 2022",
+      "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf",
+      "note": "Par rapport à la hausse votée ; à terme, celle-ci devait rapporter plus de 12 milliards par an."
+     },
+     {
+      "mesure": "Prélèvement forfaitaire unique de 30 % sur les revenus du capital",
+      "annee": "2018",
+      "effet": -1.9,
+      "texte": "−1,9",
+      "source": "France Stratégie, octobre 2021",
+      "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/2021/1014%20Reforme%20de%20la%20fiscalit%C3%A9%20du%20capital/fs-2021-troisieme_rapport-fiscalite_du_capital-octobre.pdf",
+      "note": "Chiffrage du gouvernement ; France Stratégie l'estime plus faible après coup, une fois comptés la hausse de la CSG et l'essor des dividendes."
+     },
+     {
+      "mesure": "Contribution exceptionnelle sur les bénéfices des grandes entreprises",
+      "annee": "2025",
+      "effet": 8.0,
+      "texte": "+8,0",
+      "source": "Insee Première n° 2106, mai 2026",
+      "lien": "https://www.insee.fr/fr/statistiques/8997691",
+      "note": "Avec la contribution sur le fret maritime. Temporaire, réduite en 2026."
+     }
+    ]
+   }
+  ],
+  "totaux": [
+   {
+    "texte": "Selon la Cour des comptes, les baisses de prélèvements obligatoires décidées à partir de 2018 représentent 62 milliards d'euros en 2023, soit 2,2 points de PIB : « Ces baisses de prélèvements, non compensées par des économies en dépenses, ont creusé le déficit de l'État et accru sa dette. »",
+    "source": "Cour des comptes, juillet 2024",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2024-07/20240715-RSPFP-2024_0.pdf"
+   },
+   {
+    "texte": "Le gouvernement chiffrait en novembre 2021 les baisses du premier quinquennat à 26 milliards d'euros pour les ménages et 26 milliards pour les entreprises.",
+    "source": "Assemblée nationale, commission des finances, 3 novembre 2021",
+    "lien": "https://questions.assemblee-nationale.fr/dyn/15/comptes-rendus/cion_fin/l15cion_fin2122020_compte-rendu.pdf"
+   },
+   {
+    "texte": "Sous François Hollande, les hausses l'ont emporté : +22,8 milliards d'euros de mesures nouvelles en 2012 (dont une partie votée avant son élection) et +29,5 en 2013, puis des baisses à partir de 2015 (−2,2 en 2015, −4,0 en 2016). Selon l'OFCE, ses mesures représentent +27 milliards sur le quinquennat : +35 pour les ménages, −21 pour les entreprises.",
+    "source": "Cour des comptes, juin 2017 ; OFCE, septembre 2016",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2017-07/20170629-RSPFP_0.pdf"
+   },
+   {
+    "texte": "Depuis 2024, le mouvement s'inverse : +23 milliards d'euros de hausses en 2025, +14 milliards prévus en 2026, +17,2 milliards proposés pour 2027. Une partie est temporaire.",
+    "source": "Insee Première n° 2106 ; Assemblée nationale, rapport n° 3291 sur le budget 2027",
+    "lien": "https://www.assemblee-nationale.fr/dyn/17/rapports/cion_fin/l17b3291-ti_rapport-fond.pdf"
+   },
+   {
+    "texte": "Aucune institution ne calcule le coût cumulé de ces baisses depuis 2018, ni leur part en euros dans la hausse de la dette. L'estimation publique la plus proche est celle de l'OFCE : 31 à 48 % de la hausse de la dette rapportée au PIB entre 2016 et 2023 viennent de choix budgétaires durables, baisses d'impôts et dépenses confondues.",
+    "source": "OFCE, mai 2024",
+    "lien": "https://ofce.sciences-po.fr/blog2024/fr/2024/20240524_RSMPXR/crises_et_dettes.fr.pdf"
+   }
+  ]
+ },
+ "classement": {
+  "verifie_au": "2026-11-04",
+  "mesures": [
+   {
+    "mesure": "Crédit d'impôt pour la compétitivité et l'emploi, devenu en 2019 un allègement de cotisations",
+    "qui": "Hollande",
+    "annee": "2013",
+    "type": "recettes",
+    "cout": 20,
+    "texte": "≈ 20",
+    "en_vigueur": true,
+    "source": "France Stratégie, 2018",
+    "note": "18 à 23 milliards par an de 2014 à 2018",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-_rapport_cice-2018-02-10.pdf"
+   },
+   {
+    "mesure": "Suppression de la taxe d'habitation sur les résidences principales",
+    "qui": "Macron",
+    "annee": "2018-2023",
+    "type": "recettes",
+    "cout": 18.9,
+    "texte": "18,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2025",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2025-01/20250115-Levolution-de-la-repartition-des-impots-locaux-entre-menages-et-entreprises-et-de-la-deterritorialisation-de-limpot_0.pdf"
+   },
+   {
+    "mesure": "Impôt sur les sociétés ramené de 33,3 % à 25 %",
+    "qui": "Hollande puis Macron",
+    "annee": "2017-2022",
+    "type": "recettes",
+    "cout": 11.2,
+    "texte": "11,2",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2017",
+    "note": "7,1 votés fin 2016, 4,1 en 2017",
+    "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b0273-tiii_rapport-fond.pdf"
+   },
+   {
+    "mesure": "Baisse des impôts de production",
+    "qui": "Macron",
+    "annee": "2021",
+    "type": "recettes",
+    "cout": 10.1,
+    "texte": "10,1",
+    "en_vigueur": true,
+    "source": "Sénat, 2020",
+    "lien": "https://www.senat.fr/rap/l20-138-21/l20-138-211.pdf"
+   },
+   {
+    "mesure": "Pacte de responsabilité : allègements de cotisations",
+    "qui": "Hollande",
+    "annee": "2015-2016",
+    "type": "recettes",
+    "cout": 10,
+    "texte": "≈ 10",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2016",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+   },
+   {
+    "mesure": "Baisse de l'impôt sur le revenu",
+    "qui": "Macron",
+    "annee": "2020",
+    "type": "recettes",
+    "cout": 5,
+    "texte": "5",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2019",
+    "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b2301-tii_rapport-fond.pdf"
+   },
+   {
+    "mesure": "Baisse de l'impôt sur le revenu des ménages modestes",
+    "qui": "Hollande",
+    "annee": "2014-2017",
+    "type": "recettes",
+    "cout": 5,
+    "texte": "≈ 5",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2016",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+   },
+   {
+    "mesure": "Impôt sur la fortune remplacé par l'impôt sur la fortune immobilière",
+    "qui": "Macron",
+    "annee": "2018",
+    "type": "recettes",
+    "cout": 4.5,
+    "texte": "4,5",
+    "en_vigueur": true,
+    "source": "France Stratégie, 2023",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-2023-rapport-isf-quatrieme_rapport_complet_17octobre_avis_0.pdf"
+   },
+   {
+    "mesure": "Heures supplémentaires sans cotisations salariales ni impôt sur le revenu",
+    "qui": "Macron",
+    "annee": "2019",
+    "type": "recettes",
+    "cout": 4.4,
+    "texte": "4,4",
+    "en_vigueur": true,
+    "source": "Annexe au budget 2026",
+    "lien": "https://www.assemblee-nationale.fr/dyn/dyn/contenu/visualisation/1087933/file/Voies_et_moyens_Tome_2_2026.pdf"
+   },
+   {
+    "mesure": "Première étape de suppression de la cotisation sur la valeur ajoutée des entreprises",
+    "qui": "Macron",
+    "annee": "2023",
+    "type": "recettes",
+    "cout": 4,
+    "texte": "4",
+    "en_vigueur": true,
+    "source": "Sénat, 2022",
+    "lien": "https://www.senat.fr/rap/l22-115-21/l22-115-211.pdf"
+   },
+   {
+    "mesure": "Suppression de la contribution à l'audiovisuel public",
+    "qui": "Macron",
+    "annee": "2022",
+    "type": "recettes",
+    "cout": 3.2,
+    "texte": "3,2",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2022",
+    "lien": "https://www.assemblee-nationale.fr/dyn/16/rapports/cion_fin/l16b0147_rapport-fond.pdf"
+   },
+   {
+    "mesure": "Gel de la hausse prévue de la taxe carbone",
+    "qui": "Macron",
+    "annee": "2019",
+    "type": "recettes",
+    "cout": 2.9,
+    "texte": "2,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2022",
+    "note": "par rapport à la hausse votée, plus de 12 milliards par an à terme",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "mesure": "Hausse du budget des armées (lois de programmation militaire)",
+    "qui": "Macron",
+    "annee": "2019-2030",
+    "type": "depenses",
+    "cout": 18.3,
+    "texte": "18,3",
+    "en_vigueur": true,
+    "source": "Loi de programmation militaire, 2026",
+    "note": "50,5 milliards en 2025 contre 32,2 en 2017, en euros courants (calcul)",
+    "lien": "https://www.assemblee-nationale.fr/dyn/17/textes/l17t0325_texte-adopte-provisoire.pdf"
+   },
+   {
+    "mesure": "Ségur de la santé (revalorisations et aides durables)",
+    "qui": "Macron",
+    "annee": "2020-2021",
+    "type": "depenses",
+    "cout": 12.0,
+    "texte": "12,0",
+    "en_vigueur": true,
+    "source": "Annexe au budget de la Sécurité sociale 2026",
+    "note": "dépenses durables en 2024, dont 10,9 de salaires",
+    "lien": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1088682/file/PLFSS2026-Annexe5-2025-10-14_avec%20couverture-2.pdf"
+   },
+   {
+    "mesure": "Hausse de 3,5 % du point d'indice des fonctionnaires",
+    "qui": "Macron",
+    "annee": "2022",
+    "type": "depenses",
+    "cout": 7.6,
+    "texte": "7,6",
+    "en_vigueur": true,
+    "source": "Sénat, 2025",
+    "lien": "https://www.senat.fr/rap/a25-145-5/a25-145-5_mono.html"
+   },
+   {
+    "mesure": "Suppression de la taxe professionnelle",
+    "qui": "Sarkozy",
+    "annee": "2010",
+    "type": "recettes",
+    "cout": 4.8,
+    "texte": "4,8",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2011",
+    "note": "remplacée par deux nouveaux impôts locaux",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/114000338.pdf"
+   },
+   {
+    "mesure": "Heures supplémentaires défiscalisées et exonérées (loi TEPA)",
+    "qui": "Sarkozy",
+    "annee": "2007",
+    "type": "recettes",
+    "cout": 4.5,
+    "texte": "≈ 4,5",
+    "en_vigueur": false,
+    "source": "Assemblée nationale, 2011",
+    "note": "supprimées en 2012",
+    "lien": "https://www.assemblee-nationale.fr/13/pdf/rap-info/i3615.pdf"
+   },
+   {
+    "mesure": "Aide à l'embauche d'apprentis",
+    "qui": "Macron",
+    "annee": "2020",
+    "type": "depenses",
+    "cout": 3.9,
+    "texte": "≈ 3,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2025",
+    "note": "en 2024",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2025-01/20250109-Les-mesures-daide-exceptionnelles-une-sortie-de-crise-a-achever-pour-le-budget-de-l-Etat.pdf"
+   },
+   {
+    "mesure": "Réforme des carrières des fonctionnaires (PPCR)",
+    "qui": "Hollande",
+    "annee": "2016-2017",
+    "type": "depenses",
+    "cout": 3.6,
+    "texte": "3,6",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2022",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "mesure": "Hausse de 1,5 % du point d'indice des fonctionnaires",
+    "qui": "Macron",
+    "annee": "2023",
+    "type": "depenses",
+    "cout": 3.4,
+    "texte": "3,4",
+    "en_vigueur": true,
+    "source": "Sénat, 2025",
+    "note": "plus 2,1 milliards pour 5 points en janvier 2024",
+    "lien": "https://www.senat.fr/rap/a25-145-5/a25-145-5_mono.html"
+   },
+   {
+    "mesure": "Réforme du crédit d'impôt recherche",
+    "qui": "Sarkozy",
+    "annee": "2008",
+    "type": "recettes",
+    "cout": 3.4,
+    "texte": "≈ 3,4",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2013",
+    "note": "5,2 milliards en 2011 contre 1,8 en 2007 (calcul)",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i1359.pdf"
+   },
+   {
+    "mesure": "Hausses du point d'indice de 2016 et 2017",
+    "qui": "Hollande",
+    "annee": "2016-2017",
+    "type": "depenses",
+    "cout": 2.9,
+    "texte": "2,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2022",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "mesure": "Revalorisation exceptionnelle de la prime d'activité",
+    "qui": "Macron",
+    "annee": "2019",
+    "type": "depenses",
+    "cout": 2.8,
+    "texte": "2,8",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2020",
+    "note": "décidée en décembre 2018",
+    "lien": "https://www.assemblee-nationale.fr/15/pdf/rapports/r3011-a41.pdf"
+   }
+  ],
+  "crises": [
+   {
+    "titre": "Crise financière",
+    "chiffre": "46 Md€",
+    "texte": "pour le plan de relance de 2009-2010 (35,3 milliards en 2009, 10,9 en 2010)",
+    "source": "Cour des comptes, 2010",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/104000325.pdf"
+   },
+   {
+    "titre": "Crise sanitaire",
+    "chiffre": "157 Md€",
+    "texte": "de soutien et de relance en 2020-2021 (fonds de solidarité, activité partielle, santé, relance), puis 47 milliards en 2022-2023",
+    "source": "Cour des comptes, 2022 et 2024",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "titre": "Prix de l'énergie",
+    "chiffre": "72 Md€ bruts",
+    "texte": "pour le budget de l'État de fin 2021 à 2024 (boucliers tarifaires), 36 milliards nets",
+    "source": "Cour des comptes, 2024",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/293446.pdf"
+   }
+  ],
+  "hausses": [
+   {
+    "texte": "Hausses d'impôts de 2011 : +23 milliards d'euros ; de 2012 et 2013 : +22,8 puis +29,5 milliards, dont une partie votée avant l'élection de François Hollande ; TVA de 2014 : +6,5 milliards par an",
+    "source": "Cour des comptes, 2012 et 2017 ; Insee",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/124000316.pdf"
+   },
+   {
+    "texte": "Réformes des retraites : 2010, environ 26 milliards par an d'amélioration attendue en 2018 (prévision du gouvernement) ; 2023, environ 10 milliards en 2030 pour les retraites, et 8 à 14 milliards de recettes en plus pour les autres administrations",
+    "source": "Cour des comptes, 2011 et 2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/297428.pdf"
+   },
+   {
+    "texte": "Hausses d'impôts de 2025 et 2026 : 37 milliards d'euros, dont la contribution exceptionnelle des grandes entreprises (+8 milliards en 2025, temporaire)",
+    "source": "Cour des comptes, 2026 ; Insee",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+   }
+  ],
+  "egalement": "Également, sous 2,8 milliards par an : TVA à 5,5 % dans la restauration (2009, 2,6 nets, taux relevé ensuite), fin de la surtaxe d'impôt sur les sociétés (2017, 2,6), droits de succession de la loi TEPA (2,3 prévus, en partie repris en 2012), contribution sociale de solidarité des sociétés (2,0), prélèvement forfaitaire unique (1,9), intérêts d'emprunt immobilier (1,9 en 2011), bouclier fiscal (0,7 en 2009, supprimé).",
+  "perspective": "Avant 2007 : selon le rapport demandé en 2010 au directeur général de l'Insee et à un magistrat de la Cour des comptes, les baisses de prélèvements décidées depuis 1999 ont réduit les recettes de près de 3 points de PIB ; sans elles, la dette aurait été inférieure d'environ 20 points de PIB.",
+  "source_perspective": "Rapport Champsaur-Cotis, avril 2010",
+  "egalement_liste": [
+   {
+    "texte": "TVA à 5,5 % dans la restauration (2009) : 2,6 milliards nets par an, taux relevé ensuite",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i0337.pdf"
+   },
+   {
+    "texte": "fin de la surtaxe d'impôt sur les sociétés (2017) : 2,6",
+    "lien": "https://insee.fr/fr/statistiques/fichier/3303532/TEF2018_132.pdf"
+   },
+   {
+    "texte": "droits de succession de la loi TEPA : 2,3 prévus, en partie repris en 2012",
+    "lien": "https://www.senat.fr/rap/l11-689-1/l11-689-125.html"
+   },
+   {
+    "texte": "abattements sur la contribution sociale de solidarité des sociétés : 2,0",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+   },
+   {
+    "texte": "prélèvement forfaitaire unique sur les revenus du capital : 1,9",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/2021/1014%20Reforme%20de%20la%20fiscalit%C3%A9%20du%20capital/fs-2021-troisieme_rapport-fiscalite_du_capital-octobre.pdf"
+   },
+   {
+    "texte": "crédit d'impôt sur les intérêts d'emprunt immobilier : 1,9 en 2011, fermé depuis",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/124000316.pdf"
+   },
+   {
+    "texte": "bouclier fiscal : 0,7 en 2009, supprimé",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/budget/plf2013/b0251-tiii-a41.pdf"
+   }
+  ],
+  "lien_perspective": "https://www.vie-publique.fr/files/rapport/pdf/104000234.pdf"
+ }
+}

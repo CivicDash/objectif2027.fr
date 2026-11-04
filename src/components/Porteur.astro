@@ -1,0 +1,35 @@
+---
+/**
+ * Qui porte un document : le candidat, son équipe de campagne, un parti ou un groupe
+ * parlementaire. Pour tout porteur autre que le candidat, la preuve d'endossement (note,
+ * date, lien) est exigée avant publication : on l'affiche telle quelle, sans la commenter.
+ */
+import { libellePorteur, type PorteurDoc } from '@/lib/data';
+import { dateFr } from '@/lib/format';
+
+interface Props {
+    porteur: PorteurDoc | null | undefined;
+    /** Le candidat de la fiche : accorde « le candidat » / « la candidate ». */
+    candidat?: { civilite?: string | null; nom_complet?: string } | null;
+    class?: string;
+}
+const { porteur, candidat = null, class: classe = '' } = Astro.props;
+const type = porteur?.type ?? 'candidat';
+const typeLibelle = libellePorteur(type, candidat);
+const e = porteur?.endossement ?? null;
+const aEndossement = !!(e && (e.note || e.date || e.url));
+---
+{porteur && (
+    <p class:list={['text-xs', classe]} style="color: var(--fg-muted)">
+        Porté par :{' '}
+        {porteur.libelle
+            ? <><span class="font-medium" style="color: var(--fg)">{porteur.libelle}</span> ({typeLibelle})</>
+            : <span class="font-medium" style="color: var(--fg)">{typeLibelle}</span>}
+        {aEndossement && (
+            <span class="block mt-0.5">
+                Endossement : {e!.note}{e!.date && <>{e!.note ? ', ' : ''}le {dateFr(e!.date)}</>}
+                {e!.url && <> — <a href={e!.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">source ↗</a></>}
+            </span>
+        )}
+    </p>
+)}

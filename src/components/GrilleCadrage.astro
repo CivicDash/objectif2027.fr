@@ -1,0 +1,131 @@
+---
+/**
+ * Un cadrage budgétaire dans la grille commune, la référence officielle en regard.
+ *
+ * Les lignes suivent toujours l'ordre de `BUDGETS.rubriques`, pour tous les candidats : une
+ * case vide se voit, et rien ne se réordonne selon ce qu'un candidat a dit ou non. Aucune
+ * couleur ne dépend d'une valeur ; la colonne de référence se distingue par son fond, pas
+ * par un code couleur.
+ */
+import CelluleBudget from '@/components/CelluleBudget.astro';
+import LigneBudget from '@/components/LigneBudget.astro';
+import Porteur from '@/components/Porteur.astro';
+import { BUDGETS, estCandidate, libelleTypeDocument, type Cadrage } from '@/lib/data';
+import { dateFr } from '@/lib/format';
+
+interface Props {
+    cadrage: Cadrage;
+    candidat: { civilite?: string | null; nom_complet?: string };
+}
+const { cadrage: cad, candidat } = Astro.props;
+const reference = BUDGETS.reference;
+const colonne = estCandidate(candidat) ? 'Candidate' : 'Candidat';
+const postes = cad.postes ?? [];
+---
+<article class="rounded-card border overflow-hidden" style="border-color: var(--border)">
+    <header class="p-4 border-b" style="border-color: var(--border)">
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="px-2 py-0.5 rounded-full font-medium" style="background: color-mix(in srgb, var(--fg) 8%, transparent)">{cad.nature_libelle}</span>
+            {cad.date_source && <span style="color: var(--fg-muted)">{dateFr(cad.date_source)}</span>}
+        </div>
+        <h3 class="font-semibold mt-1.5 leading-snug">{cad.titre}</h3>
+        {cad.source && (
+            <p class="text-xs mt-1" style="color: var(--fg-muted)">
+                Source :{' '}
+                {cad.source.url
+                    ? <a href={cad.source.url} target="_blank" rel="nofollow noopener" class="text-brand-600 hover:underline">{cad.source.titre} ↗</a>
+                    : cad.source.titre}
+                {cad.source.type && <> · {libelleTypeDocument(cad.source.type)}</>}
+                {cad.source.date && <> · {dateFr(cad.source.date)}</>}
+            </p>
+        )}
+        {cad.source?.porteur && <Porteur porteur={cad.source.porteur} candidat={candidat} class="mt-1" />}
+    </header>
+
+    <table class="grille w-full text-sm">
+        <caption class="sr-only">{cad.titre} — grille commune{reference ? ', en regard de la référence officielle' : ''}</caption>
+        <thead>
+            <tr>
+                <th scope="col" class="g-rubrique">Rubrique</th>
+                <th scope="col">{colonne}</th>
+                {reference && <th scope="col" class="g-ref">Référence officielle</th>}
+            </tr>
+        </thead>
+        <tbody>
+            {BUDGETS.rubriques.map((r) => (
+                <tr>
+                    <th scope="row" class="g-rubrique">{r.libelle}</th>
+                    <td data-label={colonne}><CelluleBudget rubrique={cad.rubriques?.[r.cle]} /></td>
+                    {reference && <td data-label="Référence officielle" class="g-ref"><CelluleBudget rubrique={reference.rubriques?.[r.cle]} /></td>}
+                </tr>
+            ))}
+        </tbody>
+        {reference && BUDGETS.rubriques_reference.length > 0 && (
+            <tbody class="g-constat">
+                <tr>
+                    <th scope="colgroup" colspan="3" class="g-intertitre">Situation constatée et avis : référence officielle seule</th>
+                </tr>
+                {BUDGETS.rubriques_reference.map((r) => (
+                    <tr>
+                        <th scope="row" class="g-rubrique">{r.libelle}</th>
+                        <td data-label={colonne} class="g-sans-objet"><span aria-hidden="true">—</span><span class="sr-only">sans objet</span></td>
+                        <td data-label="Référence officielle" class="g-ref"><CelluleBudget rubrique={reference.rubriques?.[r.cle]} /></td>
+                    </tr>
+                ))}
+            </tbody>
+        )}
+    </table>
+
+    {postes.length > 0 && (
+        <details class="px-4 py-3 border-t" style="border-color: var(--border)">
+            <summary class="cursor-pointer text-sm font-medium">Postes détaillés cités ({postes.length})</summary>
+            <p class="text-xs mt-1" style="color: var(--fg-muted)">Dans l'ordre de la source, chacun avec sa propre base : ils ne s'additionnent pas forcément.</p>
+            <ul class="mt-2 space-y-2.5">
+                {postes.map((l) => <li><LigneBudget ligne={l} /></li>)}
+            </ul>
+        </details>
+    )}
+
+    {(cad.a_verifier > 0 || cad.note_methodologique) && (
+        <div class="px-4 py-3 border-t text-xs space-y-1" style="border-color: var(--border); color: var(--fg-muted)">
+            {cad.a_verifier > 0 && (
+                <p>{cad.a_verifier} {cad.a_verifier > 1 ? 'chiffres de ce cadrage sont' : 'chiffre de ce cadrage est'} encore en cours de vérification : {cad.a_verifier > 1 ? 'ils seront affichés' : 'il sera affiché'} dès vérification.</p>
+            )}
+            {cad.note_methodologique && <p>{cad.note_methodologique}</p>}
+        </div>
+    )}
+</article>
+
+<style>
+    .grille { border-collapse: collapse; table-layout: fixed; }
+    .grille th, .grille td { padding: 0.6rem 1rem; vertical-align: top; text-align: left; border-top: 1px solid var(--border); }
+    .grille thead th { border-top: 0; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--fg-muted); }
+    .g-rubrique { width: 11rem; font-weight: 600; }
+    .g-ref { background: var(--bg-soft); }
+    .g-intertitre { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--fg-muted); background: var(--bg-soft); }
+    .g-constat tr:first-child th { border-top-width: 2px; }
+    .g-sans-objet { color: var(--fg-muted); }
+
+    /* Sous 640 px, chaque rubrique devient un bloc : la valeur du candidat, puis celle de la
+       référence, chacune annoncée par son intitulé de colonne. */
+    @media (max-width: 639px) {
+        .grille, .grille tbody, .grille tr, .grille th, .grille td { display: block; width: auto; }
+        .grille thead { display: none; }
+        .grille tr { border-top: 1px solid var(--border); padding: 0.6rem 1rem; }
+        .grille th, .grille td { border-top: 0; padding: 0.2rem 0; }
+        .grille td::before {
+            content: attr(data-label);
+            display: block;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--fg-muted);
+        }
+        .g-ref { background: transparent; }
+        .grille td.g-ref { margin: 0.25rem -0.5rem 0; padding: 0.35rem 0.5rem; border-radius: 6px; background: var(--bg-soft); }
+        .g-sans-objet { display: none !important; }
+        .g-intertitre { padding: 0.25rem 0; background: transparent; }
+        .g-constat tr:first-child { background: var(--bg-soft); }
+    }
+</style>

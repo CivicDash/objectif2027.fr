@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
+// Qui a dit quoi : une mesure de l'équipe de campagne reste attribuée à qui l'a formulée.
+import { attributionLocuteur, estTimecode, porteParTexte } from '@/lib/format';
 
 const props = defineProps({
     candidats: { type: Array, required: true }, // fiches détaillées
@@ -123,7 +125,18 @@ async function partager() {
                             <span v-if="m.argumente" class="ml-1 text-xs px-1.5 py-0.5 rounded" style="background:#ecfdf5;color:#047857" title="Arguments pour et contre sourcés">⚖ argumenté</span>
                         </summary>
                         <div class="mt-2 text-sm space-y-2">
-                            <p v-if="m.resume" style="color: var(--fg-muted)">{{ m.resume }}</p>
+                            <p v-if="m.resume && m.resume !== m.titre" style="color: var(--fg-muted)">{{ m.resume }}</p>
+                            <p v-if="porteParTexte(m.porte_par)" class="text-xs" style="color: var(--fg-muted)">{{ porteParTexte(m.porte_par) }}</p>
+                            <div v-if="m.citations?.length">
+                                <p class="text-xs font-semibold" style="color: var(--fg-muted)">{{ m.citations.length > 1 ? 'Citations à la source' : 'Citation à la source' }}</p>
+                                <ul class="text-xs space-y-1.5 border-l-2 pl-3" style="border-color: var(--border)">
+                                    <!-- L'auteur dans le même élément que la citation. -->
+                                    <li v-for="(cit, j) in m.citations" :key="j">
+                                        <span class="italic">« {{ cit.citation }} »</span><span v-if="attributionLocuteur(cit)" style="color: var(--fg-muted)"> — {{ attributionLocuteur(cit) }}</span>
+                                        <a v-if="cit.verifier_url" :href="cit.verifier_url" target="_blank" rel="nofollow noopener" class="tap flex items-center font-medium text-brand-600 hover:underline">▶ Vérifier{{ estTimecode(cit.timecode) ? ` à ${cit.timecode}` : ' à la source' }}</a>
+                                    </li>
+                                </ul>
+                            </div>
                             <div v-if="m.arguments?.pour?.length">
                                 <p class="text-xs font-semibold text-etat-publie">Pour</p>
                                 <ul class="text-xs list-disc pl-4 space-y-1">

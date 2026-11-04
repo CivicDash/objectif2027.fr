@@ -1,0 +1,43 @@
+---
+/**
+ * « Comprendre un budget » : trois mots, et le point de départ chiffré de 2026 selon le
+ * gouvernement. Ce sont des repères communs, pas des propositions.
+ */
+import B from '@/editorial/budget-2027.json';
+
+const fmt = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1 });
+const s = B.situation_2026;
+---
+
+<section aria-labelledby="t-trois-mots" class="trois-mots">
+    <h2 id="t-trois-mots" class="text-lg font-semibold">Comprendre un budget en trois mots</h2>
+    <div class="cartes">
+        <article>
+            <h3>Le PIB</h3>
+            <p>La richesse produite en France en un an. On exprime un montant en « % du PIB » pour le comparer à la taille de l'économie.</p>
+            <p class="repere">Selon le Haut Conseil des finances publiques, <a href={B.repere_pib.lien} target="_blank" rel="noopener">{B.repere_pib.texte}</a>.</p>
+        </article>
+        <article>
+            <h3>Le déficit</h3>
+            <p>Ce qui manque sur une année pour que les recettes couvrent les dépenses. Ce manque est emprunté.</p>
+            <p class="repere">En 2026 : {fmt.format(s.deficit)} % du PIB, selon la dernière prévision du gouvernement.</p>
+        </article>
+        <article>
+            <h3>La dette</h3>
+            <p>Tout ce qui a été emprunté au fil des années et pas encore remboursé.</p>
+            <p class="repere">Fin 2026 : {fmt.format(s.dette)} % du PIB, selon la même prévision.</p>
+        </article>
+    </div>
+    <p class="source">Source : <a href={s.lien} target="_blank" rel="noopener">{s.source}</a>.</p>
+</section>
+
+<style>
+    .trois-mots { display: grid; gap: 12px; }
+    .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    article { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; background: var(--bg); }
+    h3 { margin: 0; font-weight: 600; }
+    p { margin: 0; font-size: .92rem; color: var(--fg-muted); }
+    .repere { color: var(--fg); }
+    .source { font-size: .82rem; color: var(--fg-muted); }
+    a { text-decoration: underline; text-underline-offset: 2px; }
+</style>

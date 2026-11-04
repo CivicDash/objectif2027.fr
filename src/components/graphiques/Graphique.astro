@@ -1,0 +1,168 @@
+---
+// Un graphique de comparaison européenne, tel que l'annexe D le décrit :
+//  - <figure> + <figcaption> (titre descriptif, sous-titre = unité et champ) ;
+//  - une phrase de synthèse générée depuis les données, qui ne commente rien ;
+//  - deux gabarits SVG (compact sous 640 px, large au-dessus), un seul affiché ;
+//  - le pied obligatoire : source, code du jeu, date d'extraction, ruptures, note ;
+//  - le tableau équivalent et un CSV par indicateur, pour vérifier soi-même.
+// Aucun JavaScript : le graphique se lit sans.
+import type { RepereGraphique, Indicateur } from '@/lib/data';
+import { indicateur } from '@/lib/data';
+import { dateFr, nombreFr } from '@/lib/format';
+import {
+    GABARITS, PAYS, NOMS, aDesProvisoires, anneeCommune, anneeCompletePays, ruptures,
+    syntheseCourbes, valeurEn, valeurFr,
+} from '@/lib/graphique';
+import GraphiqueCourbes from './GraphiqueCourbes.astro';
+import GraphiqueBarresGroupees from './GraphiqueBarresGroupees.astro';
+import GraphiqueBarresEmpilees from './GraphiqueBarresEmpilees.astro';
+
+interface Props { g: RepereGraphique; id: string }
+const { g, id } = Astro.props;
+
+const inds = g.indicateurs.map((c) => indicateur(c));
+const complets = inds.every(Boolean);
+const I = inds as Indicateur[];
+const o = g.options ?? {};
+const dec = o.decimales ?? 1;
+const suf = o.suffixe ?? '';
+
+let synthese = '';
+let annee: number | null = null;
+if (complets && g.type === 'courbes') {
+    synthese = I.map((ind, k) => syntheseCourbes(ind, o.panneaux?.[k] ?? g.titre, dec, suf)).join(' ');
+} else if (complets && g.type === 'barres_groupees') {
+    annee = anneeCommune(I);
+    const lib = o.libelles ?? ['', ''];
+    synthese = `En ${annee}, ${g.titre.charAt(0).toLowerCase()}${g.titre.slice(1)} : ` + PAYS.map((p) => {
+        const a = valeurEn(I[0], p, annee!), b = valeurEn(I[1], p, annee!);
+        return a && b ? `${NOMS[p]} ${valeurFr(a.valeur, dec, suf)} (${lib[0].toLowerCase()}) et ${valeurFr(b.valeur, dec, suf)} (${lib[1].toLowerCase()})` : `${NOMS[p]} non disponible`;
+    }).join(' ; ') + '.';
+} else if (complets && g.type === 'barres_empilees') {
+    const k = o.mise_en_avant ? g.indicateurs.indexOf(o.mise_en_avant) : 0;
+    const lib = (o.libelles ?? [])[k] ?? I[k].titre;
+    synthese = `${lib}, en part du total : ` + PAYS.map((p) => {
+        const a = anneeCompletePays(I, p);
+        const v = a ? valeurEn(I[k], p, a) : undefined;
+        return v ? `${NOMS[p]} ${valeurFr(v.valeur, dec, ' %')} (${a})` : `${NOMS[p]} non disponible`;
+    }).join(' ; ') + '.';
+}
+
+const codesJeux = complets ? [...new Set(I.flatMap((i) => i.sources.map((s) => s.code)))] : [];
+const extraction = complets ? I.map((i) => i.extraction).filter(Boolean).sort().pop() : null;
+const rupt = complets ? ruptures(I) : '';
+const provisoires = complets && g.type === 'courbes' && aDesProvisoires(I);
+const note = g.note ?? (complets ? I[0].note_methodo : null);
+const idTitre = `${id}-titre`;
+const panneaux = g.type === 'courbes' && I.length > 1;
+
+// Tableau : années × pays pour les courbes, pays × catégories pour les barres.
+const tableauxCourbes = complets && g.type === 'courbes' ? I.map((ind, k) => {
+    const annees = [...new Set(Object.values(ind.series).flat().map((p) => p.annee))].sort();
+    return { titre: o.panneaux?.[k] ?? ind.titre, code: g.indicateurs[k], annees, ind };
+}) : [];
+---
+{complets && (
+<figure class="graphe my-4 rounded-card border p-3 sm:p-4" style="border-color: var(--border)" aria-labelledby={idTitre}>
+    <figcaption id={idTitre}>
+        <span class="block font-semibold">{g.titre}</span>
+        {g.sous_titre && <span class="block text-sm" style="color: var(--fg-muted)">{g.sous_titre}{annee ? `, ${annee}` : ''}</span>}
+    </figcaption>
+
+    <div class="mt-3">
+        {g.type === 'courbes' && !panneaux && (
+            <>
+                <GraphiqueCourbes indicateur={I[0]} gabarit={GABARITS.compact} decimales={dec} suffixe={suf} yMin={o.y_min ?? 0} classe="v-compact" etiquette={synthese} />
+                <GraphiqueCourbes indicateur={I[0]} gabarit={GABARITS.large} decimales={dec} suffixe={suf} yMin={o.y_min ?? 0} classe="v-large" etiquette={synthese} />
+            </>
+        )}
+        {panneaux && (
+            <div class="grid gap-4 md:grid-cols-2">
+                {I.map((ind, k) => (
+                    <div>
+                        <p class="text-sm font-medium">{o.panneaux?.[k] ?? ind.titre}</p>
+                        <GraphiqueCourbes indicateur={ind} gabarit={GABARITS.compact} decimales={dec} suffixe={suf} yMin={o.y_min ?? 0}
+                                          classe="" etiquette={syntheseCourbes(ind, o.panneaux?.[k] ?? ind.titre, dec, suf)} />
+                    </div>
+                ))}
+            </div>
+        )}
+        {g.type === 'barres_groupees' && annee && (
+            <>
+                <GraphiqueBarresGroupees indicateurs={[I[0], I[1]]} annee={annee} gabarit={GABARITS.compact} libelles={(o.libelles ?? ['', '']) as [string, string]}
+                                         decimales={dec} suffixe={suf} classe="v-compact" etiquette={synthese} motif={`${id}-hc`} />
+                <GraphiqueBarresGroupees indicateurs={[I[0], I[1]]} annee={annee} gabarit={GABARITS.large} libelles={(o.libelles ?? ['', '']) as [string, string]}
+                                         decimales={dec} suffixe={suf} classe="v-large" etiquette={synthese} motif={`${id}-hl`} />
+            </>
+        )}
+        {g.type === 'barres_empilees' && (
+            <>
+                <GraphiqueBarresEmpilees indicateurs={I} codes={g.indicateurs} gabarit={GABARITS.compact} libelles={o.libelles ?? []}
+                                         miseEnAvant={o.mise_en_avant} decimales={dec} classe="v-compact" etiquette={synthese} motif={`${id}-hc`} />
+                <GraphiqueBarresEmpilees indicateurs={I} codes={g.indicateurs} gabarit={GABARITS.large} libelles={o.libelles ?? []}
+                                         miseEnAvant={o.mise_en_avant} decimales={dec} classe="v-large" etiquette={synthese} motif={`${id}-hl`} />
+            </>
+        )}
+    </div>
+
+    <p class="mt-3 text-sm leading-relaxed">{synthese}</p>
+
+    <p class="mt-2 text-xs leading-relaxed" style="color: var(--fg-muted)">
+        {[
+            `Source : Eurostat (${codesJeux.join(', ')})${extraction ? `, extraction du ${dateFr(extraction)}` : ''}.`,
+            rupt && `Ruptures de série : ${rupt}.`,
+            provisoires && 'Points creux : données provisoires ou estimées.',
+            (o.y_min ?? 0) !== 0 && `Axe vertical à partir de ${nombreFr(o.y_min!, 0)} (indice base 100).`,
+            note,
+        ].filter(Boolean).join(' ')}
+    </p>
+
+    <details class="mt-2 text-sm">
+        <summary class="cursor-pointer text-brand-600 tap inline-flex items-center">Voir les données</summary>
+        {tableauxCourbes.map((t) => (
+            <div class="mt-2 overflow-x-auto">
+                <table class="text-xs tabular-nums w-full">
+                    <caption class="text-left font-medium py-1">{t.titre}{suf ? ` (${suf.trim()})` : ''}</caption>
+                    <thead><tr><th scope="col" class="text-left pr-3">Année</th>{PAYS.map((p) => <th scope="col" class="text-right px-2">{NOMS[p]}</th>)}</tr></thead>
+                    <tbody>
+                        {t.annees.map((a) => (
+                            <tr class="border-t" style="border-color: var(--border)">
+                                <th scope="row" class="text-left pr-3 font-normal">{a}</th>
+                                {PAYS.map((p) => {
+                                    const v = valeurEn(t.ind, p, a);
+                                    return <td class="text-right px-2">{v ? `${nombreFr(v.valeur, dec)}${v.statut ? ` (${v.statut})` : ''}` : '—'}</td>;
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        ))}
+        {g.type !== 'courbes' && (
+            <div class="mt-2 overflow-x-auto">
+                <table class="text-xs tabular-nums w-full">
+                    <thead><tr><th scope="col" class="text-left pr-3">Pays</th><th scope="col" class="text-right px-2">Année</th>{I.map((ind, k) => <th scope="col" class="text-right px-2">{o.libelles?.[k] ?? ind.titre}</th>)}</tr></thead>
+                    <tbody>
+                        {PAYS.map((p) => {
+                            const a = g.type === 'barres_groupees' ? annee : anneeCompletePays(I, p);
+                            return (
+                                <tr class="border-t" style="border-color: var(--border)">
+                                    <th scope="row" class="text-left pr-3 font-normal">{NOMS[p]}</th>
+                                    <td class="text-right px-2">{a ?? '—'}</td>
+                                    {I.map((ind) => { const v = a ? valeurEn(ind, p, a) : undefined; return <td class="text-right px-2">{v ? nombreFr(v.valeur, dec) : '—'}</td>; })}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        )}
+        <p class="mt-2 text-xs" style="color: var(--fg-muted)">
+            Statuts Eurostat : p provisoire, e estimé, b rupture de série. Télécharger :
+            {g.indicateurs.map((c, k) => (
+                <>{k > 0 && ', '}<a href={`/chiffres/donnees/${c}.csv`} class="text-brand-600 hover:underline" download>{c}.csv</a></>
+            ))}
+        </p>
+    </details>
+</figure>
+)}
