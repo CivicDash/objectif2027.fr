@@ -927,7 +927,14 @@
     "texte": "Sur les 911 milliards d'euros de hausse de fin 2016 à fin 2023, le déficit déjà présent avant 2017, « l'héritage de l'histoire de cinquante ans de politique économique », explique 50 à 70 % ; les mesures de hausse ou de baisse des dépenses et des recettes décidées de 2017 à 2023, crises comprises, 20 à 35 % ; la conjoncture, 0 à 10 %.",
     "lien": "https://questions.assemblee-nationale.fr/dyn/16/comptes-rendus/cedette/l16cedette2324003_compte-rendu.pdf"
    }
-  ]
+  ],
+  "financiere": {
+   "titre": "Crise financière",
+   "chiffre": "46 milliards d'euros",
+   "texte": "Coût budgétaire du plan de relance de 2009-2010 : 35,3 milliards en 2009 et 10,9 en 2010, prêts au secteur automobile compris.",
+   "source": "Cour des comptes, La situation et les perspectives des finances publiques, juin 2010",
+   "lien": "https://www.vie-publique.fr/files/rapport/pdf/104000325.pdf"
+  }
  },
  "derapage": {
   "texte": "En 2023 et 2024, le déficit a été bien plus élevé que prévu : 5,8 % du PIB constatés en 2024 contre 4,4 % prévus dans le budget. Une commission d'enquête de l'Assemblée nationale chiffre les recettes manquantes par rapport aux prévisions à 20,7 milliards d'euros en 2023 et 40,1 milliards en 2024 (impôt sur les sociétés, TVA, impôt sur le revenu, contribution sur les producteurs d'électricité). Les recettes ont progressé moins vite que l'activité, ce que les prévisions n'avaient pas anticipé.",
@@ -1412,5 +1419,348 @@
     "lien": "https://ofce.sciences-po.fr/blog2024/fr/2024/20240524_RSMPXR/crises_et_dettes.fr.pdf"
    }
   ]
+ },
+ "classement": {
+  "verifie_au": "2026-11-04",
+  "mesures": [
+   {
+    "mesure": "Crédit d'impôt pour la compétitivité et l'emploi, devenu en 2019 un allègement de cotisations",
+    "qui": "Hollande",
+    "annee": "2013",
+    "type": "recettes",
+    "cout": 20,
+    "texte": "≈ 20",
+    "en_vigueur": true,
+    "source": "France Stratégie, 2018",
+    "note": "18 à 23 milliards par an de 2014 à 2018",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-_rapport_cice-2018-02-10.pdf"
+   },
+   {
+    "mesure": "Suppression de la taxe d'habitation sur les résidences principales",
+    "qui": "Macron",
+    "annee": "2018-2023",
+    "type": "recettes",
+    "cout": 18.9,
+    "texte": "18,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2025",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2025-01/20250115-Levolution-de-la-repartition-des-impots-locaux-entre-menages-et-entreprises-et-de-la-deterritorialisation-de-limpot_0.pdf"
+   },
+   {
+    "mesure": "Impôt sur les sociétés ramené de 33,3 % à 25 %",
+    "qui": "Hollande puis Macron",
+    "annee": "2017-2022",
+    "type": "recettes",
+    "cout": 11.2,
+    "texte": "11,2",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2017",
+    "note": "7,1 votés fin 2016, 4,1 en 2017",
+    "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b0273-tiii_rapport-fond.pdf"
+   },
+   {
+    "mesure": "Baisse des impôts de production",
+    "qui": "Macron",
+    "annee": "2021",
+    "type": "recettes",
+    "cout": 10.1,
+    "texte": "10,1",
+    "en_vigueur": true,
+    "source": "Sénat, 2020",
+    "lien": "https://www.senat.fr/rap/l20-138-21/l20-138-211.pdf"
+   },
+   {
+    "mesure": "Pacte de responsabilité : allègements de cotisations",
+    "qui": "Hollande",
+    "annee": "2015-2016",
+    "type": "recettes",
+    "cout": 10,
+    "texte": "≈ 10",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2016",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+   },
+   {
+    "mesure": "Baisse de l'impôt sur le revenu",
+    "qui": "Macron",
+    "annee": "2020",
+    "type": "recettes",
+    "cout": 5,
+    "texte": "5",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2019",
+    "lien": "https://www.assemblee-nationale.fr/dyn/15/rapports/cion_fin/l15b2301-tii_rapport-fond.pdf"
+   },
+   {
+    "mesure": "Baisse de l'impôt sur le revenu des ménages modestes",
+    "qui": "Hollande",
+    "annee": "2014-2017",
+    "type": "recettes",
+    "cout": 5,
+    "texte": "≈ 5",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2016",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+   },
+   {
+    "mesure": "Impôt sur la fortune remplacé par l'impôt sur la fortune immobilière",
+    "qui": "Macron",
+    "annee": "2018",
+    "type": "recettes",
+    "cout": 4.5,
+    "texte": "4,5",
+    "en_vigueur": true,
+    "source": "France Stratégie, 2023",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-2023-rapport-isf-quatrieme_rapport_complet_17octobre_avis_0.pdf"
+   },
+   {
+    "mesure": "Heures supplémentaires sans cotisations salariales ni impôt sur le revenu",
+    "qui": "Macron",
+    "annee": "2019",
+    "type": "recettes",
+    "cout": 4.4,
+    "texte": "4,4",
+    "en_vigueur": true,
+    "source": "Annexe au budget 2026",
+    "lien": "https://www.assemblee-nationale.fr/dyn/dyn/contenu/visualisation/1087933/file/Voies_et_moyens_Tome_2_2026.pdf"
+   },
+   {
+    "mesure": "Première étape de suppression de la cotisation sur la valeur ajoutée des entreprises",
+    "qui": "Macron",
+    "annee": "2023",
+    "type": "recettes",
+    "cout": 4,
+    "texte": "4",
+    "en_vigueur": true,
+    "source": "Sénat, 2022",
+    "lien": "https://www.senat.fr/rap/l22-115-21/l22-115-211.pdf"
+   },
+   {
+    "mesure": "Suppression de la contribution à l'audiovisuel public",
+    "qui": "Macron",
+    "annee": "2022",
+    "type": "recettes",
+    "cout": 3.2,
+    "texte": "3,2",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2022",
+    "lien": "https://www.assemblee-nationale.fr/dyn/16/rapports/cion_fin/l16b0147_rapport-fond.pdf"
+   },
+   {
+    "mesure": "Gel de la hausse prévue de la taxe carbone",
+    "qui": "Macron",
+    "annee": "2019",
+    "type": "recettes",
+    "cout": 2.9,
+    "texte": "2,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2022",
+    "note": "par rapport à la hausse votée, plus de 12 milliards par an à terme",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "mesure": "Hausse du budget des armées (lois de programmation militaire)",
+    "qui": "Macron",
+    "annee": "2019-2030",
+    "type": "depenses",
+    "cout": 18.3,
+    "texte": "18,3",
+    "en_vigueur": true,
+    "source": "Loi de programmation militaire, 2026",
+    "note": "50,5 milliards en 2025 contre 32,2 en 2017, en euros courants (calcul)",
+    "lien": "https://www.assemblee-nationale.fr/dyn/17/textes/l17t0325_texte-adopte-provisoire.pdf"
+   },
+   {
+    "mesure": "Ségur de la santé (revalorisations et aides durables)",
+    "qui": "Macron",
+    "annee": "2020-2021",
+    "type": "depenses",
+    "cout": 12.0,
+    "texte": "12,0",
+    "en_vigueur": true,
+    "source": "Annexe au budget de la Sécurité sociale 2026",
+    "note": "dépenses durables en 2024, dont 10,9 de salaires",
+    "lien": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1088682/file/PLFSS2026-Annexe5-2025-10-14_avec%20couverture-2.pdf"
+   },
+   {
+    "mesure": "Hausse de 3,5 % du point d'indice des fonctionnaires",
+    "qui": "Macron",
+    "annee": "2022",
+    "type": "depenses",
+    "cout": 7.6,
+    "texte": "7,6",
+    "en_vigueur": true,
+    "source": "Sénat, 2025",
+    "lien": "https://www.senat.fr/rap/a25-145-5/a25-145-5_mono.html"
+   },
+   {
+    "mesure": "Suppression de la taxe professionnelle",
+    "qui": "Sarkozy",
+    "annee": "2010",
+    "type": "recettes",
+    "cout": 4.8,
+    "texte": "4,8",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2011",
+    "note": "remplacée par deux nouveaux impôts locaux",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/114000338.pdf"
+   },
+   {
+    "mesure": "Heures supplémentaires défiscalisées et exonérées (loi TEPA)",
+    "qui": "Sarkozy",
+    "annee": "2007",
+    "type": "recettes",
+    "cout": 4.5,
+    "texte": "≈ 4,5",
+    "en_vigueur": false,
+    "source": "Assemblée nationale, 2011",
+    "note": "supprimées en 2012",
+    "lien": "https://www.assemblee-nationale.fr/13/pdf/rap-info/i3615.pdf"
+   },
+   {
+    "mesure": "Aide à l'embauche d'apprentis",
+    "qui": "Macron",
+    "annee": "2020",
+    "type": "depenses",
+    "cout": 3.9,
+    "texte": "≈ 3,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2025",
+    "note": "en 2024",
+    "lien": "https://www.ccomptes.fr/sites/default/files/2025-01/20250109-Les-mesures-daide-exceptionnelles-une-sortie-de-crise-a-achever-pour-le-budget-de-l-Etat.pdf"
+   },
+   {
+    "mesure": "Réforme des carrières des fonctionnaires (PPCR)",
+    "qui": "Hollande",
+    "annee": "2016-2017",
+    "type": "depenses",
+    "cout": 3.6,
+    "texte": "3,6",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2022",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "mesure": "Hausse de 1,5 % du point d'indice des fonctionnaires",
+    "qui": "Macron",
+    "annee": "2023",
+    "type": "depenses",
+    "cout": 3.4,
+    "texte": "3,4",
+    "en_vigueur": true,
+    "source": "Sénat, 2025",
+    "note": "plus 2,1 milliards pour 5 points en janvier 2024",
+    "lien": "https://www.senat.fr/rap/a25-145-5/a25-145-5_mono.html"
+   },
+   {
+    "mesure": "Réforme du crédit d'impôt recherche",
+    "qui": "Sarkozy",
+    "annee": "2008",
+    "type": "recettes",
+    "cout": 3.4,
+    "texte": "≈ 3,4",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2013",
+    "note": "5,2 milliards en 2011 contre 1,8 en 2007 (calcul)",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i1359.pdf"
+   },
+   {
+    "mesure": "Hausses du point d'indice de 2016 et 2017",
+    "qui": "Hollande",
+    "annee": "2016-2017",
+    "type": "depenses",
+    "cout": 2.9,
+    "texte": "2,9",
+    "en_vigueur": true,
+    "source": "Cour des comptes, 2022",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "mesure": "Revalorisation exceptionnelle de la prime d'activité",
+    "qui": "Macron",
+    "annee": "2019",
+    "type": "depenses",
+    "cout": 2.8,
+    "texte": "2,8",
+    "en_vigueur": true,
+    "source": "Assemblée nationale, 2020",
+    "note": "décidée en décembre 2018",
+    "lien": "https://www.assemblee-nationale.fr/15/pdf/rapports/r3011-a41.pdf"
+   }
+  ],
+  "crises": [
+   {
+    "titre": "Crise financière",
+    "chiffre": "46 Md€",
+    "texte": "pour le plan de relance de 2009-2010 (35,3 milliards en 2009, 10,9 en 2010)",
+    "source": "Cour des comptes, 2010",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/104000325.pdf"
+   },
+   {
+    "titre": "Crise sanitaire",
+    "chiffre": "157 Md€",
+    "texte": "de soutien et de relance en 2020-2021 (fonds de solidarité, activité partielle, santé, relance), puis 47 milliards en 2022-2023",
+    "source": "Cour des comptes, 2022 et 2024",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/285605.pdf"
+   },
+   {
+    "titre": "Prix de l'énergie",
+    "chiffre": "72 Md€ bruts",
+    "texte": "pour le budget de l'État de fin 2021 à 2024 (boucliers tarifaires), 36 milliards nets",
+    "source": "Cour des comptes, 2024",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/293446.pdf"
+   }
+  ],
+  "hausses": [
+   {
+    "texte": "Hausses d'impôts de 2011 : +23 milliards d'euros ; de 2012 et 2013 : +22,8 puis +29,5 milliards, dont une partie votée avant l'élection de François Hollande ; TVA de 2014 : +6,5 milliards par an",
+    "source": "Cour des comptes, 2012 et 2017 ; Insee",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/124000316.pdf"
+   },
+   {
+    "texte": "Réformes des retraites : 2010, environ 26 milliards par an d'amélioration attendue en 2018 (prévision du gouvernement) ; 2023, environ 10 milliards en 2030 pour les retraites, et 8 à 14 milliards de recettes en plus pour les autres administrations",
+    "source": "Cour des comptes, 2011 et 2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/297428.pdf"
+   },
+   {
+    "texte": "Hausses d'impôts de 2025 et 2026 : 37 milliards d'euros, dont la contribution exceptionnelle des grandes entreprises (+8 milliards en 2025, temporaire)",
+    "source": "Cour des comptes, 2026 ; Insee",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/303867.pdf"
+   }
+  ],
+  "egalement": "Également, sous 2,8 milliards par an : TVA à 5,5 % dans la restauration (2009, 2,6 nets, taux relevé ensuite), fin de la surtaxe d'impôt sur les sociétés (2017, 2,6), droits de succession de la loi TEPA (2,3 prévus, en partie repris en 2012), contribution sociale de solidarité des sociétés (2,0), prélèvement forfaitaire unique (1,9), intérêts d'emprunt immobilier (1,9 en 2011), bouclier fiscal (0,7 en 2009, supprimé).",
+  "perspective": "Avant 2007 : selon le rapport demandé en 2010 au directeur général de l'Insee et à un magistrat de la Cour des comptes, les baisses de prélèvements décidées depuis 1999 ont réduit les recettes de près de 3 points de PIB ; sans elles, la dette aurait été inférieure d'environ 20 points de PIB.",
+  "source_perspective": "Rapport Champsaur-Cotis, avril 2010",
+  "egalement_liste": [
+   {
+    "texte": "TVA à 5,5 % dans la restauration (2009) : 2,6 milliards nets par an, taux relevé ensuite",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i0337.pdf"
+   },
+   {
+    "texte": "fin de la surtaxe d'impôt sur les sociétés (2017) : 2,6",
+    "lien": "https://insee.fr/fr/statistiques/fichier/3303532/TEF2018_132.pdf"
+   },
+   {
+    "texte": "droits de succession de la loi TEPA : 2,3 prévus, en partie repris en 2012",
+    "lien": "https://www.senat.fr/rap/l11-689-1/l11-689-125.html"
+   },
+   {
+    "texte": "abattements sur la contribution sociale de solidarité des sociétés : 2,0",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/rap-info/i3684.pdf"
+   },
+   {
+    "texte": "prélèvement forfaitaire unique sur les revenus du capital : 1,9",
+    "lien": "https://www.strategie-plan.gouv.fr/files/files/Publications/2021/1014%20Reforme%20de%20la%20fiscalit%C3%A9%20du%20capital/fs-2021-troisieme_rapport-fiscalite_du_capital-octobre.pdf"
+   },
+   {
+    "texte": "crédit d'impôt sur les intérêts d'emprunt immobilier : 1,9 en 2011, fermé depuis",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/124000316.pdf"
+   },
+   {
+    "texte": "bouclier fiscal : 0,7 en 2009, supprimé",
+    "lien": "https://www.assemblee-nationale.fr/14/pdf/budget/plf2013/b0251-tiii-a41.pdf"
+   }
+  ],
+  "lien_perspective": "https://www.vie-publique.fr/files/rapport/pdf/104000234.pdf"
  }
 }
