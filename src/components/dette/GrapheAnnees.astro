@@ -1,0 +1,165 @@
+---
+// Graphique annuel de la page dette : courbes ou barres empilées, sur un seul axe vertical,
+// avec en fond les présidences (bandes grises alternées, jamais de couleur de parti) et les
+// crises. Un SVG statique calculé au build ; une bulle native (<title>) par année au survol.
+// Deux gabarits comme les repères chiffrés : compact sous 640 px, large au-dessus.
+import { nombreFr } from '@/lib/format';
+import { axeVertical, decimalesGraduations, echelle, pasRond } from '@/lib/graphique';
+
+export interface Serie {
+    cle: string;
+    nom: string;
+    /** Classe de couleur : c1 (bleu), c2 (ambre), c3 (gris). */
+    couleur: 'c1' | 'c2' | 'c3';
+    valeurs: { annee: number; valeur: number | null; provisoire?: boolean }[];
+}
+export interface Bande { nom: string; de: number; a: number }
+
+interface Props {
+    type: 'courbes' | 'aire' | 'barres';
+    series: Serie[];
+    bandes?: Bande[];
+    crises?: { libelle: string; de: number; a: number }[];
+    unite: string;
+    decimales?: number;
+    compact?: boolean;
+    etiquette: string;
+    /** Abscisse continue : année + 1 = fin d'année (les dettes sont des encours de fin d'année). */
+    finAnnee?: boolean;
+    yMin?: number;
+}
+const { type, series, bandes = [], crises = [], unite, decimales = 0, compact = false, etiquette, finAnnee = false, yMin = 0 } = Astro.props;
+
+const G = compact
+    ? { largeur: 340, hauteur: 300, haut: bandes.length ? 34 : 14, droite: type === 'barres' ? 8 : 58, bas: 26, gauche: 40, police: 13, pasAnnees: 6 }
+    : { largeur: 720, hauteur: 330, haut: bandes.length ? 34 : 14, droite: type === 'barres' ? 12 : 92, bas: 28, gauche: 52, police: 13, pasAnnees: 2 };
+
+const annees = [...new Set(series.flatMap((s) => s.valeurs.map((v) => v.annee)))].sort((a, b) => a - b);
+const a0 = annees[0];
+const a1 = annees[annees.length - 1];
+const pos = (a: number) => (finAnnee ? a + 1 : a + 0.5);
+const xMin = finAnnee ? a0 + 1 : a0;
+const xMax = Math.max(finAnnee ? a1 + 1 : a1 + 1, ...bandes.map((b) => b.a));
+
+const totaux = type === 'barres'
+    ? annees.map((a) => series.reduce((t, s) => t + Math.max(0, s.valeurs.find((v) => v.annee === a)?.valeur ?? 0), 0))
+    : series.flatMap((s) => s.valeurs.map((v) => v.valeur ?? 0));
+const axe = axeVertical(totaux, yMin);
+const decAxe = decimalesGraduations(axe.graduations);
+
+const gauche = G.gauche, droite = G.largeur - G.droite, haut = G.haut, bas = G.hauteur - G.bas;
+const x = echelle(xMin, xMax, gauche, droite);
+const y = echelle(axe.min, axe.max, bas, haut);
+const largeurAn = x(xMin + 1) - x(xMin);
+
+const pasX = compact ? Math.max(G.pasAnnees, pasRond(xMax - xMin, 4)) : G.pasAnnees;
+const graduationsX: number[] = [];
+for (let a = Math.ceil(xMin / pasX) * pasX; a <= xMax; a += pasX) graduationsX.push(a);
+const anneesEcrites = type === 'barres' ? graduationsX.filter((a) => a <= a1) : graduationsX;
+
+const chemin = (pts: { annee: number; valeur: number }[]) =>
+    pts.map((p, i) => `${i ? 'L' : 'M'}${x(pos(p.annee)).toFixed(1)},${y(p.valeur).toFixed(1)}`).join('');
+const pleins = (s: Serie) => s.valeurs.filter((v) => v.valeur != null) as { annee: number; valeur: number; provisoire?: boolean }[];
+
+const fmt = (v: number) => `${nombreFr(v, decimales)}${unite.startsWith('%') ? ' %' : ''}`;
+const bulle = (a: number) => [String(a), ...series.map((s) => {
+    const v = s.valeurs.find((p) => p.annee === a);
+    return v?.valeur != null ? `${s.nom} : ${fmt(v.valeur)}${v.provisoire ? ' (provisoire)' : ''}` : null;
+})].filter(Boolean).join('\n');
+
+// Étiquettes directes en bout de courbe, écartées si elles se chevauchent.
+const fins = type === 'barres' ? [] : series.map((s) => {
+    const p = pleins(s).at(-1)!;
+    return { s, p, y: y(p.valeur) };
+}).sort((a, b) => a.y - b.y);
+for (let k = 1; k < fins.length; k++) if (fins[k].y - fins[k - 1].y < G.police * 2.3) fins[k].y = fins[k - 1].y + G.police * 2.3;
+---
+<svg viewBox={`0 0 ${G.largeur} ${G.hauteur}`} class:list={['graphe-annees', compact ? 'v-compact' : 'v-large']} role="img" aria-label={etiquette} font-size={G.police}>
+    {bandes.map((b, i) => (
+        <g>
+            <rect class:list={['bande', i % 2 ? 'b2' : 'b1']} x={x(Math.max(b.de, xMin))} y={haut - 22} width={x(Math.min(b.a, xMax)) - x(Math.max(b.de, xMin))} height={bas - haut + 22} />
+            <text class="bande-nom" x={(x(Math.max(b.de, xMin)) + x(Math.min(b.a, xMax))) / 2} y={haut - 8} text-anchor="middle">{compact ? b.nom.split(' ').at(-1) : b.nom}</text>
+        </g>
+    ))}
+    {axe.graduations.map((v) => (
+        <g>
+            <line class={v === axe.min ? 'g-base' : 'g-grille'} x1={gauche} x2={droite} y1={y(v)} y2={y(v)} />
+            <text class="g-texte" x={gauche - 6} y={y(v)} text-anchor="end" dominant-baseline="middle">{nombreFr(v, decAxe)}</text>
+        </g>
+    ))}
+    {crises.map((c, i) => (
+        <g>
+            <line class="crise" x1={x(c.de)} x2={x(c.a + 1)} y1={bas - 4} y2={bas - 4} />
+            {/* Crises voisines (2020-2021, 2022-2023) : libellés sur deux hauteurs, alignés sur le début du trait. */}
+            {!compact && <text class="crise-nom" x={x(c.de)} y={bas - (i % 2 ? 24 : 10)} text-anchor={i === crises.length - 1 && i > 0 ? 'start' : 'middle'}
+                               dx={i === crises.length - 1 && i > 0 ? 0 : (x(c.a + 1) - x(c.de)) / 2}>{c.libelle}</text>}
+        </g>
+    ))}
+    {/* Barres : l'année est écrite sous sa barre ; courbes : au 1er janvier. */}
+    {anneesEcrites.map((a) => (
+        <text class="g-texte" x={x(type === 'barres' ? a + 0.5 : a)} y={bas + G.police + 6} text-anchor="middle">{a}</text>
+    ))}
+
+    {type === 'barres' && annees.map((a) => {
+        let cumul = 0;
+        return series.map((s) => {
+            const v = s.valeurs.find((p) => p.annee === a)?.valeur ?? 0;
+            const y0 = y(cumul), y1 = y(cumul + Math.max(0, v));
+            cumul += Math.max(0, v);
+            return v > 0 && <rect class:list={['barre', s.couleur]} x={x(a) + largeurAn * 0.14} width={largeurAn * 0.72} y={y1} height={Math.max(0, y0 - y1 - 1)} />;
+        });
+    })}
+
+    {type === 'aire' && series.slice(0, 1).map((s) => {
+        const p = pleins(s);
+        return <path class:list={['aire', s.couleur]} d={`${chemin(p)}L${x(pos(p.at(-1)!.annee)).toFixed(1)},${y(axe.min).toFixed(1)}L${x(pos(p[0].annee)).toFixed(1)},${y(axe.min).toFixed(1)}Z`} />;
+    })}
+    {type !== 'barres' && series.map((s) => (
+        <g>
+            <path class:list={['ligne', s.couleur]} d={chemin(pleins(s))} />
+            {pleins(s).filter((p) => p.provisoire).map((p) => (
+                <circle class:list={['creux', s.couleur]} cx={x(pos(p.annee))} cy={y(p.valeur)} r="4" />
+            ))}
+        </g>
+    ))}
+    {fins.map((f) => (
+        <text class="fin" x={x(pos(f.p.annee)) + 8} y={f.y} dominant-baseline="middle">
+            <tspan x={x(pos(f.p.annee)) + 8} class="fin-val">{fmt(f.p.valeur)}</tspan>
+            {series.length > 1 && <tspan x={x(pos(f.p.annee)) + 8} dy="1.15em" class="fin-nom">{f.s.nom}</tspan>}
+        </text>
+    ))}
+    {annees.map((a) => (
+        <rect class="cible" x={x(finAnnee ? a + 0.5 : a)} y={haut} width={largeurAn} height={bas - haut}><title>{bulle(a)}</title></rect>
+    ))}
+</svg>
+
+<style>
+    .graphe-annees { width: 100%; height: auto; display: block; overflow: visible; }
+    .graphe-annees.v-large { display: none; }
+    @media (min-width: 640px) {
+        .graphe-annees.v-large { display: block; }
+        .graphe-annees.v-compact { display: none; }
+    }
+    .graphe-annees { --c1: #2563eb; --c2: #b45309; --c3: #94a3b8; --bande1: rgba(100, 116, 139, .07); --bande2: rgba(100, 116, 139, .15); }
+    @media (prefers-color-scheme: dark) {
+        .graphe-annees { --c1: #3b82f6; --c2: #c9780a; --c3: #64748b; --bande1: rgba(148, 163, 184, .06); --bande2: rgba(148, 163, 184, .14); }
+    }
+    .bande.b1 { fill: var(--bande1); }
+    .bande.b2 { fill: var(--bande2); }
+    .bande-nom { fill: var(--fg-muted); font-size: .9em; font-weight: 600; }
+    .g-grille { stroke: var(--border); stroke-width: 1; }
+    .g-base { stroke: var(--fg-muted); stroke-width: 1; }
+    .g-texte { fill: var(--fg-muted); }
+    .crise { stroke: var(--fg-muted); stroke-width: 3; stroke-linecap: round; opacity: .55; }
+    .crise-nom { fill: var(--fg-muted); font-size: .8em; }
+    .barre.c1 { fill: var(--c1); } .barre.c2 { fill: var(--c2); } .barre.c3 { fill: var(--c3); }
+    .aire.c1 { fill: var(--c1); opacity: .12; }
+    .ligne { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+    .ligne.c1 { stroke: var(--c1); } .ligne.c2 { stroke: var(--c2); } .ligne.c3 { stroke: var(--c3); }
+    .creux { fill: var(--bg); stroke-width: 2; }
+    .creux.c1 { stroke: var(--c1); } .creux.c2 { stroke: var(--c2); } .creux.c3 { stroke: var(--c3); }
+    .fin-val { fill: var(--fg); font-weight: 600; }
+    .fin-nom { fill: var(--fg-muted); font-size: .9em; }
+    .cible { fill: transparent; }
+    .cible:hover { fill: rgba(100, 116, 139, .12); }
+</style>

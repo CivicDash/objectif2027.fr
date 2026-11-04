@@ -1,0 +1,611 @@
+---
+/**
+ * La dette publique, d'où elle vient : trajectoire depuis 2002, hausse par présidence, part des
+ * intérêts et des déficits, recettes et dépenses, impôts, aides aux entreprises, crises.
+ *
+ * Règles, celles de la section Budgets :
+ *  - chaque chiffre avec sa source ; un chiffre que nous calculons est marqué « calcul » et sa
+ *    méthode est écrite en bas de page ;
+ *  - aucun responsable désigné, aucune bonne politique : les mêmes chiffres servent à tous ;
+ *  - aucune couleur de parti : les présidences sont des bandes grises ;
+ *  - aucun sigle technique sans explication : glossaire en bas de page.
+ * Données : src/editorial/dette.json, produit par Visualisations/dette/construire.py.
+ */
+import Base from '@/layouts/Base.astro';
+import AnchorNav from '@/components/AnchorNav.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Glossaire from '@/components/budget/Glossaire.astro';
+import GrapheAnnees from '@/components/dette/GrapheAnnees.astro';
+import D from '@/editorial/dette.json';
+import { dateFr, nombreFr } from '@/lib/format';
+import { breadcrumbJsonLd } from '@/lib/seo';
+
+const F = D as any;
+const md = (v: number, dec = 0) => `${nombreFr(v, dec)} milliards d'euros`;
+const pct = (v: number) => `${nombreFr(v, 1)} %`;
+const trimestre = (t: string) => `fin ${({ 1: 'mars', 2: 'juin', 3: 'septembre', 4: 'décembre' } as Record<string, string>)[t.slice(-1)]} ${t.slice(0, 4)}`;
+
+const traj = D.trajectoire;
+const premier = traj[0];
+const dernier = traj[traj.length - 1];
+const macron = D.presidences[2];
+const C = D.cumuls;
+
+// Présidences en années décimales (16 mai 2007 ≈ 2007,37), pour les bandes des graphiques.
+const decimale = (iso: string | null) => {
+    if (!iso) return dernier.annee + 1;
+    const d = new Date(iso);
+    return d.getUTCFullYear() + (d.getUTCMonth() * 30.4 + d.getUTCDate()) / 365;
+};
+const bandes = D.presidences.map((p) => ({ nom: p.nom, de: decimale(p.debut), a: decimale(p.fin) }));
+const crises = D.crises;
+
+const serieDette = [{ cle: 'dette', nom: 'Dette', couleur: 'c1' as const, valeurs: traj.map((t) => ({ annee: t.annee, valeur: t.dette_md, provisoire: t.provisoire })) }];
+const serieRatio = [{ cle: 'ratio', nom: 'Dette', couleur: 'c1' as const, valeurs: traj.map((t) => ({ annee: t.annee, valeur: t.dette_pib, provisoire: t.provisoire })) }];
+const seriesDeficit = [
+    { cle: 'primaire', nom: 'Déficit hors intérêts', couleur: 'c1' as const, valeurs: D.deficits.map((d) => ({ annee: d.annee, valeur: d.primaire })) },
+    { cle: 'interets', nom: 'Intérêts de la dette', couleur: 'c2' as const, valeurs: D.deficits.map((d) => ({ annee: d.annee, valeur: d.interets })) },
+];
+const seriesRD = [
+    { cle: 'depenses', nom: 'Dépenses', couleur: 'c2' as const, valeurs: D.recettes_depenses.map((r) => ({ annee: r.annee, valeur: r.depenses })) },
+    { cle: 'recettes', nom: 'Recettes', couleur: 'c1' as const, valeurs: D.recettes_depenses.map((r) => ({ annee: r.annee, valeur: r.recettes })) },
+];
+const serieInterets = [{ cle: 'interets', nom: 'Intérêts', couleur: 'c2' as const, valeurs: D.interets.map((i) => ({ annee: i.annee, valeur: i.md })) }];
+
+const rd = (a: number) => D.recettes_depenses.find((r) => r.annee === a)!;
+const r2017 = rd(2017), rFin = rd(dernier.annee), r2019 = rd(2019);
+const def = (a: number) => D.deficits.find((d) => d.annee === a)!;
+const int = (a: number) => D.interets.find((i) => i.annee === a)!;
+
+// Hausse par présidence : une échelle commune pour les trois barres.
+const maxHausse = Math.max(...D.presidences.map((p) => p.hausse));
+
+// Cumul de la hausse depuis 2018 : intérêts, déficit hors intérêts, trésorerie.
+const parts = [
+    { cle: 'interets', nom: 'Intérêts de la dette', valeur: C.macron.interets, couleur: 'c2' },
+    { cle: 'primaire', nom: 'Déficit hors intérêts', valeur: C.macron.primaire, couleur: 'c1' },
+    { cle: 'ajustements', nom: 'Trésorerie et ajustements', valeur: C.macron.ajustements, couleur: 'c3' },
+];
+
+// Dépenses par fonction : une échelle commune autour de zéro.
+const fonctions = D.fonctions.lignes;
+const maxVol = Math.max(...fonctions.map((f) => Math.abs(f.volume_pct)));
+const xV = (v: number) => 50 + (v / maxVol) * 48;
+const totalF = fonctions.find((f) => f.code === 'TOTAL')!;
+
+const seriePO = F.prelevements ? [{ cle: 'po', nom: 'Prélèvements', couleur: 'c1' as const, valeurs: F.prelevements.valeurs }] : [];
+const po = (a: number) => F.prelevements?.valeurs.find((v: any) => v.annee === a)?.valeur ?? 0;
+
+// Mesures fiscales : une échelle commune autour de zéro, en milliards d'euros par an.
+const lignesMes = F.mesures ? F.mesures.periodes.flatMap((p: any) => p.lignes).filter((l: any) => l.effet != null) : [];
+const maxMes = lignesMes.length ? Math.ceil(Math.max(...lignesMes.map((l: any) => Math.abs(l.effet))) / 5) * 5 : 1;
+const xM = (v: number) => 50 + (v / maxMes) * 48;
+
+const titre = "La dette publique, d'où elle vient";
+const ancres = [
+    { id: 't-traj', label: 'Depuis 2002' },
+    { id: 't-pres', label: 'Par présidence' },
+    { id: 't-orig', label: "D'où elle vient" },
+    { id: 't-crises', label: 'Les crises', si: F.couts_crises },
+    { id: 't-rd', label: 'Recettes et dépenses' },
+    { id: 't-mes', label: 'Impôts', si: F.mesures },
+    { id: 't-aides', label: 'Aides aux entreprises', si: F.aides },
+    { id: 't-dep', label: 'Dépenses' },
+    { id: 't-int', label: 'Intérêts' },
+    { id: 't-riche', label: 'Patrimoine', si: F.richesse },
+    { id: 't-cand', label: 'Les candidats' },
+].filter((a) => !('si' in a) || a.si).map(({ id, label }) => ({ id, label }));
+const lienEurostat = D.eurostat.lien;
+---
+
+<Base
+    title="Dette publique : d'où viennent les 1 300 milliards de hausse depuis 2017 ? | Objectif 2027"
+    description="La dette publique française depuis 2002, présidence par présidence : déficits, intérêts, crises, recettes et dépenses, baisses et hausses d'impôts. Les chiffres officiels, sourcés, sans parti pris."
+    ogType="article"
+    jsonld={breadcrumbJsonLd([{ label: 'Budgets', href: '/budgets/' }, { label: titre }])}>
+    <Breadcrumb items={[{ label: 'Budgets', href: '/budgets/' }, { label: titre }]} />
+
+    <div class="dette">
+        <header class="prose">
+            <h1 class="text-2xl font-bold">{titre}</h1>
+            <p>La dette publique a augmenté de {nombreFr(macron.hausse, 0)} milliards d'euros entre {trimestre(macron.t0)} et {trimestre(macron.t1)}. Cette page rassemble les chiffres officiels pour comprendre comment : les déficits, les crises, les intérêts, les impôts, les dépenses.</p>
+            <p>Chaque chiffre renvoie à sa source. Nous ne désignons ni responsable ni bonne politique : ces chiffres sont les mêmes pour tous les candidats, et chacun peut s'en servir pour juger leurs propositions.</p>
+            <p>La dette publique, c'est celle de l'État, de la Sécurité sociale et des collectivités locales réunis. Les mots techniques sont expliqués dans le <a href="#glossaire">glossaire</a>.</p>
+            {F.verifie_au && <p class="etat"><span>Chiffres vérifiés au {dateFr(F.verifie_au)}</span></p>}
+        </header>
+
+        <AnchorNav items={ancres} />
+
+        <section aria-labelledby="t-cles" class="cles">
+            <h2 id="t-cles" class="sr-only">Chiffres clés</h2>
+            <div class="tuile">
+                <strong>{nombreFr(macron.dette_fin, 0)} Md€</strong>
+                <span>Dette publique {trimestre(macron.t1)}, soit {pct(macron.pib_fin)} du PIB</span>
+            </div>
+            <div class="tuile">
+                <strong>+{nombreFr(macron.hausse, 0)} Md€</strong>
+                <span>Depuis {trimestre(macron.t0)} ({nombreFr(macron.dette_debut, 0)} milliards)</span>
+            </div>
+            <div class="tuile">
+                <strong>{nombreFr(int(dernier.annee).md, 1)} Md€</strong>
+                <span>Intérêts payés en {dernier.annee}, contre {nombreFr(int(2017).md, 1)} milliards en 2017</span>
+            </div>
+            <div class="tuile">
+                <strong>{pct(def(dernier.annee).deficit_pib)} du PIB</strong>
+                <span>Déficit public en {dernier.annee}, soit {md(def(dernier.annee).deficit, 1)}</span>
+            </div>
+        </section>
+
+        <section aria-labelledby="t-traj">
+            <div class="prose">
+                <h2 id="t-traj" class="text-lg font-semibold">La dette depuis {premier.annee}</h2>
+                <p>La dette a augmenté sous chacune des trois dernières présidences, plus vite pendant les crises. En euros, elle a été multipliée par {nombreFr(dernier.dette_md / premier.dette_md, 1)} depuis {premier.annee}. Rapportée au PIB, la richesse produite en un an, elle est passée de {pct(premier.dette_pib)} à {pct(dernier.dette_pib)}.</p>
+            </div>
+            <figure class="figure" aria-labelledby="f-traj">
+                <figcaption id="f-traj"><strong>Dette publique en fin d'année</strong><span>En milliards d'euros courants</span></figcaption>
+                <GrapheAnnees type="aire" series={serieDette} bandes={bandes} crises={crises} unite="Md€" finAnnee compact
+                              etiquette={`Dette publique de fin ${premier.annee} à fin ${dernier.annee}, en milliards d'euros : de ${nombreFr(premier.dette_md, 0)} à ${nombreFr(dernier.dette_md, 0)}.`} />
+                <GrapheAnnees type="aire" series={serieDette} bandes={bandes} crises={crises} unite="Md€" finAnnee
+                              etiquette={`Dette publique de fin ${premier.annee} à fin ${dernier.annee}, en milliards d'euros : de ${nombreFr(premier.dette_md, 0)} à ${nombreFr(dernier.dette_md, 0)}.`} />
+                <figcaption><strong>La même dette rapportée au PIB</strong><span>En % du PIB</span></figcaption>
+                <GrapheAnnees type="courbes" series={serieRatio} bandes={bandes} crises={crises} unite="% du PIB" decimales={1} finAnnee compact
+                              etiquette={`Dette publique en % du PIB : ${pct(premier.dette_pib)} fin ${premier.annee}, ${pct(dernier.dette_pib)} fin ${dernier.annee}.`} />
+                <GrapheAnnees type="courbes" series={serieRatio} bandes={bandes} crises={crises} unite="% du PIB" decimales={1} finAnnee
+                              etiquette={`Dette publique en % du PIB : ${pct(premier.dette_pib)} fin ${premier.annee}, ${pct(dernier.dette_pib)} fin ${dernier.annee}.`} />
+                <p class="legende">Bandes grises : les présidences. Traits sous la courbe : crise financière ({crises[0].de}-{crises[0].a}), crise sanitaire ({crises[1].de}-{crises[1].a}), flambée des prix de l'énergie ({crises[2].de}-{crises[2].a}). Point creux : chiffre provisoire. Source : <a href={lienEurostat} target="_blank" rel="noopener">Eurostat</a>, comptes des administrations publiques, mis à jour le {dateFr(D.eurostat.maj)}.</p>
+                <details>
+                    <summary>Voir les chiffres en tableau</summary>
+                    <div class="tableau-ext">
+                        <table>
+                            <thead><tr><th>Fin d'année</th><th>Dette (milliards d'euros)</th><th>En % du PIB</th></tr></thead>
+                            <tbody>{traj.map((t) => <tr><td>{t.annee}</td><td>{nombreFr(t.dette_md, 0)}{t.provisoire && ' (provisoire)'}</td><td>{pct(t.dette_pib)}</td></tr>)}</tbody>
+                        </table>
+                    </div>
+                </details>
+            </figure>
+        </section>
+
+        <section aria-labelledby="t-pres">
+            <div class="prose">
+                <h2 id="t-pres" class="text-lg font-semibold">Présidence par présidence</h2>
+                <p>La dette n'étant publiée qu'en fin de trimestre, chaque période va de la fin juin qui suit une investiture à la fin juin qui suit la suivante.</p>
+            </div>
+            <figure class="figure" aria-labelledby="f-pres">
+                <figcaption id="f-pres"><strong>Hausse de la dette publique</strong><span>En milliards d'euros courants</span></figcaption>
+                <div class="pres">
+                    {D.presidences.map((p) => (
+                        <div class="pres-ligne">
+                            <div class="pres-nom"><strong>{p.nom}</strong><span class="muet petit">{trimestre(p.t0)} → {trimestre(p.t1)}</span></div>
+                            <div class="track"><span class="fill c1" style={`width:${(p.hausse / maxHausse) * 100}%`}></span></div>
+                            <div class="pres-val"><strong>+{nombreFr(p.hausse, 0)}</strong><span class="muet petit">{nombreFr(p.par_an, 0)} par an</span></div>
+                        </div>
+                    ))}
+                </div>
+                <div class="tableau-ext">
+                    <table>
+                        <thead><tr><th>Présidence</th><th>Dette au début</th><th>Dette à la fin</th><th>Hausse</th><th>Par an</th><th>En % du PIB</th></tr></thead>
+                        <tbody>
+                            {D.presidences.map((p) => (
+                                <tr>
+                                    <td>{p.nom}<br /><span class="muet petit">{trimestre(p.t0)} → {trimestre(p.t1)}</span></td>
+                                    <td>{nombreFr(p.dette_debut, 0)} Md€</td>
+                                    <td>{nombreFr(p.dette_fin, 0)} Md€</td>
+                                    <td>+{nombreFr(p.hausse, 0)} Md€</td>
+                                    <td>{nombreFr(p.par_an, 0)} Md€</td>
+                                    <td>{pct(p.pib_debut)} → {pct(p.pib_fin)}<br /><span class="muet petit">{p.pib_fin - p.pib_debut >= 0 ? '+' : ''}{nombreFr(p.pib_fin - p.pib_debut, 1)} points</span></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="legende">Source : <a href={lienEurostat} target="_blank" rel="noopener">Eurostat</a>, dette trimestrielle des administrations publiques. Hausses et moyennes annuelles : calcul.</p>
+            </figure>
+            <div class="prose avertir">
+                <h3 class="font-semibold">Pour comparer honnêtement</h3>
+                <ul>
+                    <li>Les durées diffèrent : cinq ans pour les deux premières présidences, {nombreFr(macron.annees, 0)} ans (deux mandats) pour la troisième. D'où la colonne « par an ».</li>
+                    <li>Les crises ne tombent pas au même moment : la crise financière de 2008-2009 sous Nicolas Sarkozy, la crise sanitaire et la flambée des prix de l'énergie sous Emmanuel Macron. Leur poids est détaillé plus bas.</li>
+                    <li>Les montants sont en euros courants : avec l'inflation, un milliard de 2007 ne vaut pas un milliard de 2026. Rapportée au PIB, qui intègre la hausse des prix, la hausse est de {nombreFr(D.presidences[0].pib_fin - D.presidences[0].pib_debut, 0)} points, {nombreFr(D.presidences[1].pib_fin - D.presidences[1].pib_debut, 0)} points, puis {nombreFr(macron.pib_fin - macron.pib_debut, 0)} points.</li>
+                    <li>Le premier budget d'un président s'applique à l'année qui suit son élection : une partie de la première année relève encore du budget voté sous son prédécesseur.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section aria-labelledby="t-orig">
+            <div class="prose">
+                <h2 id="t-orig" class="text-lg font-semibold">D'où viennent les {nombreFr(C.macron.hausse_dette, 0)} milliards de {C.macron.de} à {C.macron.a}</h2>
+                <p>Chaque année, la dette augmente du déficit : ce qui manque pour que les recettes couvrent les dépenses, y compris les intérêts des emprunts passés. S'y ajoutent des mouvements de trésorerie, quand l'État garde plus ou moins d'argent en caisse.</p>
+            </div>
+            <figure class="figure" aria-labelledby="f-orig">
+                <figcaption id="f-orig"><strong>Hausse cumulée de la dette, fin {C.macron.de - 1} à fin {C.macron.a}</strong><span>En milliards d'euros courants</span></figcaption>
+                <div class="empile" role="img" aria-label={parts.map((p) => `${p.nom} : ${nombreFr(p.valeur, 0)} milliards`).join(', ')}>
+                    {parts.map((p) => <span class:list={['seg', p.couleur]} style={`flex:${p.valeur}`} title={`${p.nom} : ${nombreFr(p.valeur, 0)} milliards d'euros`}></span>)}
+                </div>
+                <ul class="legende-empile">
+                    {parts.map((p) => <li><span class:list={['pastille', p.couleur]} aria-hidden="true"></span>{p.nom} <strong>{nombreFr(p.valeur, 0)}</strong> <span class="muet">({nombreFr((100 * p.valeur) / C.macron.hausse_dette, 0)} %)</span></li>)}
+                </ul>
+                <p class="legende">Source : <a href={lienEurostat} target="_blank" rel="noopener">Eurostat</a>, déficit, intérêts versés et dette des administrations publiques. Sommes et parts : calcul.</p>
+            </figure>
+            <div class="prose">
+                <ul>
+                    <li><strong>Pendant les crises, de {C.crises.de} à {C.crises.a}</strong> : +{nombreFr(C.crises.hausse_dette, 0)} milliards, dont {nombreFr(C.crises.primaire, 0)} de déficit hors intérêts.</li>
+                    <li><strong>Après les crises, de {C.apres_crises.de} à {C.apres_crises.a}</strong> : +{nombreFr(C.apres_crises.hausse_dette, 0)} milliards. Le déficit hors intérêts n'est pas revenu à son niveau d'avant : {nombreFr(def(2023).primaire, 0)}, {nombreFr(def(2024).primaire, 0)} puis {nombreFr(def(2025).primaire, 0)} milliards par an, contre {nombreFr(def(2018).primaire, 0)} et {nombreFr(def(2019).primaire, 0)} milliards en 2018 et 2019.</li>
+                    <li><strong>Les intérêts</strong> représentent {nombreFr(C.macron.interets, 0)} milliards sur la période : c'est le coût des dettes accumulées auparavant, sous toutes les présidences.</li>
+                </ul>
+            </div>
+            <figure class="figure" aria-labelledby="f-def">
+                <figcaption id="f-def"><strong>Le déficit public chaque année, intérêts à part</strong><span>En milliards d'euros courants</span></figcaption>
+                <GrapheAnnees type="barres" series={seriesDeficit} bandes={bandes} unite="Md€" compact
+                              etiquette={`Déficit public par année, de ${D.deficits[0].annee} à ${dernier.annee}, décomposé en déficit hors intérêts et intérêts de la dette.`} />
+                <GrapheAnnees type="barres" series={seriesDeficit} bandes={bandes} unite="Md€"
+                              etiquette={`Déficit public par année, de ${D.deficits[0].annee} à ${dernier.annee}, décomposé en déficit hors intérêts et intérêts de la dette.`} />
+                <ul class="legende-empile">{seriesDeficit.map((s) => <li><span class:list={['pastille', s.couleur]} aria-hidden="true"></span>{s.nom}</li>)}</ul>
+                <p class="legende">Le déficit hors intérêts est appelé « déficit primaire ». Source : <a href={lienEurostat} target="_blank" rel="noopener">Eurostat</a> ; déficit hors intérêts : calcul (déficit moins intérêts versés).</p>
+                <details>
+                    <summary>Voir les chiffres en tableau</summary>
+                    <div class="tableau-ext">
+                        <table>
+                            <thead><tr><th>Année</th><th>Hausse de la dette</th><th>Déficit</th><th>dont intérêts</th><th>dont hors intérêts</th><th>Trésorerie et ajustements</th></tr></thead>
+                            <tbody>{D.deficits.map((d) => <tr><td>{d.annee}</td><td>{nombreFr(d.hausse_dette, 1)}</td><td>{nombreFr(d.deficit, 1)} <span class="muet">({pct(d.deficit_pib)} du PIB)</span></td><td>{nombreFr(d.interets, 1)}</td><td>{nombreFr(d.primaire, 1)}</td><td>{nombreFr(d.ajustements, 1)}</td></tr>)}</tbody>
+                        </table>
+                        <p class="petit muet">En milliards d'euros courants.</p>
+                    </div>
+                </details>
+            </figure>
+        </section>
+
+        {F.couts_crises && (
+            <section aria-labelledby="t-crises">
+                <div class="prose">
+                    <h2 id="t-crises" class="text-lg font-semibold">Ce qu'ont coûté les crises</h2>
+                </div>
+                <div class="cartes">
+                    {[F.couts_crises.sanitaire, F.couts_crises.energie].map((c: any) => (
+                        <article class="carte">
+                            <h3>{c.titre}</h3>
+                            <strong class="carte-chiffre">{c.chiffre}</strong>
+                            <p>{c.texte}</p>
+                            <p class="source"><a href={c.lien} target="_blank" rel="noopener">{c.source}</a></p>
+                        </article>
+                    ))}
+                </div>
+                <div class="prose">
+                    <p>{F.couts_crises.parts_intro}</p>
+                    <ul>
+                        {F.couts_crises.parts.map((x: any) => <li><strong>{x.qui}.</strong> {x.texte} <a href={x.lien} target="_blank" rel="noopener">source ↗</a></li>)}
+                    </ul>
+                </div>
+            </section>
+        )}
+
+        <section aria-labelledby="t-rd">
+            <div class="prose">
+                <h2 id="t-rd" class="text-lg font-semibold">Recettes et dépenses</h2>
+                <p>Le déficit est l'écart entre les deux courbes ci-dessous. Rapportées au PIB, les dépenses publiques sont revenues après le pic de 2020 à peu près à leur niveau de 2017 ({pct(rFin.depenses)} en {dernier.annee} contre {pct(r2017.depenses)}), mais au-dessus de 2019 ({pct(r2019.depenses)}). Les recettes sont plus basses qu'en 2017 ({pct(rFin.recettes)} contre {pct(r2017.recettes)}).</p>
+                <p>Rapportée au PIB, une dépense peut baisser alors qu'elle augmente en euros : il suffit que la richesse produite augmente plus vite.</p>
+            </div>
+            <figure class="figure" aria-labelledby="f-rd">
+                <figcaption id="f-rd"><strong>Recettes et dépenses publiques</strong><span>En % du PIB</span></figcaption>
+                <GrapheAnnees type="courbes" series={seriesRD} bandes={bandes} crises={crises} unite="% du PIB" decimales={1} yMin={45} compact
+                              etiquette={`Recettes et dépenses publiques en % du PIB. En ${dernier.annee} : dépenses ${pct(rFin.depenses)}, recettes ${pct(rFin.recettes)}.`} />
+                <GrapheAnnees type="courbes" series={seriesRD} bandes={bandes} crises={crises} unite="% du PIB" decimales={1} yMin={45}
+                              etiquette={`Recettes et dépenses publiques en % du PIB. En ${dernier.annee} : dépenses ${pct(rFin.depenses)}, recettes ${pct(rFin.recettes)}.`} />
+                <p class="legende">Axe vertical à partir de 45 %. Source : <a href={lienEurostat} target="_blank" rel="noopener">Eurostat</a>, recettes et dépenses totales des administrations publiques.</p>
+                {F.cice_ecriture && <p class="note">{F.cice_ecriture.texte} <a href={F.cice_ecriture.lien} target="_blank" rel="noopener">{F.cice_ecriture.source}</a></p>}
+                <details>
+                    <summary>Voir les chiffres en tableau</summary>
+                    <div class="tableau-ext">
+                        <table>
+                            <thead><tr><th>Année</th><th>Recettes</th><th>Dépenses</th><th>dont intérêts</th></tr></thead>
+                            <tbody>{D.recettes_depenses.map((r) => <tr><td>{r.annee}</td><td>{pct(r.recettes)}</td><td>{pct(r.depenses)}</td><td>{pct(r.interets)}</td></tr>)}</tbody>
+                        </table>
+                        <p class="petit muet">En % du PIB.</p>
+                    </div>
+                </details>
+            </figure>
+            {F.deux_lectures && (
+                <div class="lectures">
+                    <p class="prose-p">{F.deux_lectures.intro}</p>
+                    <div class="cartes">
+                        {F.deux_lectures.lectures.map((l: any) => (
+                            <article class="carte">
+                                <h3>{l.titre}</h3>
+                                <p>{l.texte}</p>
+                                <p class="source"><a href={l.lien} target="_blank" rel="noopener">{l.source}</a></p>
+                            </article>
+                        ))}
+                    </div>
+                    <p class="prose-p"><strong>{F.deux_lectures.conclusion}</strong></p>
+                </div>
+            )}
+            {F.derapage && (
+                <div class="prose">
+                    <h3 class="font-semibold">Les prévisions manquées de 2023 et 2024</h3>
+                    <p>{F.derapage.texte} <a href={F.derapage.lien} target="_blank" rel="noopener">{F.derapage.source}</a></p>
+                </div>
+            )}
+        </section>
+
+        {F.mesures && (
+            <section aria-labelledby="t-mes">
+                <div class="prose">
+                    <h2 id="t-mes" class="text-lg font-semibold">Les baisses et les hausses d'impôts depuis 2012</h2>
+                    <p>{F.mesures.intro[0]}</p>
+                </div>
+                {F.prelevements && (
+                    <figure class="figure" aria-labelledby="f-po">
+                        <figcaption id="f-po"><strong>Taux de prélèvements obligatoires</strong><span>Impôts et cotisations sociales, en % du PIB</span></figcaption>
+                        <GrapheAnnees type="courbes" series={seriePO} bandes={bandes} unite="% du PIB" decimales={1} yMin={40} compact
+                                      etiquette={`Taux de prélèvements obligatoires : ${pct(po(2011))} en 2011, ${pct(po(2017))} en 2017, ${pct(po(2024))} en 2024, ${pct(po(2025))} en 2025.`} />
+                        <GrapheAnnees type="courbes" series={seriePO} bandes={bandes} unite="% du PIB" decimales={1} yMin={40}
+                                      etiquette={`Taux de prélèvements obligatoires : ${pct(po(2011))} en 2011, ${pct(po(2017))} en 2017, ${pct(po(2024))} en 2024, ${pct(po(2025))} en 2025.`} />
+                        <p class="legende">Axe vertical à partir de 40 %. Point creux : chiffre provisoire. Source : <a href={F.prelevements.lien} target="_blank" rel="noopener">{F.prelevements.source}</a>.</p>
+                    </figure>
+                )}
+                <div class="prose">{F.mesures.intro.slice(1).map((t: string) => <p>{t}</p>)}</div>
+                <figure class="figure" aria-labelledby="f-mes">
+                    <figcaption id="f-mes"><strong>Effet des principales mesures sur les recettes publiques</strong><span>En milliards d'euros par an, une fois la mesure pleinement en place</span></figcaption>
+                    <ul class="legende-empile">
+                        <li><span class="pastille c2" aria-hidden="true"></span>Baisse d'impôts ou de cotisations : moins de recettes</li>
+                        <li><span class="pastille c1" aria-hidden="true"></span>Hausse : plus de recettes</li>
+                    </ul>
+                    {F.mesures.periodes.map((per: any) => (
+                        <div class="mes-periode">
+                            <h3>{per.nom}</h3>
+                            {per.lignes.map((l: any) => (
+                                <div class="mes">
+                                    <div class="mes-lib">{l.mesure} <span class="muet petit">({l.annee})</span>
+                                        {l.note && <span class="mes-note">{l.note}</span>}</div>
+                                    <div class="track">
+                                        <span class="zero" style="left:50%"></span>
+                                        {l.effet != null && <span class:list={['fill', l.effet < 0 ? 'neg c2' : 'pos c1']}
+                                              style={`left:${Math.min(50, xM(l.effet))}%;width:${Math.abs(xM(l.effet) - 50)}%`}
+                                              title={`${l.mesure} : ${l.texte}`}></span>}
+                                    </div>
+                                    <div class="mes-val">{l.texte} <a href={l.lien} target="_blank" rel="noopener">source ↗</a></div>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                    <p class="legende">Échelle commune de −{nombreFr(maxMes, 0)} à +{nombreFr(maxMes, 0)} milliards d'euros par an. Chaque montant est celui de l'organisme cité ; les périmètres et les années de référence diffèrent, c'est pourquoi la page n'en fait pas la somme.</p>
+                    <details>
+                        <summary>Voir les chiffres en tableau</summary>
+                        <div class="tableau-ext">
+                            <table>
+                                <thead><tr><th>Mesure</th><th>Année</th><th>Effet annuel sur les recettes</th><th>Source</th></tr></thead>
+                                <tbody>
+                                    {F.mesures.periodes.flatMap((per: any) => per.lignes.map((l: any) => (
+                                        <tr><td>{l.mesure}{l.note && <><br /><span class="muet petit">{l.note}</span></>}</td><td>{l.annee}</td><td>{l.texte}</td><td><a href={l.lien} target="_blank" rel="noopener">{l.source}</a></td></tr>
+                                    )))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                </figure>
+                {F.mesures.totaux && (
+                    <div class="prose">
+                        <h3 class="font-semibold">Au total</h3>
+                        <ul>{F.mesures.totaux.map((t: any) => <li>{t.texte} <a href={t.lien} target="_blank" rel="noopener">{t.source}</a></li>)}</ul>
+                    </div>
+                )}
+            </section>
+        )}
+
+        {F.aides && (
+            <section aria-labelledby="t-aides">
+                <div class="prose">
+                    <h2 id="t-aides" class="text-lg font-semibold">Les aides publiques aux entreprises</h2>
+                    {F.aides.intro.map((t: string) => <p>{t}</p>)}
+                </div>
+                <div class="cles">
+                    {F.aides.chiffres.map((c: any) => (
+                        <div class="tuile">
+                            <strong>{c.valeur}</strong>
+                            <span>{c.texte}</span>
+                            <a class="petit" href={c.lien} target="_blank" rel="noopener">{c.source}</a>
+                        </div>
+                    ))}
+                </div>
+                {F.aides.efficacite && (
+                    <div class="prose">
+                        <h3 class="font-semibold">Ce que l'on sait de leur efficacité</h3>
+                        <ul>{F.aides.efficacite.map((e: any) => <li>{e.texte} <a href={e.lien} target="_blank" rel="noopener">{e.source}</a></li>)}</ul>
+                    </div>
+                )}
+            </section>
+        )}
+
+        <section aria-labelledby="t-dep">
+            <div class="prose">
+                <h2 id="t-dep" class="text-lg font-semibold">Les dépenses ont-elles baissé ?</h2>
+                <p>En euros, les dépenses publiques sont passées de {md(totalF.md_debut, 0)} en {D.fonctions.de} à {md(totalF.md_fin, 0)} en {D.fonctions.a}. Une fois retirée la hausse des prix à la consommation sur la période (+{nombreFr(D.fonctions.prix_pct, 1)} %), elles ont augmenté de {nombreFr(totalF.volume_pct, 1)} %. Certains postes ont nettement progressé, d'autres ont reculé.</p>
+            </div>
+            <figure class="figure" aria-labelledby="f-dep">
+                <figcaption id="f-dep"><strong>Évolution des dépenses par fonction, {D.fonctions.de}-{D.fonctions.a}, hors hausse des prix</strong><span>En %, avec les montants en milliards d'euros</span></figcaption>
+                <div class="fonctions">
+                    {fonctions.map((f) => (
+                        <div class:list={['fn', { sous: f.sous, total: f.code === 'TOTAL' }]}>
+                            <div class="fn-lib">{f.libelle}<span class="muet petit"> {nombreFr(f.md_debut, 0)} → {nombreFr(f.md_fin, 0)} Md€</span></div>
+                            <div class="track">
+                                <span class="zero" style="left:50%"></span>
+                                <span class:list={['fill', f.volume_pct >= 0 ? 'pos c1' : 'neg c2']}
+                                      style={`left:${Math.min(50, xV(f.volume_pct))}%;width:${Math.abs(xV(f.volume_pct) - 50)}%`}
+                                      title={`${f.libelle} : ${f.volume_pct >= 0 ? '+' : ''}${nombreFr(f.volume_pct, 1)} %`}></span>
+                            </div>
+                            <div class="fn-val">{f.volume_pct >= 0 ? '+' : ''}{nombreFr(f.volume_pct, 1)} %</div>
+                        </div>
+                    ))}
+                </div>
+                <p class="legende">Dépenses de l'ensemble des administrations publiques classées par fonction. Évolution hors hausse des prix : calcul, avec l'indice des prix à la consommation harmonisé. Source : <a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=fr" target="_blank" rel="noopener">Eurostat</a>. Les « affaires économiques » baissent en partie par un effet d'écriture : le crédit d'impôt pour la compétitivité et l'emploi y était compté jusqu'en 2018, puis remplacé par une baisse de cotisations, comptée en moindres recettes.</p>
+            </figure>
+            {F.economies_definition && (
+                <div class="prose"><p>{F.economies_definition.texte} <a href={F.economies_definition.lien} target="_blank" rel="noopener">{F.economies_definition.source}</a></p></div>
+            )}
+            {F.efforts_recents && (
+                <div class="prose">
+                    <h3 class="font-semibold">Depuis 2025</h3>
+                    <ul>{F.efforts_recents.map((e: any) => <li>{e.texte} <a href={e.lien} target="_blank" rel="noopener">{e.source}</a></li>)}</ul>
+                </div>
+            )}
+        </section>
+
+        <section aria-labelledby="t-int">
+            <div class="prose">
+                <h2 id="t-int" class="text-lg font-semibold">Le coût des intérêts</h2>
+                <p>De 2012 à 2020, les intérêts ont baissé alors que la dette augmentait, parce que les taux d'emprunt étaient très bas. Ils remontent depuis 2022 avec la hausse des taux et de l'inflation, une partie de la dette étant indexée sur les prix : {md(int(dernier.annee).md, 1)} en {dernier.annee}, contre {nombreFr(int(2020).md, 1)} en 2020.</p>
+            </div>
+            <figure class="figure" aria-labelledby="f-int">
+                <figcaption id="f-int"><strong>Intérêts versés par les administrations publiques</strong><span>En milliards d'euros courants</span></figcaption>
+                <GrapheAnnees type="barres" series={serieInterets} bandes={bandes} unite="Md€" compact
+                              etiquette={`Intérêts versés de ${D.interets[0].annee} à ${dernier.annee} : ${nombreFr(int(2017).md, 1)} milliards en 2017, ${nombreFr(int(2020).md, 1)} en 2020, ${nombreFr(int(dernier.annee).md, 1)} en ${dernier.annee}.`} />
+                <GrapheAnnees type="barres" series={serieInterets} bandes={bandes} unite="Md€"
+                              etiquette={`Intérêts versés de ${D.interets[0].annee} à ${dernier.annee} : ${nombreFr(int(2017).md, 1)} milliards en 2017, ${nombreFr(int(2020).md, 1)} en 2020, ${nombreFr(int(dernier.annee).md, 1)} en ${dernier.annee}.`} />
+                <p class="legende">Source : <a href={lienEurostat} target="_blank" rel="noopener">Eurostat</a>, intérêts versés (comptabilité nationale, ce qui diffère un peu de la « charge de la dette » du budget de l'État).</p>
+                {F.interets_projection && <p class="note">{F.interets_projection.texte} <a href={F.interets_projection.lien} target="_blank" rel="noopener">{F.interets_projection.source}</a> ; <a href={F.interets_projection.lien2} target="_blank" rel="noopener">{F.interets_projection.source2}</a>.</p>}
+            </figure>
+            {F.detenteurs && (
+                <div class="prose">
+                    <h3 class="font-semibold">À qui la France doit-elle cet argent ?</h3>
+                    <p>{F.detenteurs.texte} <a href={F.detenteurs.lien} target="_blank" rel="noopener">{F.detenteurs.source}</a></p>
+                </div>
+            )}
+        </section>
+
+        {F.richesse && (
+            <section aria-labelledby="t-riche">
+                <div class="prose">
+                    <h2 id="t-riche" class="text-lg font-semibold">Un pays riche, un État endetté ?</h2>
+                    <p>{F.richesse.intro}</p>
+                </div>
+                <div class="cles">
+                    {F.richesse.chiffres.map((c: any) => (
+                        <div class="tuile">
+                            <strong>{c.valeur}</strong>
+                            <span>{c.texte}</span>
+                            <a class="petit" href={c.lien} target="_blank" rel="noopener">{c.source}</a>
+                        </div>
+                    ))}
+                </div>
+                <div class="prose"><ul>{F.richesse.limites.map((l: string) => <li>{l}</li>)}</ul></div>
+            </section>
+        )}
+
+        <section aria-labelledby="t-cand" class="renvois">
+            <h2 id="t-cand" class="text-lg font-semibold">Ce que proposent les candidats</h2>
+            <ul>
+                <li><a href="/budgets/">La grille des budgets des candidats</a> : déficit et dette visés, économies, recettes nouvelles, à côté des chiffres officiels.</li>
+                <li><a href="/budgets/2027/">Trois budgets pour 2027</a> : le projet du gouvernement, le contre-budget du Rassemblement national et le budget de première année de La France insoumise.</li>
+                <li><a href="/themes/fiscalite-budget/">Le thème Fiscalité &amp; budget</a> : toutes les propositions sur les impôts, la dette et la dépense publique, mesure par mesure.</li>
+                <li>Les questions débattues, avec les faits sourcés des deux côtés : <a href="/questions/allegements-cotisations/">les allègements de cotisations patronales</a>, <a href="/questions/imposition-tres-hauts-patrimoines/">l'imposition des très hauts patrimoines</a>, <a href="/questions/taxation-des-heritages/">les droits de succession</a>, <a href="/questions/annulation-dette-bce/">l'annulation de la dette détenue par la Banque centrale européenne</a>.</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="t-meth" class="methode">
+            <h2 id="t-meth" class="text-lg font-semibold">Méthode</h2>
+            <ul>
+                <li>Les séries viennent d'Eurostat, qui publie les comptes des administrations publiques transmis par l'Insee selon les règles européennes : dette dite « de Maastricht », déficit, recettes, dépenses, intérêts versés. Dernière mise à jour utilisée : {dateFr(D.eurostat.maj)} ; les chiffres de {dernier.annee} sont provisoires.</li>
+                <li>Hausse par présidence : écart entre la dette de fin juin qui suit l'investiture et celle de fin juin qui suit l'investiture suivante (ou le dernier trimestre publié, {trimestre(D.eurostat.dernier_trimestre)}).</li>
+                <li>Décomposition de la hausse : la hausse de la dette d'une année est égale au déficit de cette année, plus les mouvements de trésorerie et ajustements comptables. Le déficit hors intérêts est le déficit moins les intérêts versés.</li>
+                <li>Évolution hors hausse des prix : montant de la dernière année divisé par celui de {D.fonctions.de}, puis par l'évolution de l'indice des prix à la consommation harmonisé. Avec l'évolution générale des prix de l'économie (déflateur du PIB), qui a moins augmenté, la hausse des dépenses serait un peu plus forte.</li>
+                <li>Les chiffres tirés de rapports (Cour des comptes, Insee, France Stratégie, Sénat…) sont cités avec leur lien. Un chiffre d'association, de syndicat ou de groupe de réflexion n'est jamais le chiffre de référence : voir la <a href="/methodologie/#chiffres-des-themes">méthodologie</a>.</li>
+                <li>Toutes les données de cette page sont téléchargeables, pour refaire les graphiques et les calculs : <a href="/data/dette.json">dette.json</a>.</li>
+            </ul>
+        </section>
+
+        <Glossaire />
+    </div>
+</Base>
+
+<style>
+    .dette {
+        --c1: #2563eb; --c2: #b45309; --c3: #94a3b8; --grille: color-mix(in srgb, var(--border) 70%, transparent);
+        display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 8px; font-variant-numeric: tabular-nums;
+    }
+    @media (prefers-color-scheme: dark) { .dette { --c1: #3b82f6; --c2: #c9780a; --c3: #64748b; } }
+    section { display: grid; gap: 16px; }
+    .prose { display: grid; gap: 10px; max-width: 70ch; }
+    .prose p, .prose li { color: var(--fg-muted); }
+    .prose ul { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+    .prose strong { color: var(--fg); }
+    .muet { color: var(--fg-muted); }
+    .petit { font-size: .84rem; }
+    a { text-decoration: underline; text-underline-offset: 2px; }
+    .etat span { display: inline-block; font-size: .8rem; color: var(--fg-muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+
+    .cles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+    .tuile { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; background: var(--bg-soft); }
+    .tuile strong { font-size: 1.45rem; line-height: 1.2; }
+    .tuile span { font-size: .86rem; color: var(--fg-muted); }
+
+    .figure { margin: 0; border: 1px solid var(--border); border-radius: 10px; padding: 18px; display: grid; gap: 14px; background: var(--bg); min-width: 0; }
+    .figure figcaption { display: grid; gap: 2px; }
+    .figure figcaption span { font-size: .84rem; color: var(--fg-muted); }
+    .legende { font-size: .8rem; color: var(--fg-muted); }
+    .note { font-size: .86rem; color: var(--fg-muted); border-left: 3px solid var(--border); padding-left: 10px; }
+    .pastille { display: inline-block; width: 10px; height: 10px; border-radius: 3px; flex: none; margin-right: 6px; vertical-align: baseline; }
+    .c1.pastille, .seg.c1, .fill.c1 { background: var(--c1); }
+    .c2.pastille, .seg.c2, .fill.c2 { background: var(--c2); }
+    .c3.pastille, .seg.c3, .fill.c3 { background: var(--c3); }
+
+    .track { position: relative; height: 14px; }
+    .track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--grille); }
+    .zero { position: absolute; top: -4px; bottom: -4px; border-left: 1px solid var(--fg-muted); }
+    .fill { position: absolute; top: 2px; bottom: 2px; }
+    .fill.pos { border-radius: 0 4px 4px 0; }
+    .fill.neg { border-radius: 4px 0 0 4px; }
+
+    .pres { display: grid; gap: 12px; }
+    .pres-ligne { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 7rem; gap: 12px; align-items: center; }
+    .pres-ligne .track { height: 22px; }
+    .pres-ligne .fill { left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+    .pres-nom, .pres-val { display: grid; }
+    .pres-val { text-align: right; }
+
+    .empile { display: flex; gap: 2px; height: 34px; }
+    .seg { border-radius: 2px; }
+    .seg:first-child { border-radius: 4px 2px 2px 4px; }
+    .seg:last-child { border-radius: 2px 4px 4px 2px; }
+    .legende-empile { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; list-style: none; font-size: .88rem; }
+
+    .fonctions { display: grid; gap: 8px; }
+    .fn { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 1fr) 4.5rem; gap: 12px; align-items: center; font-size: .9rem; }
+    .fn.sous .fn-lib { padding-left: 1.2em; color: var(--fg-muted); }
+    .fn.total { border-top: 1px solid var(--grille); padding-top: 8px; font-weight: 600; }
+    .fn-val { text-align: right; font-weight: 600; white-space: nowrap; }
+
+    .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+    .carte { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; background: var(--bg); }
+    .carte h3 { margin: 0; font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-muted); }
+    .carte-chiffre { font-size: 1.3rem; line-height: 1.25; }
+    .carte p { margin: 0; font-size: .9rem; color: var(--fg-muted); }
+    .carte .source, .tuile a { font-size: .78rem; color: var(--fg-muted); }
+    .lectures { display: grid; gap: 12px; }
+    .prose-p { color: var(--fg-muted); max-width: 70ch; margin: 0; }
+    .prose-p strong { color: var(--fg); }
+    .mes-periode { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--grille); }
+    .mes-periode h3 { margin: 0; font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-muted); }
+    .mes { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr) 11rem; gap: 12px; align-items: center; font-size: .9rem; }
+    .mes-note { display: block; font-size: .8rem; color: var(--fg-muted); }
+    .mes-val { text-align: right; font-weight: 600; }
+    .mes-val a { font-weight: 400; font-size: .76rem; color: var(--fg-muted); white-space: nowrap; }
+    .avertir { border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; background: var(--bg-soft); max-width: none; }
+    .avertir h3 { margin: 0; color: var(--fg); }
+
+    .tableau-ext { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+    th, td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--grille); }
+    thead th { font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; color: var(--fg-muted); }
+    details { font-size: .88rem; }
+    summary { cursor: pointer; color: var(--fg-muted); }
+    details[open] summary { margin-bottom: 10px; }
+    .renvois ul, .methode ul { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; color: var(--fg-muted); max-width: 75ch; }
+
+    @media (max-width: 640px) {
+        .pres-ligne { grid-template-columns: minmax(0, 1fr) 6rem; }
+        .pres-ligne .track { grid-column: 1 / -1; grid-row: 2; }
+        .fn { grid-template-columns: minmax(0, 1fr) 4.5rem; }
+        .fn .track { grid-column: 1 / -1; grid-row: 2; }
+        .mes { grid-template-columns: minmax(0, 1fr) 8rem; }
+        .mes .track { grid-column: 1 / -1; grid-row: 2; }
+    }
+</style>

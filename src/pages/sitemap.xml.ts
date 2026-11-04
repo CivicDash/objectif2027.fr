@@ -14,6 +14,7 @@ export const GET: APIRoute = ({ site }) => {
         '/themes/',
         '/budgets/',
         '/budgets/2027/',
+        '/budgets/dette/',
         ...(QUESTIONS_ACTIVES ? ['/questions/'] : []),
         ...(CALENDRIER_ACTIF ? ['/calendrier/'] : []),
         '/recherche/',
