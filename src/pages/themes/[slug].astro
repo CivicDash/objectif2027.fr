@@ -133,7 +133,8 @@ const LIBELLE_TYPE: Record<string, string> = {
             return (
                 <div class="rounded-card border p-4" style="border-color: var(--border)">
                     <div class="flex items-center justify-between gap-2">
-                        <a href={`/candidats/${c.slug}/`} class="font-semibold hover:text-brand-600">{c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}</a>
+                        {/* Titre à ancre : la recherche en fait une sous-partie, et l'extrait porte le nom du candidat. */}
+                        <h3 id={c.slug} class="font-semibold"><a href={`/candidats/${c.slug}/`} class="hover:text-brand-600">{c.nom_complet.replace(/^M\.\s*|^Mme\s*/, '')}</a></h3>
                         <span class="text-xs whitespace-nowrap" style={etat === 'publie' ? 'color:#047857' : etat === 'relevee' ? 'color:#1d4ed8' : etat === 'en_traitement' ? 'color:#b45309' : 'color:var(--fg-muted)'}>
                             {etat === 'publie' ? 'Publié' : etat === 'relevee' ? 'Relevé — argumentaire en cours' : etat === 'en_traitement' ? 'En cours de traitement' : 'Non exprimé'}
                         </span>

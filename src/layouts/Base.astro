@@ -121,7 +121,8 @@ const plusCourantMobile = rubriquesPlusMobile.some((r) => estCourante(r.href));
             </div>
         </header>
 
-        <main id="contenu" class="flex-1 w-full mx-auto max-w-content px-4 py-6 pb-24 md:pb-8">
+        <!-- data-pagefind-body : la recherche n'indexe que le contenu, ni le menu ni le pied de page. -->
+        <main id="contenu" class="flex-1 w-full mx-auto max-w-content px-4 py-6 pb-24 md:pb-8" data-pagefind-body>
             <slot />
         </main>
 

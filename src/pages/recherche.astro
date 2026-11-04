@@ -1,5 +1,12 @@
 ---
 import Base from '@/layouts/Base.astro';
+
+// Termes voisins : deux expressions pour une même idée, que tous les candidats n'emploient
+// pas. La recherche ne mélange pas leurs résultats : elle signale le terme voisin et propose
+// de le chercher. Liste courte, publiée sur cette page, la même pour tous (04/11/2026).
+const TERMES_VOISINS: string[][] = [
+    ['préférence nationale', 'priorité nationale'],
+];
 ---
 
 <Base title="Recherche — Objectif 2027" description="Rechercher un candidat, une mesure, un thème sur Objectif 2027.">
@@ -8,30 +15,228 @@ import Base from '@/layouts/Base.astro';
         Recherche instantanée, entièrement dans votre navigateur (aucune requête envoyée).
     </p>
 
-    <div id="recherche"></div>
+    <form id="recherche-form" role="search">
+        <label for="recherche-q" class="sr-only">Rechercher</label>
+        <input id="recherche-q" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Rechercher un candidat, une mesure, un thème…"
+               class="w-full rounded-control border px-3 py-2 text-base"
+               style="border-color: var(--border); background: var(--bg); color: var(--fg)" />
+    </form>
+    <noscript><p class="text-sm mt-3">La recherche fonctionne avec JavaScript activé.</p></noscript>
 
-    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
-    <script src="/pagefind/pagefind-ui.js" is:inline></script>
-    <script is:inline>
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.PagefindUI) {
-                const ui = new window.PagefindUI({
-                    element: '#recherche',
-                    showSubResults: true,
-                    showImages: false,
-                    // Une citation (15 mots au plus) est suivie de « — Nom, rôle » quand ce
-                    // n'est pas le candidat qui parle : l'extrait doit être assez long pour
-                    // ne jamais montrer la phrase sans son auteur.
-                    excerptLength: 40,
-                    translations: {
-                        placeholder: 'Rechercher un candidat, une mesure, un thème…',
-                        zero_results: 'Aucun résultat pour « [SEARCH_TERM] »',
-                    },
-                });
-                // Recherche pré-remplie depuis ?q= (permet la SearchAction / sitelinks searchbox).
-                const q = new URLSearchParams(window.location.search).get('q');
-                if (q && typeof ui.triggerSearch === 'function') ui.triggerSearch(q);
+    <p id="recherche-statut" class="text-sm mt-3" style="color: var(--fg-muted)" aria-live="polite"></p>
+    <p id="recherche-voisin" class="text-sm mt-1" hidden></p>
+    <ol id="recherche-resultats" class="mt-4 space-y-5"></ol>
+    <button id="recherche-plus" type="button" hidden
+            class="tap mt-5 rounded-control border px-4 py-2 text-sm font-medium" style="border-color: var(--border)">
+        Charger plus de résultats
+    </button>
+
+    <details class="mt-10 text-sm" style="color: var(--fg-muted)" data-pagefind-ignore="all">
+        <summary class="cursor-pointer text-brand-600">Comment fonctionne la recherche</summary>
+        <ul class="mt-2 space-y-2 list-disc pl-5">
+            <li>Les pages qui contiennent votre expression telle quelle passent en premier, les autres suivent.
+                Entre guillemets ("…"), seule l'expression exacte est cherchée.</li>
+            <li>Une citation apparaît toujours avec le nom de qui l'a prononcée.</li>
+            <li>Termes voisins signalés :
+                {TERMES_VOISINS.map((g, i) => <>{i > 0 && ' ; '}{g.map((t) => `« ${t} »`).join(' et ')}</>)}.
+                Quand votre recherche contient l'un, la page propose de chercher l'autre, sans mélanger les
+                résultats. La liste est la même pour tous les candidats.</li>
+        </ul>
+    </details>
+
+    <style is:global>
+        #recherche-resultats mark { background: #fde68a; color: inherit; border-radius: 2px; padding: 0 1px; }
+        @media (prefers-color-scheme: dark) {
+            #recherche-resultats mark { background: #78520f; }
+        }
+    </style>
+
+    <script is:inline define:vars={{ voisins: TERMES_VOISINS }}>
+        const PAR_PAGE = 10;
+        const LONGUEUR_EXTRAIT = 32; // mots
+
+        const form = document.getElementById('recherche-form');
+        const champ = document.getElementById('recherche-q');
+        const statut = document.getElementById('recherche-statut');
+        const voisin = document.getElementById('recherche-voisin');
+        const liste = document.getElementById('recherche-resultats');
+        const plus = document.getElementById('recherche-plus');
+
+        let pagefind = null;
+        let resultats = [];
+        let exacts = new Set();
+        let affiches = 0;
+        let tour = 0;
+        let minuterie = null;
+
+        const normaliser = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+            .replace(/["«»]/g, ' ').replace(/\s+/g, ' ').trim();
+        const echapper = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+        async function chargerPagefind() {
+            const pf = await import('/pagefind/pagefind.js');
+            await pf.options({ excerptLength: LONGUEUR_EXTRAIT });
+            return pf;
+        }
+
+        function termesVoisins(q) {
+            const n = ` ${normaliser(q)} `;
+            for (const groupe of voisins) {
+                const present = groupe.find((t) => n.includes(` ${normaliser(t)} `));
+                if (present) return groupe.filter((t) => t !== present);
             }
-        });
+            return [];
+        }
+
+        function afficherVoisin(q) {
+            const autres = termesVoisins(q);
+            voisin.replaceChildren();
+            voisin.hidden = autres.length === 0;
+            if (!autres.length) return;
+            voisin.append('Terme voisin employé dans les propositions : ');
+            autres.forEach((t, i) => {
+                if (i) voisin.append(', ');
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'font-medium text-brand-600 hover:underline';
+                b.textContent = `chercher « ${t} »`;
+                b.addEventListener('click', () => { champ.value = t; chercher(t); });
+                voisin.append(b);
+            });
+        }
+
+        // Extrait autour des mots trouvés (positions de Pagefind, en mots du contenu). Une citation
+        // entamée va jusqu'à son guillemet fermant, puis jusqu'au bout du nom de qui l'a prononcée
+        // (« … » — Nom, rôle) : une phrase n'est jamais détachée de son auteur (méthodologie).
+        // L'extrait d'une sous-partie reste entre son titre et le titre suivant.
+        function extrait(mots, positions, [bas, haut] = [0, mots.length]) {
+            const pos = [...new Set(positions)].sort((a, b) => a - b);
+            if (!pos.length) return '';
+            let ancre = pos[0];
+            let meilleur = 0;
+            for (const p of pos) {
+                const n = pos.filter((x) => x >= p && x < p + LONGUEUR_EXTRAIT).length;
+                if (n > meilleur) { meilleur = n; ancre = p; }
+            }
+            const debut = Math.max(bas, ancre - Math.floor(LONGUEUR_EXTRAIT / 3));
+            let fin = Math.min(haut, debut + LONGUEUR_EXTRAIT);
+
+            let ouverte = false;
+            let fermant = -1;
+            for (let i = Math.max(0, debut - 120); i < fin; i++) {
+                if (mots[i].includes('«')) ouverte = true;
+                if (mots[i].includes('»')) { ouverte = false; if (i >= debut) fermant = i; }
+            }
+            if (ouverte) {
+                let j = fin;
+                while (j < mots.length && !mots[j].includes('»')) j++;
+                if (j < mots.length) { fermant = j; fin = j + 1; }
+            }
+            if (fermant >= 0 && mots[fermant + 1] === '—') {
+                let j = fermant + 2;
+                while (j < mots.length && j < fermant + 18 && !/^[▶«]/.test(mots[j])) {
+                    j++;
+                    if (mots[j - 1].endsWith(')')) break; // « (équipe de campagne) » clôt l'attribution
+                }
+                fin = Math.max(fin, j);
+            }
+
+            const marques = new Set(pos);
+            const corps = mots.slice(debut, fin)
+                .map((m, k) => (marques.has(debut + k) ? `<mark>${echapper(m)}</mark>` : echapper(m)))
+                .join(' ');
+            return (debut > bas ? '… ' : '') + corps + (fin < haut ? ' …' : '');
+        }
+
+        // Bornes d'une sous-partie, en mots : après son titre (déjà affiché), avant le titre suivant.
+        function bornes(d, mots, ancre) {
+            const debut = ancre ? ancre.location + ancre.text.split(/\s+/).length : 0;
+            const suivant = (d.anchors ?? [])
+                .filter((a) => /^h[1-6]$/i.test(a.element) && a.location > (ancre ? ancre.location : -1))
+                .reduce((min, a) => Math.min(min, a.location), mots.length);
+            return [debut, suivant];
+        }
+
+        function carte(d, exact) {
+            const mots = d.content.split(/[\r\n\s]+/g);
+            const titre = d.meta?.title || d.url;
+            // Sous-parties de la page (titres à ancre) : les trois qui contiennent le plus de mots
+            // trouvés, dans l'ordre de la page. Sur une page thème, ce sont les candidats.
+            const racine = d.sub_results.find((s) => s.url === d.url && s.locations?.length);
+            const sousParties = d.sub_results.filter((s) => s.url !== d.url && s.locations?.length);
+            const top = [...sousParties].sort((a, b) => b.locations.length - a.locations.length).slice(0, 3);
+            const gardees = sousParties.filter((s) => top.includes(s));
+
+            let html = `<a href="${echapper(d.url)}" class="font-semibold text-brand-600 hover:underline">${echapper(titre)}</a>`;
+            if (exact) html += ' <span class="text-xs whitespace-nowrap" style="color: var(--fg-muted)">· expression exacte</span>';
+            if (racine || !gardees.length) {
+                html += `<p class="text-sm mt-1">${racine ? extrait(mots, racine.locations, bornes(d, mots, null)) : extrait(mots, d.locations)}</p>`;
+            }
+            if (gardees.length) {
+                html += '<ul class="mt-2 space-y-2 border-l-2 pl-3" style="border-color: var(--border)">'
+                    + gardees.map((s) => `<li><a href="${echapper(s.url)}" class="text-sm font-medium hover:underline">${echapper(s.title)}</a>`
+                        + `<p class="text-sm" style="color: var(--fg-muted)">${extrait(mots, s.locations, bornes(d, mots, s.anchor))}</p></li>`).join('')
+                    + '</ul>';
+            }
+            const li = document.createElement('li');
+            li.innerHTML = html;
+            return li;
+        }
+
+        async function afficherSuite() {
+            const monTour = tour;
+            const lot = resultats.slice(affiches, affiches + PAR_PAGE);
+            const donnees = await Promise.all(lot.map((r) => r.data()));
+            if (monTour !== tour) return;
+            lot.forEach((r, k) => liste.append(carte(donnees[k], exacts.has(r.id))));
+            affiches += lot.length;
+            plus.hidden = affiches >= resultats.length;
+        }
+
+        async function chercher(q) {
+            const monTour = ++tour;
+            const brut = q.trim();
+            history.replaceState(null, '', brut ? `?q=${encodeURIComponent(brut)}` : location.pathname);
+            liste.replaceChildren();
+            plus.hidden = true;
+            resultats = [];
+            exacts = new Set();
+            affiches = 0;
+            afficherVoisin(brut);
+            if (!brut) { statut.textContent = ''; return; }
+
+            try {
+                pagefind ??= await chargerPagefind();
+                // Plusieurs mots sans guillemets : l'expression exacte d'abord, puis le reste.
+                const expression = brut.includes('"') || !/\s/.test(brut) ? null : `"${brut}"`;
+                const [large, exacte] = await Promise.all([
+                    pagefind.search(brut),
+                    expression ? pagefind.search(expression) : null,
+                ]);
+                if (monTour !== tour) return;
+                const vus = new Set();
+                for (const r of exacte?.results ?? []) { vus.add(r.id); exacts.add(r.id); resultats.push(r); }
+                for (const r of large?.results ?? []) if (!vus.has(r.id)) { vus.add(r.id); resultats.push(r); }
+            } catch {
+                if (monTour === tour) statut.textContent = 'La recherche est momentanément indisponible.';
+                return;
+            }
+
+            const n = resultats.length;
+            statut.textContent = n === 0
+                ? `Aucun résultat pour « ${brut} »`
+                : `${n} résultat${n > 1 ? 's' : ''} pour « ${brut} »`
+                    + (exacts.size ? `, dont ${exacts.size} avec l'expression exacte` : '');
+            await afficherSuite();
+        }
+
+        form.addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(minuterie); chercher(champ.value); });
+        champ.addEventListener('input', () => { clearTimeout(minuterie); minuterie = setTimeout(() => chercher(champ.value), 250); });
+        plus.addEventListener('click', () => afficherSuite());
+
+        // Recherche pré-remplie depuis ?q= (SearchAction / sitelinks searchbox).
+        const q = new URLSearchParams(location.search).get('q');
+        if (q) { champ.value = q; chercher(q); }
     </script>
 </Base>
